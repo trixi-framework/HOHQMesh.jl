@@ -1,5 +1,7 @@
 # HOHQMesh.jl
 
+[![Build Status](https://github.com/trixi-framework/HOHQMesh.jl/workflows/CI/badge.svg)](https://github.com/trixi-framework/HOHQMesh.jl/actions?query=workflow%3ACI)
+
 This package is a *thin* Julia wrapper around the *High Order Hex-Quad Mesher*
 (a.k.a. **HOHQMesh**) created and developed by
 [David A.  Kopriva](https://www.math.fsu.edu/~kopriva/).
