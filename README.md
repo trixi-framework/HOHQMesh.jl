@@ -20,9 +20,9 @@ by executing the following lines in your Julia REPL:
 ```julia
 julia> import Pkg
 
-julia> Pkg.add(url="git@github.com:trixi-framework/HOHQMESH_jll.jl")
+julia> Pkg.add(url="https://github.com/trixi-framework/HOHQMESH_jll.jl")
 
-julia> Pkg.add(url="git@github.com:trixi-framework/HOHQMESH.jl")
+julia> Pkg.add(url="https://github.com/trixi-framework/HOHQMESH.jl")
 ```
 
 Afterwards, you can just load HOHQMesh with
