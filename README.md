@@ -14,8 +14,9 @@ This package is a thin Julia wrapper around the *High Order Hex-Quad Mesher*
 This package is still in proof-of-concept stage. Thus many things will not work
 as convenient as they do for properly registered packages.
 
-To install HOHQMesh.jl, you need to manually install it *and its dependency* by
-executing the following lines in your Julia REPL:
+To install HOHQMesh.jl, you need to manually install it *and its dependency*
+[HOHQMesh_jll](https://github.com/trixi-framework/HOHQMESH_jll.jl)
+by executing the following lines in your Julia REPL:
 ```julia
 julia> import Pkg
 
