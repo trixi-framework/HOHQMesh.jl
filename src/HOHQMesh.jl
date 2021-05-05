@@ -1,6 +1,6 @@
 module HOHQMesh
 
-using HOHQMesh_jll
+import HOHQMesh_jll
 
 export generate_mesh
 
@@ -62,7 +62,7 @@ function generate_mesh(control_file;
     flush(tmpio)
 
     # Run HOHQMesh and store output
-    readchomp(`$(HOHQMesh_jll.HOHQMesh_path) -f $tmppath`)
+    readchomp(`$(HOHQMesh_jll.HOHQMesh()) -f $tmppath`)
   end
 
   output
