@@ -2,11 +2,11 @@
 
 [![Build Status](https://github.com/trixi-framework/HOHQMesh.jl/workflows/CI/badge.svg)](https://github.com/trixi-framework/HOHQMesh.jl/actions?query=workflow%3ACI)
 
-This package is a *thin* Julia wrapper around the *High Order Hex-Quad Mesher*
+This package is a thin Julia wrapper around the *High Order Hex-Quad Mesher*
 (a.k.a. **HOHQMesh**) created and developed by
-[David A.  Kopriva](https://www.math.fsu.edu/~kopriva/).
+[David A. Kopriva](https://www.math.fsu.edu/~kopriva/).
 
-**Note: This package is still _highly_ experimental!**
+**Note: This package is currently _highly_ experimental!**
 
 
 ## Getting started
@@ -40,3 +40,21 @@ julia> output = generate_mesh(control_file)
 
 You will then find the resulting output files (mesh, plot file, statistics) in
 the designated output directory, which defaults to `out`.
+
+
+## Authors
+HOHQMesh.jl was initiated by
+[Michael Schlottke-Lakemper](https://www.mi.uni-koeln.de/NumSim/schlottke-lakemper)
+(University of Cologne, Germany), who is also the principal developer of HOHQMesh.jl.
+The *HOHQMesh* mesh generator itself is developed by
+[David A. Kopriva](https://www.math.fsu.edu/~kopriva/).
+
+
+## License and contributing
+HOHQMesh.jl is licensed under the MIT license (see [LICENSE.md](LICENSE.md)).
+*HOHQMesh* itself is not available as open source.
+
+
+## Acknowledgements
+The authors would like to thank David A. Kopriva for making the sources of
+*HOHQMesh* available to them, and for assisting with making it work with Julia.
