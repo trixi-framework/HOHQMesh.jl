@@ -46,7 +46,12 @@ julia> output = generate_mesh(control_file)
 You will then find the resulting output files (mesh, plot file, statistics) in
 the designated output directory, which defaults to `out`. The
 `GingerbreadMan.control` file will yield the following mesh,
+
+![gingerbreadman_with_edges_400px](https://user-images.githubusercontent.com/3637659/117241938-80f4ee80-ae34-11eb-854a-ebebcd0b9d88.png)
+
 while the 3D `Snake.control` looks like this:
+
+![snake_400px](https://user-images.githubusercontent.com/3637659/117241963-8ce0b080-ae34-11eb-9b79-d091807d9a23.png)
 
 
 ## Authors
