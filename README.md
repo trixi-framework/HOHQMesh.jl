@@ -43,9 +43,10 @@ julia> control_file = joinpath(HOHQMesh.examples_dir(), "GingerbreadMan.control"
 
 julia> output = generate_mesh(control_file)
 ```
-
 You will then find the resulting output files (mesh, plot file, statistics) in
-the designated output directory, which defaults to `out`.
+the designated output directory, which defaults to `out`. The
+`GingerbreadMan.control` file will yield the following mesh,
+while the 3D `Snake.control` looks like this:
 
 
 ## Authors
