@@ -1,0 +1,8 @@
+**/Manifest.toml
+out*/
+docs/build
+public/
+coverage/
+coverage_report/
+**/*.jl.*.cov
+.vscode/
