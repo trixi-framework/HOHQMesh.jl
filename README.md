@@ -49,7 +49,7 @@ the designated output directory, which defaults to `out`. The
 
 ![gingerbreadman_with_edges_400px](https://user-images.githubusercontent.com/3637659/117241938-80f4ee80-ae34-11eb-854a-ebebcd0b9d88.png)
 
-while the 3D `Snake.control` looks like this:
+while the 3D file `Snake.control` produces this mesh:
 
 ![snake_400px](https://user-images.githubusercontent.com/3637659/117241963-8ce0b080-ae34-11eb-9b79-d091807d9a23.png)
 

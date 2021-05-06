@@ -29,16 +29,23 @@ julia> using HOHQMesh
 ```
 and then happily generate away!
 
-Two examples from HOHQMesh itself (`GingerbreadMan` or `NACA0012`) come
-delivered with this package. You can generate a mesh for them by executing
+Two 2D examples from HOHQMesh itself (`GingerbreadMan` or `NACA0012`) and a 3D
+example (`Snake`) come delivered with this package. You can generate a mesh for
+them by executing
 ```julia
-julia> control_file = joinpath(HOHQMesh.examples_dir(), "GingerbreadMan", "GingerbreadMan.control")
+julia> control_file = joinpath(HOHQMesh.examples_dir(), "GingerbreadMan.control")
 
 julia> output = generate_mesh(control_file)
 ```
-
 You will then find the resulting output files (mesh, plot file, statistics) in
-the designated output directory, which defaults to `out`.
+the designated output directory, which defaults to `out`. The
+`GingerbreadMan.control` file will yield the following mesh,
+
+![gingerbreadman_with_edges_400px](https://user-images.githubusercontent.com/3637659/117241938-80f4ee80-ae34-11eb-854a-ebebcd0b9d88.png)
+
+while the 3D file `Snake.control` produces this mesh:
+
+![snake_400px](https://user-images.githubusercontent.com/3637659/117241963-8ce0b080-ae34-11eb-9b79-d091807d9a23.png)
 
 
 ## Authors
