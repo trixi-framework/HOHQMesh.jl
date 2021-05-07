@@ -9,6 +9,7 @@
 This package is a thin Julia wrapper around the *High Order Hex-Quad Mesher*
 (a.k.a. **HOHQMesh**) created and developed by
 [David A. Kopriva](https://www.math.fsu.edu/~kopriva/).
+HOHQMesh.jl is available on Linux, MacOS, and Windows.
 
 **Note: This package is currently _highly_ experimental!**
 
