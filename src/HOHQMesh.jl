@@ -19,11 +19,15 @@ the filenames for the mesh file, plot file, and statistics file are generated au
 control file name. For example, `path/to/ControlFile.control` will result in output files
 `ControlFile.mesh`, `ControlFile.tec`, and `ControlFile.txt`.
 
+You can activate verbose output from HOHQMesh that prints additional messages and debugging
+mesh information with the keyword argument `verbose`.
+
 This function returns the output to `stdout` of the HOHQMesh binary when generating the mesh.
 """
 function generate_mesh(control_file;
                        output_directory="out",
-                       mesh_filename=nothing, plot_filename=nothing, stats_filename=nothing)
+                       mesh_filename=nothing, plot_filename=nothing, stats_filename=nothing,
+                       verbose=false)
   @assert isfile(control_file) "'$control_file' is not a valid path to an existing file"
 
   # Determine output filenames
@@ -66,7 +70,11 @@ function generate_mesh(control_file;
     flush(tmpio)
 
     # Run HOHQMesh and store output
-    readchomp(`$(HOHQMesh_jll.HOHQMesh()) -f $tmppath`)
+    if ~verbose
+      readchomp(`$(HOHQMesh_jll.HOHQMesh()) -f $tmppath`)
+    else
+      readchomp(`$(HOHQMesh_jll.HOHQMesh()) -verbose -f $tmppath`)
+    end
   end
 
   String(output)
