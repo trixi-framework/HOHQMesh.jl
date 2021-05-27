@@ -70,10 +70,10 @@ function generate_mesh(control_file;
     flush(tmpio)
 
     # Run HOHQMesh and store output
-    if ~verbose
-      readchomp(`$(HOHQMesh_jll.HOHQMesh()) -f $tmppath`)
-    else
+    if verbose
       readchomp(`$(HOHQMesh_jll.HOHQMesh()) -verbose -f $tmppath`)
+    else
+      readchomp(`$(HOHQMesh_jll.HOHQMesh()) -f $tmppath`)
     end
   end
 
