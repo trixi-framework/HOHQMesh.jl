@@ -12,7 +12,7 @@ using Test
     @test generate_mesh(control_file) isa String
   end
 
-  @testset "generate_mesh()" begin
+  @testset "generate_mesh(; verbose=true)" begin
     control_file = joinpath(HOHQMesh.examples_dir(), "GingerbreadMan.control")
     @test generate_mesh(control_file, verbose=true) isa String
   end
