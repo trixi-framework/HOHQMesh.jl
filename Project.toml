@@ -5,3 +5,6 @@ version = "0.1.0-pre"
 
 [deps]
 HOHQMesh_jll = "1d5cbd98-5122-5a8a-bea1-c186d986ee7f"
+
+[compat]
+julia = "1.6"
