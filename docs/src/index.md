@@ -18,8 +18,9 @@ julia> import Pkg; Pkg.add("HOHQMesh")
 ```
 HOHQMesh.jl depends on the binary distribution of the
 [HOHQMesh](https://github.com/trixi-framework/HOHQMesh)
-mesh generator, which is available via the Julia package `HOHQMesh_jll.jl` and
-which is automatically installed as a dependency.
+mesh generator, which is available via the Julia package
+[HOHQMesh_jll.jl](https://github.com/JuliaBinaryWrappers/HOHQMesh_jll.jl)
+and which is automatically installed as a dependency.
 
 ## Usage
 In the Julia REPL, you can load HOHQMesh with
@@ -29,7 +30,7 @@ julia> using HOHQMesh
 and then happily generate away!
 
 Two 2D examples `GingerbreadMan` and `NACA0012` and a 3D example `Snake` (all
-    from HOHQMesh itself) come delivered with this package. You can generate a
+from HOHQMesh itself) come delivered with this package. You can generate a
 mesh for them by executing
 ```julia
 julia> control_file = joinpath(HOHQMesh.examples_dir(), "GingerbreadMan.control")
