@@ -25,14 +25,9 @@ jobs:
         with:
           version: '1.6'
       - name: Install dependencies
-        run: | # FIXME: Remove run and use next one once JLL package is registered
-          julia --project=docs/ -e 'using Pkg; Pkg.develop(url="https://github.com/trixi-framework/HOHQMesh_jll.jl")'
-          julia --project=docs/ -e 'using Pkg; Pkg.develop(PackageSpec(path=pwd())); Pkg.instantiate()'
-        # run: julia --project=docs/ -e 'using Pkg; Pkg.develop(PackageSpec(path=pwd())); Pkg.instantiate()'
+        run: julia --project=docs/ -e 'using Pkg; Pkg.develop(PackageSpec(path=pwd())); Pkg.instantiate()'
       - name: Build and deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # For authentication with GitHub Actions token
           DOCUMENTER_KEY: ${{ secrets.DOCUMENTER_KEY }} # For authentication with SSH deploy key
         run: julia --project=docs --color=yes docs/make.jl
-      - name: Clean up docs/Project.toml
-        run: git restore docs/Project.toml

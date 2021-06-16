@@ -1,38 +1,37 @@
 # HOHQMesh.jl
 
 This package is a thin Julia wrapper around the *High Order Hex-Quad Mesher*
-(a.k.a. **HOHQMesh**) created and developed by
+(a.k.a. [**HOHQMesh**](https://github.com/trixi-framework/HOHQMesh)) created and developed by
 [David A. Kopriva](https://www.math.fsu.edu/~kopriva/).
 HOHQMesh.jl is available on Linux, MacOS, and Windows.
 
-**Note: This package is currently _highly_ experimental!**
 
+## Installation
+If you have not yet installed Julia, please [follow the instructions for your
+operating system](https://julialang.org/downloads/platform/). HOHQMesh.jl works
+with Julia v1.6.
 
-## Getting started
-
-This package is still in proof-of-concept stage. Thus many things will not work
-as convenient as they do for properly registered packages.
-
-To install HOHQMesh.jl, you need to manually install it *and its dependency*
-[HOHQMesh_jll](https://github.com/trixi-framework/HOHQMESH_jll.jl)
-by executing the following lines in your Julia REPL:
+HOHQMesh.jl is a registered Julia package. Hence, you can install it by executing
+the following commands in the Julia REPL:
 ```julia
-julia> import Pkg
-
-julia> Pkg.add(url="https://github.com/trixi-framework/HOHQMESH_jll.jl")
-
-julia> Pkg.add(url="https://github.com/trixi-framework/HOHQMESH.jl")
+julia> import Pkg; Pkg.add("HOHQMesh")
 ```
+HOHQMesh.jl depends on the binary distribution of the
+[HOHQMesh](https://github.com/trixi-framework/HOHQMesh)
+mesh generator, which is available via the Julia package
+[HOHQMesh_jll.jl](https://github.com/JuliaBinaryWrappers/HOHQMesh_jll.jl)
+and which is automatically installed as a dependency.
 
-Afterwards, you can just load HOHQMesh with
+## Usage
+In the Julia REPL, you can load HOHQMesh with
 ```julia
 julia> using HOHQMesh
 ```
 and then happily generate away!
 
-Two 2D examples from HOHQMesh itself (`GingerbreadMan` or `NACA0012`) and a 3D
-example (`Snake`) come delivered with this package. You can generate a mesh for
-them by executing
+Two 2D examples `GingerbreadMan` and `NACA0012` and a 3D example `Snake` (all
+from HOHQMesh itself) come delivered with this package. You can generate a
+mesh for them by executing
 ```julia
 julia> control_file = joinpath(HOHQMesh.examples_dir(), "GingerbreadMan.control")
 
@@ -59,9 +58,10 @@ The *HOHQMesh* mesh generator itself is developed by
 
 ## License and contributing
 HOHQMesh.jl is licensed under the MIT license (see [License](@ref)).
-*HOHQMesh* itself is not available as open source.
+*HOHQMesh* itself is also available under the MIT license.
 
 
 ## Acknowledgements
 The authors would like to thank David A. Kopriva for making the sources of
-*HOHQMesh* available to them, and for assisting with making it work with Julia.
+*HOHQMesh* available as open source, and for assisting with making it work with
+Julia.

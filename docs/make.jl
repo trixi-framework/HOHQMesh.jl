@@ -18,7 +18,7 @@ makedocs(
         # Explicitly add favicon as asset
         # assets = ["assets/favicon.ico"],
         # Set canonical URL to GitHub pages URL
-        canonical = "https://trixi-framework.github.io/HOHQMesh.jl/dev"
+        canonical = "https://trixi-framework.github.io/HOHQMesh.jl/stable"
     ),
     # Explicitly specify documentation structure
     pages = [
