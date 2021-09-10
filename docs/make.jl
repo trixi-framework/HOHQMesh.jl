@@ -34,5 +34,5 @@ makedocs(
 deploydocs(
     repo = "github.com/trixi-framework/HOHQMesh.jl",
     devbranch = "main",
-    # push_preview = true
+    push_preview = true
 )
