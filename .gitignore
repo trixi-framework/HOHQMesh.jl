@@ -6,3 +6,5 @@ coverage/
 coverage_report/
 **/*.jl.*.cov
 .vscode/
+examples/*.tec
+examples/*.mesh

@@ -50,7 +50,7 @@ function runDemo()
     Reads in an existing control file, plots the boundary curves and generates
     a mesh.
 =#
-    p = openProject("AllFeatures.control", "Demo")
+    p = openProject("AllFeatures.control", joinpath(@__DIR__, "..", "examples"))
     plotProject!(p,MODEL+REFINEMENTS+GRID)
     println("Hit any key to continue and generate the mesh")
     readline()
