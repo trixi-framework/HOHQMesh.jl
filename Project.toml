@@ -5,6 +5,7 @@ version = "0.1.1-pre"
 
 [deps]
 HOHQMesh_jll = "1d5cbd98-5122-5a8a-bea1-c186d986ee7f"
+Printf = "de0858da-6303-5e67-8744-51eddeeeb8d7"
 
 [compat]
 HOHQMesh_jll = "1.0"
