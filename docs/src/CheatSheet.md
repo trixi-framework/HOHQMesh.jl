@@ -12,7 +12,7 @@ Workflow:
 
 		p = newProject(<projectName>,<folder>)
 
-## Plotting
+## [Plotting](@id cs-plotting)
 
 		plotProject!(p,options)
 		updatePlot!(p,options)
@@ -25,7 +25,7 @@ Workflow:
 		c = new(name, dataFile) 			                      *Spline*
 		c = new(name, nKnots, knotsMatrix)                        *also Spline*
 
-## Manual Refinement
+## [Manual Refinement](@id cs-manual-refinement)
 
 		r = newRefinementCenter(name, center, gridSize, radius )
 		r = newRefinementLine(name,type, startPoint, endPoint, gridSize, width )
