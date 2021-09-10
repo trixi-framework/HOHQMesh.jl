@@ -23,6 +23,8 @@ makedocs(
     # Explicitly specify documentation structure
     pages = [
         "Home" => "index.md",
+        "Interactive mesh generation" => "HQMTool.md",
+        "Cheat sheet" => "CheatSheet.md",
         "Reference" => "reference.md",
         "License" => "license.md"
     ],
