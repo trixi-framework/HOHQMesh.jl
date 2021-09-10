@@ -89,4 +89,7 @@ Return the path to the directory with some example mesh setups.
 examples_dir() = joinpath(pathof(HOHQMesh) |> dirname |> dirname, "examples")
 
 
+# FIXME: Include this in a proper way
+include("HQMTool.jl")
+
 end # module
