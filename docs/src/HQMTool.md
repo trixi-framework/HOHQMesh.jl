@@ -98,7 +98,9 @@ One run parameter that must be set manually is the background grid. Since there 
 The example sets the background mesh size to be 0.1 in the x and y directions. The z component is ignored.
 
 The script finishes by generating the quad mesh and plotting the results, as shown below
+```@raw html
 <img width="750" alt="iceCreamCone" src="https://user-images.githubusercontent.com/3637659/132798939-218a3379-7d50-4f3e-9bec-e75e6cd79031.png">
+```
 
 It also returns the project so that it can be edited further, if desired.
 
