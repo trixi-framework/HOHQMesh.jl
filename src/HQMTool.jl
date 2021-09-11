@@ -24,24 +24,22 @@
  --- End License
 =#
 
-using Base: CyclePadding, Int64, Float64, current_logger, parseint_preamble, String, Bool
 using Printf
-using HOHQMesh
 #=
     A program for reading, writing and plotting a model for HOHQMesh
 =#
-include("Source/Viz/VizMesh.jl")
-include("Source/Misc/NotificationCenter.jl")
-include("Source/Misc/DictionaryOperations.jl")
-include("Source/Curves/Spline.jl")
-include("Source/ControlFile/ControlFileOperations.jl")
-include("Source/Curves/CurveOperations.jl")
-include("Source/Project/Project.jl")
-include("Source/Project/CurvesAPI.jl")
-include("Source/Viz/VizProject.jl")
-include("Source/Project/Undo.jl")
-include("Source/Mesh/Meshing.jl")
-include("Source/Project/Generics.jl")
+include("Viz/VizMesh.jl")
+include("Misc/NotificationCenter.jl")
+include("Misc/DictionaryOperations.jl")
+include("Curves/Spline.jl")
+include("ControlFile/ControlFileOperations.jl")
+include("Curves/CurveOperations.jl")
+include("Project/Project.jl")
+include("Project/CurvesAPI.jl")
+include("Viz/VizProject.jl")
+include("Project/Undo.jl")
+include("Mesh/Meshing.jl")
+include("Project/Generics.jl")
 
 #
 #---------------- FOR TESTING PURPOSES --------------------------------------
@@ -52,7 +50,7 @@ function runDemo()
     Reads in an existing control file, plots the boundary curves and generates
     a mesh.
 =#
-    p = openProject("AllFeatures.control", "Demo")
+    p = openProject("AllFeatures.control", joinpath(@__DIR__, "..", "examples"))
     plotProject!(p,MODEL+REFINEMENTS+GRID)
     println("Hit any key to continue and generate the mesh")
     readline()

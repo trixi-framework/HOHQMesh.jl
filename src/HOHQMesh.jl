@@ -1,8 +1,20 @@
 module HOHQMesh
 
-import HOHQMesh_jll
+# Include other packages that are used in HOHQMesh
+# (standard library packages first, other packages next, all of them sorted alphabetically)
+
+using HOHQMesh_jll: HOHQMesh_jll
+using Requires: @require
 
 export generate_mesh
+
+
+function __init__()
+  # Enable features that depend on the availability of the Makie package
+  @require Makie="ee78f7c6-11fb-53f2-987a-cfe4a2b5a57a" begin
+    using .Makie
+  end
+end
 
 
 """
@@ -88,5 +100,8 @@ Return the path to the directory with some example mesh setups.
 """
 examples_dir() = joinpath(pathof(HOHQMesh) |> dirname |> dirname, "examples")
 
+
+# FIXME: Include this in a proper way
+include("HQMTool.jl")
 
 end # module
