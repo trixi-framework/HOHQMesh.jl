@@ -5,10 +5,14 @@ import HOHQMesh_jll
 export generate_mesh
 
 
+#TODO: add mesh_file_format parsed directly from the control file and set the
+#      appropriate mesh file name extension. Maybe also print a statement saying
+#      which type of mesh you just created
 """
     generate_mesh(control_file;
                   output_directory="out",
-                  mesh_filename=nothing, plot_filename=nothing, stats_filename=nothing)
+                  mesh_filename=nothing, plot_filename=nothing, stats_filename=nothing,
+                  verbose=false)
 
 Generate a mesh based on the `control_file` with the HOHQMesh mesh generator and store resulting
 files in `output_directory`.
@@ -32,8 +36,24 @@ function generate_mesh(control_file;
 
   # Determine output filenames
   filebase = splitext(basename(control_file))[1]
-  if isnothing(mesh_filename)
-    mesh_filename = filebase * ".mesh"
+
+  # Find the file line that gives the mesh file format
+  file_lines = readlines(open(control_file))
+  file_idx = findfirst(occursin.("mesh file format", file_lines))
+
+  # Extract the mesh file format keyword
+  mesh_file_format = split(file_lines[file_idx])[5]
+
+  if mesh_file_format == "ISM" || mesh_file_format == "ISM-V2" || mesh_file_format == "ISM-v2"
+    if isnothing(mesh_filename)
+      mesh_filename = filebase * ".mesh"
+    end
+  elseif mesh_file_format == "ABAQUS"
+    if isnothing(mesh_filename)
+      mesh_filename = filebase * ".inp"
+    end
+  else
+    error("Unknown mesh file format")
   end
   if isnothing(plot_filename)
     plot_filename = filebase * ".tec"
@@ -76,6 +96,9 @@ function generate_mesh(control_file;
       readchomp(`$(HOHQMesh_jll.HOHQMesh()) -f $tmppath`)
     end
   end
+
+  # Append a statement to indicate to the user which mesh file format was used
+  output = string(output, "\n", " Mesh file written in ", mesh_file_format, " format.")
 
   String(output)
 end
