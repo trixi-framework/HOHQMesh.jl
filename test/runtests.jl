@@ -33,5 +33,5 @@ isdir(outdir) && rm(outdir, recursive=true)
 
 end # testset "HOHQMesh.jl"
 
-# Clean up afterwards: delete Trixi output directory
+# Clean up afterwards: delete HOHQMesh output directory
 @test_nowarn rm(outdir, recursive=true)
