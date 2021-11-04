@@ -5,9 +5,6 @@ import HOHQMesh_jll
 export generate_mesh
 
 
-#TODO: add mesh_file_format parsed directly from the control file and set the
-#      appropriate mesh file name extension. Maybe also print a statement saying
-#      which type of mesh you just created
 """
     generate_mesh(control_file;
                   output_directory="out",
@@ -36,21 +33,14 @@ function generate_mesh(control_file;
 
   # Determine output filenames
   filebase = splitext(basename(control_file))[1]
-
-  # Find the file line that gives the mesh file format
-  file_lines = readlines(open(control_file))
-  file_idx = findfirst(contains("mesh file format"), file_lines)
-
-  # Extract the mesh file format keyword
-  mesh_file_format = split(file_lines[file_idx])[5]
-
-  if mesh_file_format == "ISM" || mesh_file_format == "ISM-V2" || mesh_file_format == "ISM-v2"
-    if isnothing(mesh_filename)
+  if isnothing(mesh_filename)
+    mesh_file_format = extract_mesh_file_format(control_file)
+    if mesh_file_format == "ISM" || mesh_file_format == "ISM-V2" || mesh_file_format == "ISM-v2"
       mesh_filename = filebase * ".mesh"
-    end
-  elseif mesh_file_format == "ABAQUS"
-    if isnothing(mesh_filename)
+    elseif mesh_file_format == "ABAQUS"
       mesh_filename = filebase * ".inp"
+    else
+      error("Unknown mesh file format: ", mesh_file_format, " (must be one of ISM, ISM-V2, or ABAQUS)")
     end
   end
   if isnothing(plot_filename)
@@ -95,12 +85,27 @@ function generate_mesh(control_file;
     end
   end
 
-  # Append a statement to indicate to the user which mesh file format was used
-  output = string(output, "\n", " Mesh file written in ", mesh_file_format, " format.")
-
   String(output)
 end
 
+
+"""
+    extract_mesh_file_format(control_file)
+
+Return a string with the desired output format of the HOHQMesh generated mesh file.
+This information is given within the `RUN_PARAMETERS` of the `CONTROL_INPUT` block
+of the control file.
+See the [`HOHQMesh` documentation](https://trixi-framework.github.io/HOHQMesh/) for details.
+"""
+function extract_mesh_file_format(control_file)
+  # Find the file line that gives the mesh file format
+  file_lines = readlines(open(control_file))
+  line_index = findfirst(contains("mesh file format"), file_lines)
+  # Extract the mesh file format keyword
+  file_format = split(file_lines[line_index])[5]
+
+  return file_format
+end
 
 """
     examples_dir()

@@ -23,12 +23,12 @@ isdir(outdir) && rm(outdir, recursive=true)
   end
 
   @testset "generate_mesh() with ABAQUS output" begin
-    control_file = joinpath(HOHQMesh.examples_dir(), "ABAQUS_IceCreamCone.control")
+    control_file = joinpath(HOHQMesh.examples_dir(), "IceCreamCone_Abaqus.control")
     generate_mesh(control_file)
-    parse_mesh = abaqus_read_mesh(joinpath(outdir, "ABAQUS_IceCreamCone.inp"))
+    parse_mesh = abaqus_read_mesh(joinpath(outdir, "IceCreamCone_Abaqus.inp"))
     # set some reference values for comparison. These are the corner IDs for element 114
-    ref_IDs = [140, 141, 154, 153]
-    @test sum(parse_mesh["elements"][114] - ref_IDs) == 0
+    reference_ids = [140, 141, 154, 153]
+    @test parse_mesh["elements"][114] == reference_ids
   end
 
 end # testset "HOHQMesh.jl"
