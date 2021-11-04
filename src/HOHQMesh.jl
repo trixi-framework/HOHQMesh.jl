@@ -52,8 +52,6 @@ function generate_mesh(control_file;
     if isnothing(mesh_filename)
       mesh_filename = filebase * ".inp"
     end
-  else
-    error("Unknown mesh file format")
   end
   if isnothing(plot_filename)
     plot_filename = filebase * ".tec"
