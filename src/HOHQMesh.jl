@@ -39,7 +39,7 @@ function generate_mesh(control_file;
 
   # Find the file line that gives the mesh file format
   file_lines = readlines(open(control_file))
-  file_idx = findfirst(occursin.("mesh file format", file_lines))
+  file_idx = findfirst(contains("mesh file format"), file_lines)
 
   # Extract the mesh file format keyword
   mesh_file_format = split(file_lines[file_idx])[5]
