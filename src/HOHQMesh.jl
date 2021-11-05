@@ -8,7 +8,8 @@ export generate_mesh
 """
     generate_mesh(control_file;
                   output_directory="out",
-                  mesh_filename=nothing, plot_filename=nothing, stats_filename=nothing)
+                  mesh_filename=nothing, plot_filename=nothing, stats_filename=nothing,
+                  verbose=false)
 
 Generate a mesh based on the `control_file` with the HOHQMesh mesh generator and store resulting
 files in `output_directory`.
@@ -33,7 +34,14 @@ function generate_mesh(control_file;
   # Determine output filenames
   filebase = splitext(basename(control_file))[1]
   if isnothing(mesh_filename)
-    mesh_filename = filebase * ".mesh"
+    mesh_file_format = extract_mesh_file_format(control_file)
+    if mesh_file_format == "ISM" || mesh_file_format == "ISM-V2" || mesh_file_format == "ISM-v2"
+      mesh_filename = filebase * ".mesh"
+    elseif mesh_file_format == "ABAQUS"
+      mesh_filename = filebase * ".inp"
+    else
+      error("Unknown mesh file format: ", mesh_file_format, " (must be one of ISM, ISM-V2, or ABAQUS)")
+    end
   end
   if isnothing(plot_filename)
     plot_filename = filebase * ".tec"
@@ -78,6 +86,25 @@ function generate_mesh(control_file;
   end
 
   String(output)
+end
+
+
+"""
+    extract_mesh_file_format(control_file)
+
+Return a string with the desired output format of the HOHQMesh generated mesh file.
+This information is given within the `RUN_PARAMETERS` of the `CONTROL_INPUT` block
+of the control file.
+See the [`HOHQMesh` documentation](https://trixi-framework.github.io/HOHQMesh/) for details.
+"""
+function extract_mesh_file_format(control_file)
+  # Find the file line that gives the mesh file format
+  file_lines = readlines(open(control_file))
+  line_index = findfirst(contains("mesh file format"), file_lines)
+  # Extract the mesh file format keyword
+  file_format = split(file_lines[line_index])[5]
+
+  return file_format
 end
 
 

@@ -1,2 +1,3 @@
 [deps]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+AbaqusReader = "bc6b9049-e460-56d6-94b4-a597b2c0390d"
