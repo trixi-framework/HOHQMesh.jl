@@ -35,14 +35,8 @@ isdir(outdir) && rm(outdir, recursive=true)
     control_file = joinpath(HOHQMesh.examples_dir(), "IceCreamCone_Abaqus.control")
     # Create temporary control file option that is invalid
     mktemp() do path, io
-      # Update mesh file format to be invalid
-      lines = readlines(control_file, keep=true)
-      for line in lines
-        if occursin("mesh file format", line)
-          write(io, "      mesh file format = ABBAKISS\n")
-         end
-         flush(io)
-      end
+      write(io, "mesh file format = ABBAKISS")
+      flush(io)
       @test_throws ErrorException generate_mesh(path)
     end
   end
