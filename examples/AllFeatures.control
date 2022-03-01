@@ -101,9 +101,9 @@
       background grid size = [3.0,3.0,0.0]
    \end{BACKGROUND_GRID}
    \begin{RUN_PARAMETERS}
-      mesh file name = Demo/AllFeatures.mesh
+      mesh file name = examples/AllFeatures.mesh
       plot file format = skeleton
-      plot file name = Demo/AllFeatures.tec
+      plot file name = examples/AllFeatures.tec
       stats file name = none
       mesh file format = ISM-V2
       polynomial order = 4
