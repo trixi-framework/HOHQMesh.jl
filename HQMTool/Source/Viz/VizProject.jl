@@ -3,24 +3,24 @@
 
  Copyright (c) 2010-present David A. Kopriva and other contributors: AUTHORS.md
 
- Permission is hereby granted, free of charge, to any person obtaining a copy  
- of this software and associated documentation files (the "Software"), to deal  
- in the Software without restriction, including without limitation the rights  
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell  
- copies of the Software, and to permit persons to whom the Software is  
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
 
- The above copyright notice and this permission notice shall be included in all  
+ The above copyright notice and this permission notice shall be included in all
  copies or substantial portions of the Software.
 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR  
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,  
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE  
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER  
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,  
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
- 
+
  --- End License
 =#
 
@@ -32,10 +32,10 @@ const REFINEMENTS = 8; const ALL = 15
     plotProject!(proj::Project, plotOptions::Int = 0)
 
 Plot objects specified by the `plotOptions`. Construct the `plotOptions` by the sum
-of what is to be drawn from the choices `MODEL`, `GRID`, `MESH`, `REFINEMENTS`. 
+of what is to be drawn from the choices `MODEL`, `GRID`, `MESH`, `REFINEMENTS`.
 
 Example: To plot the model and the grid, `plotOptions = MODEL + GRID`. To plot
-just the mesh, `plotOptions = MESH`. 
+just the mesh, `plotOptions = MESH`.
 
 To plot everything, `plotOptions = MODEL + GRID + MESH + REFINEMENTS`
 
@@ -76,7 +76,8 @@ function plotProject!(proj::Project, plotOptions::Int = 0)
         if proj.meshShouldUpdate || (isempty(proj.xMesh) && isempty(proj.yMesh))
             meshFileName = getMeshFileName(proj)
             if isfile(meshFileName)
-                proj.xMesh, proj.yMesh = getMeshFromMeshFile(meshFileName)
+                fileFormat = getMeshFileFormat(proj)
+                proj.xMesh, proj.yMesh = getMeshFromMeshFile(meshFileName, fileFormat)
                 plotMesh(plt, proj.xMesh, proj.yMesh)
             end
             proj.meshShouldUpdate = false
@@ -116,10 +117,10 @@ function plotProject!(proj::Project, plotOptions::Int = 0)
     if plotTheRefinements
         if !isempty(proj.refinementRegionNames)
             plotRefinement(plt,proj.refinementRegionPoints,
-                           proj.refinementRegionNames, 
+                           proj.refinementRegionNames,
                            proj.refinementRegionLoc)
         end
-    end 
+    end
 #
 #   Display the plot
 #
@@ -141,7 +142,7 @@ end
 """
 updatePlot!(proj::Project, plotOptions::Int)
 
-Replot with the new plotOptions = combinations (sums) of 
+Replot with the new plotOptions = combinations (sums) of
 
     GRID, MESH, MODEL, REFINEMENTS
 
@@ -163,7 +164,7 @@ function plotChain!(plt, chainPoints::Array{Any}, labels::Array{String})
     for i = 2:s
         x = chainPoints[i]
         plotCurve(plt,x,labels[i])
-    end 
+    end
 end
 
 function plotCurve(plt, points::Matrix{Float64}, label::String)
@@ -171,7 +172,7 @@ function plotCurve(plt, points::Matrix{Float64}, label::String)
     s = size(points)
     np = div(s[1], 2, RoundNearest)
     if s[1] == 3
-        np = 2 
+        np = 2
     end
     dx = points[np+1,1] - points[np-1,1]
     dy = points[np+1,2] - points[np-1,2]
@@ -190,5 +191,5 @@ function plotRefinement(plt, points::Array{Matrix{Float64}}, label::Array{String
         p = loc[i]
         pp = (p[1],p[2])
         text!(plt[1,1],label[i],position = pp, align = (:center,:center))
-    end 
+    end
 end
