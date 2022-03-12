@@ -55,11 +55,12 @@ while the 3D file `Snake.control` produces this mesh:
 
 
 ## Authors
-HOHQMesh.jl was initiated by
-[Michael Schlottke-Lakemper](https://www.mi.uni-koeln.de/NumSim/schlottke-lakemper)
-(University of Cologne, Germany), who is also the principal developer of HOHQMesh.jl.
-The *HOHQMesh* mesh generator itself is developed by
+HOHQMesh.jl is maintained by the
+[Trixi authors](https://github.com/trixi-framework/Trixi.jl/blob/main/AUTHORS.md).
+Its principal developers are [Andrew Winters](https://liu.se/en/employee/andwi94)
+(Linköping University, Sweden) and
 [David A. Kopriva](https://www.math.fsu.edu/~kopriva/).
+The *HOHQMesh* mesh generator itself is developed by David A. Kopriva.
 
 
 ## License and contributing
