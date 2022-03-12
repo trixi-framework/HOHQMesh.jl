@@ -92,16 +92,15 @@ function iceCreamConeVerbose(folder::String)
 #
 #   Show the model and grid
 #
-        plotProject!(p, MODEL+GRID)
+    plotProject!(p, MODEL+GRID)
 #
 #   Generate the mesh and plot
 #
-        println("Press any key to continue and generate the mesh")
-        readline()
-        generateMesh(p)
+    println("Press any key to continue and generate the mesh")
+    readline()
+    generateMesh(p)
 
-
-return p
+    return p
 end
 
 function iceCreamCone(folder::String)
@@ -128,7 +127,9 @@ function iceCreamCone(folder::String)
     #   To mesh, a background grid is needed
     #
         addBackgroundGrid!(p, [0.5,0.5,0.0])
-        setMeshFileFormat!(p,"ISM")
+        setMeshFileFormat!(p, "ABAQUS")
+        meshFileFormat = getMeshFileFormat(p)
+        setFileNames!(p, meshFileFormat)
     #
     #   Show the model and grid
     #
