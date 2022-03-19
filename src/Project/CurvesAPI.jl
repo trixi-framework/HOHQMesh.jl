@@ -140,17 +140,17 @@ end
 
 Duplicate the given curve giving it the new name.
 """
-function duplicateCurve(crv::Dict{String,Any}, newName::String)
-    disableNotifications()
-    disableUndo()
+# function duplicateCurve(crv::Dict{String,Any}, newName::String)
+#     disableNotifications()
+#     disableUndo()
 
-    duplicate = deepcopy(crv)
-    setCurveName!(duplicate,newName)
+#     duplicate = deepcopy(crv)
+#     setCurveName!(duplicate,newName)
 
-    enableNotifications()
-    enableUndo()
-    return duplicate
-end
+#     enableNotifications()
+#     enableUndo()
+#     return duplicate
+# end
 """
     setCurveName!(curveDict, name)
 
@@ -322,7 +322,7 @@ end
 
 Get the units for the start and end angles of a circular arc curve.
 """
-function getArcUnits!(arc::Dict{String,Any})
+function getArcUnits(arc::Dict{String,Any})
     return arc["units"]
 end
 """

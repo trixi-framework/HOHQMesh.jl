@@ -23,6 +23,7 @@
  
  --- End License
 =#
+using GLMakie
 
 const MODEL = 1; const GRID = 2; const MESH = 4; const EMPTY = 0
 const REFINEMENTS = 8; const ALL = 15

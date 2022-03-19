@@ -93,8 +93,8 @@ function  peEquationCurvePoint(xEqn, yEqn, t::Float64, point::Array{Float64})
     yArg  = Symbol(yArgM.match)
     ey    = Meta.parse(eqString)
     
-    point[1] = evalWithDict(ex,Dict(xArg=> t[i]))
-    point[2] = evalWithDict(ey,Dict(yArg=> t[i]))
+    point[1] = evalWithDict(ex,Dict(xArg=> t))
+    point[2] = evalWithDict(ey,Dict(yArg=> t))
   
 end
 
@@ -134,7 +134,7 @@ function evalWithDict(ex::Expr, locals::Dict{Symbol})
 end
 
 function curvePoints(crvDict::Dict{String,Any}, N::Int)
-
+# N = Number of intervals
     curveType::String = crvDict["TYPE"]
 
     if curveType == "PARAMETRIC_EQUATION_CURVE"
