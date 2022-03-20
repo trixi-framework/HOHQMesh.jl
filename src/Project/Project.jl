@@ -56,7 +56,7 @@ mutable struct Project
 end
 
 defaultPlotPts  = 50
-meshFileFormats = Set(["ISM", "ISM-V2"])
+meshFileFormats = Set(["ISM", "ISM-V2", "ABAQUS"])
 plotFileFormats = Set(["sem", "skeleton"])
 smootherTypes   = Set(["LinearSpring", "LinearAndCrossbarSpring"])
 statusValues    = Set(["ON", "OFF"])

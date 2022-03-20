@@ -82,25 +82,6 @@ function getName(proj::Project)
     return proj.name
 end 
 """
-setFolder(proj::Project,folder::String)
-
-Set the path to the directory where the mesh, plot, control, and stats files
-will be written 
-"""
-function setFolder(proj::Project,folder::String)
-    oldPath = proj.path
-    registerWithUndoManager(proj,setFolder,(oldPath,),"Set Project Folder")
-    proj.path = folder
-end
-"""
-    path(proj::Project)
-
-Returns the directory where the project files will be written
-"""
-function getfolder(proj::Project)
-    return proj.path
-end 
-"""
     setPolynomialOrder(proj::Project, p::Int)
 
 Set the polynomial order for boundary curves in the mesh file to `p`.
@@ -121,17 +102,17 @@ Returns the polynomial order for boundary curves in the mesh file.
 """
 function getPolynomialOrder(proj::Project)
     rpDict = getDictInControlDictNamed(proj,"RUN_PARAMETERS")
-    return rpDict["polynomial order"]
+    return parse(Int,rpDict["polynomial order"]) 
 end
 """
     setMeshFileFormat(proj::Project, meshFileFormat::String)
 
 Set the file format for the mesh file. Acceptable choices
-are "ISM" and "ISM-V2".
+are "ISM", "ISM-V2", or "ABAQUS".
 """
 function setMeshFileFormat!(proj::Project, meshFileFormat::String)
     if !in(meshFileFormat,meshFileFormats)
-        println("Acceptable file formats are ISM and ISM-V2. Try again.")
+        println("Acceptable file formats are: ", meshFileFormats,". Try again.") #TODO Format this nicely
         return
     end
     key = "mesh file format"
@@ -159,6 +140,10 @@ are "sem", which includes interior nodes and boundary nodes and "skeleton", whic
 only the corner nodes.
 """
 function setPlotFileFormat!(proj::Project, plotFileFormat::String)
+    if !in(plotFileFormat,plotFileFormats)
+        println("Acceptable plot formats are: ", plotFileFormats,". Try again.") #TODO Format this nicely
+        return
+    end
     rpDict = getDictInControlDictNamed(proj,"RUN_PARAMETERS")
     key = "plot file format"
     if haskey(rpDict,key)
@@ -187,4 +172,14 @@ function setFileNames!(proj::Project)
  function getMeshFileName(proj::Project)
     rpDict = getDictInControlDictNamed(proj,"RUN_PARAMETERS")
     return rpDict["mesh file name"]
+ end
+
+ function getPlotFileName(proj::Project)
+    rpDict = getDictInControlDictNamed(proj,"RUN_PARAMETERS")
+    return rpDict["plot file name"]
+ end
+ 
+ function getStatsFileName(proj::Project)
+    rpDict = getDictInControlDictNamed(proj,"RUN_PARAMETERS")
+    return rpDict["stats file name"]
  end

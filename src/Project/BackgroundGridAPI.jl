@@ -33,7 +33,6 @@ is an outer boundary defined in the model.
 function addBackgroundGrid!(proj::Project, bgSize::Array{Float64})
     disableUndo()
     disableNotifications()
-    bgDict = getDictInControlDictNamed(proj,"BACKGROUND_GRID")
     setBackgroundGridSize!(proj, bgSize, "background grid size")
     enableUndo()
     registerWithUndoManager(proj,removeBackgroundGrid!,(nothing,),"Add Background Grid")
@@ -48,7 +47,6 @@ and the number of intervals in each diredction. Use this when there
 is _no_ outer boundary defined in the model.
 """
 function addBackgroundGrid!(proj::Project, box::Array{Float64}, N::Array{Int})
-    bgDict = getDictInControlDictNamed(proj,"BACKGROUND_GRID")
     disableUndo()
     disableNotifications()
     proj.bounds     = box
@@ -90,10 +88,10 @@ function addBackgroundGrid!(proj::Project, x0::Array{Float64}, dx::Array{Float64
     setBackgroundGridSize!(proj, dx, "dx")
     setBackgroundGridLowerLeft!(proj,x0)
     setBackgroundGridSteps!(proj,N)
-    proj.userBounds[TOP]    = x0[2] + N*dx[2]
+    proj.userBounds[TOP]    = x0[2] + N[2]*dx[2]
     proj.userBounds[LEFT]   = x0[1]
     proj.userBounds[BOTTOM] = x0[2]
-    proj.userBounds[RIGHT]  = x0[1] + N*dx[1]
+    proj.userBounds[RIGHT]  = x0[1] + N[1]*dx[1]
     enableUndo()
     enableNotifications()
     registerWithUndoManager(proj,removeBackgroundGrid!,(nothing,),"Add Background Grid")
@@ -109,7 +107,7 @@ Remove the background grid block from the project.
 function removeBackgroundGrid!(proj::Project)
     cDict = getControlDict(proj)
     registerWithUndoManager(proj,addBackgroundGrid!,(cDict,),"Delete Background Grid")
-    delete!(cDict,"RUN_PARAMETERS")
+    delete!(cDict,"BACKGROUND_GRID")
     postNotificationWithName(proj,"BGRID_DID_CHANGE_NOTIFICATION",(nothing,))
     return nothing
 end
@@ -162,7 +160,7 @@ end
 """
     function getBackgroundGridLowerLeft(proj::Project)
 
-Returns the [x,y] of the lower left point of thebackground grid.
+Returns the [x,y] of the lower left point of the background grid.
 """
 function getBackgroundGridLowerLeft(proj::Project)
     bgDict = getDictInControlDictNamed(proj,"BACKGROUND_GRID")
@@ -173,14 +171,14 @@ function getBackgroundGridLowerLeft(proj::Project)
     end
 end
 """
-    function getBackgroundGridLowerLeft(proj::Project)
+    function getBackgroundGridSteps(proj::Project)
         
-Returns the [x,y,z] of the lower left point of thebackground grid.
+Returns the [Nx,Ny,Nz] for the background grid.
 """
 function getBackgroundGridSteps(proj::Project)
     bgDict = getDictInControlDictNamed(proj,"BACKGROUND_GRID")
     if haskey(bgDict,"N")
-        return realIntForKeyFromDictionary("N",bgDict)
+        return intArrayForKeyFromDictionary("N",bgDict)
     else
         return nothing
     end

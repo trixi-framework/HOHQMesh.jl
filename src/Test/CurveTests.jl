@@ -1,5 +1,8 @@
 using Test
 include("../HQMTool.jl")
+#
+# Curve Tests tests the "CurvesAPI.jl" functions
+#
 
 @testset "Curve Tests" begin
     @testset "ParametricCurve Tests" begin
@@ -92,6 +95,7 @@ include("../HQMTool.jl")
         @test typeof(crv)           == Dict{String,Any}
         @test getCurveType(crv)     == "SPLINE_CURVE"
         @test getCurveName(crv)     == name
+        @test getSplineNKnots(crv)  == nKnots
         
         pt = curvePoint(crv, 0.5)
         @test isapprox(pt,[0.5^3,0.5^3 + 0.5^2,0.0])
@@ -107,7 +111,9 @@ include("../HQMTool.jl")
             tj = (j-1)*d
             @test isapprox(pts[j,:],[tj^3,tj^3 + tj^2])
         end 
-      
+
+        gPts = getSplinePoints(crv)
+        @test isapprox(data,gPts)
     end
 
 end

@@ -29,3 +29,6 @@ Set up the test cases for HQMTool
 =#
 using Test
 include("../HQMTool.jl")
+include("CurveTests.jl")
+include("BackgroundGridTests.jl")
+include("ProjectTests.jl")

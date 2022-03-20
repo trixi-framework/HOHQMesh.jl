@@ -35,11 +35,11 @@ function addSpringSmoother!(proj::Project,status::String = "ON",
                             type::String = "LinearAndCrossbarSpring", 
                             nIterations::Int = 25)
     if !in(status,statusValues)
-        println("Acceptable smoother status are `ON` and `OFF`. Try again.")
+        println("Acceptable smoother status are: ", statusValues,". Try again.")
         return
     end
     if !in(type,smootherTypes)
-        println("Acceptable smoothers are `LinearSpring` and `LinearAndCrossbarSpring`. Try again.")
+        println("Acceptable smoothers are:", smootherTypes, ". Try again.")
         return
     end
     setSmoothingStatus!(proj,status)
@@ -53,7 +53,7 @@ status is either "ON" or "OFF"
 """
 function setSmoothingStatus!(proj::Project, status::String)
     if !in(status,statusValues)
-        println("Acceptable smoother status are `ON` and `OFF`. Try again.")
+        println("Acceptable smoother status is one of: ", statusValues,". Try again.")
         return
     end
     smDict = getDictInControlDictNamed(proj,"SPRING_SMOOTHER")
@@ -75,7 +75,7 @@ type is either `LinearSpring` or `LinearAndCrossbarSpring`
 """
 function setSmoothingType!(proj::Project, type::String)
     if !in(type,smootherTypes)
-        println("Acceptable smoothers are `LinearSpring` and `LinearAndCrossbarSpring`. Try again.")
+        println("Acceptable smoothers are:", smootherTypes, ". Try again.")
         return
     end
     smDict = getDictInControlDictNamed(proj,"SPRING_SMOOTHER")
