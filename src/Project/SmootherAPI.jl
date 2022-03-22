@@ -82,7 +82,7 @@ function setSmoothingType!(proj::Project, type::String)
     smDict["smoothing type"] = type
 end
 """
-    smoothingType(proj::Project)
+    getSmoothingType(proj::Project)
 
 Returns either "LinearSpring" or "LinearAndCrossbarSpring"
 """
@@ -91,7 +91,7 @@ function getSmoothingType(proj::Project)
     return smDict["smoothing type"]
 end
 """
-    setSmoothingIterations!((proj::Project, iterations::Int)
+    setSmoothingIterations!(proj::Project, iterations::Int)
 
 Set the number of iterations to smooth the mesh.
 """
@@ -100,12 +100,13 @@ function setSmoothingIterations!(proj::Project, iterations::Int)
     smDict["number of iterations"] = iterations
 end
 """
+    getSmoothingIterations(proj::Project)
 
+Get the number of iterations to smooth the mesh.
 """
 function getSmoothingIterations(proj::Project)
     smDict = getDictInControlDictNamed(proj,"SPRING_SMOOTHER")
     return smDict["number of iterations"]
-
 end
 """
     removeSpringSmoother!(proj::Project)

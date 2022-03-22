@@ -1,8 +1,18 @@
 using Test
 include("../HQMTool.jl")
-#
-# Smoother Tests tests the "SmootherAPI.jl" functions
-#
+#=
+    Smoother Tests tests the "SmootherAPI.jl" functions
+
+Functions: @ = tested
+    @   addSpringSmoother!(status::String, type::String, nIterations::Int)
+    @   setSmoothingStatus!(proj::Project, status::String)
+    @   getSmoothingStatus(proj::Project)
+    @   setSmoothingType!(proj::Project, type::String)
+    @   getSmoothingType(proj::Project)
+    @   setSmoothingIterations!(proj::Project, iterations::Int)
+    @   getSmoothingIterations(proj::Project)
+    @   removeSpringSmoother!(proj::Project)
+=#
 @testset "Smoother Tests" begin
 #
 #   Create, save, and read
