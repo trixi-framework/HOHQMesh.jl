@@ -50,7 +50,7 @@ end
 """
     removeRunParameters!(proj::Project)
 
-Remove the run parameters block from the project.
+Remove the run parameters block from the project. This is not undo-able.
 """
 function removeRunParameters!(proj::Project)
     cDict = getControlDict(proj)
