@@ -127,8 +127,8 @@ function setBackgroundGridSize!(proj::Project, dx::Float64, dy::Float64, dz::Flo
         # With the "corner+intervals" setting of the outer boundary deprecated, keep
         # the original bounds fixed.
         x0 = realArrayForKeyFromDictionary("x0",bgDict)
-        Nx = round(Int,(proj.userBounds[RIGHT] - proj.userBounds[LEFT])  /dx[1])
-        Ny = round(Int,(proj.userBounds[TOP]   - proj.userBounds[BOTTOM])/dx[2])
+        Nx = round(Int,(proj.userBounds[RIGHT] - proj.userBounds[LEFT])  /dx)
+        Ny = round(Int,(proj.userBounds[TOP]   - proj.userBounds[BOTTOM])/dy)
         N  = [Nx,Ny,0]
         disableNotifications()
         setBackgroundGridSteps!(proj,N)
