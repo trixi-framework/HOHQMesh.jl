@@ -8,12 +8,12 @@ Functions: @ = tested
     addRefinementRegionPoints!
     refinementRegionPoints
     @   getRefinementRegionCenter
-    removeRefinementRegion!
-    insertRefinementRegion!
+    @   removeRefinementRegion!
+    @   insertRefinementRegion!
     @   newRefinementLine
-    getRefinementRegion (1)
-    getAllRefinementRegions
-    getRefinementRegion (2)
+    @   getRefinementRegion (1)
+    @   getAllRefinementRegions
+    @   getRefinementRegion (2)
     @   setRefinementType!
     @   getRefinementType
     @   setRefinementName!
@@ -134,6 +134,28 @@ Functions: @ = tested
 #
 #   Project functions
 #
+    lst = getAllRefinementRegions(p)
+    @test length(lst) == 2
 
+    (i,r) = getRefinementRegion(p,"Line1")
+    @test i == 2
+    @test getRefinementName(r) == "Line1"
 
+    s = getRefinementRegion(p,1)
+    @test getRefinementName(s) == "Center1"
+
+    c2 = newRefinementCenter("middle","smooth",[2.0,3.0,4.0],0.6,3.0)
+    insertRefinementRegion!(p,c2,2)
+    lst = getAllRefinementRegions(p)
+    @test length(lst) == 3
+
+    removeRefinementRegion!(p,"middle")
+    lst = getAllRefinementRegions(p)
+    @test length(lst) == 2
+    names = ["Center1", "Line1"]
+
+    for (i,d) in enumerate(lst)
+        @test getRefinementName(d) == names[i]
+    end 
+   
 end
