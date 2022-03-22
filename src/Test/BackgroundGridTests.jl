@@ -1,8 +1,22 @@
 using Test
 include("../HQMTool.jl")
-#
-# Background Grid Tests tests the "BackgroundGrid.jl" functions
-#
+#=
+    Background Grid Tests tests the "BackgroundGrid.jl" functions
+
+Functions: @ = tested
+    @   addBackgroundGrid!(proj::Project, bgSize::Array{Float64})
+    @   addBackgroundGrid!(proj::Project, box::Array{Float64}, N::Array{Int})
+    @   addBackgroundGrid!(proj::Project, x0::Array{Float64}, dx::Array{Float64}, N::Array{Int})
+    @   removeBackgroundGrid!(proj::Project)
+    setBackgroundGridSize!(proj::Project, dx::Float64, dy::Float64, dz::Float64 = 0.0)
+    @   getBackgroundGridSize(proj::Project)
+    @   getBackgroundGridLowerLeft(proj::Project)
+    @   getBackgroundGridSteps(proj::Project)
+    setBackgroundGridLowerLeft!(proj::Project, x0::Array{Float64})
+    setBackgroundGridSteps!(proj::Project, N::Array{Int})
+    setBackgroundGridSize!(proj::Project, dx::Array{Float64}, key::String)
+    addBackgroundGrid!(proj::Project, dict::Dict{String,Any})
+=#
 @testset "Background Grid Tests" begin
 
     projectName = "TestProject"

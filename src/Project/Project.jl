@@ -373,7 +373,7 @@ function refinementDidChange(proj::Project, sender::Dict{String,Any})
         x    = refinementRegionPoints(sender)
         proj.refinementRegionPoints[indx] = x
         proj.refinementRegionNames[indx] = sender["name"]
-        center = refinementRegionCenter(sender)
+        center = getRefinementRegionCenter(sender)
         proj.refinementRegionLoc[indx] = center
     
         if !isnothing(proj.plt)

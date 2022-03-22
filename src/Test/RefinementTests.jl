@@ -1,23 +1,55 @@
 using Test
 include("../HQMTool.jl")
-#
-# Project Tests tests the "Project.jl" functions
-#
+#=
+    Project Tests tests the "Project.jl" functions
+Functions: @ = tested
+    @   newRefinementCenter
+    @   addRefinementRegion!
+    addRefinementRegionPoints!
+    refinementRegionPoints
+    @   getRefinementRegionCenter
+    removeRefinementRegion!
+    insertRefinementRegion!
+    @   newRefinementLine
+    getRefinementRegion (1)
+    getAllRefinementRegions
+    getRefinementRegion (2)
+    @   setRefinementType!
+    @   getRefinementType
+    @   setRefinementName!
+    @   getRefinementName
+    @   setRefinementLocation!
+    @   getRefinementLocation
+    @   setRefinementGridSize!
+    @   getRefinementGridSize
+    @   setRefinementWidth!
+    @   getRefinementWidth
+    @   setRefinementStart!
+    @   getRefinementStart
+    @   setRefinementEnd!
+    @   getRefinementEnd
+=#
 @testset "Project Tests" begin
 
     projectName = "TestProject"
     projectPath = "./Test/TestData"
 
     p = newProject(projectName, projectPath)
-    disableNotifications()
-
+#
+#   Creating and changing refinement regions...
+#
     x0 = [1.0,2.0,0.0]
     h  = 0.25
     w  = 0.5
-
+#
+# ...Center
+#
     cent1 = newRefinementCenter("Center1","smooth",x0,h,w)
-    disableNotifications()
-
+    addRefinementRegion!(p,cent1)
+    @test length(p.refinementRegionNames) == 1
+#
+#   Refinement type
+#
     @test getRefinementType(cent1)     == "smooth"
     setRefinementType!(cent1,"sharp")
     @test getRefinementType(cent1)     == "sharp"
@@ -25,7 +57,9 @@ include("../HQMTool.jl")
     @test getRefinementType(cent1)     == "smooth"
     redo()
     @test getRefinementType(cent1)     == "sharp"
-
+#
+#   Refinement name 
+#
     @test getRefinementName(cent1)     == "Center1"
     setRefinementName!(cent1,"Second")
     @test getRefinementName(cent1)     == "Second"
@@ -35,36 +69,71 @@ include("../HQMTool.jl")
     @test getRefinementName(cent1)     == "Second"
     undo()
     @test getRefinementName(cent1)     == "Center1"
-
+#
+#   Refinement center location 
+#
     @test getRefinementLocation(cent1) == x0
+    @test getRefinementRegionCenter(cent1) == [1.0,2.0]
+    setRefinementLocation!(cent1,[0.,0.,0.])
+    @test getRefinementLocation(cent1) == [0.,0.,0.]
+    undo()
+    @test getRefinementLocation(cent1) == x0
+    redo()
+    @test getRefinementLocation(cent1) == [0.,0.,0.]
+#
+#   Refinement width 
+#
     @test getRefinementWidth(cent1)    == w
+    setRefinementWidth!(cent1,1.0)
+    @test getRefinementWidth(cent1)    == 1.0
+    undo()
+    @test getRefinementWidth(cent1)    == w
+    redo()
+    @test getRefinementWidth(cent1)    == 1.0
+#
+#   Refinement grid size 
+#
     @test getRefinementGridSize(cent1) == h
-
     setRefinementGridSize!(cent1,0.5)
     @test getRefinementGridSize(cent1) == 0.5
     undo()
     @test getRefinementGridSize(cent1) == h
     redo()
     @test getRefinementGridSize(cent1) == 0.5
-
-    setRefinementLocation!(cent1,[0.0,0.0,0.0])
-    @test getRefinementLocation(cent1) == [0.0,0.0,0.0]
-    undo()
-    @test getRefinementLocation(cent1) == x0
-    redo()
-    @test getRefinementLocation(cent1) == [0.0,0.0,0.0]
-
+#
+#... Line
+#
     line1 = newRefinementLine("Line1","smooth",[1.0,0.5,0.0],[1.5,2.0,0.0],h,w)
-    disableNotifications()
-
+    addRefinementRegion!(p,line1)
+    @test length(p.refinementRegionNames) == 2
+    #the following have been tested above
     @test getRefinementType(line1)     == "smooth"
     @test getRefinementName(line1)     == "Line1"
     @test getRefinementWidth(line1)    == w
     @test getRefinementGridSize(line1) == h
+#
+#   Refinement line start
+#
     @test isapprox(getRefinementStart(line1),[1.0,0.5,0.0])
+    setRefinementStart!(line1,[0.0,0.0,0.0])
+    @test getRefinementStart(line1) == [0.0,0.0,0.0]
+    undo()
+    @test isapprox(getRefinementStart(line1),[1.0,0.5,0.0])
+    redo()
+    @test getRefinementStart(line1) == [0.0,0.0,0.0]
+#
+#   Refinement Line End
+#
     @test isapprox(getRefinementEnd(line1),[1.5,2.0,0.0])
-    
-    setRefinementGridSize!(cent1,0.5)
+    setRefinementEnd!(line1,[0.0,0.0,0.0])
+    @test getRefinementEnd(line1) == [0.0,0.0,0.0]
+    undo()
+    @test isapprox(getRefinementEnd(line1),[1.5,2.0,0.0])
+    redo()
+    @test getRefinementEnd(line1) == [0.0,0.0,0.0]
+#
+#   Project functions
+#
 
-    enableNotifications()
+
 end

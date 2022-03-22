@@ -129,6 +129,6 @@ examples_dir() = joinpath(pathof(HOHQMesh) |> dirname |> dirname, "examples")
 
 
 # FIXME: Include this in a proper way
-include("HQMTool.jl")
+# include("HQMTool.jl")
 
 end # module

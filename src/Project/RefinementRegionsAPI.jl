@@ -72,7 +72,7 @@ function addRefinementRegionPoints!(proj::Project, r::Dict{String,Any})
         x = refinementRegionPoints(r)
         push!(proj.refinementRegionPoints,x)
         push!(proj.refinementRegionNames, r["name"])
-        center = refinementRegionCenter(r)
+        center = getRefinementRegionCenter(r)
         push!(proj.refinementRegionLoc,center)
 end
 """
@@ -117,11 +117,11 @@ function refinementRegionPoints(r::Dict{String,Any})
 
 end
 """
-    refinementRegionCenter(r::Dict{String,Any})
+    getRefinementRegionCenter(r::Dict{String,Any})
 
 Get, or compute, the center of the given refinement region.
 """
-function refinementRegionCenter(r::Dict{String,Any})
+function getRefinementRegionCenter(r::Dict{String,Any})
     if r["TYPE"] == "REFINEMENT_CENTER"
         center = getRefinementLocation(r)
         return center[1:2]
@@ -159,7 +159,7 @@ function insertRefinementRegion!(proj::Project, r::Dict{String,Any}, indx::Int)
     insert!(lst,indx,r)
     x = refinementRegionPoints(r)
     insert!(proj.refinementRegionPoints,indx,x)
-    center = refinementRegionCenter(r)
+    center = getRefinementRegionCenter(r)
     insert!(proj.refinementRegionLoc,indx,center)
     insert!(proj.refinementRegionNames,indx,r["name"])
     postNotificationWithName(proj,"REFINEMENT_WAS_ADDED_NOTIFICATION",(nothing,))
@@ -215,7 +215,7 @@ end
 #  --------------------------------------------------------------------------------------
 #
 """
-    allRefinementRegions(proj::Project)
+    getAllRefinementRegions(proj::Project)
 
 Get the list of refinement regions.
 """
@@ -307,13 +307,8 @@ end#
 Set the location of a refinement center to location = [x,y,z].
 """
 function setRefinementLocation!(r::Dict{String,Any}, x::Array{Float64})
-    if haskey(r,"x0")
-        old = r["x0"]
-        registerWithUndoManager(r,setRefinementLocation!, (old,), "Set Refinement Center")    
-    end
     x0Str  = @sprintf("[%f,%f,%f]", x[1], x[2], x[3])
-    r["x0"] = x0Str
-    postNotificationWithName(r,"REFINEMENT_WAS_CHANGED_NOTIFICATION",(nothing,))
+    setRefinementLocation!(r,x0Str)
     return nothing
 end
 
@@ -324,6 +319,7 @@ function setRefinementLocation!(r::Dict{String,Any}, x0Str::String)
     end
     r["x0"] = x0Str
     postNotificationWithName(r,"REFINEMENT_WAS_CHANGED_NOTIFICATION",(nothing,))
+    return nothing
 end
 #
 #  --------------------------------------------------------------------------------------
@@ -341,7 +337,7 @@ end
 #  --------------------------------------------------------------------------------------
 #
 """
-    setRefinementGridSize(r::Dict{String,Any}, h)
+    setRefinementGridSize!(r::Dict{String,Any}, h)
 
 Set the grid size, `h` for the refinement region. `r` is the dictionary that 
 represents the refinement region.
@@ -352,7 +348,9 @@ function setRefinementGridSize!(r::Dict{String,Any}, h::Float64)
         registerWithUndoManager(r,setRefinementGridSize!, (old,), "Set Refinement Grid Size")    
     end
     r["h"] = string(h)
+    postNotificationWithName(r,"REFINEMENT_WAS_CHANGED_NOTIFICATION",(nothing,))
 end
+
 function setRefinementGridSize!(r::Dict{String,Any}, h::String)
     hf = parse(Float64,h)
     setRefinementGridSize!(r,hf)
@@ -386,6 +384,7 @@ function setRefinementWidth!(r::Dict{String,Any},w::Float64)
     r["w"] = string(w)
     postNotificationWithName(r,"REFINEMENT_WAS_CHANGED_NOTIFICATION",(nothing,))
 end
+
 function setRefinementWidth!(r::Dict{String,Any},w::String)
     wf = parse(Float64,w)
     setRefinementWidth!(r,wf)
@@ -411,20 +410,17 @@ end
 Set the start point location of a refinement line, `location = [x, y, z]`.
 """
 function setRefinementStart!(r::Dict{String,Any}, x::Array{Float64})
-    if haskey(r,"x0")
-        old = r["x0"]
-        registerWithUndoManager(r,setRefinementStart!, (old,), "Set Refinement Start")    
-    end
     x0Str  = @sprintf("[%f,%f,%f]", x[1], x[2], x[3])
-    r["x0"] = x0Str
-    postNotificationWithName(r,"REFINEMENT_WAS_CHANGED_NOTIFICATION",(r,))
+    setRefinementStart!(r,x0Str)
 end
+
 function setRefinementStart!(r::Dict{String,Any}, x0Str::String)
     if haskey(r,"x0")
         old = r["x0"]
         registerWithUndoManager(r,setRefinementStart!, (old,), "Set Refinement Start")    
     end
     r["x0"] = x0Str
+    postNotificationWithName(r,"REFINEMENT_WAS_CHANGED_NOTIFICATION",(nothing,))
 end
 #
 #  --------------------------------------------------------------------------------------
@@ -442,23 +438,19 @@ end
 #  --------------------------------------------------------------------------------------
 #
 """
-    setRefinementEnd(refinementRegion, location)
+    setRefinementEnd!(refinementRegion, location)
 
 Set the end point location of a refinement line, `location = [x, y, z]`.
 """
 function setRefinementEnd!(r::Dict{String,Any}, x::Array{Float64})
-    if haskey(r,"x1")
-        old = r["x1"]
-        registerWithUndoManager(r,setRefinementStart!, (old,), "Set Refinement End")    
-    end
     x0Str  = @sprintf("[%f,%f,%f]", x[1], x[2], x[3])
-    r["x1"] = x0Str
-    postNotificationWithName(r,"REFINEMENT_WAS_CHANGED_NOTIFICATION",(nothing,))
+    setRefinementEnd!(r,x0Str)
 end
+
 function setRefinementEnd!(r::Dict{String,Any}, x0Str::String)
     if haskey(r,"x1")
         old = r["x1"]
-        registerWithUndoManager(r,setRefinementStart!, (old,), "Set Refinement End")    
+        registerWithUndoManager(r,setRefinementEnd!, (old,), "Set Refinement End")    
     end
     r["x1"] = x0Str
     postNotificationWithName(r,"REFINEMENT_WAS_CHANGED_NOTIFICATION",(nothing,))
