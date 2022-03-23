@@ -252,16 +252,16 @@ Set the start point for a line curve.
 """
 function setStartPoint!(crv::Dict{String,Any}, point::Array{Float64})
     pStr  = @sprintf("[%f,%f,%f]", point[1], point[2], point[3])
+    setStartPoint!(crv,pStr)
+end
+
+function setStartPoint!(crv::Dict{String,Any}, pointAsString::String)
     key = "xStart"
     if haskey(crv,key)
         oldPt = crv[key]
         registerWithUndoManager(crv,setStartPoint!, (oldPt,), "Set Start Point")    
     end
-    crv[key] = pStr
-    postNotificationWithName(crv,"CURVE_DID_CHANGE_NOTIFICATION",(nothing,))
-end
-function setStartPoint!(crv::Dict{String,Any}, pointAsString::String)
-    crv["xStart"] = pointAsString
+    crv[key] = pointAsString
     postNotificationWithName(crv,"CURVE_DID_CHANGE_NOTIFICATION",(nothing,))
 end
 """
@@ -279,16 +279,16 @@ Set the end point for a line curve.
 """
 function setEndPoint!(crv::Dict{String,Any}, point::Array{Float64})
     pStr  = @sprintf("[%f,%f,%f]", point[1], point[2], point[3])
+    setEndPoint!(crv,pStr)
+end
+
+function setEndPoint!(crv::Dict{String,Any}, pointAsString::String)
     key = "xEnd"
     if haskey(crv,key)
         oldPt = crv[key]
         registerWithUndoManager(crv,setEndPoint!, (oldPt,), "Set End Point")    
     end
-    crv[key] = pStr
-    postNotificationWithName(crv,"CURVE_DID_CHANGE_NOTIFICATION",(nothing,))
-end
-function setEndPoint!(crv::Dict{String,Any}, pointAsString::String)
-    crv["xEnd"] = pointAsString
+    crv[key] = pointAsString
     postNotificationWithName(crv,"CURVE_DID_CHANGE_NOTIFICATION",(nothing,))
 end
 """
@@ -331,19 +331,18 @@ end
 Set the center of a circular arc.
 """
 function setArcCenter!(arc::Dict{String,Any}, point::Array{Float64})
+    pStr  = @sprintf("[%f,%f,%f]", point[1], point[2], point[3])
+    setArcCenter!(arc,pStr)
+end
+function setArcCenter!(arc::Dict{String,Any}, pointAsString::String)
     key = "center"
     if haskey(arc,key)
         oldVal = arc[key]
         registerWithUndoManager(arc,setArcCenter!, (oldVal,), "Set Arc Center")    
     end
 
-    pStr  = @sprintf("[%f,%f,%f]", point[1], point[2], point[3])
-    arc[key] = pStr
+    arc[key] = pointAsString
     postNotificationWithName(arc,"CURVE_DID_CHANGE_NOTIFICATION",(nothing,))
-end
-function setArcCenter!(arc::Dict{String,Any}, pointAsString::String)
-    arc["center"] = pointAsString
-    postNotificationWithName(crv,"CURVE_DID_CHANGE_NOTIFICATION",(nothing,))
 end
 """
     getArcCenter(crv::Dict{String,Any}, point::Array{Float64})

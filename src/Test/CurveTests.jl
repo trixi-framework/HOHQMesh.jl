@@ -1,8 +1,55 @@
 using Test
 include("../HQMTool.jl")
-#
-# Curve Tests tests the "CurvesAPI.jl" functions
-#
+#=
+    Curve Tests tests the "CurvesAPI.jl" functions
+
+Functions: @ = tested
+    @(as new)   newParametricEquationCurve(name::String, 
+                                    xEqn::String, 
+                                    yEqn::String, 
+                                    zEqn::String = "z(t) = 0.0" )
+    @(as new)   newEndPointsLineCurve(name::String, 
+                               xStart::Array{Float64},
+                               xEnd::Array{Float64})
+    @(as new)   newCircularArcCurve(name::String, 
+                             center::Array{Float64},  
+                             radius::Float64,
+                             startAngle::Float64, 
+                             endAngle::Float64,
+                             units::String = "degrees")
+    @   newSplineCurve(name::String, nKnots::Int, data::Matrix{Float64})
+    newSplineCurve(name::String, dataFile::String)
+    @   setCurveName!(crv::Dict{String,Any}, name::String)
+    @   getCurveName(crv::Dict{String,Any})
+    @   getCurveType(crv::Dict{String,Any})
+    @   setXEqn!(crv::Dict{String,Any}, eqn::String)
+    @   getXEqn(crv::Dict{String,Any})
+    @   setYEqn!(crv::Dict{String,Any}, eqn::String)
+    @   getYEqn(crv::Dict{String,Any})
+    @   setZEqn!(crv::Dict{String,Any}, eqn::String)
+    @   getZEqn(crv::Dict{String,Any})
+    @   setStartPoint!(crv::Dict{String,Any}, point::Array{Float64})
+    @   setStartPoint!(crv::Dict{String,Any}, pointAsString::String)
+    @   getStartPoint(crv::Dict{String,Any})
+    @   setEndPoint!(crv::Dict{String,Any}, point::Array{Float64})
+    @   setEndPoint!(crv::Dict{String,Any}, pointAsString::String)
+    @   getEndPoint(crv::Dict{String,Any})
+    @   setArcUnits!(arc::Dict{String,Any}, units::String)
+    @   getArcUnits(arc::Dict{String,Any})
+    @   setArcCenter!(arc::Dict{String,Any}, point::Array{Float64})
+    @   setArcCenter!(arc::Dict{String,Any}, pointAsString::String)
+    @   getArcCenter(arc::Dict{String,Any})
+    @   setArcStartAngle!(arc::Dict{String,Any}, angle::Float64)
+    @   getArcStartAngle(arc::Dict{String,Any})
+    @   setArcEndAngle!(arc::Dict{String,Any}, angle::Float64)
+    @   getArcEndAngle(arc::Dict{String,Any})
+    @   setArcRadius!(arc::Dict{String,Any}, radius::Float64)
+    @   getArcRadius(arc::Dict{String,Any})
+    @   setSplineNKnots!(spline::Dict{String,Any}, nKnots::Int)
+    @   getSplineNKnots(spline::Dict{String,Any})
+    @   setSplinePoints!(spline::Dict{String,Any},points::Matrix{Float64})
+    @   getSplinePoints(spline::Dict{String,Any})
+=#
 
 @testset "Curve Tests" begin
     @testset "ParametricCurve Tests" begin
@@ -49,6 +96,21 @@ include("../HQMTool.jl")
         @test isapprox(pts[1,:],[0.0,0.0])
         @test isapprox(pts[2,:],[0.5,0.5])
         @test isapprox(pts[3,:],[1.0,1.0])
+
+        setStartPoint!(crv,[2.0,3.0,0.0])
+        @test getStartPoint(crv) == [2.0,3.0,0.0]
+        undo()
+        @test getStartPoint(crv) == xStart
+        redo()
+        @test getStartPoint(crv) == [2.0,3.0,0.0]
+
+        setEndPoint!(crv,[2.0,3.0,0.0])
+        @test getEndPoint(crv) == [2.0,3.0,0.0]
+        undo()
+        @test getEndPoint(crv) == xEnd
+        redo()
+        @test getEndPoint(crv) == [2.0,3.0,0.0]
+     
     end
 
     @testset "CircularArc Tests" begin
@@ -75,6 +137,21 @@ include("../HQMTool.jl")
         @test isapprox(pts[1,:],[2.0,0.0])
         @test isapprox(pts[2,:],[0.0,2.0])
         @test isapprox(pts[3,:],[-2.0,0.0])
+
+        setArcUnits!(crv,"radians")
+        @test getArcUnits(crv) == "radians"
+        undo()
+        @test getArcUnits(crv) == "degrees"
+        redo()
+        @test getArcUnits(crv) == "radians"
+
+        setArcCenter!(crv,[1.0,2.0,0.0])
+        @test getArcCenter(crv) == [1.0,2.0,0.0]
+        undo()
+        @test getArcCenter(crv) == center
+        redo()
+        @test getArcCenter(crv) == [1.0,2.0,0.0]
+
     end
 
     @testset "Spline Tests" begin
@@ -115,5 +192,11 @@ include("../HQMTool.jl")
         gPts = getSplinePoints(crv)
         @test isapprox(data,gPts)
     end
+#
+#   Get spline data from a file
+#
+    # fSpline = newSplineCurve("fromFile", "TestData/SplineData.txt")
+    # fPts = getSplinePoints(fSpline)
+    # @test isapprox(data,fPts)
 
 end
