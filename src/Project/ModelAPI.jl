@@ -58,9 +58,7 @@ function addCurveToOuterBoundary!(proj::Project, crv::Dict{String,Any})
 
     push!(proj.outerBndryNames,crv["name"])
 
-    enableUndo()
     registerWithUndoManager(proj,removeOuterBoundaryCurveWithName!,(crv["name"],),"Add Curve")
-    enableNotifications()
     postNotificationWithName(proj,"MODEL_DID_CHANGE_NOTIFICATION",(nothing,))
 end
 """
@@ -72,7 +70,7 @@ function removeOuterBoundaryCurveWithName!(proj::Project, name::String)
     lst = getOuterBoundaryChainList(proj)
     indx  = getChainIndex(lst,name)
     if indx > 0
-        removeOuterBoundaryCurveAtIndex(proj,indx) # posts undo/notification
+        removeOuterBoundaryCurveAtIndex!(proj,indx) # posts undo/notification
         proj.backgroundGridShouldUpdate = true
     end
 end
@@ -98,25 +96,25 @@ function insertOuterBoundaryCurveAtIndex!(proj::Project, crv::Dict{String,Any}, 
     insert!(proj.outerBndryPoints,indx,curvePoints(crv,defaultPlotPts))
     insert!(proj.outerBndryNames,indx,crv["name"])
     proj.backgroundGridShouldUpdate = true
+    registerWithUndoManager(proj,removeOuterBoundaryCurveAtIndex!,(indx,),"Add Curve")
     postNotificationWithName(proj,"MODEL_DID_CHANGE_NOTIFICATION",(nothing,))
 end
 
-function removeOuterBoundaryCurveAtIndex(proj::Project, indx::Int)
+function removeOuterBoundaryCurveAtIndex!(proj::Project, indx::Int)
     lst = getOuterBoundaryChainList(proj)
     crv = lst[indx]
     deleteat!(lst,indx)
     deleteat!(proj.outerBndryNames,indx)
     deleteat!(proj.outerBndryPoints,indx)
     proj.backgroundGridShouldUpdate = true
-    enableNotifications()
-    enableUndo()
     registerWithUndoManager(proj,insertOuterBoundaryCurveAtIndex!,(crv,indx),"Add Curve")
     postNotificationWithName(proj,"MODEL_DID_CHANGE_NOTIFICATION",(nothing,))
 end
 """
-    addOuterBoundary!(proj::Project)
+    addOuterBoundary!(proj::Project, outerBoundary::Dict{String,Any})
 
 Add an empty outer boundary to the project. There can be only one.
+This function is only used as part of an undo operation removing the outer boundary
 """
 function addOuterBoundary!(proj::Project, outerBoundary::Dict{String,Any})
     model = getModelDict(proj)
@@ -132,26 +130,24 @@ function removeOuterboundary!(proj::Project)
     modelDict = getModelDict(proj)
     if haskey(modelDict,"OUTER_BOUNDARY")
         ob = modelDict["OUTER_BOUNDARY"]
-        enableUndo()
         registerWithUndoManager(proj,addOuterBoundary!, (ob,), "Remove Outer Boundary")
         delete!(modelDict,"OUTER_BOUNDARY")
         proj.outerBndryPoints = Any[]
         proj.outerBndryNames  = String[]
         proj.backgroundGridShouldUpdate = true
-        enableNotifications()
         postNotificationWithName(proj,"MODEL_DID_CHANGE_NOTIFICATION",(nothing,))
     end
 end
 
-function addOuterBoundary(proj::Project,obDict::Dict{String,Any})
-    modelDict = getModelDict(proj)
-    modelDict["OUTER_BOUNDARY"] = obDict
-end
+# function addOuterBoundary(proj::Project,obDict::Dict{String,Any})
+#     modelDict = getModelDict(proj)
+#     modelDict["OUTER_BOUNDARY"] = obDict
+# end
 #
 #  --------------------------------------------------------------------------------------
 #
 """
-    getOuterBoundary(proj::Project)
+    getOuterBoundaryChainList(proj::Project)
 
 Get the array of outer boundary curves.
 """
@@ -216,7 +212,7 @@ end
 """
     removeInnerBoundaryCurve!(proj::Project, name::String)
 
-Remove the named curve in the outer boundary
+Remove the named curve in the inner boundary
 """
 function removeInnerBoundaryCurve!(proj::Project, name::String, chainName::String)
     i, chain = getInnerBoundaryChainWithName(proj,chainName)
