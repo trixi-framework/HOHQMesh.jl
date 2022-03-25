@@ -3,44 +3,44 @@
 
  Copyright (c) 2010-present David A. Kopriva and other contributors: AUTHORS.md
 
- Permission is hereby granted, free of charge, to any person obtaining a copy  
- of this software and associated documentation files (the "Software"), to deal  
- in the Software without restriction, including without limitation the rights  
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell  
- copies of the Software, and to permit persons to whom the Software is  
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
 
- The above copyright notice and this permission notice shall be included in all  
+ The above copyright notice and this permission notice shall be included in all
  copies or substantial portions of the Software.
 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR  
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,  
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE  
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER  
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,  
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
- 
+
  --- End License
 =#
 
 """
-    addRunParameters!(proj::Project, 
-        plotFormat::String     = "skeleton", 
-        meshFileFormat::String = "ISM-V2", 
+    addRunParameters!(proj::Project,
+        plotFormat::String     = "skeleton",
+        meshFileFormat::String = "ISM-V2",
         polynomialOrder::Int   = 5)
 
 Add a RUN_PARAMETERS block and set all the parameters in one call.
 """
-function addRunParameters!(proj::Project, 
-    plotFormat::String     = "skeleton", 
-    meshFileFormat::String = "ISM-V2", 
+function addRunParameters!(proj::Project,
+    plotFormat::String     = "skeleton",
+    meshFileFormat::String = "ISM-V2",
     polynomialOrder::Int   = 5)
 
-    setFileNames!(proj)
-    setPlotFileFormat!(proj,plotFormat)
-    setMeshFileFormat!(proj,meshFileFormat)
-    setPolynomialOrder!(proj,polynomialOrder)
+    setFileNames!(proj, meshFileFormat)
+    setPlotFileFormat!(proj, plotFormat)
+    setMeshFileFormat!(proj, meshFileFormat)
+    setPolynomialOrder!(proj, polynomialOrder)
 
     rpDict = getDictInControlDictNamed(proj,"RUN_PARAMETERS")
     registerWithUndoManager(proj,removeRunParameters!, (nothing,), "Add Run Parameters")
@@ -62,7 +62,7 @@ end
 """
     setName(proj::Project,name::String)
 
-The `name` of the project is the filename to be used by the mesh, plot, and 
+The `name` of the project is the filename to be used by the mesh, plot, and
 stats files. It is also the name of the control file the tool will produce.
 """
 function setName!(proj::Project,name::String)
@@ -70,17 +70,17 @@ function setName!(proj::Project,name::String)
     oldName = proj.name
     registerWithUndoManager(proj,setName!,(oldName,),"Set Project Name")
     proj.name = name
-    setFileNames!(proj)
+    setFileNames!(proj, getMeshFileFormat(proj))
 end
 """
     getName(proj::Project)
 
-Returns the filename to be used by the mesh, plot, control, and 
+Returns the filename to be used by the mesh, plot, control, and
 stats files.
 """
 function getName(proj::Project)
     return proj.name
-end 
+end
 """
     setPolynomialOrder(proj::Project, p::Int)
 
@@ -102,7 +102,7 @@ Returns the polynomial order for boundary curves in the mesh file.
 """
 function getPolynomialOrder(proj::Project)
     rpDict = getDictInControlDictNamed(proj,"RUN_PARAMETERS")
-    return parse(Int,rpDict["polynomial order"]) 
+    return parse(Int,rpDict["polynomial order"])
 end
 """
     setMeshFileFormat(proj::Project, meshFileFormat::String)
@@ -162,11 +162,15 @@ function getPlotFileFormat(proj::Project)
     return rpDict["plot file format"]
 end
 
-function setFileNames!(proj::Project)
+function setFileNames!(proj::Project, meshFileFormat::String)
     rpDict = getDictInControlDictNamed(proj,"RUN_PARAMETERS")
-    rpDict["mesh file name"]   = joinpath(proj.projectDirectory, proj.name *".mesh")
-    rpDict["plot file name"]   = joinpath(proj.projectDirectory, proj.name *".tec")
-    rpDict["stats file name"]  = joinpath(proj.projectDirectory, proj.name *".txt")
+    if meshFileFormat == "ABAQUS"
+        rpDict["mesh file name"] = joinpath(proj.projectDirectory, proj.name *".inp")
+    else
+        rpDict["mesh file name"] = joinpath(proj.projectDirectory, proj.name *".mesh")
+    end
+    rpDict["plot file name"]  = joinpath(proj.projectDirectory, proj.name *".tec")
+    rpDict["stats file name"] = joinpath(proj.projectDirectory, proj.name *".txt")
  end
 
  function getMeshFileName(proj::Project)
@@ -178,7 +182,7 @@ function setFileNames!(proj::Project)
     rpDict = getDictInControlDictNamed(proj,"RUN_PARAMETERS")
     return rpDict["plot file name"]
  end
- 
+
  function getStatsFileName(proj::Project)
     rpDict = getDictInControlDictNamed(proj,"RUN_PARAMETERS")
     return rpDict["stats file name"]
