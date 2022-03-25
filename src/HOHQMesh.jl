@@ -5,19 +5,19 @@ module HOHQMesh
 
 using HOHQMesh_jll: HOHQMesh_jll
 using Printf
-using Requires: @require
+#using Requires: @require
 
 export generate_mesh
 export hqmtool_all_features_demo
 export hqmtool_ice_cream_cone_verbose_demo, hqmtool_ice_cream_cone_demo
 
 
-function __init__()
-  # Enable features that depend on the availability of the Makie package
-  @require Makie="ee78f7c6-11fb-53f2-987a-cfe4a2b5a57a" begin
-    using .Makie
-  end
-end
+# function __init__()
+#   # Enable features that depend on the availability of the Makie package
+#   @require Makie="ee78f7c6-11fb-53f2-987a-cfe4a2b5a57a" begin
+#     using .Makie
+#   end
+# end
 
 
 """
