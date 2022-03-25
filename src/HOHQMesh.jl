@@ -4,9 +4,12 @@ module HOHQMesh
 # (standard library packages first, other packages next, all of them sorted alphabetically)
 
 using HOHQMesh_jll: HOHQMesh_jll
+using Printf
 using Requires: @require
 
 export generate_mesh
+export hqmtool_all_features_demo
+export hqmtool_ice_cream_cone_verbose_demo, hqmtool_ice_cream_cone_demo
 
 
 function __init__()
@@ -128,7 +131,122 @@ Return the path to the directory with some example mesh setups.
 examples_dir() = joinpath(pathof(HOHQMesh) |> dirname |> dirname, "examples")
 
 
-# FIXME: Include this in a proper way
-# include("HQMTool.jl")
+# Include functionality for interactive reading, writing, and plotting of a model for HOHQMesh
+include("Viz/VizMesh.jl")
+include("Misc/NotificationCenter.jl")
+include("Misc/DictionaryOperations.jl")
+include("Curves/Spline.jl")
+include("ControlFile/ControlFileOperations.jl")
+include("Curves/CurveOperations.jl")
+include("Project/Project.jl")
+include("Project/CurvesAPI.jl")
+include("Viz/VizProject.jl")
+include("Project/Undo.jl")
+include("Mesh/Meshing.jl")
+include("Project/Generics.jl")
+
+#
+#---------------- Routines for testing and demonstrating the HQMTool ---------------------------------
+#
+
+function hqmtool_all_features_demo()
+#
+# Reads in an existing control file, plots the boundary curves and generates
+# a mesh.
+#
+    p = openProject("AllFeatures.control", joinpath(@__DIR__, "..", "examples"))
+    plotProject!(p,MODEL+REFINEMENTS+GRID)
+    println("Hit any key to continue and generate the mesh")
+    readline()
+    generateMesh(p)
+    return p
+end
+
+function hqmtool_ice_cream_cone_verbose_demo(folder::String)
+#
+# Create a project with the name "IceCreamCone", which will be the name of the mesh, plot and stats files,
+# written to `folder`.
+#
+    p = newProject("IceCreamCone",folder)
+#
+#   Outer boundary
+#
+    circ = newCircularArcCurve("outerCircle",[0.0,-1.0,0.0],4.0,0.0,360.0,"degrees")
+    addCurveToOuterBoundary!(p,circ)
+#
+#   Inner boundary
+#
+    cone1    = newEndPointsLineCurve("cone1", [0.0,-3.0,0.0],[1.0,0.0,0.0])
+    iceCream = newCircularArcCurve("iceCream",[0.0,0.0,0.0],1.0,0.0,180.0,"degrees")
+    cone2    = newEndPointsLineCurve("cone2", [-1.0,0.0,0.0],[0.0,-3.0,0.0])
+    addCurveToInnerBoundary!(p,cone1,"IceCreamCone")
+    addCurveToInnerBoundary!(p,iceCream,"IceCreamCone")
+    addCurveToInnerBoundary!(p,cone2,"IceCreamCone")
+#
+#   Set some control RunParameters to overwrite the defaults
+#
+    setPolynomialOrder!(p,4)
+    setPlotFileFormat!(p,"sem")
+#
+#   To mesh, a background grid is needed
+#
+    addBackgroundGrid!(p, [0.5,0.5,0.0])
+#
+#   Show the model and grid
+#
+    plotProject!(p, MODEL+GRID)
+#
+#   Generate the mesh and plot
+#
+    println("Press any key to continue and generate the mesh")
+    readline()
+    generateMesh(p)
+
+    return p
+end
+
+function hqmtool_ice_cream_cone_demo(folder::String)
+#
+# Create a project with the name "IceCreamCone", which will be the name of the mesh, plot and stats files,
+# written to `path`.
+#
+    p = newProject("IceCreamCone",folder)
+#
+#   Outer boundary
+#
+    circ = new("outerCircle",[0.0,-1.0,0.0],4.0,0.0,360.0,"degrees")
+    add!(p,circ)
+#
+#   Inner boundary
+#
+    cone1    = new("cone1", [0.0,-3.0,0.0],[1.0,0.0,0.0])
+    iceCream = new("iceCream",[0.0,0.0,0.0],1.0,0.0,180.0,"degrees")
+    cone2    = new("cone2", [-1.0,0.0,0.0],[0.0,-3.0,0.0])
+    add!(p,cone1,"IceCreamCone")
+    add!(p,iceCream,"IceCreamCone")
+    add!(p,cone2,"IceCreamCone")
+#
+#   To mesh, a background grid is needed
+#
+    addBackgroundGrid!(p, [0.5,0.5,0.0])
+#
+#   Set alternative file format and corresponding output file names
+#
+    setMeshFileFormat!(p, "ABAQUS")
+    meshFileFormat = getMeshFileFormat(p)
+    setFileNames!(p, meshFileFormat)
+#
+#   Show the model and grid
+#
+    plotProject!(p, MODEL+GRID)
+#
+#   Generate the mesh and plot
+#
+    println("Press any key to continue and generate the mesh")
+    readline()
+    generateMesh(p)
+
+    return p
+end
 
 end # module
