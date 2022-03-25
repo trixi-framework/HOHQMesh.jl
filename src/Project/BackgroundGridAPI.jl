@@ -3,24 +3,24 @@
 
  Copyright (c) 2010-present David A. Kopriva and other contributors: AUTHORS.md
 
- Permission is hereby granted, free of charge, to any person obtaining a copy  
- of this software and associated documentation files (the "Software"), to deal  
- in the Software without restriction, including without limitation the rights  
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell  
- copies of the Software, and to permit persons to whom the Software is  
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
 
- The above copyright notice and this permission notice shall be included in all  
+ The above copyright notice and this permission notice shall be included in all
  copies or substantial portions of the Software.
 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR  
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,  
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE  
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER  
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,  
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
- 
+
  --- End License
 =#
 
@@ -42,7 +42,7 @@ end
 """
     addBackgroundGrid!(proj::Project, box::Array{Float64},  N::Array{Int} )
 
-Add the background grid block with bounding box = [TOP, LEFT, BOTTOM, RIGHT] 
+Add the background grid block with bounding box = [TOP, LEFT, BOTTOM, RIGHT]
 and the number of intervals in each diredction. Use this when there
 is _no_ outer boundary defined in the model.
 """
@@ -51,7 +51,7 @@ function addBackgroundGrid!(proj::Project, box::Array{Float64}, N::Array{Int})
     disableNotifications()
     proj.bounds     = box
     proj.userBounds = deepcopy(box)
-    
+
     dx          = zeros(Float64,3)
     dx[1]       = (box[RIGHT] - box[LEFT])/N[1]
     dx[2]       = (box[TOP] - box[BOTTOM])/N[2]
@@ -69,9 +69,9 @@ end
 """
     addBackgroundGrid!(proj::Project, x0::Array{Float64}, dx::Array{Float64}, N::Array{Int})
 
-Add the background grid block using the left corner, x0, the 
+Add the background grid block using the left corner, x0, the
 grid size dx, and the number of intervals in each direction. Use this when there
-is _no_ outer boundary defined in the model. This version mimics HOHQMesh's 
+is _no_ outer boundary defined in the model. This version mimics HOHQMesh's
 backgroundGrid block, but the version
 
     addBackgroundGrid!(proj::Project, box::Array{Float64},  N::Array{Int} )
@@ -141,7 +141,7 @@ function setBackgroundGridSize!(proj::Project, dx::Float64, dy::Float64, dz::Flo
     registerWithUndoManager(proj,setBackgroundGridSize!,
                             (oldSpacing[1],oldSpacing[2],0.0),"Set Background Grid Spacing")
     return nothing
-    end
+end
 """
     getBackgroundGridSize(proj::Project)
 
@@ -172,7 +172,7 @@ function getBackgroundGridLowerLeft(proj::Project)
 end
 """
     function getBackgroundGridSteps(proj::Project)
-        
+
 Returns the [Nx,Ny,Nz] for the background grid.
 """
 function getBackgroundGridSteps(proj::Project)
@@ -197,10 +197,10 @@ function setBackgroundGridLowerLeft!(proj::Project, x0::Array{Float64})
         oldLowerLeft = realArrayForKeyFromDictionary("x0",bgDict)
         registerWithUndoManager(proj,setBackgroundGridLowerLeft!,
         (oldLowerLeft[1],oldLowerLeft[2],0.0),"Set Background Lower Left")
-    end 
+    end
 
     x0Str  = @sprintf("[%f,%f,%f]", x0[1], x0[2], x0[3])
-    bgDict["x0"] = x0Str   
+    bgDict["x0"] = x0Str
     postNotificationWithName(proj,"BGRID_DID_CHANGE_NOTIFICATION",(nothing,))
     return nothing
 end

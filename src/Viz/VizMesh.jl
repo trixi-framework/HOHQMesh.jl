@@ -24,7 +24,7 @@
  --- End License
 =#
 
-function getMeshFromMeshFile(meshFile::AbstractString, meshFileFormat::String)
+function getMeshFromMeshFile(meshFile::AbstractString, meshFileFormat::AbstractString)
 
     if meshFileFormat == "ISM-V2"
        open(meshFile,"r") do f
