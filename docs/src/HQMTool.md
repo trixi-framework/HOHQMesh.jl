@@ -91,7 +91,7 @@ Similarly, you create curves and add them to as many inner boundaries that you w
 
 For convenience, `newProject` will generate default run parameters, like the plot file format and the smoother. The parameters can be edited with setter commands. For example, the script sets the polynomial order (default = 5) and the plot file format (default = "skeleton").
 
-One run parameter that must be set manually is the background grid. Since there is an outer boundary, that determines the extend of the domain to be meshed, so only the mesh size needs to be specified using
+One run parameter that must be set manually is the background grid. Since there is an outer boundary, that determines the extent of the domain to be meshed, so only the mesh size needs to be specified using
 
 		addBackgroundGrid!(proj::Project, bgSize::Array{Float64})
 
@@ -100,7 +100,6 @@ The example sets the background mesh size to be 0.1 in the x and y directions. T
 The script finishes by generating the quad mesh and plotting the results, as shown below
 
 ![iceCreamCone](https://user-images.githubusercontent.com/3637659/132798939-218a3379-7d50-4f3e-9bec-e75e6cd79031.png)
-
 
 It also returns the project so that it can be edited further, if desired.
 
@@ -224,7 +223,7 @@ The run parameters can be enquired and set with these getter/setter pairs:
 		[Return:nothing] setPlotFileFormat!(proj::Project, plotFileFormat::String)
 		[Return:String]  getPlotFileFormat(proj::Project)
 
-The mesh file format is either `ISM` or `ISM-V2`. The plot file (Which can be viewed with something like VisIt or Paraview) format is either `skeleton` or `sem`. The former is just a low order finite elemnt represntation of the mesh. The latter (which is a much bigger file) includes the interior degrees of freedom. **At this time, if you want to plot the grid in HQMTool, then you must use `ISM-V2` as the mesh file format.**
+The available mesh file formats are `ISM`, `ISM-V2`, or `ABAQUS`. The plot file (which can be viewed with something like VisIt or Paraview) format is either `skeleton` or `sem`. The former is just a low order finite element represntation of the mesh. The latter (which is a much bigger file) includes the interior degrees of freedom.
 
 #### Changing the output file names
 
@@ -233,7 +232,7 @@ By default, the mesh, plot and stats files will be written with the name and pat
 		[Return:nothing] setName!(proj::Project,name::String)
 		[Return:String]  getName(proj::Project)
 		[Return:nothing] setFolder!(proj::Project,folder::String)
-		[Return:String] getFolder(proj::Project)
+		[Return:String]  getFolder(proj::Project)
 
 #### Adding the background grid
 
