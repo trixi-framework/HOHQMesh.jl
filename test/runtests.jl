@@ -42,5 +42,8 @@ isdir(outdir) && rm(outdir, recursive=true)
 
 end # testset "HOHQMesh.jl"
 
+# test background grid routines
+include("background_grid_tests.jl")
+
 # Clean up afterwards: delete HOHQMesh output directory
 @test_nowarn rm(outdir, recursive=true)
