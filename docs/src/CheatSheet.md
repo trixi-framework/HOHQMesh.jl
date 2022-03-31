@@ -59,6 +59,6 @@ All items have set/get methods to edit them. Most actions have undo() and redo()
 
 ## Meshing
 
-		generateMesh(p)
-		removeMesh!(p)
+		generate_mesh(p)
+		remove_mesh!(p)
 

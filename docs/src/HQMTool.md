@@ -24,57 +24,62 @@ HQMTool is currently an API to generate a quad (Future:Hex) mesh using Julia.
 
 ## Introduction
 
-HQMTool is an API to build quad/hex meshes. Two examples are included to get you started. The first reads in an existing control file from the HOHQMesh examples collection.
+HQMTool is an API to build quad/hex meshes. Three examples are included to get you started.
+The first reads in an existing control file from the HOHQMesh examples collection.
 To see that example, run
 
-		runDemo()
+		run_demo("out")
 
-The second example builds a new project consisting of an outer, circular boundary, and an inner boundary in the shape of an ice cream cone. The script is
+where `out` specifies the folder where the resulting mesh and TecPlot files will be saved.
 
-	function iceCreamCone(folder::String)
+The second example builds a new project consisting of an outer, circular boundary, and an inner
+boundary in the shape of an ice cream cone. The "verbose" version of the script is given below.
+
+    function ice_cream_cone_verbose_demo(folder::String; called_by_user=true)
     #
     # Create a project with the name "IceCreamCone", which will be the name of the mesh, plot and stats files,
-    # written to `path`. This version uses generic versions of
-    # the API.
+    # written to `folder`. The keyword arguement `called_by_user` is there for testing purposes.
     #
-        p = newProject("IceCreamCone",path)
+        p = newProject("IceCreamCone", folder)
     #
     #   Outer boundary
     #
-        circ = new("outerCircle",[0.0,-1.0,0.0],4.0,0.0,360.0,"degrees")
-        add!(p,circ)
+        circ = newCircularArcCurve("outerCircle", [0.0,-1.0,0.0], 4.0, 0.0, 360.0, "degrees")
+        addCurveToOuterBoundary!(p, circ)
     #
     #   Inner boundary
     #
-        cone1    = new("cone1", [0.0,-3.0,0.0],[1.0,0.0,0.0]) # A line
-        iceCream = new("iceCream",[0.0,0.0,0.0],1.0,0.0,180.0,"degrees") # An arc
-        cone2    = new("cone2", [-1.0,0.0,0.0],[0.0,-3.0,0.0]) # A line
-        add!(p,cone1,"IceCreamCone")
-        add!(p,iceCream,"IceCreamCone")
-        add!(p,cone2,"IceCreamCone")
+        cone1    = newEndPointsLineCurve("cone1", [0.0,-3.0,0.0], [1.0,0.0,0.0])
+        iceCream = newCircularArcCurve("iceCream", [0.0,0.0,0.0], 1.0, 0.0, 180.0, "degrees")
+        cone2    = newEndPointsLineCurve("cone2", [-1.0,0.0,0.0], [0.0,-3.0,0.0])
+        addCurveToInnerBoundary!(p, cone1, "IceCreamCone")
+        addCurveToInnerBoundary!(p, iceCream, "IceCreamCone")
+        addCurveToInnerBoundary!(p, cone2, "IceCreamCone")
     #
     #   Set some control RunParameters to overwrite the defaults
     #
-        setPolynomialOrder!(p,4)
-        setPlotFileFormat!(p,"sem")
+        setPolynomialOrder!(p, 4)
+        setPlotFileFormat!(p, "sem")
     #
     #   To mesh, a background grid is needed
     #
-        addBackgroundGrid!(p, [0.1,0.1,0.0])
+        addBackgroundGrid!(p, [0.5,0.5,0.0])
+
+        if called_by_user
     #
     #   Show the model and grid
     #
-        plotProject!(p, MODEL+GRID)
+          plotProject!(p, MODEL+GRID)
+          println("Press enter to continue and generate the mesh")
+          readline()
+        end
     #
     #   Generate the mesh and plot
     #
-        println("Press any key to continue and generate the mesh")
-        readline()
-        generateMesh(p)
-        updatePlot!(p, MODEL+MESH)
+        generate_mesh(p)
 
         return p
-	end
+    end
 
 The first line creates a new project, where the mesh and plot file names will be derived from the project name, "IceCreamCone" written to the specified folder.
 
@@ -85,7 +90,7 @@ To develop the model, one adds curves to the outer boundary or to multiple inner
 - Lines defined by their end points
 - Circular arcs
 
-In the example, the outer boundary is a closed circular arc with center at [0,0,0] with radius 4, starting at zero and ending at 360 degrees. It is added to the project with `addCurveToOuterBoundary!` through the generic name `add!`. You can add any number of curves, but they must be added in order, counter-clockwise.
+In the example, the outer boundary is a closed circular arc with center at [0.0, 0.0, 0.0] with radius 4, starting at zero and ending at 360 degrees. It is added to the project with `addCurveToOuterBoundary!` through the generic name `add!`. You can add any number of curves, but they must be added in order, counter-clockwise.
 
 Similarly, you create curves and add them to as many inner boundaries that you want to have. In the example, there is one inner boundary, "IceCreamCone" made up of two lines and a half circular arc. Again, add them in order, counter-clockwise.
 
@@ -109,7 +114,10 @@ To save a control file for HOHQMesh, simply invoke
 
 where outFile is the name of the control file (traditionally with a .control extension). `saveProject` is automatically called when a mesh is generated.
 
-Methods are available to edit a model. For example to move the center of the outer boundary
+The third example `ice_cream_cone_demo` is identical to that which was explained above except that the function calls
+use the generic version of, e.g., `new` or `add!`.
+
+Methods are available to edit a model. For example to move the center of the outer boundary.
 
 ## Basic Moves
 
@@ -174,7 +182,6 @@ The supplied name will be the default name of the mesh and plot files generated 
 #### Opening an existing project file
 
 		(Return:Project) proj = openProject(fileName::String, folder::String)
-
 
 #### Saving a project
 
@@ -347,9 +354,9 @@ Example:
 To edit curves they can be accessed by name:
 
 		[Return:Dict{String,Any}] getInnerBoundaryCurve(proj::Project, curveName::String, boundaryName::String)
-        Generic: get(...)
+        Generic: getCurve(...)
 		[Return:Dict{String,Any}] getOuterBoundaryCurveWithName(proj::Project, name::String)
-        Generic: get(...)
+        Generic: getCurve(...)
 
 - Deleting boundary curves
 
@@ -401,7 +408,7 @@ The `xStart` and `xEnd` are arrays of the form [x,y,z]. The `z` component should
 
 Example:
 
-			cone1    = new("cone1", [0.0,-3.0,0.0],[1.0,0.0,0.0])
+			cone1    = new("cone1", [0.0, -3.0, 0.0], [1.0, 0.0, 0.0])
 ##### Circular Arc
 
 	[Return:Dict{String,Any}] newCircularArcCurve(name::String,
@@ -416,7 +423,7 @@ Example:
 
 Example:
 
-		iceCream = new("iceCream",[0.0,0.0,0.0],1.0,0.0,180.0,"degrees")
+		iceCream = new("iceCream", [0.0, 0.0, 0.0], 1.0, 0.0, 180.0, "degrees")
 
 ##### Spline Curve
 
