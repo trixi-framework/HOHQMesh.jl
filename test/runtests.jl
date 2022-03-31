@@ -42,8 +42,6 @@ isdir(outdir) && rm(outdir, recursive=true)
 
 end # testset "HOHQMesh.jl"
 
-# TODO: add a test for the three demos
-
 # Unit tests for the HQMTool functionality
 
 # Background grid test routines
@@ -54,6 +52,9 @@ include("test_curve.jl")
 
 # Model test routines
 include("test_model.jl")
+
+# HQMTool demonstration test routines
+include("test_hqmtool_demos.jl")
 
 # HQMTool project test routines
 include("test_hqmtool_project.jl")
