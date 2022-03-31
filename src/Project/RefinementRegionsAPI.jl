@@ -238,7 +238,8 @@ function getRefinementRegion(proj::Project, name::String)
             return i,r
         end 
     end 
-    println("Refinement region with name %s not found",name)
+    # TODO: Remove? Not sure why this print statement is here
+    # println("Refinement region with name %s not found",name)
     return nothing
 end
 #
