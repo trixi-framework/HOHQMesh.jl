@@ -67,5 +67,8 @@ include("test_run_parameters.jl")
 # Smoother test routines
 include("test_smoother.jl")
 
+# Visualization test routines
+include("test_visualization.jl")
+
 # Clean up afterwards: delete HOHQMesh output directory
 @test_nowarn rm(outdir, recursive=true)
