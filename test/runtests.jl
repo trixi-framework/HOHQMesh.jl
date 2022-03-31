@@ -42,30 +42,30 @@ isdir(outdir) && rm(outdir, recursive=true)
 
 end # testset "HOHQMesh.jl"
 
-#@testset "HQMTool features" begin
+# TODO: add a test for the three demos
 
-  # Background grid test routines
-  include("background_grid_tests.jl")
+# Unit tests for the HQMTool functionality
 
-  # Curve test routines
-  include("curve_tests.jl")
+# Background grid test routines
+include("test_background_grid.jl")
 
-  # Model test routines
-  include("model_tests.jl")
+# Curve test routines
+include("test_curve.jl")
 
-  # Project test routines
-  include("project_tests.jl")
+# Model test routines
+include("test_model.jl")
 
-  # Refinement test routines
-  include("refinement_tests.jl")
+# HQMTool project test routines
+include("test_hqmtool_project.jl")
 
-  # Run parameters test routines
-  include("run_parameters_tests.jl")
+# Refinement test routines
+include("test_refinement.jl")
 
-  # Smoother test routines
-  include("smoother_tests.jl")
+# Run parameters test routines
+include("test_run_parameters.jl")
 
-#end # testset "HQMTool features"
+# Smoother test routines
+include("test_smoother.jl")
 
 # Clean up afterwards: delete HOHQMesh output directory
 @test_nowarn rm(outdir, recursive=true)
