@@ -40,9 +40,9 @@ Workflow:
 
 ## Accessing items
 
-		crv         = get(p,curveName)	             *Get a curve in the outer boundary*
-		crv         = get(p,curveName, boundaryName) *Get a curve in an inner boundary*
-		indx, chain = getChain(p,boundaryName)       *Get a complete inner boundary curve*
+		crv         = getCurve(p,curveName)	              *Get a curve in the outer boundary*
+		crv         = getCurve(p,curveName, boundaryName) *Get a curve in an inner boundary*
+		indx, chain = getChain(p,boundaryName)            *Get a complete inner boundary curve*
 		r           = getRefinementRegion(p, name)
 
 ## Removing from Project

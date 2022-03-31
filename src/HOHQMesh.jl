@@ -27,7 +27,7 @@ export hqmtool_all_features_demo,
 # Generic functions for the HQMTool interface
 export new,
        add!,
-       get,
+       getCurve,
        getInnerBoundary,
        remove!
 
