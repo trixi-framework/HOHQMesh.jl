@@ -16,7 +16,7 @@ Workflow:
 
 		plotProject!(p,options)
 		updatePlot!(p,options)
-		
+
 ## Curves
 
 		c = new(name, startLocation [x,y,z],endLocation [x,y,z])  *Straight Line*
@@ -37,22 +37,22 @@ Workflow:
 
 		addBackgroundGrid!(p, [top, left, bottom, right], [nX,nY,nZ]) *No outer boundary*
 		addBackgroundGrid!(p, [dx,dy,dz])                             *If an outer boundary is present*
-		
+
 ## Accessing items
 
 		crv         = get(p,curveName)	             *Get a curve in the outer boundary*
 		crv         = get(p,curveName, boundaryName) *Get a curve in an inner boundary*
 		indx, chain = getChain(p,boundaryName)       *Get a complete inner boundary curve*
 		r           = getRefinementRegion(p, name)
-		
+
 ## Removing from Project
 
 		removeOuterboundary!(p) 			       *Entire outer boundary curve*
-		removeInnerBoundary!(p, innerBoundaryName) *Entire inner boundary curve
+		removeInnerBoundary!(p, innerBoundaryName) *Entire inner boundary curve*
 		remove!(p, name) 					       *Curve in outer boundary*
 		remove!(p, name, innerBoundaryName)        *Curve in inner boundary*
 		removeRefinementRegion!(p,  name)
-		
+
 ## Editing items
 
 All items have set/get methods to edit them. Most actions have undo() and redo(). To find out what the next undo/redo actions are, use undoActionName() and redoActionName() to print them out.
@@ -61,4 +61,4 @@ All items have set/get methods to edit them. Most actions have undo() and redo()
 
 		generateMesh(p)
 		removeMesh!(p)
-	
+
