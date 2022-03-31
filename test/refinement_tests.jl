@@ -1,7 +1,5 @@
-using Test
-include("../HQMTool.jl")
 #=
-    Project Tests tests the "Project.jl" functions
+    Project Tests tests the "RefinementRegions.jl" functions
 Functions: @ = tested
     @   newRefinementCenter
     @   addRefinementRegion!
@@ -29,10 +27,10 @@ Functions: @ = tested
     @   setRefinementEnd!
     @   getRefinementEnd
 =#
-@testset "Project Tests" begin
+@testset "Refinement Tests" begin
 
     projectName = "TestProject"
-    projectPath = "./Test/TestData"
+    projectPath = "out"
 
     p = newProject(projectName, projectPath)
 #
@@ -58,7 +56,7 @@ Functions: @ = tested
     redo()
     @test getRefinementType(cent1)     == "sharp"
 #
-#   Refinement name 
+#   Refinement name
 #
     @test getRefinementName(cent1)     == "Center1"
     setRefinementName!(cent1,"Second")
@@ -70,7 +68,7 @@ Functions: @ = tested
     undo()
     @test getRefinementName(cent1)     == "Center1"
 #
-#   Refinement center location 
+#   Refinement center location
 #
     @test getRefinementLocation(cent1) == x0
     @test getRefinementRegionCenter(cent1) == [1.0,2.0]
@@ -81,7 +79,7 @@ Functions: @ = tested
     redo()
     @test getRefinementLocation(cent1) == [0.,0.,0.]
 #
-#   Refinement width 
+#   Refinement width
 #
     @test getRefinementWidth(cent1)    == w
     setRefinementWidth!(cent1,1.0)
@@ -91,7 +89,7 @@ Functions: @ = tested
     redo()
     @test getRefinementWidth(cent1)    == 1.0
 #
-#   Refinement grid size 
+#   Refinement grid size
 #
     @test getRefinementGridSize(cent1) == h
     setRefinementGridSize!(cent1,0.5)
@@ -156,6 +154,6 @@ Functions: @ = tested
 
     for (i,d) in enumerate(lst)
         @test getRefinementName(d) == names[i]
-    end 
-   
+    end
+
 end

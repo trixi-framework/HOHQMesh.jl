@@ -18,7 +18,7 @@ Functions: @ = tested
 @testset "Background Grid Tests" begin
 
     projectName = "TestProject"
-    projectPath = "./test/TestData"
+    projectPath = "out"
 
     p = newProject(projectName, projectPath)
 #

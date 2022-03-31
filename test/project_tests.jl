@@ -1,5 +1,3 @@
-using Test
-include("../HQMTool.jl")
 #=
     Project Tests tests the "Project.jl" functions
 
@@ -27,12 +25,12 @@ Functions: @ = tested
 #   Create, save, and read
 #
     projectName = "TestProject"
-    projectPath = "./Test/TestData"
+    projectPath = "out"
 
     p = newProject(projectName, projectPath)
 
     saveProject(p)
-    q = openProject("TestProject.Control",projectPath)
+    q = openProject("TestProject.control",projectPath)
     setSmoothingIterations!(q,25)
 
     @test getSmoothingIterations(q) == 25
@@ -45,7 +43,9 @@ Functions: @ = tested
     cDict = getControlDict(q)
     @test haskey(cDict,"SPRING_SMOOTHER") == false
 
-    p = openProject("AllFeatures.control",projectPath)
+    control_file = joinpath(HOHQMesh.examples_dir(), "AllFeatures.control")
+    p = openProject(control_file, projectPath)
+    # p = openProject("AllFeatures.control",projectPath)
 
     @test hasBackgroundGrid(p) == true
     bounds = [25.28, -20.0, -5.0, 20.0]
@@ -57,7 +57,7 @@ Functions: @ = tested
     obNames = ["B1", "B2", "B3"]
     @test p.outerBndryNames == obNames
 
-    xGrid = [-23.0, -20.0, -17.0, -14.0, -11.0, -8.0, -5.0, -2.0, 1.0, 4.0, 7.0, 
+    xGrid = [-23.0, -20.0, -17.0, -14.0, -11.0, -8.0, -5.0, -2.0, 1.0, 4.0, 7.0,
             10.0, 13.0, 16.0, 19.0, 22.0]
     yGrid = [-8.0, -5.0, -2.0, 1.0, 4.0, 7.0, 10.0, 13.0, 16.0, 19.0, 22.0, 25.0, 28.0]
     p.xGrid, p.yGrid = projectGrid(p)

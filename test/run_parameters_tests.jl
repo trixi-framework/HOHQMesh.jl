@@ -1,12 +1,10 @@
-using Test
-include("../HQMTool.jl")
 #=
     Run Parameters Tests tests the "RunParameters.jl" functions
 
 Functions: @ = tested
-    @   addRunParameters!(proj::Project, 
-            plotFormat::String     = "skeleton", 
-            meshFileFormat::String = "ISM-V2", 
+    @   addRunParameters!(proj::Project,
+            plotFormat::String     = "skeleton",
+            meshFileFormat::String = "ISM-V2",
             polynomialOrder::Int   = 5)
     @   removeRunParameters!(proj::Project)
     @   setName!(proj::Project,name::String)
@@ -25,7 +23,7 @@ Functions: @ = tested
 @testset "Run Parameters Tests" begin
 
     projectName = "TestProject"
-    projectPath = "./Test/TestData"
+    projectPath = "out"
     newName     = "RPTestsName"
 
     p = newProject(projectName, projectPath) # Auto sets up run parameters
@@ -39,10 +37,10 @@ Functions: @ = tested
     redo()
     @test getName(p)          == newName
 
-    setFileNames!(p)
-    @test getMeshFileName(p)  == "./Test/TestData/RPTestsName.mesh"
-    @test getPlotFileName(p)  == "./Test/TestData/RPTestsName.tec"
-    @test getStatsFileName(p) == "./Test/TestData/RPTestsName.txt"
+    setFileNames!(p, getMeshFileFormat(p))
+    @test getMeshFileName(p)  == "out/RPTestsName.mesh"
+    @test getPlotFileName(p)  == "out/RPTestsName.tec"
+    @test getStatsFileName(p) == "out/RPTestsName.txt"
 
     @test getPolynomialOrder(p) == 5
     setPolynomialOrder!(p,6)
@@ -52,6 +50,11 @@ Functions: @ = tested
     redo()
     @test getPolynomialOrder(p) == 6
 
+    setMeshFileFormat!(p, "ABAQUS")
+    @test getMeshFileFormat(p) == "ABAQUS"
+    undo()
+
+    # ISM-V2 is the default file format type
     @test getMeshFileFormat(p) == "ISM-V2"
     setMeshFileFormat!(p,"ISM")
     @test getMeshFileFormat(p) == "ISM"
@@ -64,14 +67,14 @@ Functions: @ = tested
     @test getMeshFileFormat(p) == "ISM"
 
     @test getPlotFileFormat(p) == "skeleton"
-    setPlotFileFormat!(p,"sem") 
+    setPlotFileFormat!(p,"sem")
     @test getPlotFileFormat(p) == "sem"
     undo()
     @test getPlotFileFormat(p) == "skeleton"
     redo()
     @test getPlotFileFormat(p) == "sem"
 
-    setPlotFileFormat!(p,"BLORP") 
+    setPlotFileFormat!(p,"BLORP")
     @test getPlotFileFormat(p) == "sem"
 
     removeRunParameters!(p)

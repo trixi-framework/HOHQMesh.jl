@@ -1,20 +1,18 @@
-using Test
-include("../HQMTool.jl")
 #=
     Curve Tests tests the "CurvesAPI.jl" functions
 
 Functions: @ = tested
-    @(as new)   newParametricEquationCurve(name::String, 
-                                    xEqn::String, 
-                                    yEqn::String, 
+    @(as new)   newParametricEquationCurve(name::String,
+                                    xEqn::String,
+                                    yEqn::String,
                                     zEqn::String = "z(t) = 0.0" )
-    @(as new)   newEndPointsLineCurve(name::String, 
+    @(as new)   newEndPointsLineCurve(name::String,
                                xStart::Array{Float64},
                                xEnd::Array{Float64})
-    @(as new)   newCircularArcCurve(name::String, 
-                             center::Array{Float64},  
+    @(as new)   newCircularArcCurve(name::String,
+                             center::Array{Float64},
                              radius::Float64,
-                             startAngle::Float64, 
+                             startAngle::Float64,
                              endAngle::Float64,
                              units::String = "degrees")
     @   newSplineCurve(name::String, nKnots::Int, data::Matrix{Float64})
@@ -66,14 +64,6 @@ Functions: @ = tested
         @test getXEqn(crv)      == xEqn
         @test getYEqn(crv)      == yEqn
         @test getZEqn(crv)      == zEqn
-
-        # pt = zeros(Float64,2)
-        # peEquationCurvePoint(xEqn,yEqn,0.5,pt)
-        # pts = curvePoints(crv,2)
-        # @test isapprox(pts[1,:],[0.0,0.0])
-        # @test isapprox(pts[2,:],[0.5,1.0])
-        # @test isapprox(pts[3,:],[1.0,2.0])
-
     end
 
     @testset "EndPointLine Tests" begin
@@ -92,7 +82,7 @@ Functions: @ = tested
         pt = curvePoint(crv, 0.5)
         @test isapprox(pt,[0.5,0.5,0.0])
 
-        pts = curvePoints(crv,2)
+        pts = curvePoints(crv, 2)
         @test isapprox(pts[1,:],[0.0,0.0])
         @test isapprox(pts[2,:],[0.5,0.5])
         @test isapprox(pts[3,:],[1.0,1.0])
@@ -110,7 +100,6 @@ Functions: @ = tested
         @test getEndPoint(crv) == xEnd
         redo()
         @test getEndPoint(crv) == [2.0,3.0,0.0]
-     
     end
 
     @testset "CircularArc Tests" begin
@@ -151,7 +140,6 @@ Functions: @ = tested
         @test getArcCenter(crv) == center
         redo()
         @test getArcCenter(crv) == [1.0,2.0,0.0]
-
     end
 
     @testset "Spline Tests" begin
@@ -173,7 +161,7 @@ Functions: @ = tested
         @test getCurveType(crv)     == "SPLINE_CURVE"
         @test getCurveName(crv)     == name
         @test getSplineNKnots(crv)  == nKnots
-        
+
         pt = curvePoint(crv, 0.5)
         @test isapprox(pt,[0.5^3,0.5^3 + 0.5^2,0.0])
         pt = curvePoint(crv, 0.0)
@@ -187,7 +175,7 @@ Functions: @ = tested
         for j in 1:M+1
             tj = (j-1)*d
             @test isapprox(pts[j,:],[tj^3,tj^3 + tj^2])
-        end 
+        end
 
         gPts = getSplinePoints(crv)
         @test isapprox(data,gPts)

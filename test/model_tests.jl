@@ -1,5 +1,3 @@
-using Test
-include("../HQMTool.jl")
 #=
     Model Tests tests the "ModelAPI.jl" functions
 
@@ -17,7 +15,7 @@ Functions: @  = tested
 
     @@ addCurveToInnerBoundary!(proj::Project, crv::Dict{String,Any}, boundaryName::String)
     @   removeInnerBoundaryCurve!(proj::Project, name::String, chainName::String)
-    @@  insertInnerBoundaryCurveAtIndex!(proj::Project, crv::Dict{String,Any}, 
+    @@  insertInnerBoundaryCurveAtIndex!(proj::Project, crv::Dict{String,Any},
                                          indx::Int, boundaryName::String)
     @@  removeInnerBoundaryCurveAtIndex!(proj::Project, indx::Int, chainName::String)
     removeInnerBoundary!(proj::Project, chainName::String)
@@ -36,7 +34,7 @@ Functions: @  = tested
 #   Project for the model
 #
     projectName = "TestProject"
-    projectPath = "./Test/TestData"
+    projectPath = "out"
 
     p = newProject(projectName, projectPath)
 #
@@ -94,5 +92,5 @@ Functions: @  = tested
     @test length(ibList) == 3
     ibc = getInnerBoundaryCurve(p, "obc2",ib1Name)
     @test getCurveName(ibc) == "obc2"
-    
+
 end

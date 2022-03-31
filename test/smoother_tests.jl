@@ -1,5 +1,3 @@
-using Test
-include("../HQMTool.jl")
 #=
     Smoother Tests tests the "SmootherAPI.jl" functions
 
@@ -18,12 +16,12 @@ Functions: @ = tested
 #   Create, save, and read
 #
     projectName = "TestProject"
-    projectPath = "./Test/TestData"
+    projectPath = "out"
 
     p = newProject(projectName, projectPath)
 
     saveProject(p)
-    q = openProject("TestProject.Control",projectPath)
+    q = openProject("TestProject.control",projectPath)
     setSmoothingIterations!(q,25)
 
     @test getSmoothingIterations(q) == 25
