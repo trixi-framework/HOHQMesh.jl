@@ -26,7 +26,7 @@
 
 function generate_mesh(proj::Project)
 #
-#   Check to be sure background grid has been created (everhtying else is defaults)
+#   Check to be sure background grid has been created (everything else is defaults)
 #
     controlDict = getControlDict(proj)
     if !haskey(controlDict,"BACKGROUND_GRID")
