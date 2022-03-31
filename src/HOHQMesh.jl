@@ -7,17 +7,189 @@ using HOHQMesh_jll: HOHQMesh_jll
 using Printf
 #using Requires: @require
 
-export generate_mesh
-export hqmtool_all_features_demo
-export hqmtool_ice_cream_cone_verbose_demo, hqmtool_ice_cream_cone_demo
-
-
 # function __init__()
 #   # Enable features that depend on the availability of the Makie package
 #   @require Makie="ee78f7c6-11fb-53f2-987a-cfe4a2b5a57a" begin
 #     using .Makie
 #   end
 # end
+
+# Main wrapper to generate a mesh from a control file
+export generate_mesh
+
+# Functions useful to demonstrate the interactive HQMTool
+export hqmtool_all_features_demo,
+       hqmtool_ice_cream_cone_verbose_demo,
+       hqmtool_ice_cream_cone_demo
+
+# Generic functions for the HQMTool interface
+export new,
+       add!,
+       get,
+       getInnerBoundary,
+       remove!
+
+#
+#  TODO: Go through and cleanup most of this exporting. Most of this will only
+#        exported for automatic testing purposes
+#
+# Functions from `BackgroundGridAPI.jl`
+export addBackgroundGrid!,
+       removeBackgroundGrid!,
+       setBackgroundGridSize!,
+       getBackgroundGridSize,
+       getBackgroundGridLowerLeft,
+       getBackgroundGridSteps,
+       setBackgroundGridLowerLeft!,
+       setBackgroundGridSteps!
+
+# Functions from `ControlInputAPI.jl`
+export getControlDict,
+       getDictInControlDictNamed,
+       getListInControlDictNamed
+
+# Functions from `CurvesAPI.jl`
+export newParametricEquationCurve,
+       newEndPointsLineCurve,
+       newCircularArcCurve,
+       newSplineCurve,
+       setCurveName!,
+       getCurveName,
+       getCurveType,
+       setXEqn!, getXEqn,
+       setYEqn!, getYEqn,
+       setZEqn!, getZEqn,
+       setStartPoint!,
+       getStartPoint,
+       setEndPoint!,
+       getEndPoint,
+       setArcUnits!,
+       getArcUnits,
+       setArcCenter!,
+       getArcCenter,
+       setArcStartAngle!,
+       getArcStartAngle,
+       setArcEndAngle!,
+       getArcEndAngle,
+       setArcRadius!,
+       getArcRadius,
+       setSplineNKnots!,
+       getSplineNKnots,
+       setSplinePoints!,
+       getSplinePoints,
+       curvePoint,
+       curvePoints
+
+# Functions from `ModelAPI.jl`
+export addCurveToOuterBoundary!,
+       removeOuterBoundaryCurveWithName!,
+       getOuterBoundaryCurveWithName,
+       insertOuterBoundaryCurveAtIndex!,
+       removeOuterBoundaryCurveAtIndex!,
+       addOuterBoundary!,
+       removeOuterboundary!,
+       getOuterBoundaryChainList,
+       addCurveToInnerBoundary!,
+       removeInnerBoundaryCurve!,
+       insertInnerBoundaryCurveAtIndex!,
+       removeInnerBoundaryCurveAtIndex!,
+       removeInnerBoundary!,
+       addInnerBoundaryWithName!,
+       getChainIndex,
+       getAllInnerBoundaries,
+       getInnerBoundaryChainWithName,
+       getInnerBoundaryCurve,
+       innerBoundaryIndices,
+       getModelDict,
+       getDictInModelDictNamed
+
+# Functions from `Project.jl` (this is main object of HQMTool)
+export openProject,
+       saveProject,
+       newProject,
+       hasBackgroundGrid,
+       assemblePlotArrays,
+       projectBounds,
+       projectGrid,
+       curveDidChange,
+       modelDidChange,
+       backgroundGridDidChange,
+       refinementWasAdded,
+       refinementDidChange,
+       meshWasGenerated,
+       meshWasDeleted
+
+# Functions from `RefinementRegionsAPI.jl`
+export newRefinementCenter,
+       addRefinementRegion!,
+       addRefinementRegionPoints!,
+       refinementRegionPoints,
+       getRefinementRegionCenter,
+       removeRefinementRegion!,
+       insertRefinementRegion!,
+       newRefinementLine,
+       getRefinementRegion,
+       getAllRefinementRegions,
+       getRefinementRegion,
+       setRefinementType!,
+       getRefinementType,
+       setRefinementName!,
+       getRefinementName,
+       setRefinementLocation!,
+       getRefinementLocation,
+       setRefinementGridSize!,
+       getRefinementGridSize,
+       setRefinementWidth!,
+       getRefinementWidth,
+       setRefinementStart!,
+       getRefinementStart,
+       setRefinementEnd!,
+       getRefinementEnd
+
+# Functions from `RunParametersAPI.jl`
+export addRunParameters!,
+       removeRunParameters!,
+       setName!,
+       getName,
+       setPolynomialOrder!,
+       getPolynomialOrder,
+       setMeshFileFormat!,
+       getMeshFileFormat,
+       setPlotFileFormat!,
+       getPlotFileFormat,
+       setFileNames!,
+       getMeshFileName,
+       getPlotFileName,
+       getStatsFileName
+
+# Functions from `SmootherAPI.jl`
+export addSpringSmoother!,
+       setSmoothingStatus!,
+       getSmoothingStatus,
+       setSmoothingType!,
+       getSmoothingType,
+       setSmoothingIterations!,
+       getSmoothingIterations,
+       removeSpringSmoother!
+
+# Functions from `Undo.jl`
+export undo,
+       redo,
+       registerUndo,
+       registerWithUndoManager,
+       registerRedo,
+       clearUndoRedo,
+       undoActionName,
+       redoActionName,
+       disableUndo,
+       enableUndo
+
+# Functions from `VizProject.jl`
+export plotProject!,
+       updatePlot!
+
+# Functions from `Meshing.jl`
+export generateMesh, removeMesh!
 
 
 """
