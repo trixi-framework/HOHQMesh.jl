@@ -187,8 +187,8 @@ export undo,
        disableUndo,
        enableUndo
 
-# Functions from `Meshing.jl`
-export generateMesh, removeMesh!
+# Functions from `Meshing.jl`, generate_mesh is already exported
+export remove_mesh!
 
 
 """
@@ -329,7 +329,7 @@ function hqmtool_all_features_demo(folder::String)
     plotProject!(p, MODEL+REFINEMENTS+GRID)
     println("Hit any key to continue and generate the mesh")
     readline()
-    generateMesh(p)
+    generate_mesh(p)
     return p
 end
 
@@ -371,7 +371,7 @@ function hqmtool_ice_cream_cone_verbose_demo(folder::String)
 #
     println("Press any key to continue and generate the mesh")
     readline()
-    generateMesh(p)
+    generate_mesh(p)
 
     return p
 end
@@ -415,7 +415,7 @@ function hqmtool_ice_cream_cone_demo(folder::String)
 #
     println("Press any key to continue and generate the mesh")
     readline()
-    generateMesh(p)
+    generate_mesh(p)
 
     return p
 end
