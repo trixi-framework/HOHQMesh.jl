@@ -21,9 +21,7 @@ end
 export generate_mesh
 
 # Functions useful to demonstrate the interactive HQMTool
-export hqmtool_all_features_demo,
-       hqmtool_ice_cream_cone_verbose_demo,
-       hqmtool_ice_cream_cone_demo
+export run_demo, ice_cream_cone_verbose_demo, ice_cream_cone_demo
 
 # Generic functions for the HQMTool interface
 export new,
@@ -319,21 +317,23 @@ include("Project/Generics.jl")
 #---------------- Routines for demonstrating the HQMTool ---------------------------------
 #
 
-function hqmtool_all_features_demo(folder::String)
+function run_demo(folder::String; called_by_user=true)
 #
 # Reads in an existing control file, plots the boundary curves and generates
 # a mesh.
 #
     all_features_control_file = joinpath( examples_dir() , "AllFeatures.control" )
     p = openProject(all_features_control_file, folder)
-    plotProject!(p, MODEL+REFINEMENTS+GRID)
-    println("Hit any key to continue and generate the mesh")
-    readline()
+    if called_by_user
+      plotProject!(p, MODEL+REFINEMENTS+GRID)
+      println("Press enter to continue and generate the mesh")
+      readline()
+    end
     generate_mesh(p)
     return p
 end
 
-function hqmtool_ice_cream_cone_verbose_demo(folder::String)
+function ice_cream_cone_verbose_demo(folder::String; called_by_user=true)
 #
 # Create a project with the name "IceCreamCone", which will be the name of the mesh, plot and stats files,
 # written to `folder`.
@@ -362,21 +362,24 @@ function hqmtool_ice_cream_cone_verbose_demo(folder::String)
 #   To mesh, a background grid is needed
 #
     addBackgroundGrid!(p, [0.5,0.5,0.0])
+
+    if called_by_user
 #
 #   Show the model and grid
 #
-    plotProject!(p, MODEL+GRID)
+      plotProject!(p, MODEL+GRID)
+      println("Press enter to continue and generate the mesh")
+      readline()
+    end
 #
 #   Generate the mesh and plot
 #
-    println("Press any key to continue and generate the mesh")
-    readline()
     generate_mesh(p)
 
     return p
 end
 
-function hqmtool_ice_cream_cone_demo(folder::String)
+function ice_cream_cone_demo(folder::String; called_by_user=true)
 #
 # Create a project with the name "IceCreamCone", which will be the name of the mesh, plot and stats files,
 # written to `path`.
@@ -406,15 +409,19 @@ function hqmtool_ice_cream_cone_demo(folder::String)
     setMeshFileFormat!(p, "ABAQUS")
     meshFileFormat = getMeshFileFormat(p)
     setFileNames!(p, meshFileFormat)
+
+    if called_by_user
 #
 #   Show the model and grid
 #
-    plotProject!(p, MODEL+GRID)
+      plotProject!(p, MODEL+GRID)
+      println("Press enter to continue and generate the mesh")
+      readline()
+    end
+
 #
 #   Generate the mesh and plot
 #
-    println("Press any key to continue and generate the mesh")
-    readline()
     generate_mesh(p)
 
     return p
