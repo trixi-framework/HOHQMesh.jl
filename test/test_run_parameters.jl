@@ -1,3 +1,4 @@
+module TestRunParameters
 #=
     Run Parameters Tests tests the "RunParameters.jl" functions
 
@@ -20,6 +21,9 @@ Functions: @ = tested
     @   getPlotFileName(proj::Project)
     @   getStatsFileName(proj::Project)
 =#
+using HOHQMesh
+using Test
+
 @testset "Run Parameters Tests" begin
 
     projectName = "TestProject"
@@ -83,3 +87,5 @@ Functions: @ = tested
     @test haskey(cDict,"RUN_PARAMETERS") == false
 
 end
+
+end # module

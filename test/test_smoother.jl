@@ -1,3 +1,4 @@
+module TestSmoother
 #=
     Smoother Tests tests the "SmootherAPI.jl" functions
 
@@ -11,6 +12,9 @@ Functions: @ = tested
     @   getSmoothingIterations(proj::Project)
     @   removeSpringSmoother!(proj::Project)
 =#
+using HOHQMesh
+using Test
+
 @testset "Smoother Tests" begin
 #
 #   Create, save, and read
@@ -42,3 +46,5 @@ Functions: @ = tested
     @test haskey(cDict,"SPRING_SMOOTHER") == false
 
 end
+
+end # module

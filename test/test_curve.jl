@@ -1,3 +1,4 @@
+module TestCurve
 #=
     Curve Tests tests the "CurvesAPI.jl" functions
 
@@ -48,6 +49,8 @@ Functions: @ = tested
     @   setSplinePoints!(spline::Dict{String,Any},points::Matrix{Float64})
     @   getSplinePoints(spline::Dict{String,Any})
 =#
+using HOHQMesh
+using Test
 
 @testset "Curve Tests" begin
     @testset "ParametricCurve Tests" begin
@@ -188,3 +191,5 @@ Functions: @ = tested
     # @test isapprox(data,fPts)
 
 end
+
+end # module

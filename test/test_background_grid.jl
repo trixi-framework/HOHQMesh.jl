@@ -1,3 +1,4 @@
+module TestBackgroundGrid
 #=
     Background Grid Tests exercises routines found in "src/Project/BackgroundGridAPI.jl" functions
 
@@ -15,6 +16,9 @@ Functions: @ = tested
     @   setBackgroundGridSize!(proj::Project, dx::Array{Float64}, key::String)
     @   addBackgroundGrid!(proj::Project, dict::Dict{String,Any})
 =#
+using HOHQMesh
+using Test
+
 @testset "Background Grid Tests" begin
 
     projectName = "TestProject"
@@ -67,3 +71,5 @@ Functions: @ = tested
     @test hasBackgroundGrid(p) == false
 
 end
+
+end # module

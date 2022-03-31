@@ -1,3 +1,4 @@
+module TestModel
 #=
     Model Tests tests the "ModelAPI.jl" functions
 
@@ -29,6 +30,9 @@ Functions: @  = tested
     @   getModelDict(proj::Project)
     @@  getDictInModelDictNamed(proj::Project,name::String)
 =#
+using HOHQMesh
+using Test
+
 @testset "Model Tests" begin
 #
 #   Project for the model
@@ -94,3 +98,5 @@ Functions: @  = tested
     @test getCurveName(ibc) == "obc2"
 
 end
+
+end # module

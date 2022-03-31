@@ -1,3 +1,4 @@
+module TestRefinement
 #=
     Project Tests tests the "RefinementRegions.jl" functions
 Functions: @ = tested
@@ -27,6 +28,9 @@ Functions: @ = tested
     @   setRefinementEnd!
     @   getRefinementEnd
 =#
+using HOHQMesh
+using Test
+
 @testset "Refinement Tests" begin
 
     projectName = "TestProject"
@@ -157,3 +161,5 @@ Functions: @ = tested
     end
 
 end
+
+end # module

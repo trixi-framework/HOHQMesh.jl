@@ -1,3 +1,4 @@
+module TestHQMToolProject
 #=
     Project Tests tests the "Project.jl" functions
 
@@ -20,6 +21,9 @@ Functions: @ = tested
     meshWasDeleted(proj::Project, sender::Project)
 
 =#
+using HOHQMesh
+using Test
+
 @testset "Project Tests" begin
 #
 #   Create, save, and read
@@ -64,3 +68,5 @@ Functions: @ = tested
     @test isapprox(p.xGrid,xGrid)
     @test isapprox(p.yGrid,yGrid)
 end
+
+end # module
