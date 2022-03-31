@@ -10,8 +10,9 @@ using Requires: @require
 function __init__()
   # Enable features that depend on the availability of the Makie package
   @require Makie="ee78f7c6-11fb-53f2-987a-cfe4a2b5a57a" begin
-    include("Viz/VizProject.jl")
     using .Makie
+    include("Viz/VizProject.jl")
+    include("Viz/VizMesh.jl")
     export plotProject!, updatePlot!
   end
 end
