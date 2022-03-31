@@ -30,7 +30,7 @@ Functions: @ = tested
     p = newProject(projectName, projectPath)
 
     saveProject(p)
-    q = openProject("TestProject.control",projectPath)
+    q = openProject("TestProject.control", projectPath)
     setSmoothingIterations!(q,25)
 
     @test getSmoothingIterations(q) == 25

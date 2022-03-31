@@ -38,9 +38,10 @@ Functions: @ = tested
     @test getName(p)          == newName
 
     setFileNames!(p, getMeshFileFormat(p))
-    @test getMeshFileName(p)  == "out/RPTestsName.mesh"
-    @test getPlotFileName(p)  == "out/RPTestsName.tec"
-    @test getStatsFileName(p) == "out/RPTestsName.txt"
+    # Use string concatenation to make this more general
+    @test getMeshFileName(p)  == joinpath(projectPath, newName*".mesh")
+    @test getPlotFileName(p)  == joinpath(projectPath, newName*".tec")
+    @test getStatsFileName(p) == joinpath(projectPath, newName*".txt")
 
     @test getPolynomialOrder(p) == 5
     setPolynomialOrder!(p,6)
