@@ -24,7 +24,7 @@
  --- End License
 =#
 
-function generateMesh(proj::Project)
+function generate_mesh(proj::Project)
 #
 #   Check to be sure background grid has been created (everhtying else is defaults)
 #
@@ -42,7 +42,7 @@ function generateMesh(proj::Project)
     return nothing
 end
 
-function removeMesh!(proj::Project)
+function remove_mesh!(proj::Project)
     meshFile = getMeshFileName(proj)
     rm(meshFile)
     proj.xMesh = Float64[]
