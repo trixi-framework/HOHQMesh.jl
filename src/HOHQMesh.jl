@@ -5,14 +5,16 @@ module HOHQMesh
 
 using HOHQMesh_jll: HOHQMesh_jll
 using Printf
-#using Requires: @require
+using Requires: @require
 
-# function __init__()
-#   # Enable features that depend on the availability of the Makie package
-#   @require Makie="ee78f7c6-11fb-53f2-987a-cfe4a2b5a57a" begin
-#     using .Makie
-#   end
-# end
+function __init__()
+  # Enable features that depend on the availability of the Makie package
+  @require Makie="ee78f7c6-11fb-53f2-987a-cfe4a2b5a57a" begin
+    include("Viz/VizProject.jl")
+    using .Makie
+    export plotProject!, updatePlot!
+  end
+end
 
 # Main wrapper to generate a mesh from a control file
 export generate_mesh
@@ -30,7 +32,7 @@ export new,
        remove!
 
 #
-#  TODO: Go through and cleanup most of this exporting. Most of this will only
+#  TODO: Go through and cleanup this exporting. Most of this will only be
 #        exported for automatic testing purposes
 #
 # Functions from `BackgroundGridAPI.jl`
@@ -184,10 +186,6 @@ export undo,
        disableUndo,
        enableUndo
 
-# Functions from `VizProject.jl`
-export plotProject!,
-       updatePlot!
-
 # Functions from `Meshing.jl`
 export generateMesh, removeMesh!
 
@@ -312,22 +310,22 @@ include("ControlFile/ControlFileOperations.jl")
 include("Curves/CurveOperations.jl")
 include("Project/Project.jl")
 include("Project/CurvesAPI.jl")
-include("Viz/VizProject.jl")
 include("Project/Undo.jl")
 include("Mesh/Meshing.jl")
 include("Project/Generics.jl")
 
 #
-#---------------- Routines for testing and demonstrating the HQMTool ---------------------------------
+#---------------- Routines for demonstrating the HQMTool ---------------------------------
 #
 
-function hqmtool_all_features_demo()
+function hqmtool_all_features_demo(folder::String)
 #
 # Reads in an existing control file, plots the boundary curves and generates
 # a mesh.
 #
-    p = openProject("AllFeatures.control", joinpath(@__DIR__, "..", "examples"))
-    plotProject!(p,MODEL+REFINEMENTS+GRID)
+    all_features_control_file = joinpath( examples_dir() , "AllFeatures.control" )
+    p = openProject(all_features_control_file, folder)
+    plotProject!(p, MODEL+REFINEMENTS+GRID)
     println("Hit any key to continue and generate the mesh")
     readline()
     generateMesh(p)
@@ -339,26 +337,26 @@ function hqmtool_ice_cream_cone_verbose_demo(folder::String)
 # Create a project with the name "IceCreamCone", which will be the name of the mesh, plot and stats files,
 # written to `folder`.
 #
-    p = newProject("IceCreamCone",folder)
+    p = newProject("IceCreamCone", folder)
 #
 #   Outer boundary
 #
-    circ = newCircularArcCurve("outerCircle",[0.0,-1.0,0.0],4.0,0.0,360.0,"degrees")
-    addCurveToOuterBoundary!(p,circ)
+    circ = newCircularArcCurve("outerCircle", [0.0,-1.0,0.0], 4.0, 0.0, 360.0, "degrees")
+    addCurveToOuterBoundary!(p, circ)
 #
 #   Inner boundary
 #
-    cone1    = newEndPointsLineCurve("cone1", [0.0,-3.0,0.0],[1.0,0.0,0.0])
-    iceCream = newCircularArcCurve("iceCream",[0.0,0.0,0.0],1.0,0.0,180.0,"degrees")
-    cone2    = newEndPointsLineCurve("cone2", [-1.0,0.0,0.0],[0.0,-3.0,0.0])
-    addCurveToInnerBoundary!(p,cone1,"IceCreamCone")
-    addCurveToInnerBoundary!(p,iceCream,"IceCreamCone")
-    addCurveToInnerBoundary!(p,cone2,"IceCreamCone")
+    cone1    = newEndPointsLineCurve("cone1", [0.0,-3.0,0.0], [1.0,0.0,0.0])
+    iceCream = newCircularArcCurve("iceCream", [0.0,0.0,0.0], 1.0, 0.0, 180.0, "degrees")
+    cone2    = newEndPointsLineCurve("cone2", [-1.0,0.0,0.0], [0.0,-3.0,0.0])
+    addCurveToInnerBoundary!(p, cone1, "IceCreamCone")
+    addCurveToInnerBoundary!(p, iceCream, "IceCreamCone")
+    addCurveToInnerBoundary!(p, cone2, "IceCreamCone")
 #
 #   Set some control RunParameters to overwrite the defaults
 #
-    setPolynomialOrder!(p,4)
-    setPlotFileFormat!(p,"sem")
+    setPolynomialOrder!(p, 4)
+    setPlotFileFormat!(p, "sem")
 #
 #   To mesh, a background grid is needed
 #
@@ -382,21 +380,21 @@ function hqmtool_ice_cream_cone_demo(folder::String)
 # Create a project with the name "IceCreamCone", which will be the name of the mesh, plot and stats files,
 # written to `path`.
 #
-    p = newProject("IceCreamCone",folder)
+    p = newProject("IceCreamCone", folder)
 #
 #   Outer boundary
 #
-    circ = new("outerCircle",[0.0,-1.0,0.0],4.0,0.0,360.0,"degrees")
+    circ = new("outerCircle", [0.0,-1.0,0.0],4.0,0.0,360.0,"degrees")
     add!(p,circ)
 #
 #   Inner boundary
 #
-    cone1    = new("cone1", [0.0,-3.0,0.0],[1.0,0.0,0.0])
-    iceCream = new("iceCream",[0.0,0.0,0.0],1.0,0.0,180.0,"degrees")
-    cone2    = new("cone2", [-1.0,0.0,0.0],[0.0,-3.0,0.0])
-    add!(p,cone1,"IceCreamCone")
-    add!(p,iceCream,"IceCreamCone")
-    add!(p,cone2,"IceCreamCone")
+    cone1    = new("cone1", [0.0,-3.0,0.0], [1.0,0.0,0.0])
+    iceCream = new("iceCream", [0.0,0.0,0.0], 1.0, 0.0, 180.0, "degrees")
+    cone2    = new("cone2", [-1.0,0.0,0.0], [0.0,-3.0,0.0])
+    add!(p, cone1, "IceCreamCone")
+    add!(p, iceCream, "IceCreamCone")
+    add!(p, cone2, "IceCreamCone")
 #
 #   To mesh, a background grid is needed
 #
