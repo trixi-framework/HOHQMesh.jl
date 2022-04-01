@@ -25,8 +25,13 @@ using Test
     p = newProject(projectName, projectPath)
 
     saveProject(p)
-    q = openProject("TestProject.control", projectPath)
-    setSmoothingIterations!(q,25)
+    q = openProject( projectName*".control", projectPath )
+
+    # Trigger error statements by setting incorrect values in the smoother options
+    addSpringSmoother!(p, "PAUSE", "LinearSpring", 50)
+    addSpringSmoother!(p, "ON"   , "MagicSprings", 50)
+
+    setSmoothingIterations!(q, 25)
 
     @test getSmoothingIterations(q) == 25
     @test getSmoothingStatus(q)     == "ON"
@@ -34,9 +39,16 @@ using Test
 
     setSmoothingStatus!(q,"OFF")
     @test getSmoothingStatus(q) == "OFF"
+
+    # Trigger error statement by setting an invalid spring status
     setSmoothingStatus!(q,"UNKNOWN")
     @test getSmoothingStatus(q) == "OFF"
+
     setSmoothingType!(q,"LinearSpring")
+    @test getSmoothingType(q) == "LinearSpring"
+
+    # Trigger error statement by setting an invalid spring type
+    setSmoothingType!(q,"TorsionalSpring")
     @test getSmoothingType(q) == "LinearSpring"
 
     cDict = getControlDict(q)

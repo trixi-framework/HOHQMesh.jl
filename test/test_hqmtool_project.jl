@@ -49,7 +49,6 @@ using Test
 
     control_file = joinpath(HOHQMesh.examples_dir(), "AllFeatures.control")
     p = openProject(control_file, projectPath)
-    # p = openProject("AllFeatures.control",projectPath)
 
     @test hasBackgroundGrid(p) == true
     bounds = [25.28, -20.0, -5.0, 20.0]
@@ -67,6 +66,10 @@ using Test
     p.xGrid, p.yGrid = projectGrid(p)
     @test isapprox(p.xGrid,xGrid)
     @test isapprox(p.yGrid,yGrid)
+
+    # Exercise some dictionary printing routines for the AllFeatures project
+    HOHQMesh.showDescription(p.projectDictionary)
+    HOHQMesh.stringForKeyFromDictionary("CONTROL_INPUT", p.projectDictionary)
 end
 
 end # module

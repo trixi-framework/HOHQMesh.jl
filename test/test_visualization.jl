@@ -70,9 +70,9 @@ using CairoMakie
     circ4 = new("inner3", [-2.0, -0.75, 0.0], 0.3, 0.0, 360.0, "degrees")
     add!(p, circ4, "inner3")
 
-    # Create a refinement center
+    # Create a refinement center and add it with the generic method
     cent = newRefinementCenter("Center1", "smooth", [-1.25, -3.0, 0.0], 0.2, 1.0)
-    addRefinementRegion!(p, cent)
+    add!(p, cent)
 
     # Set file format to ABAQUS (to exericise plotting routine)
     setMeshFileFormat!(p, "ABAQUS")
