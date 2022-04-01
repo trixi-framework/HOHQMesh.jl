@@ -326,8 +326,9 @@ function run_demo(folder::String; called_by_user=true)
 #
     all_features_control_file = joinpath( examples_dir() , "AllFeatures.control" )
     p = openProject(all_features_control_file, folder)
+
+    plotProject!(p, MODEL+REFINEMENTS+GRID)
     if called_by_user
-      plotProject!(p, MODEL+REFINEMENTS+GRID)
       println("Press enter to continue and generate the mesh")
       readline()
     end
@@ -365,11 +366,11 @@ function ice_cream_cone_verbose_demo(folder::String; called_by_user=true)
 #
     addBackgroundGrid!(p, [0.5,0.5,0.0])
 
+    plotProject!(p, MODEL+GRID)
     if called_by_user
 #
 #   Show the model and grid
 #
-      plotProject!(p, MODEL+GRID)
       println("Press enter to continue and generate the mesh")
       readline()
     end
@@ -412,11 +413,11 @@ function ice_cream_cone_demo(folder::String; called_by_user=true)
     meshFileFormat = getMeshFileFormat(p)
     setFileNames!(p, meshFileFormat)
 
+    plotProject!(p, MODEL+GRID)
     if called_by_user
 #
 #   Show the model and grid
 #
-      plotProject!(p, MODEL+GRID)
       println("Press enter to continue and generate the mesh")
       readline()
     end
