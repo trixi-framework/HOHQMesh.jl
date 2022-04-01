@@ -70,6 +70,16 @@ using Test
 
         value = curvePoint(crv, 0.25)
         @test value == [0.25, 0.5, 0.0]
+
+        # tests to reset curve name and equation definitions
+        setCurveName!(crv, "WhatACurve")
+        setXEqn!(crv, "t^2")
+        setYEqn!(crv, "1.5*t")
+        setZEqn!(crv, "t^3")
+        @test getCurveName(crv) == "WhatACurve"
+        @test getXEqn(crv)      == "t^2"
+        @test getYEqn(crv)      == "1.5*t"
+        @test getZEqn(crv)      == "t^3"
     end
 
     @testset "EndPointLine Tests" begin
@@ -133,6 +143,9 @@ using Test
         @test isapprox(pts[2,:],[0.0,2.0])
         @test isapprox(pts[3,:],[-2.0,0.0])
 
+        # purposly trigger warning with invalid units
+        setArcUnits!(crv,"Rankine")
+
         setArcUnits!(crv,"radians")
         @test getArcUnits(crv) == "radians"
         undo()
@@ -146,6 +159,13 @@ using Test
         @test getArcCenter(crv) == center
         redo()
         @test getArcCenter(crv) == [1.0,2.0,0.0]
+
+        setArcStartAngle!(crv, 90.0)
+        @test getArcStartAngle(crv) == 90.0
+        setArcEndAngle!(crv, 270.0)
+        @test getArcEndAngle(crv) == 270.0
+        setArcRadius!(crv, 1.5)
+        @test getArcRadius(crv) == 1.5
     end
 
     @testset "Spline Tests" begin
@@ -183,6 +203,22 @@ using Test
             @test isapprox(pts[j, :], [tj^3, tj^3 + tj^2])
         end
 
+        gPts = getSplinePoints(crv)
+        @test isapprox(data, gPts)
+#
+#       Create a new set of points to replace the existing ones
+#
+        data = zeros(Float64, 10, 4)
+        for j in 1:10
+            tj = 0.1*(j-1)
+            xj = tj^4
+            yj = tj^2 + 0.5*tj
+            zj = 0.0
+            data[j,:] = [tj,xj,yj,zj]
+        end
+        setSplineNKnots!(crv, 10)
+        setSplinePoints!(crv, data)
+        # test the new points
         gPts = getSplinePoints(crv)
         @test isapprox(data, gPts)
 #
