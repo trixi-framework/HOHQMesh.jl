@@ -1,3 +1,7 @@
+%
+% Control file that exercises available 2D features
+%
+
 \begin{MODEL}
    \begin{OUTER_BOUNDARY}
       \begin{END_POINTS_LINE}
