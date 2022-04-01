@@ -30,6 +30,9 @@ using CairoMakie
     spline1 = new("inner1", joinpath(@__DIR__, "test_spline_curve_data.txt"))
     add!(p, spline1, "inner1")
 
+    # Attempt to generate the mesh before the background grid is set. Throws an error.
+    @test_nowarn generate_mesh(p)
+
     # To mesh, a background grid is needed
     addBackgroundGrid!(p, [0.6, 0.6, 0.0])
 
