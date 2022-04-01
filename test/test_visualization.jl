@@ -65,7 +65,7 @@ using CairoMakie
              [0.5  2.7  -1.0 0.0]
              [0.75 0.6  -2.0 0.0]
              [1.0  1.75 -1.0 0.0] ]
-    spline2 = newSplineCurve("small_spline", 5, data)
+    spline2 = new("small_spline", 5, data)
     add!(p, spline2, "inner2")
 
     # Test getting the inner curve and test
@@ -103,6 +103,9 @@ using CairoMakie
 
     # Create the mesh which contains a plotting update for ABAQUS
     @test_nowarn generate_mesh(p)
+
+    # Destroy everything
+    remove_mesh!(p)
 
 end
 
