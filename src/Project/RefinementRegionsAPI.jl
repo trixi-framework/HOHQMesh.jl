@@ -3,36 +3,36 @@
 
  Copyright (c) 2010-present David A. Kopriva and other contributors: AUTHORS.md
 
- Permission is hereby granted, free of charge, to any person obtaining a copy  
- of this software and associated documentation files (the "Software"), to deal  
- in the Software without restriction, including without limitation the rights  
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell  
- copies of the Software, and to permit persons to whom the Software is  
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
 
- The above copyright notice and this permission notice shall be included in all  
+ The above copyright notice and this permission notice shall be included in all
  copies or substantial portions of the Software.
 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR  
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,  
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE  
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER  
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,  
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
- 
+
  --- End License
 =#
 
 """
-newRefinementCenter(type, 
+newRefinementCenter(type,
                           center, meshSize,
                           width )
 
 Create refinement center of `type` "smooth" or "sharp" centered at `center = [x,y,z]``
 with a mesh size `meshSize` spread over a radius `width`.
 """
-function newRefinementCenter(name::String, type::String, 
+function newRefinementCenter(name::String, type::String,
                               x0::Array{Float64}, h::Float64,
                               w::Float64 )
     disableUndo()
@@ -130,7 +130,7 @@ function getRefinementRegionCenter(r::Dict{String,Any})
         xEnd   = realArrayForKeyFromDictionary("x1",r)
         xAvg   = 0.5*(xStart + xEnd)
         return xAvg[1:2]
-    end 
+    end
 end
 """
     removeRefinementRegion!(proj::Project, name::String)
@@ -144,7 +144,7 @@ function removeRefinementRegion!(proj::Project, name::String)
     deleteat!(proj.refinementRegionLoc,i)
     deleteat!(proj.refinementRegionNames,i)
     deleteat!(proj.refinementRegionPoints,i)
-    registerWithUndoManager(proj,insertRefinementRegion!, (r,i,), "Remove Refinement Region")    
+    registerWithUndoManager(proj,insertRefinementRegion!, (r,i,), "Remove Refinement Region")
     enableNotifications()
     postNotificationWithName(proj,"REFINEMENT_WAS_ADDED_NOTIFICATION",(nothing,))
 end
@@ -155,7 +155,7 @@ Used by undo()
 """
 function insertRefinementRegion!(proj::Project, r::Dict{String,Any}, indx::Int)
     lst = getAllRefinementRegions(proj)
-    registerWithUndoManager(proj,removeRefinementRegion!, (r["name"],), "Set Insert Refinement Region")    
+    registerWithUndoManager(proj,removeRefinementRegion!, (r["name"],), "Set Insert Refinement Region")
     insert!(lst,indx,r)
     x = refinementRegionPoints(r)
     insert!(proj.refinementRegionPoints,indx,x)
@@ -168,7 +168,7 @@ end
 #  --------------------------------------------------------------------------------------
 #
 """
-    newRefinementLine(type, 
+    newRefinementLine(type,
                         start, end,
                         meshSize,
                         width )
@@ -176,7 +176,7 @@ end
 Create refinement line of type "smooth" or "sharp" between `start` = [x,y,z] and `end` = [x,y,z]
 with a mesh size `meshSize` spread over a width `width`.
 """
-function newRefinementLine(name::String, type::String, 
+function newRefinementLine(name::String, type::String,
                             x0::Array{Float64}, x1::Array{Float64},
                             h::Float64,
                             w::Float64 )
@@ -236,10 +236,9 @@ function getRefinementRegion(proj::Project, name::String)
     for (i,r) in enumerate(lst)
         if r["name"] == name
             return i,r
-        end 
-    end 
-    # TODO: Remove? Not sure why this print statement is here
-    # println("Refinement region with name %s not found",name)
+        end
+    end
+    println("Refinement region with name %s not found",name)
     return nothing
 end
 #
@@ -258,7 +257,7 @@ function setRefinementType!(r::Dict{String,Any}, type::String)
 
     if haskey(r,"type")
         oldType = r["type"]
-        registerWithUndoManager(r,setRefinementType!, (oldType,), "Set Refinement Type")    
+        registerWithUndoManager(r,setRefinementType!, (oldType,), "Set Refinement Type")
     end
     r["type"] = type
 end
@@ -268,7 +267,7 @@ end
 """
     getRefinementType(r::Dict{String,Any})
 
-Return the type of refinement, either "smooth" or "sharp". `r` is the dictionary that 
+Return the type of refinement, either "smooth" or "sharp". `r` is the dictionary that
 represents the refinement region.
 """
 function getRefinementType(r::Dict{String,Any})
@@ -277,13 +276,13 @@ end
 """
     setRefinementName!(r::Dict{String,Any}, type)
 
-Set a name for the refinement region.`r` is the dictionary that 
+Set a name for the refinement region.`r` is the dictionary that
     represents the refinement region.
 """
 function setRefinementName!(r::Dict{String,Any}, name::String)
     if haskey(r,"name")
         oldName = r["name"]
-        registerWithUndoManager(r,setRefinementName!, (oldName,), "Set Refinement Name")    
+        registerWithUndoManager(r,setRefinementName!, (oldName,), "Set Refinement Name")
     end
     r["name"] = name
     postNotificationWithName(r,"REFINEMENT_WAS_CHANGED_NOTIFICATION",(nothing,))
@@ -294,7 +293,7 @@ end
 """
     getRefinementName(r::Dict{String,Any})
 
-Return name of the refinement. `r` is the dictionary that 
+Return name of the refinement. `r` is the dictionary that
 represents the refinement region.
 """
 function getRefinementName(r::Dict{String,Any})
@@ -316,7 +315,7 @@ end
 function setRefinementLocation!(r::Dict{String,Any}, x0Str::String)
     if haskey(r,"x0")
         old = r["x0"]
-        registerWithUndoManager(r,setRefinementLocation!, (old,), "Set Refinement Center")    
+        registerWithUndoManager(r,setRefinementLocation!, (old,), "Set Refinement Center")
     end
     r["x0"] = x0Str
     postNotificationWithName(r,"REFINEMENT_WAS_CHANGED_NOTIFICATION",(nothing,))
@@ -328,7 +327,7 @@ end
 """
     getRefinementLocation(r::Dict{String,Any})
 
-Return Array{Float64} of the location of the refinement center.`r` is the dictionary that 
+Return Array{Float64} of the location of the refinement center.`r` is the dictionary that
 represents the refinement region.
 """
 function getRefinementLocation(r::Dict{String,Any})
@@ -340,13 +339,13 @@ end
 """
     setRefinementGridSize!(r::Dict{String,Any}, h)
 
-Set the grid size, `h` for the refinement region. `r` is the dictionary that 
+Set the grid size, `h` for the refinement region. `r` is the dictionary that
 represents the refinement region.
 """
 function setRefinementGridSize!(r::Dict{String,Any}, h::Float64)
     if haskey(r,"h")
         old = r["h"]
-        registerWithUndoManager(r,setRefinementGridSize!, (old,), "Set Refinement Grid Size")    
+        registerWithUndoManager(r,setRefinementGridSize!, (old,), "Set Refinement Grid Size")
     end
     r["h"] = string(h)
     postNotificationWithName(r,"REFINEMENT_WAS_CHANGED_NOTIFICATION",(nothing,))
@@ -362,7 +361,7 @@ end
 """
     getRefinementGridSize(r::Dict{String,Any})
 
-Returns the grid size,h, as Float64. `r` is the dictionary that 
+Returns the grid size,h, as Float64. `r` is the dictionary that
 represents the refinement region.
 """
 function getRefinementGridSize(r::Dict{String,Any})
@@ -374,13 +373,13 @@ end
 """
     setRefinementWidth!(r::Dict{String,Any}, width)
 
-Set the width of the refinement region. `r` is the dictionary that 
+Set the width of the refinement region. `r` is the dictionary that
 represents the refinement region.
 """
 function setRefinementWidth!(r::Dict{String,Any},w::Float64)
     if haskey(r,"w")
         old = r["w"]
-        registerWithUndoManager(r,setRefinementWidth!, (old,), "Set Refinement Width")    
+        registerWithUndoManager(r,setRefinementWidth!, (old,), "Set Refinement Width")
     end
     r["w"] = string(w)
     postNotificationWithName(r,"REFINEMENT_WAS_CHANGED_NOTIFICATION",(nothing,))
@@ -396,7 +395,7 @@ end
 """
     getRefinementWidth(r::Dict{String,Any})
 
-Returns the region width,w, as Float64. `r` is the dictionary that 
+Returns the region width,w, as Float64. `r` is the dictionary that
 represents the refinement region.
 """
 function getRefinementWidth(r::Dict{String,Any})
@@ -418,7 +417,7 @@ end
 function setRefinementStart!(r::Dict{String,Any}, x0Str::String)
     if haskey(r,"x0")
         old = r["x0"]
-        registerWithUndoManager(r,setRefinementStart!, (old,), "Set Refinement Start")    
+        registerWithUndoManager(r,setRefinementStart!, (old,), "Set Refinement Start")
     end
     r["x0"] = x0Str
     postNotificationWithName(r,"REFINEMENT_WAS_CHANGED_NOTIFICATION",(nothing,))
@@ -429,7 +428,7 @@ end
 """
     getRefinementStart  (r::Dict{String,Any})
 
-Return Array{Float64} of the start location of the refinement line. `r` is the dictionary that 
+Return Array{Float64} of the start location of the refinement line. `r` is the dictionary that
 represents the refinement region.
 """
 function getRefinementStart(r::Dict{String,Any})
@@ -451,7 +450,7 @@ end
 function setRefinementEnd!(r::Dict{String,Any}, x0Str::String)
     if haskey(r,"x1")
         old = r["x1"]
-        registerWithUndoManager(r,setRefinementEnd!, (old,), "Set Refinement End")    
+        registerWithUndoManager(r,setRefinementEnd!, (old,), "Set Refinement End")
     end
     r["x1"] = x0Str
     postNotificationWithName(r,"REFINEMENT_WAS_CHANGED_NOTIFICATION",(nothing,))
