@@ -24,6 +24,7 @@
     \begin{REFINEMENT_REGIONS}
 
        \begin{REFINEMENT_CENTER}
+	  name = TECenter
           type = smooth
           x0   = [1.0,0.0,0.0]
           h    = 0.10
@@ -31,6 +32,7 @@
       \end{REFINEMENT_CENTER}
 
       \begin{REFINEMENT_CENTER}
+	  name = LECenter
           type = smooth
           x0   = [0.0,0.0,0.0]
           h    = 0.05

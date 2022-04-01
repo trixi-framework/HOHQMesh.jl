@@ -117,6 +117,7 @@ end
 function performImport(collection, f::IOStream)
 
     for line in eachline(f)
+        line = rstrip(line)
 #
 #       ----------------
 #       Start of a block
