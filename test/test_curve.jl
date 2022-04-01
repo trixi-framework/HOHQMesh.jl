@@ -67,6 +67,9 @@ using Test
         @test getXEqn(crv)      == xEqn
         @test getYEqn(crv)      == yEqn
         @test getZEqn(crv)      == zEqn
+
+        value = curvePoint(crv, 0.25)
+        @test value == [0.25, 0.5, 0.0]
     end
 
     @testset "EndPointLine Tests" begin

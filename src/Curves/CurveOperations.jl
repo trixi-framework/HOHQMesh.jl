@@ -3,24 +3,24 @@
 
  Copyright (c) 2010-present David A. Kopriva and other contributors: AUTHORS.md
 
- Permission is hereby granted, free of charge, to any person obtaining a copy  
- of this software and associated documentation files (the "Software"), to deal  
- in the Software without restriction, including without limitation the rights  
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell  
- copies of the Software, and to permit persons to whom the Software is  
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
 
- The above copyright notice and this permission notice shall be included in all  
+ The above copyright notice and this permission notice shall be included in all
  copies or substantial portions of the Software.
 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR  
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,  
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE  
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER  
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,  
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
- 
+
  --- End License
 =#
 
@@ -33,7 +33,7 @@ function arcCurvePoints(center::Array{Float64}, r::Float64, thetaStart::Float64,
     if units == "degrees"
         fctr = pi/180.0
     end
-    
+
     theta::Float64 = 0.0
     for i = 1:length(t)
         theta = thetaStart + (thetaEnd - thetaStart)*t[i]
@@ -42,7 +42,7 @@ function arcCurvePoints(center::Array{Float64}, r::Float64, thetaStart::Float64,
     end
 end
 
-function arcCurvePoint(center::Array{Float64}, r::Float64, thetaStart::Float64, thetaEnd::Float64, 
+function arcCurvePoint(center::Array{Float64}, r::Float64, thetaStart::Float64, thetaEnd::Float64,
                        units::AbstractString, t::Float64, point::Array{Float64})
     fctr::Float64 = 1.0
     if units == "degrees"
@@ -74,7 +74,7 @@ function peEquationCurvePoints(xEqn, yEqn, t::Array{Float64}, points::Array{Floa
     yArgM = match(argRegex,argPart)
     yArg  = Symbol(yArgM.match)
     ey    = Meta.parse(eqString)
-    
+
     for i = 1:length(t)
         points[i,1] = evalWithDict(ex,Dict(xArg=> t[i]))
         points[i,2] = evalWithDict(ey,Dict(yArg=> t[i]))
@@ -82,7 +82,7 @@ function peEquationCurvePoints(xEqn, yEqn, t::Array{Float64}, points::Array{Floa
 end
 
 function  peEquationCurvePoint(xEqn, yEqn, t::Float64, point::Array{Float64})
-  
+
     argPart,eqString = keyAndValueFromString(xEqn)
     xArgM = match(argRegex,argPart)
     xArg  = Symbol(xArgM.match)
@@ -92,10 +92,10 @@ function  peEquationCurvePoint(xEqn, yEqn, t::Float64, point::Array{Float64})
     yArgM = match(argRegex,argPart)
     yArg  = Symbol(yArgM.match)
     ey    = Meta.parse(eqString)
-    
-    point[1] = evalWithDict(ex,Dict(xArg=> t))
-    point[2] = evalWithDict(ey,Dict(yArg=> t))
-  
+
+    point[1] = evalWithDict(ex, Dict(xArg=> t))
+    point[2] = evalWithDict(ey, Dict(yArg=> t))
+
 end
 
 function splineCurvePoints(nKnots::Int, splineData::Array{Float64,2}, points::Array{Float64,2})
@@ -110,7 +110,7 @@ function splineCurvePoints(nKnots::Int, splineData::Array{Float64,2}, points::Ar
         t = (i-1)/(nPts-1)
         points[i,1] = evalSpline(xSpline,t)
         points[i,2] = evalSpline(ySpline,t)
-    end 
+    end
 end
 
 function splineCurvePoint(nKnots::Int, splineData::Array{Float64,2}, t, point::Array{Float64})
@@ -122,13 +122,14 @@ function splineCurvePoint(nKnots::Int, splineData::Array{Float64,2}, t, point::A
     point[2] = evalSpline(ySpline,t)
 end
 
-function parse_eval_dict(s::AbstractString, locals::Dict{Symbol})
-    ex = Meta.parse(s)
-    assignments = [:($sym = $val) for (sym,val) in locals]
-    eval(:(let $(assignments...); $ex; end))
-end
+# This function evaluates a string as an equation, might be redundant code
+# function parse_eval_dict(s::AbstractString, locals::Dict{Symbol})
+#     ex = Meta.parse(s)
+#     assignments = [:($sym = $val) for (sym,val) in locals]
+#     eval(:(let $(assignments...); $ex; end))
+# end
 
-function evalWithDict(ex::Expr, locals::Dict{Symbol})
+function evalWithDict(ex, locals::Dict{Symbol})
     assignments = [:($sym = $val) for (sym,val) in locals]
     eval(:(let $(assignments...); $ex; end))
 end
@@ -145,7 +146,7 @@ function curvePoints(crvDict::Dict{String,Any}, N::Int)
         t = zeros(Float64,N+1)
         for i = 1:N+1
             t[i] = (i-1)/N
-        end 
+        end
         peEquationCurvePoints(xEqn,yEqn,t,x)
     elseif curveType == "END_POINTS_LINE"
         xStart = realArrayForKeyFromDictionary("xStart",crvDict)
@@ -154,7 +155,7 @@ function curvePoints(crvDict::Dict{String,Any}, N::Int)
         t = zeros(Float64,3)
         for i = 1:3
             t[i] = (i-1)/2.0
-        end 
+        end
 
         endPointsLineCurvePoints(xStart,xEnd,t,x)
     elseif curveType == "CIRCULAR_ARC"
@@ -168,7 +169,7 @@ function curvePoints(crvDict::Dict{String,Any}, N::Int)
         t = zeros(Float64,N+1)
         for i = 1:N+1
             t[i] = (i-1)/N
-        end 
+        end
 
         arcCurvePoints(center,radius,startAngle,endAngle,units,t,x)
     elseif curveType == "SPLINE_CURVE"
@@ -180,12 +181,12 @@ function curvePoints(crvDict::Dict{String,Any}, N::Int)
         t = zeros(Float64,M+1)
         for i = 1:M+1
             t[i] = (i-1)/M
-        end 
+        end
 
         splineCurvePoints(nKnots,splineData,x)
     else
 
-    end 
+    end
     return x
 end
 
@@ -195,7 +196,7 @@ function chainPoints(chain::Array{Dict{String,Any}}, N::Int)
 
     for crvDict in chain
         push!(x,curvePoints(crvDict,N))
-    end 
+    end
     return x
 end
 
@@ -207,7 +208,7 @@ function curvePoint(crvDict::Dict{String,Any}, t::Float64)
         xEqn = crvDict["xEqn"]
         yEqn = crvDict["yEqn"]
         x = zeros(Float64,3)
-        peEquationCurvePoint(xEqn,yEqn,t,x)
+        peEquationCurvePoint(xEqn, yEqn, t, x)
     elseif curveType == "END_POINTS_LINE"
         xStart = realArrayForKeyFromDictionary("xStart",crvDict)
         xEnd   = realArrayForKeyFromDictionary("xEnd",crvDict)
@@ -228,7 +229,7 @@ function curvePoint(crvDict::Dict{String,Any}, t::Float64)
         splineCurvePoint(nKnots,splineData,t,x)
     else
 
-    end 
+    end
     return x
 end
 

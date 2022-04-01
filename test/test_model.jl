@@ -58,6 +58,7 @@ using Test
     @test undoActionName() == "Add Curve"
     undo()
     @test length(obList) == 2
+    @test redoActionName() == "Add Curve"
     redo()
     @test length(obList) == 3
 
