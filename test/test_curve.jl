@@ -166,29 +166,31 @@ using Test
         @test getSplineNKnots(crv)  == nKnots
 
         pt = curvePoint(crv, 0.5)
-        @test isapprox(pt,[0.5^3,0.5^3 + 0.5^2,0.0])
+        @test isapprox(pt, [0.5^3, 0.5^3 + 0.5^2, 0.0])
         pt = curvePoint(crv, 0.0)
-        @test isapprox(pt,[0.0,0.0,0.0])
+        @test isapprox(pt, [0.0, 0.0, 0.0])
 #
 #       The curvePoints for the spline has M = max(N,nKnots*2) values
 #
-        M = max(nPts,nKnots*2)
-        pts = curvePoints(crv,M)
-        d   = 1.0/M
+        M = max(nPts, nKnots*2)
+        pts = curvePoints(crv, M)
+        d   = 1.0 / M
         for j in 1:M+1
-            tj = (j-1)*d
-            @test isapprox(pts[j,:],[tj^3,tj^3 + tj^2])
+            tj = (j-1) * d
+            @test isapprox(pts[j, :], [tj^3, tj^3 + tj^2])
         end
 
         gPts = getSplinePoints(crv)
-        @test isapprox(data,gPts)
-    end
+        @test isapprox(data, gPts)
 #
 #   Get spline data from a file
 #
-    # fSpline = newSplineCurve("fromFile", "TestData/SplineData.txt")
-    # fPts = getSplinePoints(fSpline)
-    # @test isapprox(data,fPts)
+        fSpline = newSplineCurve("fromFile", joinpath(@__DIR__, "test_spline_curve_data.txt"))
+        fPts = getSplinePoints(fSpline)
+        # Use point value 11 from the file as the test point
+        control_pt = [0.131578947368421, -0.657970237227418, 0.051342865473934, 0.0]
+        @test isapprox(control_pt, fPts[11, :])
+    end
 
 end
 

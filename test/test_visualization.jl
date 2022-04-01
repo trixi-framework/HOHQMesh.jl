@@ -26,9 +26,9 @@ using CairoMakie
     circ = new("outerCircle", [0.0, -1.0, 0.0], 4.0, 0.0, 360.0, "degrees")
     add!(p, circ)
 
-    # First inner boundary
-    circ2 = new("inner1", [0.0, 0.0, 0.0], 1.0, 0.0, 360.0, "degrees")
-    add!(p, circ2, "inner1")
+    # First inner boundary via a spline from a file
+    spline1 = new("inner1", joinpath(@__DIR__, "test_spline_curve_data.txt"))
+    add!(p, spline1, "inner1")
 
     # To mesh, a background grid is needed
     addBackgroundGrid!(p, [0.6, 0.6, 0.0])
