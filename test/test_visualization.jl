@@ -26,9 +26,17 @@ using CairoMakie
     circ = new("outerCircle", [0.0, -1.0, 0.0], 4.0, 0.0, 360.0, "degrees")
     add!(p, circ)
 
+    # Test getting the outer curve name
+    dict = getCurve(p, "outerCircle")
+    @test dict["TYPE"] == "CIRCULAR_ARC"
+
     # First inner boundary via a spline from a file
-    spline1 = new("inner1", joinpath(@__DIR__, "test_spline_curve_data.txt"))
+    spline1 = new("big_spline", joinpath(@__DIR__, "test_spline_curve_data.txt"))
     add!(p, spline1, "inner1")
+
+    # Test extracting an inner boundary chain with the generic function
+    tup = getInnerBoundary(p, "inner1")
+    @test tup[2]["TYPE"] == "CHAIN"
 
     # Attempt to generate the mesh before the background grid is set. Throws an error.
     @test_nowarn generate_mesh(p)
@@ -51,9 +59,18 @@ using CairoMakie
     @test_nowarn remove_mesh!(p)
     addBackgroundGrid!(p, [0.6,0.6,0.0])
 
-    # Add another inner boundary
-    circ3 = new("inner2", [2.0, -1.25, 0.0], 0.5, 0.0, 360.0, "degrees")
-    add!(p, circ3, "inner2")
+    # Add another inner boundary via a spline with given data points
+    data = [ [0.0  1.75 -1.0 0.0]
+             [0.25 2.1  -0.5 0.0]
+             [0.5  2.7  -1.0 0.0]
+             [0.75 0.6  -2.0 0.0]
+             [1.0  1.75 -1.0 0.0] ]
+    spline2 = newSplineCurve("small_spline", 5, data)
+    add!(p, spline2, "inner2")
+
+    # Test getting the inner curve and test
+    dict = getCurve(p, "small_spline", "inner2")
+    @test dict["TYPE"] == "SPLINE_CURVE"
 
     # Set file format to ISM-V2 (to exericise plotting routine)
     setMeshFileFormat!(p, "ISM-V2")
@@ -70,7 +87,7 @@ using CairoMakie
     addBackgroundGrid!(p, [0.6,0.6,0.0])
 
     # Add a final inner boundary
-    circ4 = new("inner3", [-2.0, -0.75, 0.0], 0.3, 0.0, 360.0, "degrees")
+    circ4 = new("innerCircle", [-2.0, -0.75, 0.0], 0.3, 0.0, 360.0, "degrees")
     add!(p, circ4, "inner3")
 
     # Create a refinement center and add it with the generic method
