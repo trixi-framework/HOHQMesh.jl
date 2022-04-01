@@ -79,7 +79,9 @@ export newParametricEquationCurve,
        setSplinePoints!,
        getSplinePoints,
        curvePoint,
-       curvePoints
+       curvePoints,
+       peEquationCurvePoints,
+       peEquationCurvePoint
 
 # Functions from `ModelAPI.jl`
 export addCurveToOuterBoundary!,

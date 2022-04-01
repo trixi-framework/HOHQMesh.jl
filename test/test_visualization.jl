@@ -104,9 +104,6 @@ using CairoMakie
     # Create the mesh which contains a plotting update for ABAQUS
     @test_nowarn generate_mesh(p)
 
-    # Destroy everything
-    remove_mesh!(p)
-
 end
 
 end #module
