@@ -253,6 +253,7 @@ function removeInnerBoundaryCurveAtIndex!(proj::Project, indx::Int, chainName::S
             deleteat!(ibChains,i)
             deleteat!(proj.innerBoundaryChainNames,i)
             deleteat!(proj.innerBoundaryPoints,i)
+            deleteat!(proj.innerBoundaryNames,i)
         end
         proj.backgroundGridShouldUpdate = true
         postNotificationWithName(proj,"MODEL_DID_CHANGE_NOTIFICATION",(nothing,))
