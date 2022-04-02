@@ -47,6 +47,7 @@ using Test
     cDict = getControlDict(q)
     @test haskey(cDict,"SPRING_SMOOTHER") == false
 
+    # read in the AllFeatures example
     control_file = joinpath(HOHQMesh.examples_dir(), "AllFeatures.control")
     p = openProject(control_file, projectPath)
 
@@ -70,6 +71,18 @@ using Test
     # Exercise some dictionary printing routines for the AllFeatures project
     HOHQMesh.showDescription(p.projectDictionary)
     HOHQMesh.stringForKeyFromDictionary("CONTROL_INPUT", p.projectDictionary)
+
+    # Use the NACA0012 example because it sets the background grid differently
+    control_file = joinpath(HOHQMesh.examples_dir(), "NACA0012.control")
+    p = openProject(control_file, projectPath)
+
+    sizes = [2.0, 2.0, 1.0]
+    @test isapprox( getBackgroundGridSize(p) , sizes )
+    steps = [20, 20 ,20]
+    @test isapprox( getBackgroundGridSteps(p), steps )
+    lower_left = [-20.0 , -20.0 , 0.0]
+    @test isapprox( getBackgroundGridLowerLeft(p) , lower_left )
+
 end
 
 end # module
