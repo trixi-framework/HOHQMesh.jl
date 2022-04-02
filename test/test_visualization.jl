@@ -104,6 +104,9 @@ using CairoMakie
     # Create the mesh which contains a plotting update for ABAQUS
     @test_nowarn generate_mesh(p)
 
+    # Remove the outer boundary from the project
+    @test remove!(p, "outerCircle")
+
 end
 
 end #module
