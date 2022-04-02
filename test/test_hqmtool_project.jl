@@ -82,6 +82,14 @@ using Test
     @test isapprox( getBackgroundGridSteps(p), steps )
     lower_left = [-20.0 , -20.0 , 0.0]
     @test isapprox( getBackgroundGridLowerLeft(p) , lower_left )
+    # Update the background grid starting point
+    new_lower_left = [-25.0, -10.0, 0.0]
+    setBackgroundGridLowerLeft!(p, new_lower_left)
+    @test isapprox( getBackgroundGridLowerLeft(p) , new_lower_left )
+    # # Update the size of the background grid
+    # setBackgroundGridSize!(p, 2.5, 1.5, 1.0)
+    # new_sizes = [2.5, 1.5, 1.0]
+    # @test isapprox( getBackgroundGridSize(p) , new_sizes )
 
 end
 

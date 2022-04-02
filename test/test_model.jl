@@ -98,6 +98,24 @@ using Test
     ibc = getInnerBoundaryCurve(p, "obc2",ib1Name)
     @test getCurveName(ibc) == "obc2"
 
+#
+#   Purposely create outer / inner boundary curves that do
+#   not join in a new project. This will trigger error statements.
+#
+    obc1 = new("obc1",[0.0,0.0,0.0], [2.0,0.0,0.0])
+    obc2 = new("obc2",[3.0,0.0,0.0], [1.0,1.0,0.0])
+
+    # Failing outer boundary
+    add!(p, obc1)
+    add!(p, obc2)
+
+    # Failing inner boundary
+    line = newEndPointsLineCurve("line", [0.0,-2.0,0.0], [1.0,0.0,0.0])
+    halfCircle  = newCircularArcCurve("halfCircle", [0.0,0.0,0.0], 1.0, 0.0, 180.0, "degrees")
+
+    addCurveToInnerBoundary!(p, line, "failCurve")
+    addCurveToInnerBoundary!(p, halfCircle , "failCurve")
+
 end
 
 end # module
