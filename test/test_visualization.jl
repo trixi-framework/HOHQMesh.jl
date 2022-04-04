@@ -105,7 +105,12 @@ using CairoMakie
     @test_nowarn generate_mesh(p)
 
     # Remove the outer boundary from the project
-    @test remove!(p, "outerCircle")
+    remove!(p, "outerCircle")
+
+    # Remove the inner boundaries from the project
+    remove!(p, "small_spline", "inner2")
+    remove!(p, "innerCircle" , "inner3")
+    remove!(p, "big_spline"  , "inner1")
 
 end
 
