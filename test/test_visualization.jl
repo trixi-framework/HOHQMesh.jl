@@ -44,8 +44,8 @@ using CairoMakie
     # To mesh, a background grid is needed
     addBackgroundGrid!(p, [0.6, 0.6, 0.0])
 
-    # Set file format to ISM and corresponding output file names
-    setMeshFileFormat!(p, "ISM")
+    # Set file format to ISM-V2 and corresponding output file names
+    setMeshFileFormat!(p, "ISM-V2")
     meshFileFormat = getMeshFileFormat(p)
     setFileNames!(p, meshFileFormat)
 
@@ -71,13 +71,13 @@ using CairoMakie
     # Test getting the inner curve and test
     #
     # Purposely get the names wrong to throw a warning
-    dict = getCurve(å, "small_spline", "inner1")
+    dict = getCurve(p, "small_spline", "inner1")
     # Do it correctly this time
     dict = getCurve(p, "small_spline", "inner2")
     @test dict["TYPE"] == "SPLINE_CURVE"
 
-    # Set file format to ISM-V2 (to exericise plotting routine)
-    setMeshFileFormat!(p, "ISM-V2")
+    # Set file format to ISM (to exericise plotting routine)
+    setMeshFileFormat!(p, "ISM")
     meshFileFormat = getMeshFileFormat(p)
     setFileNames!(p, meshFileFormat)
 
@@ -90,9 +90,13 @@ using CairoMakie
     @test_nowarn remove_mesh!(p)
     addBackgroundGrid!(p, [0.6,0.6,0.0])
 
-    # Add a final inner boundary
-    circ4 = new("innerCircle", [-2.0, -0.75, 0.0], 0.3, 0.0, 360.0, "degrees")
-    add!(p, circ4, "inner3")
+    # Add a final inner boundary that contains multiple links in the chain
+    edge1 = newEndPointsLineCurve("edge1", [-2.3, -1.0, 0.0], [-1.7, -1.0, 0.0])
+    edge2 = newEndPointsLineCurve("edge2", [-1.7, -1.0, 0.0], [-2.0, -0.4, 0.0])
+    edge3 = newEndPointsLineCurve("edge3", [-2.0, -0.4, 0.0], [-2.3, -1.0, 0.0])
+    add!(p, edge1, "inner3")
+    add!(p, edge2, "inner3")
+    add!(p, edge3, "inner3")
 
     # Create a refinement center and add it with the generic method
     cent = newRefinementCenter("Center1", "smooth", [-1.25, -3.0, 0.0], 0.2, 1.0)
@@ -111,15 +115,22 @@ using CairoMakie
     # Remove the outer boundary from the project
     remove!(p, "outerCircle")
 
+    #
     # Remove the inner boundaries from the project
+    #
 
     # Purposely do this wrong to throw a warning
-    remove!(p, "big_spline"  , "inner2")
+    #  (1) Give a wrong "new" inner boundary name
+    @test_throws ErrorException remove!(p, "big_spline", "wrongName")
+    #  (2) Give the wrong inner boundary name that exists but does not contain "big_spline"
+    @test_throws ErrorException remove!(p, "big_spline", "inner2")
+    #  (3) Give the correct combination and remove the inner boundary
+    remove!(p, "big_spline", "inner1")
 
-    # Do the inner boudary removals correctly
+    # Do the rest of the inner boudary removals correctly. To remove the inner boundary
+    # with multiple chains we use a different method
     remove!(p, "small_spline", "inner2")
-    remove!(p, "innerCircle" , "inner3")
-    remove!(p, "big_spline"  , "inner1")
+    removeInnerBoundary!(p, "inner3")
 
 end
 
