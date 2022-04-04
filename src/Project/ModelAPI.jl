@@ -3,24 +3,24 @@
 
  Copyright (c) 2010-present David A. Kopriva and other contributors: AUTHORS.md
 
- Permission is hereby granted, free of charge, to any person obtaining a copy  
- of this software and associated documentation files (the "Software"), to deal  
- in the Software without restriction, including without limitation the rights  
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell  
- copies of the Software, and to permit persons to whom the Software is  
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
 
- The above copyright notice and this permission notice shall be included in all  
+ The above copyright notice and this permission notice shall be included in all
  copies or substantial portions of the Software.
 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR  
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,  
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE  
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER  
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,  
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
- 
+
  --- End License
 =#
 
@@ -83,7 +83,7 @@ function getOuterBoundaryCurveWithName(proj::Project, name::String)
         if crv["name"] == name
             return crv
         end
-    end 
+    end
 end
 """
     insertOuterBoundaryCurveAtIndex(proj::Project, crv::Dict{String,Any}, indx::Int)
@@ -153,7 +153,7 @@ Get the array of outer boundary curves.
 """
 function getOuterBoundaryChainList(proj::Project)
     outerBndryDict = getDictInModelDictNamed(proj,"OUTER_BOUNDARY")
-    if haskey(outerBndryDict,"LIST") 
+    if haskey(outerBndryDict,"LIST")
         lst = outerBndryDict["LIST"]
         return lst
     else
@@ -219,20 +219,20 @@ function removeInnerBoundaryCurve!(proj::Project, name::String, chainName::Strin
     lst   = chain["LIST"]
     if isempty(lst)
         println("No curve ", name, " in boundary ", chainName) #TODO Replace with error()
-        return 
+        return
     end
     indx  = getChainIndex(lst,name)
     removeInnerBoundaryCurveAtIndex!(proj,indx,chainName)
 end
 
-function insertInnerBoundaryCurveAtIndex!(proj::Project, crv::Dict{String,Any}, 
+function insertInnerBoundaryCurveAtIndex!(proj::Project, crv::Dict{String,Any},
                                          indx::Int, boundaryName::String)
     i, chain = getInnerBoundaryChainWithName(proj,boundaryName)
     lst   = chain["LIST"]
     insert!(lst,indx,crv)
     innerBoundaryPoints = proj.innerBoundaryPoints[i]
     insert!(innerBoundaryPoints,indx,curvePoints(crv,defaultPlotPts))
-    insert!(proj.innerBoundaryNames[i],indx,crv["name"])                           
+    insert!(proj.innerBoundaryNames[i],indx,crv["name"])
     proj.backgroundGridShouldUpdate = true
     postNotificationWithName(proj,"MODEL_DID_CHANGE_NOTIFICATION",(nothing,))
 end
@@ -265,9 +265,9 @@ end
 Remove an entire inner boundary
 """
 function removeInnerBoundary!(proj::Project, chainName::String)
-    i,crv = getInnerBoundaryChainWithName(p,chainName)
-    deleteat!(proj.innerBoundaryChainNames,i)
-    deleteat!(proj.innerBoundaryPoints,i)
+    i, crv = getInnerBoundaryChainWithName(proj, chainName)
+    deleteat!(proj.innerBoundaryChainNames, i)
+    deleteat!(proj.innerBoundaryPoints, i)
     ibChains = getAllInnerBoundaries(proj)
     deleteat!(ibChains,i)
 end
@@ -309,7 +309,7 @@ function getChainIndex(chain::Vector{Dict{String, Any}},name)
             return i
         end
     end
-    return 0 
+    return 0
 end
 """
     getAllInnerBoundaries(proj::Project)
@@ -321,7 +321,7 @@ Returns an array of the inner boundaries
 #
 function getAllInnerBoundaries(proj::Project)
     innerBndryDict = getDictInModelDictNamed(proj,"INNER_BOUNDARIES")
-    if haskey(innerBndryDict,"LIST") 
+    if haskey(innerBndryDict,"LIST")
         lst = innerBndryDict["LIST"]
         return lst
     else
@@ -329,7 +329,7 @@ function getAllInnerBoundaries(proj::Project)
         innerBndryDict["LIST"] = lst
         return lst
     end
-    return nothing 
+    return nothing
 end
 #
 #  --------------------------------------------------------------------------------------
@@ -366,13 +366,14 @@ end
 
 """
 function getInnerBoundaryCurve(proj::Project, curveName::String, boundaryName::String)
-    i, chain = getInnerBoundaryChainWithName(proj,boundaryName)
+    i, chain = getInnerBoundaryChainWithName(proj, boundaryName)
     lst   = chain["LIST"]
     for crv in lst
         if crv["name"] == curveName
             return crv
         end
     end
+    println("No curve ", curveName, " in boundary ", boundaryName, ". Try again.")
     return nothing
 end
 """
