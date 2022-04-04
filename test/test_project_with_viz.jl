@@ -52,6 +52,11 @@ using CairoMakie
     setArcRadius!(inner_top_arc, 1.0)
     add!(p, inner_top_arc, "inner1") # succeed with the proper radius
 
+    # Add in a refinement center and adjust its width manually
+    cent = newRefinementCenter("center1", "smooth", [0.0, -1.0, 0.0], 0.25, 1.0)
+    setRefinementWidth!(cent, 0.5)
+    add!(p, cent)
+
     # Generate the mesh (automatically updates the plot)
     @test_nowarn generate_mesh(p)
 
