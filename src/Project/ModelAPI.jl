@@ -346,13 +346,13 @@ function getInnerBoundaryChainWithName(proj::Project, name::String)
     # See if there is an inner boundary with that name
     #
     l = length(lst)
-    i = 1
+    i = 0
     if l > 0
         for chain in lst
             bCurveName = chain["name"]
+            i = i + 1
             if bCurveName == name
                 return i, chain
-                i = i + 1
             end
         end
     end
