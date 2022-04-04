@@ -112,6 +112,11 @@ using CairoMakie
     remove!(p, "outerCircle")
 
     # Remove the inner boundaries from the project
+
+    # Purposely do this wrong to throw a warning
+    remove!(p, "big_spline"  , "inner2")
+
+    # Do the inner boudary removals correctly
     remove!(p, "small_spline", "inner2")
     remove!(p, "innerCircle" , "inner3")
     remove!(p, "big_spline"  , "inner1")

@@ -218,7 +218,7 @@ function removeInnerBoundaryCurve!(proj::Project, name::String, chainName::Strin
     i, chain = getInnerBoundaryChainWithName(proj,chainName)
     lst   = chain["LIST"]
     if isempty(lst)
-        println("No curve ", name, " in boundary ", chainName) #TODO Replace with error()
+        println("No curve ", name, " in boundary ", chainName, ". Try again.")
         return
     end
     indx  = getChainIndex(lst,name)
