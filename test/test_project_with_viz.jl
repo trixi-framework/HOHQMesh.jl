@@ -25,8 +25,10 @@ using CairoMakie
     # Build the outer boundary chain and plot piece-by-piece
     outer_line1 = newEndPointsLineCurve("outerline1", [0.0, -7.0, 0.0], [5.0, 3.0, 0.0])
     add!(p, outer_line1)
-    outer_arc = newCircularArcCurve("outerarc", [0.0, 3.0, 0.0], 5.0, 0.0, 180.0, "degrees")
-    add!(p, outer_arc)
+    outer_arc = newCircularArcCurve("outerarc", [0.0, 3.0, 0.0], 0.0, 0.0, 180.0, "degrees")
+    add!(p, outer_arc) # fails because the radius is wrong
+    setArcRadius!(outer_arc, 5.0)
+    add!(p, outer_arc) # succeed with the proper radius
     outer_line2 = newEndPointsLineCurve("outerline2", [-5.0, 3.0, 0.0], [0.0, -7.0, 0.0])
     add!(p, outer_line2)
 
@@ -45,8 +47,10 @@ using CairoMakie
     add!(p, inner_bottom_arc, "inner1")
     inner_line2 = newEndPointsLineCurve("innerLine2", [-1.0, 3.0, 0.0], [-1.0, 5.0, 0.0])
     add!(p, inner_line2, "inner1")
-    inner_top_arc = newCircularArcCurve("innerTopArc", [0.0, 5.0, 0.0], 1.0, 180.0, 0.0, "degrees")
-    add!(p, inner_top_arc, "inner1")
+    inner_top_arc = newCircularArcCurve("innerTopArc", [0.0, 5.0, 0.0], 0.0, 180.0, 0.0, "degrees")
+    add!(p, inner_top_arc, "inner1") # fails as the curves won't join
+    setArcRadius!(inner_top_arc, 1.0)
+    add!(p, inner_top_arc, "inner1") # succeed with the proper radius
 
     # Generate the mesh (automatically updates the plot)
     @test_nowarn generate_mesh(p)
