@@ -228,7 +228,7 @@ function removeInnerBoundaryCurve!(proj::Project, name::String, chainName::Strin
 
     if isempty(lst)
         # When the chain is empty, `chainName` was not present before the call.
-        # Throw a warning and remove the empty chain otherwise plotting routine breaks.
+        # Throw an error and remove the empty chain otherwise plotting routine breaks.
         ibChains = getAllInnerBoundaries(proj)
         deleteat!(ibChains,i)
         deleteat!(proj.innerBoundaryChainNames,i)
@@ -236,7 +236,7 @@ function removeInnerBoundaryCurve!(proj::Project, name::String, chainName::Strin
         error("No curve ", name, " in boundary ", chainName, ". Try again.")
     elseif name_check == 0
         # Situation where `chainName` already exists but the `name` to be deleted that
-        # was passed does not lie in that `chainName`. Simply throw a warning.
+        # was passed does not lie in that `chainName`. Throw an error.
         error("No curve ", name, " in boundary ", chainName, ". Try again.")
     end
     indx  = getChainIndex(lst,name)

@@ -146,6 +146,10 @@ using Test
     s = getRefinementRegion(p,1)
     @test getRefinementName(s) == "Center1"
 
+    # Test that an error is thrown if one requests a refinement region with
+    # with an index larger than the number of regions present in the project
+    @test_throws ErrorException getRefinementRegion(p, 3)
+
     c2 = newRefinementCenter("middle","smooth",[2.0,3.0,4.0],0.6,3.0)
     insertRefinementRegion!(p,c2,2)
     lst = getAllRefinementRegions(p)

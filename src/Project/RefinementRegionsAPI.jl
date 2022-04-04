@@ -206,8 +206,7 @@ there is none. The return value is a dictionary that represents the refinement r
 function getRefinementRegion(proj::Project, indx::Int)
     lst = getListInControlDictNamed(proj,"REFINEMENT_REGIONS")
     if indx > length(lst)
-        printf("Index %i is larger than the number of refinement regions, %i", indx, length(lst))
-        return nothing
+        error("Index ",indx," is larger than the number of refinement regions ", length(lst))
     end
     return lst[indx]
 end
