@@ -217,9 +217,27 @@ Remove the named curve in the inner boundary
 function removeInnerBoundaryCurve!(proj::Project, name::String, chainName::String)
     i, chain = getInnerBoundaryChainWithName(proj,chainName)
     lst   = chain["LIST"]
+
+    # Go through `chainName` and check if the passed `name` is present in said chain
+    name_check = 0
+    for (i,dict) in enumerate(lst)
+       if dict["name"] == name
+          name_check += 1
+       end
+    end
+
     if isempty(lst)
-        println("No curve ", name, " in boundary ", chainName, ". Try again.")
-        return
+        # When the chain is empty, `chainName` was not present before the call.
+        # Throw a warning and remove the empty chain otherwise plotting routine breaks.
+        ibChains = getAllInnerBoundaries(proj)
+        deleteat!(ibChains,i)
+        deleteat!(proj.innerBoundaryChainNames,i)
+        deleteat!(proj.innerBoundaryNames,i)
+        error("No curve ", name, " in boundary ", chainName, ". Try again.")
+    elseif name_check == 0
+        # Situation where `chainName` already exists but the `name` to be deleted that
+        # was passed does not lie in that `chainName`. Simply throw a warning.
+        error("No curve ", name, " in boundary ", chainName, ". Try again.")
     end
     indx  = getChainIndex(lst,name)
     removeInnerBoundaryCurveAtIndex!(proj,indx,chainName)
@@ -262,14 +280,17 @@ end
 """
     removeInnerBoundary!(proj::Project, chainName::String)
 
-Remove an entire inner boundary
+Remove an entire inner boundary. Note, cannot undo().
 """
 function removeInnerBoundary!(proj::Project, chainName::String)
     i, crv = getInnerBoundaryChainWithName(proj, chainName)
     deleteat!(proj.innerBoundaryChainNames, i)
     deleteat!(proj.innerBoundaryPoints, i)
+    deleteat!(proj.innerBoundaryNames, i)
     ibChains = getAllInnerBoundaries(proj)
     deleteat!(ibChains,i)
+    proj.backgroundGridShouldUpdate = true
+    postNotificationWithName(proj,"MODEL_DID_CHANGE_NOTIFICATION",(nothing,))
 end
 #
 #  --------------------------------------------------------------------------------------
