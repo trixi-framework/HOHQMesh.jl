@@ -68,6 +68,9 @@ include("test_hqmtool_demos.jl")
 # HQMTool project test routines
 include("test_hqmtool_project.jl")
 
+# HQMTool project + visualzation test routines
+include("test_project_with_viz.jl")
+
 # Refinement test routines
 include("test_refinement.jl")
 
