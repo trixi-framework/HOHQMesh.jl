@@ -67,8 +67,12 @@ using CairoMakie
              [1.0  1.75 -1.0 0.0] ]
     spline2 = new("small_spline", 5, data)
     add!(p, spline2, "inner2")
-
+    #
     # Test getting the inner curve and test
+    #
+    # Purposely get the names wrong to throw a warning
+    dict = getCurve(å, "small_spline", "inner1")
+    # Do it correctly this time
     dict = getCurve(p, "small_spline", "inner2")
     @test dict["TYPE"] == "SPLINE_CURVE"
 
