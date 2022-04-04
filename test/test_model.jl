@@ -111,9 +111,9 @@ using Test
 
     # Failing inner boundary
     line = newEndPointsLineCurve("line", [0.0,-2.0,0.0], [1.0,0.0,0.0])
-    halfCircle  = newCircularArcCurve("halfCircle", [0.0,0.0,0.0], 1.0, 0.0, 180.0, "degrees")
+    halfCircle  = newCircularArcCurve("halfCircle", [0.0,0.0,0.0], 1.5, 0.0, 180.0, "degrees")
 
-    addCurveToInnerBoundary!(p, line, "failCurve")
+    add!(p, line, "failCurve")
     addCurveToInnerBoundary!(p, halfCircle , "failCurve")
 
 end

@@ -103,10 +103,12 @@ function getMeshFromMeshFile(meshFile::AbstractString, meshFileFormat::AbstractS
                if sum(temp) == 0
                    # straight-sided edge so just skip the boundary labels
                    readline(f)
-               else
-                   # curved edge so skip the boundary polynomial and the labels
-                   for i = 1:nBndy+1
-                       readline(f)
+               else # sum(temp) > 0
+                   # At least one curved edge, so skip any boundary polynomial(s) and the labels
+                   for j = 1:sum(temp)
+                       for i = 1:nBndy+1
+                           readline(f)
+                       end
                    end
                    readline(f)
                end
