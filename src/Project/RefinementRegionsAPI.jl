@@ -237,8 +237,7 @@ function getRefinementRegion(proj::Project, name::String)
             return i,r
         end
     end
-    println("Refinement region with name %s not found",name)
-    return nothing
+    error("Refinement region with name ", name, " not found!")
 end
 #
 #  --------------------------------------------------------------------------------------
