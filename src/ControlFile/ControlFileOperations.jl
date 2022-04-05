@@ -297,11 +297,7 @@ end
 function ImportSplineData( splineDict::Dict{String,Any}, f::IOStream)
 
     if !haskey(splineDict, "nKnots")
-        @warn "Spline block must define nKnots before SPLINE_DATA. Skipping..."
-        line = ""
-        while !occursin("end{SPLINE_DATA",line) #BUG This will read one too many lines
-            line = readline(f)
-        end 
+        error("Spline block must define nKnots before SPLINE_DATA. Try again.")
     end
 
     knotString = splineDict["nKnots"]
