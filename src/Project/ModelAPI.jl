@@ -118,8 +118,18 @@ This function is only used as part of an undo operation removing the outer bound
 """
 function addOuterBoundary!(proj::Project, outerBoundary::Dict{String,Any})
     model = getModelDict(proj)
+    # Recover the complete outer boundary dictionary
     model["OUTER_BOUNDARY"] = outerBoundary
+    # Recover the outer boundary points and names for each member of the chain (necessary for plotting)
+    chain = getOuterBoundaryChainList(proj)
+    for (i, crv) in enumerate(chain)
+        crvPoints = curvePoints(crv, defaultPlotPts)
+        push!(proj.outerBndryPoints, crvPoints)
+        push!(proj.outerBndryNames , crv["name"])
+    end
+    proj.backgroundGridShouldUpdate = true
     registerWithUndoManager(proj,removeOuterBoundary!, (nothing,), "Add Outer Boundary")
+    postNotificationWithName(proj,"MODEL_DID_CHANGE_NOTIFICATION",(nothing,))
 end
 """
     removeOuterboundary!(proj::Project)
