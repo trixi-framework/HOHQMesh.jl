@@ -3,24 +3,24 @@
 
  Copyright (c) 2010-present David A. Kopriva and other contributors: AUTHORS.md
 
- Permission is hereby granted, free of charge, to any person obtaining a copy  
- of this software and associated documentation files (the "Software"), to deal  
- in the Software without restriction, including without limitation the rights  
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell  
- copies of the Software, and to permit persons to whom the Software is  
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
 
- The above copyright notice and this permission notice shall be included in all  
+ The above copyright notice and this permission notice shall be included in all
  copies or substantial portions of the Software.
 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR  
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,  
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE  
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER  
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,  
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
- 
+
  --- End License
 =#
 #=
@@ -90,7 +90,7 @@ function openProject(fileName::String, folder::String)
 #   Overwrite defaults
 #
     proj.projectDictionary = controlDict
-    
+
     assemblePlotArrays(proj)
     clearUndoRedo()
 
@@ -135,7 +135,7 @@ function newProject(name::String, folder::String)
     plotOptions   = 0
 #
     proj = Project(name, folder, projectDict, plt, plotOptions, obPnts, obNames,
-                   ibChainPoints,ibNames, ibChainNames, 
+                   ibChainPoints,ibNames, ibChainNames,
                    refinementRegionPts,refinementRegionNames, refinementRegionLocs,
                    bounds, userBounds, xGrid, yGrid, xMesh, yMesh,
                    true, false)
@@ -171,7 +171,7 @@ function hasBackgroundGrid(proj::Project)
 end
 
 function assemblePlotArrays(proj::Project)
-    
+
     empty!(proj.outerBndryPoints)
     empty!(proj.outerBndryNames)
     empty!(proj.innerBoundaryChainNames)
@@ -179,7 +179,7 @@ function assemblePlotArrays(proj::Project)
     empty!(proj.innerBoundaryNames)
     empty!(proj.xGrid)
     empty!(proj.yGrid)
-    
+
     bounds = emptyBounds()
 
     modelDict = getModelDict(proj)
@@ -194,11 +194,11 @@ function assemblePlotArrays(proj::Project)
 
         for crv in obChain
             push!(proj.outerBndryNames,crv["name"])
-        end 
+        end
     end
 
     if haskey(modelDict,"INNER_BOUNDARIES")
-        innerBoundaries   = modelDict["INNER_BOUNDARIES"] 
+        innerBoundaries   = modelDict["INNER_BOUNDARIES"]
         innerBoundaryList = innerBoundaries["LIST"] #LIST of CHAINS
         for d in innerBoundaryList
             push!(proj.innerBoundaryChainNames, d["name"])
@@ -222,7 +222,7 @@ function assemblePlotArrays(proj::Project)
         refinementsList = refinementBlock["LIST"]
         for ref in refinementsList
             addRefinementRegionPoints!(proj,ref)
-        end 
+        end
     end
     proj.bounds = bounds
 end
@@ -303,11 +303,11 @@ function curveDidChange(proj::Project,crv::Dict{String,Any})
             proj.outerBndryPoints[i] = curvePoints(crv,defaultPlotPts)
             if !isnothing(proj.plt)
                 options = proj.plotOptions
-                updatePlot!(proj, options)    
+                updatePlot!(proj, options)
             end
             return nothing
         end
-    end 
+    end
 #
 #   Otherwise, see if it is an inner boundary
 #
@@ -321,13 +321,13 @@ function curveDidChange(proj::Project,crv::Dict{String,Any})
 
     if !isnothing(proj.plt)
         options = proj.plotOptions
-        updatePlot!(proj, options)    
+        updatePlot!(proj, options)
     end
     return nothing
 end
 
 function modelDidChange(proj::Project, sender::Project)
-    
+
     if proj === sender && !isnothing(proj.plt)
         options = proj.plotOptions
         if (options & MODEL) == 0
@@ -367,7 +367,7 @@ function refinementDidChange(proj::Project, sender::Dict{String,Any})
             indx = i
             break
         end
-    end 
+    end
 
     if indx > 0
         x    = refinementRegionPoints(sender)
@@ -375,12 +375,9 @@ function refinementDidChange(proj::Project, sender::Dict{String,Any})
         proj.refinementRegionNames[indx] = sender["name"]
         center = getRefinementRegionCenter(sender)
         proj.refinementRegionLoc[indx] = center
-    
+
         if !isnothing(proj.plt)
             options = proj.plotOptions
-            if (options & REFINEMENTS) == 0
-                options = options + REFINEMENTS
-            end
             updatePlot!(proj, options)
         end
     else
