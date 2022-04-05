@@ -35,6 +35,14 @@ using Test
 
 @testset "Model Tests" begin
 #
+# Exercise the different outputs for empty undo / redo stacks
+#
+    clearUndoRedo()
+    @test undo() == "Empty undo stack. No action performed."
+    @test undoActionName() == "No undo action in queue"
+    @test redo() == "Empty redo stack. No action performed."
+    @test redoActionName() == "No redo action in queue"
+#
 #   Project for the model
 #
     projectName = "TestProject"
