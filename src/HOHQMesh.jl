@@ -328,8 +328,8 @@ function run_demo(folder::String; called_by_user=true)
     p = openProject(all_features_control_file, folder)
 
     plotProject!(p, MODEL+REFINEMENTS+GRID)
+    println("Press enter to continue and generate the mesh")
     if called_by_user
-      println("Press enter to continue and generate the mesh")
       readline()
     end
     generate_mesh(p)
@@ -365,13 +365,12 @@ function ice_cream_cone_verbose_demo(folder::String; called_by_user=true)
 #   To mesh, a background grid is needed
 #
     addBackgroundGrid!(p, [0.5,0.5,0.0])
-
-    plotProject!(p, MODEL+GRID)
-    if called_by_user
 #
 #   Show the model and grid
 #
-      println("Press enter to continue and generate the mesh")
+    plotProject!(p, MODEL+GRID)
+    println("Press enter to continue and generate the mesh")
+    if called_by_user
       readline()
     end
 #
@@ -412,16 +411,14 @@ function ice_cream_cone_demo(folder::String; called_by_user=true)
     setMeshFileFormat!(p, "ABAQUS")
     meshFileFormat = getMeshFileFormat(p)
     setFileNames!(p, meshFileFormat)
-
-    plotProject!(p, MODEL+GRID)
-    if called_by_user
 #
 #   Show the model and grid
 #
-      println("Press enter to continue and generate the mesh")
+    plotProject!(p, MODEL+GRID)
+    println("Press enter to continue and generate the mesh")
+    if called_by_user
       readline()
     end
-
 #
 #   Generate the mesh and plot
 #
