@@ -142,7 +142,7 @@ To create generate a mesh you
 
 - To [visualize](#Plotting) the project's model,
 
-		plotProject(p,MODEL)
+		plotProject!(p,MODEL)
 
 	To update the plot at any time, use
 
@@ -166,7 +166,7 @@ To create generate a mesh you
 
 		generateMesh(p)
 
-The mesh will be stored in `<folder>` with the name `<projectName>.mesh`. The control file will also be saved in that folder with the name `<projectName>.control`, which you can read in again later and modify, remesh, etc. The function will print grid information, and will plot the grid as in the figure above, if a plot is otherwise visible. If not, it can always be plotted with the `plotProject` command.
+The mesh will be stored in `<folder>` with the name `<projectName>.mesh`. The control file will also be saved in that folder with the name `<projectName>.control`, which you can read in again later and modify, remesh, etc. The function will print grid information, and will plot the grid as in the figure above, if a plot is otherwise visible. If not, it can always be plotted with the `plotProject!` command.
 
 
 ## HQMTool API
@@ -193,7 +193,7 @@ writes a control file to the folder designated when creating the new project. It
 
 #### Plotting a Project
 
-		plotProject(proj::Project, options)
+		plotProject!(proj::Project, options)
 
 The options are any combination of `MODEL`, `GRID`, `MESH`, and `REFINEMENTS`. `GRID` refers to the background grid, which you an view to make sure that it can resolve the boundary curves in the model. Before meshing one probably wants to view `MODEL+GRID`, and afterwards, `MODEL+MESH`. `REFINEMENTS` will show where [manual refinement](#ManualRefinement) is added.
 
