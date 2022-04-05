@@ -205,7 +205,7 @@ function setBackgroundGridLowerLeft!(proj::Project, x0::Array{Float64})
     return nothing
 end
 """
-setBackgroundGridSteps!(proj::Project, N::Array{Int})
+    setBackgroundGridSteps!(proj::Project, N::Array{Int})
 
 Set how many steps of size setBackgroundGridSpacing in each direction the background grid extends from the
 lower left.
@@ -226,14 +226,14 @@ function setBackgroundGridSteps!(proj::Project, N::Array{Int})
     return nothing
 end
 """
-setBackgroundGridSize!(proj::Project, dx::Array{Float64},key::String)
+    setBackgroundGridSize!(proj::Project, dx::Array{Float64},key::String)
 """
 function setBackgroundGridSize!(proj::Project, dx::Array{Float64}, key::String)
     setBackgroundGridSize!(proj, dx[1], dx[2], key)
     return nothing
 end
 """
-setBackgroundGridSize!(proj::Project, dx::Float64, dy::Float64,key::String)
+    setBackgroundGridSize!(proj::Project, dx::Float64, dy::Float64,key::String)
 """
 function setBackgroundGridSize!(proj::Project, dx::Float64, dy::Float64,key::String)
     bgDict = getDictInControlDictNamed(proj,"BACKGROUND_GRID")

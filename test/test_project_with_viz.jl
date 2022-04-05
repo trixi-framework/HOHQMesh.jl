@@ -77,6 +77,10 @@ using CairoMakie
         setRefinementGridSize!(refine_center, 0.15)
         @test getRefinementGridSize(refine_center) == 0.15
 
+        # Adjust the background grid size
+        setBackgroundGridSize!(p_file, 4.0, 4.0, 0.0)
+        @test getBackgroundGridSize(p_file) == [4.0, 4.0, 0.0]
+
         # Generate the mesh (automatically updates the plot)
         @test_nowarn generate_mesh(p_file)
 
