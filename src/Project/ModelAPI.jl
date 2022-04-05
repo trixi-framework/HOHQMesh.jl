@@ -58,7 +58,7 @@ function addCurveToOuterBoundary!(proj::Project, crv::Dict{String,Any})
 
     push!(proj.outerBndryNames,crv["name"])
 
-    registerWithUndoManager(proj,removeOuterBoundaryCurveWithName!,(crv["name"],),"Add Curve")
+    registerWithUndoManager(proj,removeOuterBoundaryCurveWithName!,(crv["name"],),"Add Outer Boundary Curve")
     postNotificationWithName(proj,"MODEL_DID_CHANGE_NOTIFICATION",(nothing,))
 end
 """
@@ -96,7 +96,7 @@ function insertOuterBoundaryCurveAtIndex!(proj::Project, crv::Dict{String,Any}, 
     insert!(proj.outerBndryPoints,indx,curvePoints(crv,defaultPlotPts))
     insert!(proj.outerBndryNames,indx,crv["name"])
     proj.backgroundGridShouldUpdate = true
-    registerWithUndoManager(proj,removeOuterBoundaryCurveAtIndex!,(indx,),"Add Curve")
+    registerWithUndoManager(proj,removeOuterBoundaryCurveAtIndex!,(indx,),"Add Outer Boundary Curve")
     postNotificationWithName(proj,"MODEL_DID_CHANGE_NOTIFICATION",(nothing,))
 end
 
@@ -107,7 +107,7 @@ function removeOuterBoundaryCurveAtIndex!(proj::Project, indx::Int)
     deleteat!(proj.outerBndryNames,indx)
     deleteat!(proj.outerBndryPoints,indx)
     proj.backgroundGridShouldUpdate = true
-    registerWithUndoManager(proj,insertOuterBoundaryCurveAtIndex!,(crv,indx),"Add Curve")
+    registerWithUndoManager(proj,insertOuterBoundaryCurveAtIndex!,(crv,indx),"Remove Outer Boundary Curve")
     postNotificationWithName(proj,"MODEL_DID_CHANGE_NOTIFICATION",(nothing,))
 end
 """
@@ -119,17 +119,18 @@ This function is only used as part of an undo operation removing the outer bound
 function addOuterBoundary!(proj::Project, outerBoundary::Dict{String,Any})
     model = getModelDict(proj)
     model["OUTER_BOUNDARY"] = outerBoundary
-    registerWithUndoManager(proj,removeOuterboundary!, (nothing,), "Add Outer Boundary")
+    registerWithUndoManager(proj,removeOuterBoundary!, (nothing,), "Add Outer Boundary")
 end
 """
     removeOuterboundary!(proj::Project)
 
 Remove the outer boundary curve if it exists.
 """
-function removeOuterboundary!(proj::Project)
+function removeOuterBoundary!(proj::Project)
     modelDict = getModelDict(proj)
     if haskey(modelDict,"OUTER_BOUNDARY")
         ob = modelDict["OUTER_BOUNDARY"]
+        println(ob)
         registerWithUndoManager(proj,addOuterBoundary!, (ob,), "Remove Outer Boundary")
         delete!(modelDict,"OUTER_BOUNDARY")
         proj.outerBndryPoints = Any[]

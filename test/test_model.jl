@@ -55,10 +55,10 @@ using Test
     obList = getOuterBoundaryChainList(p)
     @test length(obList) == 3
     @test getChainIndex(obList,"obc3") == 3
-    @test undoActionName() == "Add Curve"
+    @test undoActionName() == "Add Outer Boundary Curve"
     undo()
     @test length(obList) == 2
-    @test redoActionName() == "Add Curve"
+    @test redoActionName() == "Remove Outer Boundary Curve"
     redo()
     @test length(obList) == 3
 
@@ -67,7 +67,7 @@ using Test
 #
 #   Test remove/add outer boundary
 #
-    removeOuterboundary!(p)
+    removeOuterBoundary!(p)
     mDict = getModelDict(p)
     @test haskey(mDict,"OUTER_BOUNDARY") == false
     undo()
