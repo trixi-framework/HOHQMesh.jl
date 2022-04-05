@@ -41,6 +41,12 @@ using CairoMakie
     # Attempt to generate the mesh before the background grid is set. Throws an error.
     @test_nowarn generate_mesh(p_visu)
 
+    # There is no background grid. Query the different styles of background grids
+    # to test that errors are thrown correctly.
+    @test_throws ErrorException getBackgroundGridSize(p_visu)
+    @test_throws ErrorException getBackgroundGridLowerLeft(p_visu)
+    @test_throws ErrorException getBackgroundGridSteps(p_visu)
+
     # To mesh, a background grid is needed
     addBackgroundGrid!(p_visu, [0.6, 0.6, 0.0])
 

@@ -154,7 +154,7 @@ function getBackgroundGridSize(proj::Project)
     elseif haskey(bgDict,"background grid size")
         return realArrayForKeyFromDictionary("background grid size",bgDict)
     else
-        return nothing
+        error("No background grid size is present.")
     end
 end
 """
@@ -167,7 +167,7 @@ function getBackgroundGridLowerLeft(proj::Project)
     if haskey(bgDict,"x0")
         return realArrayForKeyFromDictionary("x0",bgDict)
     else
-        return nothing
+        error("No background grid initial point x0 is present.")
     end
 end
 """
@@ -180,7 +180,7 @@ function getBackgroundGridSteps(proj::Project)
     if haskey(bgDict,"N")
         return intArrayForKeyFromDictionary("N",bgDict)
     else
-        return nothing
+        error("No background grid step size is present.")
     end
 end
 """
