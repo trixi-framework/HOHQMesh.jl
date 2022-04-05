@@ -184,8 +184,6 @@ function curvePoints(crvDict::Dict{String,Any}, N::Int)
         end
 
         splineCurvePoints(nKnots,splineData,x)
-    else
-
     end
     return x
 end
@@ -227,8 +225,6 @@ function curvePoint(crvDict::Dict{String,Any}, t::Float64)
         splineData = crvDict["SPLINE_DATA"]
         x = zeros(Float64,3)
         splineCurvePoint(nKnots,splineData,t,x)
-    else
-
     end
     return x
 end
