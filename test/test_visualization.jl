@@ -63,7 +63,6 @@ using CairoMakie
 
     # Destroy the mesh and reset the background grid
     @test_nowarn remove_mesh!(p_visu)
-    addBackgroundGrid!(p_visu, [0.6, 0.6, 0.0])
 
     # Add another inner boundary via a spline with given data points
     data = [ [0.0  1.75 -1.0 0.0]
@@ -94,7 +93,6 @@ using CairoMakie
 
     # Destroy the mesh and reset the background grid
     @test_nowarn remove_mesh!(p_visu)
-    addBackgroundGrid!(p_visu, [0.6, 0.6, 0.0])
 
     # Add a final inner boundary that contains multiple links in the chain
     edge1 = newEndPointsLineCurve("edge1", [-2.3, -1.0, 0.0], [-1.7, -1.0, 0.0])

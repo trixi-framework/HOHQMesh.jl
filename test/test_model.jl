@@ -35,7 +35,7 @@ using Test
 
 @testset "Model Tests" begin
 #
-# Exercise the different outputs for empty undo / redo stacks
+#   Exercise the different outputs for empty undo / redo stacks
 #
     clearUndoRedo()
     @test undo() == "Empty undo stack. No action performed."
@@ -108,7 +108,7 @@ using Test
 
 #
 #   Purposely create outer / inner boundary curves that do
-#   not join in a new project. This will trigger error statements.
+#   not join in a new project. This will trigger warning statements.
 #
     obc1 = new("obc1",[0.0,0.0,0.0], [2.0,0.0,0.0])
     obc2 = new("obc2",[3.0,0.0,0.0], [1.0,1.0,0.0])

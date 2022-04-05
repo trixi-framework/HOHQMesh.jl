@@ -15,7 +15,7 @@ using CairoMakie
 
         p_scratch = newProject(projectName, projectPath)
 
-        # Bounding box uses box = [TOP, LEFT, BOTTOM, RIGHT]
+        # Bounding box uses order [TOP, LEFT, BOTTOM, RIGHT]
         bounds = [9.0, -8.0, -8.0, 8.0]
         N = [16, 17, 1]
 
@@ -73,6 +73,7 @@ using CairoMakie
 
         # Refinement regions are already present but we manually adjust
         # one of its parameters to trigger a specific piece of plot update logic
+        # in `refinementDidChange`
         _, refine_center = getRefinementRegion(p_file, "center")
         setRefinementGridSize!(refine_center, 0.15)
         @test getRefinementGridSize(refine_center) == 0.15
