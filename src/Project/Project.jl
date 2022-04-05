@@ -378,10 +378,15 @@ function refinementDidChange(proj::Project, sender::Dict{String,Any})
 
         if !isnothing(proj.plt)
             options = proj.plotOptions
+            if (options & REFINEMENTS) == 0
+                options = options + REFINEMENTS
+            end
             updatePlot!(proj, options)
         end
-    else
-        println("Refinement region with name $regionName not found.")
+    # TODO: Remove this? It triggers to the screen frequently during example that work
+    #       correctly. Not sure why it is here.
+    # else
+    #     println("Refinement region with name $regionName not found.")
     end
 end
 
