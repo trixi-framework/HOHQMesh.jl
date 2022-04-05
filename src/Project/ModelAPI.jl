@@ -280,16 +280,38 @@ end
 """
     removeInnerBoundary!(proj::Project, chainName::String)
 
-Remove an entire inner boundary. Note, cannot undo().
+Remove an entire inner boundary.
 """
 function removeInnerBoundary!(proj::Project, chainName::String)
     i, crv = getInnerBoundaryChainWithName(proj, chainName)
+    registerWithUndoManager(proj,insertInnerBoundaryAtIndex!,
+                            (chainName,i,crv,proj.innerBoundaryPoints[i],proj.innerBoundaryNames[i]),
+                            "Remove Inner Boundary")
+
     deleteat!(proj.innerBoundaryChainNames, i)
     deleteat!(proj.innerBoundaryPoints, i)
     deleteat!(proj.innerBoundaryNames, i)
     ibChains = getAllInnerBoundaries(proj)
     deleteat!(ibChains,i)
-    proj.backgroundGridShouldUpdate = true
+
+    postNotificationWithName(proj,"MODEL_DID_CHANGE_NOTIFICATION",(nothing,))
+end
+"""
+    insertInnerBoundaryAtIndex!(proj::Project, chainName::String, indx::Int, chain::??)
+
+Insert an entire inner boundary. Primarily meant for undo operation.
+"""
+function insertInnerBoundaryAtIndex!(proj::Project, chainName::String, i::Int, chain::Dict{String, Any}, 
+                                     bPoints::Vector{Any}, bNames::Vector{String})
+     
+    lst = getAllInnerBoundaries(proj::Project)
+    insert!(lst,i,chain)
+    insert!(proj.innerBoundaryChainNames,i,chainName)
+    insert!(proj.innerBoundaryPoints,i,bPoints)
+    insert!(p.innerBoundaryNames,i,bNames)
+    registerWithUndoManager(proj,removeInnerBoundary!,
+                            (chainName,),
+                            "Remove Inner Boundary")
     postNotificationWithName(proj,"MODEL_DID_CHANGE_NOTIFICATION",(nothing,))
 end
 #
