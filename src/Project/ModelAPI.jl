@@ -203,7 +203,6 @@ function addCurveToInnerBoundary!(proj::Project, crv::Dict{String,Any}, boundary
         push!(a,curvePoints(crv,defaultPlotPts))
     end
     push!(proj.innerBoundaryNames[i],crv["name"])
-    proj.backgroundGridShouldUpdate = true
     registerWithUndoManager(proj,removeInnerBoundaryCurve!,
                             (crv["name"],boundaryName),
                             "Add Inner Boundary Curve")
@@ -244,14 +243,13 @@ function removeInnerBoundaryCurve!(proj::Project, name::String, chainName::Strin
 end
 
 function insertInnerBoundaryCurveAtIndex!(proj::Project, crv::Dict{String,Any},
-                                         indx::Int, boundaryName::String)
+                                          indx::Int, boundaryName::String)
     i, chain = getInnerBoundaryChainWithName(proj,boundaryName)
     lst   = chain["LIST"]
     insert!(lst,indx,crv)
     innerBoundaryPoints = proj.innerBoundaryPoints[i]
     insert!(innerBoundaryPoints,indx,curvePoints(crv,defaultPlotPts))
     insert!(proj.innerBoundaryNames[i],indx,crv["name"])
-    proj.backgroundGridShouldUpdate = true
     postNotificationWithName(proj,"MODEL_DID_CHANGE_NOTIFICATION",(nothing,))
 end
 
@@ -260,20 +258,18 @@ function removeInnerBoundaryCurveAtIndex!(proj::Project, indx::Int, chainName::S
     lst      = chain["LIST"]
     if indx > 0
         crv      = lst[indx]
-        deleteat!(lst,indx)
-        deleteat!(proj.innerBoundaryNames[i],indx)
-        deleteat!(proj.innerBoundaryPoints[i],indx)
-        registerWithUndoManager(proj,insertInnerBoundaryCurveAtIndex!,
-                                (crv,indx,chainName),
-                                "Remove Inner Boundary Curve")
-        if isempty(lst)
-            ibChains = getAllInnerBoundaries(proj)
-            deleteat!(ibChains,i)
-            deleteat!(proj.innerBoundaryChainNames,i)
-            deleteat!(proj.innerBoundaryPoints,i)
-            deleteat!(proj.innerBoundaryNames,i)
+        deleteat!(lst, indx)
+        if isempty(lst) # Boundary chain contained a single curve
+            # Complete removal. Requires a different function to be posted
+            # in the Undo Manager
+            removeInnerBoundary!(proj::Project, chainName::String)
+        else # Boundary chain contained more than one curve
+            deleteat!(proj.innerBoundaryNames[i],indx)
+            deleteat!(proj.innerBoundaryPoints[i],indx)
+            registerWithUndoManager(proj,insertInnerBoundaryCurveAtIndex!,
+                                   (crv,indx,chainName),
+                                   "Remove Inner Boundary Curve")
         end
-        proj.backgroundGridShouldUpdate = true
         postNotificationWithName(proj,"MODEL_DID_CHANGE_NOTIFICATION",(nothing,))
     end
 end
@@ -293,7 +289,6 @@ function removeInnerBoundary!(proj::Project, chainName::String)
     deleteat!(proj.innerBoundaryNames, i)
     ibChains = getAllInnerBoundaries(proj)
     deleteat!(ibChains,i)
-
     postNotificationWithName(proj,"MODEL_DID_CHANGE_NOTIFICATION",(nothing,))
 end
 """
@@ -301,14 +296,14 @@ end
 
 Insert an entire inner boundary. Primarily meant for undo operation.
 """
-function insertInnerBoundaryAtIndex!(proj::Project, chainName::String, i::Int, chain::Dict{String, Any}, 
+function insertInnerBoundaryAtIndex!(proj::Project, chainName::String, i::Int, chain::Dict{String, Any},
                                      bPoints::Vector{Any}, bNames::Vector{String})
-     
+
     lst = getAllInnerBoundaries(proj::Project)
     insert!(lst,i,chain)
     insert!(proj.innerBoundaryChainNames,i,chainName)
     insert!(proj.innerBoundaryPoints,i,bPoints)
-    insert!(p.innerBoundaryNames,i,bNames)
+    insert!(proj.innerBoundaryNames,i,bNames)
     registerWithUndoManager(proj,removeInnerBoundary!,
                             (chainName,),
                             "Remove Inner Boundary")

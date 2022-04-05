@@ -126,11 +126,24 @@ using CairoMakie
     @test_throws ErrorException remove!(p, "big_spline", "inner2")
     #  (3) Give the correct combination and remove the inner boundary
     remove!(p, "big_spline", "inner1")
+    @test length(p.innerBoundaryNames) == 2
 
-    # Do the rest of the inner boudary removals correctly. To remove the inner boundary
-    # with multiple chains we use a different method
+    # Do the rest of the inner boudary removals correctly.
     remove!(p, "small_spline", "inner2")
+    @test length(p.innerBoundaryNames) == 1
+    undo()
+    @test length(p.innerBoundaryNames) == 2
+    redo()
+
+    # Remove a single part of the chain with multiple curves
+    @test length(p.innerBoundaryNames[1]) == 3
+    remove!(p, "edge2", "inner3")
+    @test length(p.innerBoundaryNames[1]) == 2
+    undo()
+    # To remove the inner boundary with multiple chains we use a different method.
     removeInnerBoundary!(p, "inner3")
+    undo()
+    redo()
 
 end
 
