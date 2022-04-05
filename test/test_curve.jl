@@ -80,6 +80,10 @@ using Test
         @test getXEqn(crv)      == "t^2"
         @test getYEqn(crv)      == "1.5*t"
         @test getZEqn(crv)      == "t^3"
+
+        # If the equal sign is forgotten an error is thrown
+        fEqn = "f(t)   1.5*t"
+        @test_throws ErrorException HOHQMesh.keyAndValueFromString(fEqn)
     end
 
     @testset "EndPointLine Tests" begin
