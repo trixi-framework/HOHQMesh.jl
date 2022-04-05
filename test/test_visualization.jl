@@ -21,43 +21,43 @@ using CairoMakie
     projectName = "CirclesInCircle"
     projectPath = "out"
 
-    p = newProject(projectName, projectPath)
+    p_visu = newProject(projectName, projectPath)
     # Outer boundary
     circ = new("outerCircle", [0.0, -1.0, 0.0], 4.0, 0.0, 360.0, "degrees")
-    add!(p, circ)
+    add!(p_visu, circ)
 
     # Test getting the outer curve name
-    dict = getCurve(p, "outerCircle")
+    dict = getCurve(p_visu, "outerCircle")
     @test dict["TYPE"] == "CIRCULAR_ARC"
 
     # First inner boundary via a spline from a file
     spline1 = new("big_spline", joinpath(@__DIR__, "test_spline_curve_data.txt"))
-    add!(p, spline1, "inner1")
+    add!(p_visu, spline1, "inner1")
 
     # Test extracting an inner boundary chain with the generic function
-    tup = getInnerBoundary(p, "inner1")
+    tup = getInnerBoundary(p_visu, "inner1")
     @test tup[2]["TYPE"] == "CHAIN"
 
     # Attempt to generate the mesh before the background grid is set. Throws an error.
-    @test_nowarn generate_mesh(p)
+    @test_nowarn generate_mesh(p_visu)
 
     # To mesh, a background grid is needed
-    addBackgroundGrid!(p, [0.6, 0.6, 0.0])
+    addBackgroundGrid!(p_visu, [0.6, 0.6, 0.0])
 
     # Set file format to ISM-V2 and corresponding output file names
-    setMeshFileFormat!(p, "ISM-V2")
-    meshFileFormat = getMeshFileFormat(p)
-    setFileNames!(p, meshFileFormat)
+    setMeshFileFormat!(p_visu, "ISM-V2")
+    meshFileFormat = getMeshFileFormat(p_visu)
+    setFileNames!(p_visu, meshFileFormat)
 
     # Show initial the model and grid
-    @test_nowarn plotProject!(p, HOHQMesh.MODEL + HOHQMesh.GRID)
+    @test_nowarn plotProject!(p_visu, HOHQMesh.MODEL + HOHQMesh.GRID)
 
     # Create the mesh which contains a plotting update for ISM
-    @test_nowarn generate_mesh(p)
+    @test_nowarn generate_mesh(p_visu)
 
     # Destroy the mesh and reset the background grid
-    @test_nowarn remove_mesh!(p)
-    addBackgroundGrid!(p, [0.6,0.6,0.0])
+    @test_nowarn remove_mesh!(p_visu)
+    addBackgroundGrid!(p_visu, [0.6, 0.6, 0.0])
 
     # Add another inner boundary via a spline with given data points
     data = [ [0.0  1.75 -1.0 0.0]
@@ -66,54 +66,54 @@ using CairoMakie
              [0.75 0.6  -2.0 0.0]
              [1.0  1.75 -1.0 0.0] ]
     spline2 = new("small_spline", 5, data)
-    add!(p, spline2, "inner2")
+    add!(p_visu, spline2, "inner2")
     #
     # Test getting the inner curve and test
     #
     # Purposely get the names wrong to throw a warning
-    dict = getCurve(p, "small_spline", "inner1")
+    dict = getCurve(p_visu, "small_spline", "inner1")
     # Do it correctly this time
-    dict = getCurve(p, "small_spline", "inner2")
+    dict = getCurve(p_visu, "small_spline", "inner2")
     @test dict["TYPE"] == "SPLINE_CURVE"
 
     # Set file format to ISM (to exericise plotting routine)
-    setMeshFileFormat!(p, "ISM")
-    meshFileFormat = getMeshFileFormat(p)
-    setFileNames!(p, meshFileFormat)
+    setMeshFileFormat!(p_visu, "ISM")
+    meshFileFormat = getMeshFileFormat(p_visu)
+    setFileNames!(p_visu, meshFileFormat)
 
-    @test_nowarn updatePlot!(p)
+    @test_nowarn updatePlot!(p_visu)
 
     # Create the mesh which contains a plotting update for ISM-V2
-    @test_nowarn generate_mesh(p)
+    @test_nowarn generate_mesh(p_visu)
 
     # Destroy the mesh and reset the background grid
-    @test_nowarn remove_mesh!(p)
-    addBackgroundGrid!(p, [0.6,0.6,0.0])
+    @test_nowarn remove_mesh!(p_visu)
+    addBackgroundGrid!(p_visu, [0.6, 0.6, 0.0])
 
     # Add a final inner boundary that contains multiple links in the chain
     edge1 = newEndPointsLineCurve("edge1", [-2.3, -1.0, 0.0], [-1.7, -1.0, 0.0])
     edge2 = newEndPointsLineCurve("edge2", [-1.7, -1.0, 0.0], [-2.0, -0.4, 0.0])
     edge3 = newEndPointsLineCurve("edge3", [-2.0, -0.4, 0.0], [-2.3, -1.0, 0.0])
-    add!(p, edge1, "inner3")
-    add!(p, edge2, "inner3")
-    add!(p, edge3, "inner3")
+    add!(p_visu, edge1, "inner3")
+    add!(p_visu, edge2, "inner3")
+    add!(p_visu, edge3, "inner3")
 
     # Create a refinement center and add it with the generic method
     cent = newRefinementCenter("Center1", "smooth", [-1.25, -3.0, 0.0], 0.2, 1.0)
-    add!(p, cent)
+    add!(p_visu, cent)
 
     # Set file format to ABAQUS (to exericise plotting routine)
-    setMeshFileFormat!(p, "ABAQUS")
-    meshFileFormat = getMeshFileFormat(p)
-    setFileNames!(p, meshFileFormat)
+    setMeshFileFormat!(p_visu, "ABAQUS")
+    meshFileFormat = getMeshFileFormat(p_visu)
+    setFileNames!(p_visu, meshFileFormat)
 
-    @test_nowarn updatePlot!(p, HOHQMesh.MODEL + HOHQMesh.GRID + HOHQMesh.REFINEMENTS)
+    @test_nowarn updatePlot!(p_visu, HOHQMesh.MODEL + HOHQMesh.GRID + HOHQMesh.REFINEMENTS)
 
     # Create the mesh which contains a plotting update for ABAQUS
-    @test_nowarn generate_mesh(p)
+    @test_nowarn generate_mesh(p_visu)
 
     # Remove the outer boundary from the project
-    remove!(p, "outerCircle")
+    remove!(p_visu, "outerCircle")
 
     #
     # Remove the inner boundaries from the project
@@ -121,27 +121,27 @@ using CairoMakie
 
     # Purposely do this wrong to throw a warning
     #  (1) Give a wrong "new" inner boundary name
-    @test_throws ErrorException remove!(p, "big_spline", "wrongName")
+    @test_throws ErrorException remove!(p_visu, "big_spline", "wrongName")
     #  (2) Give the wrong inner boundary name that exists but does not contain "big_spline"
-    @test_throws ErrorException remove!(p, "big_spline", "inner2")
+    @test_throws ErrorException remove!(p_visu, "big_spline", "inner2")
     #  (3) Give the correct combination and remove the inner boundary
-    remove!(p, "big_spline", "inner1")
-    @test length(p.innerBoundaryNames) == 2
+    remove!(p_visu, "big_spline", "inner1")
+    @test length(p_visu.innerBoundaryNames) == 2
 
     # Do the rest of the inner boudary removals correctly.
-    remove!(p, "small_spline", "inner2")
-    @test length(p.innerBoundaryNames) == 1
+    remove!(p_visu, "small_spline", "inner2")
+    @test length(p_visu.innerBoundaryNames) == 1
     undo()
-    @test length(p.innerBoundaryNames) == 2
+    @test length(p_visu.innerBoundaryNames) == 2
     redo()
 
     # Remove a single part of the chain with multiple curves
-    @test length(p.innerBoundaryNames[1]) == 3
-    remove!(p, "edge2", "inner3")
-    @test length(p.innerBoundaryNames[1]) == 2
+    @test length(p_visu.innerBoundaryNames[1]) == 3
+    remove!(p_visu, "edge2", "inner3")
+    @test length(p_visu.innerBoundaryNames[1]) == 2
     undo()
     # To remove the inner boundary with multiple chains we use a different method.
-    removeInnerBoundary!(p, "inner3")
+    removeInnerBoundary!(p_visu, "inner3")
     undo()
     redo()
 
