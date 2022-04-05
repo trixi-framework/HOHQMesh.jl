@@ -70,8 +70,8 @@ function removeOuterBoundaryCurveWithName!(proj::Project, name::String)
     lst = getOuterBoundaryChainList(proj)
     indx  = getChainIndex(lst,name)
     if indx > 0
-        removeOuterBoundaryCurveAtIndex!(proj,indx) # posts undo/notification
         proj.backgroundGridShouldUpdate = true
+        removeOuterBoundaryCurveAtIndex!(proj,indx) # posts undo/notification
     end
 end
 """
@@ -114,7 +114,7 @@ end
     addOuterBoundary!(proj::Project, outerBoundary::Dict{String,Any})
 
 Add an empty outer boundary to the project. There can be only one.
-This function is only used as part of an undo operation removing the outer boundary
+This function is only used as part of an undo operation removing the outer boundary.
 """
 function addOuterBoundary!(proj::Project, outerBoundary::Dict{String,Any})
     model = getModelDict(proj)
