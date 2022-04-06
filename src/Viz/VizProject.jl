@@ -91,8 +91,12 @@ function plotProject!(proj::Project, plotOptions::Int = 0)
 #       Plot the outer innerBoundaries
 #
         if !isempty(proj.outerBndryNames)
-            plotNames = ["Outer."*s for s in proj.outerBndryNames]
-            plotChain!(plt,proj.outerBndryPoints, plotNames)
+            plotNumbers = ["O."*string(i) for i in 1:length(proj.outerBndryNames)]
+            plotNames = String[]
+            for j = 1:length(proj.outerBndryNames)
+                push!(plotNames, plotNumbers[j]*"| Outer."*proj.outerBndryNames[j] ) 
+            end
+            plotChain!(plt,proj.outerBndryPoints, plotNames, plotNumbers)
         end
 #
 #       Plot the inner innerBoundaries
@@ -101,7 +105,12 @@ function plotProject!(proj::Project, plotOptions::Int = 0)
             for i = 1:length(proj.innerBoundaryChainNames)
                 innerBndryPts = proj.innerBoundaryPoints[i]
                 innerBndryNames = [ proj.innerBoundaryChainNames[i]*"."*s for s in proj.innerBoundaryNames[i]]
-                plotChain!(plt,innerBndryPts, innerBndryNames)
+                plotNumbers = [string(i)*"."*string(j) for j in 1:length(innerBndryNames)]
+                plotNames = String[]
+                for j = 1:length(innerBndryNames)
+                    push!(plotNames, plotNumbers[j]*"| "*innerBndryNames[j] ) 
+                end
+                plotChain!(plt,innerBndryPts, plotNames, plotNumbers)
             end
         end
         if !isempty(proj.outerBndryNames) || !isempty(proj.innerBoundaryChainNames)
@@ -153,33 +162,33 @@ function updatePlot!(proj::Project, plotOptions::Int)
     end
 end
 
-function plotChain!(plt, chainPoints::Array{Any}, labels::Array{String})
+function plotChain!(plt, chainPoints::Array{Any}, legendLabels::Array{String}, curveLabels::Array{String} )
     x = chainPoints[1]
-    plotCurve(plt, x, labels[1])
+    plotCurve(plt, x, legendLabels[1], curveLabels[1])
 
-    s = length(labels)
+    s = length(legendLabels)
 
     for i = 2:s
         x = chainPoints[i]
-        plotCurve(plt,x,labels[i])
-    end
+        plotCurve(plt,x,legendLabels[i], curveLabels[i])
+    end 
 end
 
-function plotCurve(plt, points::Matrix{Float64}, label::String)
-    lines!(plt[1,1],points[:,1],points[:,2], label = label, linewidth = 5 )
+function plotCurve(plt, points::Matrix{Float64}, legendLabel::String, curveLabel::String)
+    lines!(plt[1,1],points[:,1],points[:,2], label = legendLabel, linewidth = 5 )
     s = size(points)
     np = div(s[1], 2, RoundNearest)
     if s[1] == 3
-        np = 2
+        np = 2 
     end
-    dx = points[np+1,1] - points[np-1,1]
-    dy = points[np+1,2] - points[np-1,2]
-    theta = atan(dy,dx)
-    if(abs(dy) <= 0.0001) #Not pretty
-        theta = 0.0
-    end
+    # dx = points[np+1,1] - points[np-1,1]
+    # dy = points[np+1,2] - points[np-1,2]
+    # theta = atan(dy,dx)
+    # if(abs(dy) <= 0.0001) #Not pretty
+    #     theta = 0.0
+    # end
     pp = (points[np,1],points[np,2])
-    text!(plt[1,1],label,position = pp, align = (:center,:center), rotation = theta )
+    text!(plt[1,1],curveLabel,textsize = 28, position = pp, align = (:center,:center) )
 end
 
 function plotRefinement(plt, points::Array{Matrix{Float64}}, label::Array{String}, loc::Array{Array{Float64}})
