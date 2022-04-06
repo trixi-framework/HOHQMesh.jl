@@ -135,11 +135,11 @@ function newSplineCurve(name::String, dataFile::String)
     end 
     return spline
 end
-"""
-    duplicateCurve(crv::Dict{String,Any}, newName::String)
-
-Duplicate the given curve giving it the new name.
-"""
+#"""
+#    duplicateCurve(crv::Dict{String,Any}, newName::String)
+#
+#Duplicate the given curve giving it the new name.
+#"""
 # function duplicateCurve(crv::Dict{String,Any}, newName::String)
 #     disableNotifications()
 #     disableUndo()
