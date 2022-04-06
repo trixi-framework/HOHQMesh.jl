@@ -55,29 +55,29 @@ function addObserver(observer::Any, note::String, fnction::Any)
     push!(HQMNotificationCenter[note],noteObj)
 end
 
-# This is unused. We never remove notifications
-# """
-#     unRegisterForNotification(observer::Any, note::String)
+"""
+    unRegisterForNotification(observer::Any, note::String)
 
-# Remove the observer from being notified by the notification `note`
-# """
-# function unRegisterForNotification(observer::Any, note::String)
-#     if haskey(HQMNotificationCenter,note)
-#         global observers = HQMNotificationCenter[note]
+Remove the observer from being notified by the notification `note`
+"""
+function unRegisterForNotification(observer::Any, note::String)
+    if haskey(HQMNotificationCenter,note)
+        global observers = HQMNotificationCenter[note]
 
-#         for i = 1:length(observers)
-#             global noteObj  = observers[i]
-#             noteObserver = noteObj.observer
-#             if noteObserver === observer
-#                 deleteat!(observers,i)
-#                 break
-#             end
-#         end
-#         if isempty(observers)
-#             delete!(HQMNotificationCenter,note)
-#         end
-#     end
-# end
+        for i = 1:length(observers)
+            global noteObj  = observers[i]
+            noteObserver = noteObj.observer
+            if noteObserver === observer
+                deleteat!(observers,i)
+                break
+            end
+        end
+        if isempty(observers)
+            delete!(HQMNotificationCenter,note)
+        end
+    end
+end
+
 """
     postNotificationWithName(sender::Any, name::String, userInfo::Tuple)
 
