@@ -72,8 +72,8 @@ using Test
 #
 #   There are no longer any background grid. Delete the notification center piece as well.
 #   Note that the notification center is global and can have multiple observers. So we test
-#   this notification center removal before other observers are created that will add in the
-#   background grid again.
+#   this notification center removal before other observers, e.g. other projects in the
+#   testing runs, are created that will add in the background grid again.
 #
     HOHQMesh.unRegisterForNotification(p, "BGRID_DID_CHANGE_NOTIFICATION")
     @test haskey( HOHQMesh.HQMNotificationCenter , "BGRID_DID_CHANGE_NOTIFICATION" ) == false
