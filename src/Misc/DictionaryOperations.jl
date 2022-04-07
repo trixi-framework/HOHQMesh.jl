@@ -27,7 +27,7 @@
 #=
     Some useful getters for a dictionary
 =#
-arrayRegex = r"(?<=\[).+?(?=\])"
+const arrayRegex = r"(?<=\[).+?(?=\])"
 
 function realForKeyFromDictionary(key::AbstractString, d::Dict{String,Any})
     v = d[key]
