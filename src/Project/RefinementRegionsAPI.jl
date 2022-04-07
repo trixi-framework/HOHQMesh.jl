@@ -305,7 +305,7 @@ end#
 Set the location of a refinement center to location = [x,y,z].
 """
 function setRefinementLocation!(r::Dict{String,Any}, x::Array{Float64})
-    x0Str  = @sprintf("[%f,%f,%f]", x[1], x[2], x[3])
+    x0Str = "[$(x[1]),$(x[2]),$(x[3])]" # @sprintf("[%f,%f,%f]", x[1], x[2], x[3])
     setRefinementLocation!(r,x0Str)
     return nothing
 end
@@ -408,7 +408,7 @@ end
 Set the start point location of a refinement line, `location = [x, y, z]`.
 """
 function setRefinementStart!(r::Dict{String,Any}, x::Array{Float64})
-    x0Str  = @sprintf("[%f,%f,%f]", x[1], x[2], x[3])
+    x0Str = "[$(x[1]),$(x[2]),$(x[3])]" # @sprintf("[%f,%f,%f]", x[1], x[2], x[3])
     setRefinementStart!(r,x0Str)
 end
 
@@ -441,7 +441,7 @@ end
 Set the end point location of a refinement line, `location = [x, y, z]`.
 """
 function setRefinementEnd!(r::Dict{String,Any}, x::Array{Float64})
-    x0Str  = @sprintf("[%f,%f,%f]", x[1], x[2], x[3])
+    x0Str = "[$(x[1]),$(x[2]),$(x[3])]" # @sprintf("[%f,%f,%f]", x[1], x[2], x[3])
     setRefinementEnd!(r,x0Str)
 end
 

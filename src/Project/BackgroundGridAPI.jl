@@ -199,7 +199,7 @@ function setBackgroundGridLowerLeft!(proj::Project, x0::Array{Float64})
         (oldLowerLeft[1],oldLowerLeft[2],0.0),"Set Background Lower Left")
     end
 
-    x0Str  = @sprintf("[%f,%f,%f]", x0[1], x0[2], x0[3])
+    x0Str = "[$(x0[1]),$(x0[2]),$(x0[3])]" # @sprintf("[%f,%f,%f]", x0[1], x0[2], x0[3])
     bgDict["x0"] = x0Str
     postNotificationWithName(proj,"BGRID_DID_CHANGE_NOTIFICATION",(nothing,))
     return nothing
@@ -219,7 +219,7 @@ function setBackgroundGridSteps!(proj::Project, N::Array{Int})
         (oldN[1],oldN[2],oldN[3]),"Set Background Steps")
     end
 
-    NStr   = @sprintf("[%i,%i,%i]", N[1], N[2], N[3])
+    NStr = "[$(N[1]),$(N[2]),$(N[3])]" # @sprintf("[%i,%i,%i]", N[1], N[2], N[3])
     bgDict["N"]  = NStr
 
     postNotificationWithName(proj,"BGRID_DID_CHANGE_NOTIFICATION",(nothing,))
@@ -244,7 +244,7 @@ function setBackgroundGridSize!(proj::Project, dx::Float64, dy::Float64,key::Str
         (oldDx[1],oldDx[2],oldDx[3]),"Set Background Size")
     end
 
-    dxStr  = @sprintf("[%f,%f,%f]", dx, dy, 0.0)
+    dxStr = "[$(dx),$(dy),$(0.0)]" # @sprintf("[%f,%f,%f]", dx, dy, 0.0)
     bgDict[key] = dxStr
     postNotificationWithName(proj,"BGRID_DID_CHANGE_NOTIFICATION",(nothing,))
     return nothing

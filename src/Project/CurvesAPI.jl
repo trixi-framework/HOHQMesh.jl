@@ -3,38 +3,38 @@
 
  Copyright (c) 2010-present David A. Kopriva and other contributors: AUTHORS.md
 
- Permission is hereby granted, free of charge, to any person obtaining a copy  
- of this software and associated documentation files (the "Software"), to deal  
- in the Software without restriction, including without limitation the rights  
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell  
- copies of the Software, and to permit persons to whom the Software is  
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
 
- The above copyright notice and this permission notice shall be included in all  
+ The above copyright notice and this permission notice shall be included in all
  copies or substantial portions of the Software.
 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR  
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,  
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE  
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER  
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,  
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
- 
+
  --- End License
 =#
 
 """
-    newParametricEquationCurve(name::String, 
-        xEqn::String, 
-        yEqn::String, 
+    newParametricEquationCurve(name::String,
+        xEqn::String,
+        yEqn::String,
         zEqn::String = "z(t) = 0.0" )
 
 Creates and returns a new parametricEquationCurve in the form of a Dictionary
 """
-function newParametricEquationCurve(name::String, 
-                                    xEqn::String, 
-                                    yEqn::String, 
+function newParametricEquationCurve(name::String,
+                                    xEqn::String,
+                                    yEqn::String,
                                     zEqn::String = "z(t) = 0.0" )
 
     crv = Dict{String,Any}()
@@ -54,7 +54,7 @@ end
 
 Creates and returns a new curve defined by its end points in the form of a Dictionary
 """
-function newEndPointsLineCurve(name::String, 
+function newEndPointsLineCurve(name::String,
                                xStart::Array{Float64},
                                xEnd::Array{Float64})
     crv = Dict{String,Any}()
@@ -69,19 +69,19 @@ function newEndPointsLineCurve(name::String,
     return crv
 end
 """
-    newCircularArcCurve(name::String, center::Array{Float64},  
+    newCircularArcCurve(name::String, center::Array{Float64},
         startAngle::Float64, endAngle::Float64,
         units::String)
 
 Creates and returns a new circular arc curve in the form of a Dictionary
 """
-function newCircularArcCurve(name::String, 
-                             center::Array{Float64},  
+function newCircularArcCurve(name::String,
+                             center::Array{Float64},
                              radius::Float64,
-                             startAngle::Float64, 
+                             startAngle::Float64,
                              endAngle::Float64,
                              units::String = "degrees")
-    
+
     arc = Dict{String,Any}()
     arc["TYPE"] = "CIRCULAR_ARC"
     disableNotifications()
@@ -130,9 +130,9 @@ function newSplineCurve(name::String, dataFile::String)
             for j = 1:4
                 splineDataArray[i,j] = parse(Float64,currentLine[j])
             end
-        end 
+        end
         spline = newSplineCurve(name, nKnots, splineDataArray)
-    end 
+    end
     return spline
 end
 #"""
@@ -159,7 +159,7 @@ Set the name of the curve represented by curveDict.
 function setCurveName!(crv::Dict{String,Any}, name::String)
     if haskey(crv,"name")
         oldName = crv["name"]
-        registerWithUndoManager(crv,setCurveName!, (oldName,), "Set Curve Name")    
+        registerWithUndoManager(crv,setCurveName!, (oldName,), "Set Curve Name")
         postNotificationWithName(crv,"CURVE_DID_CHANGE_NAME_NOTIFICATION",(oldName,))
     end
     crv["name"] = name
@@ -187,7 +187,7 @@ For a parametric equation, set the x-equation.
 function setXEqn!(crv::Dict{String,Any}, eqn::String)
     if haskey(crv,"xEqn")
         oldEqn = crv["xEqn"]
-        registerWithUndoManager(crv,setXEqn!, (eqn,), "Set X Equation")    
+        registerWithUndoManager(crv,setXEqn!, (eqn,), "Set X Equation")
     end
     crv["xEqn"] = eqn
     postNotificationWithName(crv,"CURVE_DID_CHANGE_NOTIFICATION",(nothing,))
@@ -209,7 +209,7 @@ For a parametric equation, set the y-equation.
 function setYEqn!(crv::Dict{String,Any}, eqn::String)
     if haskey(crv,"yEqn")
         oldEqn = crv["yEqn"]
-        registerWithUndoManager(crv,setYEqn!, (eqn,), "Set Y Equation")    
+        registerWithUndoManager(crv,setYEqn!, (eqn,), "Set Y Equation")
     end
     crv["yEqn"] = eqn
     postNotificationWithName(crv,"CURVE_DID_CHANGE_NOTIFICATION",(nothing,))
@@ -231,7 +231,7 @@ For a parametric equation, set the zEqn-equation.
 function setZEqn!(crv::Dict{String,Any}, eqn::String)
     if haskey(crv,"zEqn")
         oldEqn = crv["zEqn"]
-        registerWithUndoManager(crv,setZEqn!, (eqn,), "Set Z Equation")    
+        registerWithUndoManager(crv,setZEqn!, (eqn,), "Set Z Equation")
     end
     crv["zEqn"] = eqn
     postNotificationWithName(crv,"CURVE_DID_CHANGE_NOTIFICATION",(nothing,))
@@ -251,7 +251,7 @@ end
 Set the start point for a line curve.
 """
 function setStartPoint!(crv::Dict{String,Any}, point::Array{Float64})
-    pStr  = @sprintf("[%f,%f,%f]", point[1], point[2], point[3])
+    pStr = "[$(point[1]),$(point[2]),$(point[3])]" # @sprintf("[%f,%f,%f]", point[1], point[2], point[3])
     setStartPoint!(crv,pStr)
 end
 
@@ -259,7 +259,7 @@ function setStartPoint!(crv::Dict{String,Any}, pointAsString::String)
     key = "xStart"
     if haskey(crv,key)
         oldPt = crv[key]
-        registerWithUndoManager(crv,setStartPoint!, (oldPt,), "Set Start Point")    
+        registerWithUndoManager(crv,setStartPoint!, (oldPt,), "Set Start Point")
     end
     crv[key] = pointAsString
     postNotificationWithName(crv,"CURVE_DID_CHANGE_NOTIFICATION",(nothing,))
@@ -278,7 +278,7 @@ end
 Set the end point for a line curve.
 """
 function setEndPoint!(crv::Dict{String,Any}, point::Array{Float64})
-    pStr  = @sprintf("[%f,%f,%f]", point[1], point[2], point[3])
+    pStr = "[$(point[1]),$(point[2]),$(point[3])]" # @sprintf("[%f,%f,%f]", point[1], point[2], point[3])
     setEndPoint!(crv,pStr)
 end
 
@@ -286,7 +286,7 @@ function setEndPoint!(crv::Dict{String,Any}, pointAsString::String)
     key = "xEnd"
     if haskey(crv,key)
         oldPt = crv[key]
-        registerWithUndoManager(crv,setEndPoint!, (oldPt,), "Set End Point")    
+        registerWithUndoManager(crv,setEndPoint!, (oldPt,), "Set End Point")
     end
     crv[key] = pointAsString
     postNotificationWithName(crv,"CURVE_DID_CHANGE_NOTIFICATION",(nothing,))
@@ -309,10 +309,10 @@ function setArcUnits!(arc::Dict{String,Any}, units::String)
         key = "units"
         if haskey(arc,key)
             oldUnits = arc[key]
-            registerWithUndoManager(arc,setArcUnits!, (oldUnits,), "Set Arc Units")    
+            registerWithUndoManager(arc,setArcUnits!, (oldUnits,), "Set Arc Units")
         end
         arc[key] = units
-        postNotificationWithName(arc,"CURVE_DID_CHANGE_NOTIFICATION",(nothing,))          
+        postNotificationWithName(arc,"CURVE_DID_CHANGE_NOTIFICATION",(nothing,))
     else
         println("Units must either be `degrees` or `radians`. Try setting `units` again.")
     end
@@ -331,14 +331,14 @@ end
 Set the center of a circular arc.
 """
 function setArcCenter!(arc::Dict{String,Any}, point::Array{Float64})
-    pStr  = @sprintf("[%f,%f,%f]", point[1], point[2], point[3])
+    pStr = "[$(point[1]),$(point[2]),$(point[3])]" # @sprintf("[%f,%f,%f]", point[1], point[2], point[3])
     setArcCenter!(arc,pStr)
 end
 function setArcCenter!(arc::Dict{String,Any}, pointAsString::String)
     key = "center"
     if haskey(arc,key)
         oldVal = arc[key]
-        registerWithUndoManager(arc,setArcCenter!, (oldVal,), "Set Arc Center")    
+        registerWithUndoManager(arc,setArcCenter!, (oldVal,), "Set Arc Center")
     end
 
     arc[key] = pointAsString
@@ -360,7 +360,7 @@ function setArcStartAngle!(arc::Dict{String,Any}, angle::Float64)
     key = "start angle"
     if haskey(arc,key)
         oldVal = parse(Float64,arc[key])
-        registerWithUndoManager(arc,setArcStartAngle!, (oldVal,), "Set Arc Start Angle")    
+        registerWithUndoManager(arc,setArcStartAngle!, (oldVal,), "Set Arc Start Angle")
     end
     arc[key] = string(angle)
     postNotificationWithName(arc,"CURVE_DID_CHANGE_NOTIFICATION",(nothing,))
@@ -380,7 +380,7 @@ function setArcEndAngle!(arc::Dict{String,Any}, angle::Float64)
     key = "end angle"
     if haskey(arc,key)
         oldVal = parse(Float64,arc[key])
-        registerWithUndoManager(arc,setArcEndAngle!, (oldVal,), "Set Arc Start Angle")    
+        registerWithUndoManager(arc,setArcEndAngle!, (oldVal,), "Set Arc Start Angle")
     end
     arc[key] = string(angle)
     postNotificationWithName(arc,"CURVE_DID_CHANGE_NOTIFICATION",(nothing,))
@@ -400,7 +400,7 @@ function setArcRadius!(arc::Dict{String,Any}, radius::Float64)
     key = "radius"
     if haskey(arc,key)
         oldVal = parse(Float64,arc[key])
-        registerWithUndoManager(arc,setArcRadius!, (oldVal,), "Set Arc Radius")    
+        registerWithUndoManager(arc,setArcRadius!, (oldVal,), "Set Arc Radius")
     end
     arc[key] = string(radius)
     postNotificationWithName(arc,"CURVE_DID_CHANGE_NOTIFICATION",(nothing,))
@@ -419,7 +419,7 @@ function setSplineNKnots!(spline::Dict{String,Any}, nKnots::Int)
     key = "nKnots"
     if haskey(spline,key)
         oldVal = parse(Int,spline[key])
-        registerWithUndoManager(spline,setSplineNKnots!, (oldVal,), "Set Spline Knots")    
+        registerWithUndoManager(spline,setSplineNKnots!, (oldVal,), "Set Spline Knots")
     end
     spline["nKnots"] = string(nKnots)
     postNotificationWithName(spline,"CURVE_DID_CHANGE_NOTIFICATION",(nothing,))
@@ -436,7 +436,7 @@ end
 function setSplinePoints!(spline::Dict{String,Any},points::Matrix{Float64})
     key = "SPLINE_DATA"
     if haskey(spline,key)
-        registerWithUndoManager(spline,setSplinePoints!, (spline["SPLINE_DATA"],), "Set Spline Points")    
+        registerWithUndoManager(spline,setSplinePoints!, (spline["SPLINE_DATA"],), "Set Spline Points")
     end
     spline["SPLINE_DATA"] = points
     postNotificationWithName(spline,"CURVE_DID_CHANGE_NOTIFICATION",(nothing,))
