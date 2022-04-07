@@ -60,6 +60,19 @@ The *HOHQMesh* mesh generator itself is developed by David A. Kopriva.
 HOHQMesh.jl is licensed under the MIT license (see [License](@ref)).
 *HOHQMesh* itself is also available under the MIT license.
 
+### Preview of the documentation
+
+You can build the documentation of HOHQMesh.jl locally by running
+```bash
+julia --project=docs -e 'using Pkg; Pkg.instantiate(); include("docs/make.jl")'
+```
+from the HOHQMesh.jl main directory. Then, you can look at the html files generated in
+`docs/build`.
+For PRs triggered from branches inside the HOHQMesh.jl main repository previews of
+the new documentation are generated at `https://trixi-framework.github.io/HOHQMesh.jl/previews/PRXXX`,
+where `XXX` is the number of the PR.
+Note, this does not work for PRs from forks for security reasons (since anyone could otherwise push
+arbitrary stuff, including malicious code).
 
 ## Acknowledgements
 The authors would like to thank David A. Kopriva for making the sources of
