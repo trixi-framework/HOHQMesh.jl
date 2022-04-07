@@ -75,16 +75,21 @@ include("./SmootherAPI.jl")
 Open existing project described in the control File.
 
     folder   = folder the control file is in
-    fileNmae = the name of the file
+    fileName = the name of the file
 """
 function openProject(fileName::String, folder::String)
 
     controlFile = joinpath(folder,fileName)
-    splitName   = split(fileName,".")
-
     controlDict = ImportControlFile(controlFile)
 
-    s    = string(splitName[1]) # This is dumb
+    # Strip off the file path into a temporary name
+    tempName = splitdir(fileName)
+    # Separate the project name from `.control`
+    splitName = split(tempName[2], ".")
+    # Pull the correct project name
+    s = string(splitName[1]) # This is dumb
+
+    # Instantiate an empty project with some defaults
     proj = newProject(s,folder)
 #
 #   Overwrite defaults
@@ -103,7 +108,6 @@ end
 Save a project dictionary to the file path specified when the project was created.
 """
 function saveProject(proj::Project)
-    getfolder     = mkpath(proj.projectDirectory)
     fileName = joinpath(proj.projectDirectory,proj.name)*".control"
     WriteControlFile(proj.projectDictionary,fileName)
 end

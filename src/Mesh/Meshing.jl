@@ -33,7 +33,6 @@ function generate_mesh(proj::Project)
         println("A background grid is needed before meshing. Add one and try again.")
         return nothing
     end
-    path           = mkpath(proj.projectDirectory)
     saveProject(proj)
     fileName       = joinpath(proj.projectDirectory,proj.name)*".control"
     mesherOutput   = generate_mesh(fileName, output_directory = proj.projectDirectory)
