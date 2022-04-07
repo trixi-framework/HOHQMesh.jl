@@ -30,7 +30,7 @@ To see that example, run
 ```
    run_demo("out")
 ```
-where `out` specifies the folder where the resulting mesh and TecPlot files will be saved.
+where `"out"` specifies the folder where the resulting mesh and TecPlot files will be saved.
 
 The second example builds a new project consisting of an outer, circular boundary, and an inner
 boundary in the shape of an ice cream cone. The "verbose" version of the script is given below.
@@ -296,8 +296,8 @@ The run parameters can be enquired and set with these getter/setter pairs:
    [Return:String]  getPlotFileFormat(proj::Project)
 ```
 
-The available mesh file formats are `ISM`, `ISM-V2`, or `ABAQUS`. The plot file (which can be viewed with something
-like VisIt or Paraview) format is either `skeleton` or `sem`. The former is just a low order finite element
+The available mesh file formats are `"ISM"`, `"ISM-V2"`, or `"ABAQUS"`. The plot file (which can be viewed with something
+like VisIt or Paraview) format is either `"skeleton"` or `"sem"`. The former is just a low order finite element
 represntation of the mesh. The latter (which is a much bigger file) includes the interior degrees of freedom.
 
 #### Changing the output file names
