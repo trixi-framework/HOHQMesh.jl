@@ -251,7 +251,7 @@ end
 Set the start point for a line curve.
 """
 function setStartPoint!(crv::Dict{String,Any}, point::Array{Float64})
-    pStr = "[$(point[1]),$(point[2]),$(point[3])]" # @sprintf("[%f,%f,%f]", point[1], point[2], point[3])
+    pStr = "[$(point[1]),$(point[2]),$(point[3])]"
     setStartPoint!(crv,pStr)
 end
 
@@ -278,7 +278,7 @@ end
 Set the end point for a line curve.
 """
 function setEndPoint!(crv::Dict{String,Any}, point::Array{Float64})
-    pStr = "[$(point[1]),$(point[2]),$(point[3])]" # @sprintf("[%f,%f,%f]", point[1], point[2], point[3])
+    pStr = "[$(point[1]),$(point[2]),$(point[3])]"
     setEndPoint!(crv,pStr)
 end
 
@@ -331,7 +331,7 @@ end
 Set the center of a circular arc.
 """
 function setArcCenter!(arc::Dict{String,Any}, point::Array{Float64})
-    pStr = "[$(point[1]),$(point[2]),$(point[3])]" # @sprintf("[%f,%f,%f]", point[1], point[2], point[3])
+    pStr = "[$(point[1]),$(point[2]),$(point[3])]"
     setArcCenter!(arc,pStr)
 end
 function setArcCenter!(arc::Dict{String,Any}, pointAsString::String)

@@ -4,7 +4,6 @@ module HOHQMesh
 # (standard library packages first, other packages next, all of them sorted alphabetically)
 
 using HOHQMesh_jll: HOHQMesh_jll
-using Printf
 using Requires: @require
 
 function __init__()
