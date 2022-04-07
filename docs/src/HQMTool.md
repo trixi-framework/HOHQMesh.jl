@@ -396,9 +396,9 @@ A refinement region can be edited by using the following
    [Return:nothing]         setRefinementLocation!(r::Dict{String,Any}, x::Array{Float64})
    [Return:Array{Float64}]  getRefinementLocation(r::Dict{String,Any})
    [Return:nothing]         setRefinementGridSize!(r::Dict{String,Any}, h::Float64)
-   [Return:float64]         getRefinementGridSize(r::Dict{String,Any})
+   [Return:Float64]         getRefinementGridSize(r::Dict{String,Any})
    [Return:nothing]         setRefinementWidth!(r::Dict{String,Any}, w::Float64)
-   [Return:float64]         getRefinementWidth(r::Dict{String,Any})
+   [Return:Float64]         getRefinementWidth(r::Dict{String,Any})
 ```
 where `r` is a dictionary returned by `newRefinementCenter!`, `newRefinementLine!`, or `getRefinementRegion`.
 
@@ -429,7 +429,7 @@ To further edit a `RefinementLine`, use the methods
    Example:
 
    ```julia
-   circ = newCircularArcCurve("outerCircle", [0.0,-1.0,0.0], 4.0, 0.0, 360.0, "degrees")
+   circ = newCircularArcCurve("outerCircle", [0.0, -1.0, 0.0], 4.0, 0.0, 360.0, "degrees")
    add!(p, circ)
    ```
 
@@ -446,7 +446,7 @@ To further edit a `RefinementLine`, use the methods
    Example:
 
    ```julia
-   cone1 = newEndPointsLineCurve("cone1", [0.0,-3.0,0.0], [1.0,0.0,0.0])
+   cone1 = newEndPointsLineCurve("cone1", [0.0, -3.0, 0.0], [1.0, 0.0, 0.0])
    add!(p, cone1, "IceCreamCone")
    ```
 
