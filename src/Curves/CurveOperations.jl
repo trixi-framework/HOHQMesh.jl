@@ -24,9 +24,7 @@
  --- End License
 =#
 
-using Base: String, Int64, Float64
-
-argRegex = r"(?<=\().+?(?=\))"
+const argRegex = r"(?<=\().+?(?=\))"
 
 function arcCurvePoints(center::Array{Float64}, r::Float64, thetaStart::Float64, thetaEnd::Float64, units::AbstractString, t::Array{Float64}, points::Array{Float64,2})
     fctr::Float64 = 1.0

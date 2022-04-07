@@ -36,7 +36,7 @@ end
 
 function intForKeyFromDictionary(key::AbstractString, d::Dict{String,Any})
     v = d[key]
-    return parse(Int64,v)
+    return parse(Int,v)
 end
 
 function stringForKeyFromDictionary(key::AbstractString, d::Dict{String,Any})

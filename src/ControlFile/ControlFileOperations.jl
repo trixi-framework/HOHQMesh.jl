@@ -3,24 +3,24 @@
 
  Copyright (c) 2010-present David A. Kopriva and other contributors: AUTHORS.md
 
- Permission is hereby granted, free of charge, to any person obtaining a copy  
- of this software and associated documentation files (the "Software"), to deal  
- in the Software without restriction, including without limitation the rights  
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell  
- copies of the Software, and to permit persons to whom the Software is  
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
 
- The above copyright notice and this permission notice shall be included in all  
+ The above copyright notice and this permission notice shall be included in all
  copies or substantial portions of the Software.
 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR  
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,  
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE  
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER  
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,  
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
- 
+
  --- End License
 =#
 
@@ -44,7 +44,7 @@ The CONTROL_INPUT contains the blocks
     MESH_PARAMETERS
     SPRING_SMOOTHER
     REFINEMENT_REGIONS
-        REFINEMENT_REGIONS contains a ["LIST"] of 
+        REFINEMENT_REGIONS contains a ["LIST"] of
             REFINEMENT_CENTER
             REFINEMENT_LINE
     SCALE_TRANSFORMATION
@@ -80,15 +80,15 @@ A PARAMETRIC_EQUATION_CURVE dictionary contains the keys
     xEqn
     yEqn
     zEqn
-          
+
 =#
 
 # Four objects store their members as lists rather than
 # as dictionaries
 
-blocksThatStoreLists = Set(["OUTER_BOUNDARY", 
+blocksThatStoreLists = Set(["OUTER_BOUNDARY",
                             "REFINEMENT_REGIONS" ,
-                            "INNER_BOUNDARIES", 
+                            "INNER_BOUNDARIES",
                             "CHAIN"])
 
 blockNameStack = []
@@ -100,9 +100,9 @@ function ImportControlFile(fileName::String)
     controlDict = Dict{String,Any}()
     open(fileName,"r") do controlFile
         performImport(controlDict, controlFile)
-    end 
+    end
     return controlDict
-end 
+end
 
 function WriteControlFile(controlDict::Dict{String,Any}, fileName::String)
     open(fileName,"w") do controlFile
@@ -137,7 +137,7 @@ function performImport(collection, f::IOStream)
                 if blockName == "SPLINE_DATA"
                     ImportSplineData( collection, f)
                     continue
-                end 
+                end
 
                 newBlock = Dict{String,Any}()
                 newBlock["TYPE"] = blockName
@@ -157,11 +157,11 @@ function performImport(collection, f::IOStream)
                             error("Key-value pair not found in string: " * nextLine)
                         end
                         addToCollection(newBlock,kvp[1],kvp[2])
-                    end 
+                    end
                     performImport(newBlock["LIST"],f)
                 else
                     performImport(newBlock,f)
-                end 
+                end
             end
 #
 #       --------------
@@ -185,7 +185,7 @@ function performImport(collection, f::IOStream)
                     pop!(blockNameStack)
                 else
                     error("Block name end $blockName does not match current block $stackValue")
-                end 
+                end
                 if blockName == "SPLINE_DATA"
                     continue
                 else
@@ -220,7 +220,7 @@ end
 #
 function WriteDictionary(controlDict::Dict{String,Any}, f::IOStream, indent::String)
 
-    deepIndent = "   " * indent 
+    deepIndent = "   " * indent
     for (key, value) in controlDict
         if isa(value, AbstractDict)
             println(f,indent,"\\begin{$key}")
@@ -229,12 +229,12 @@ function WriteDictionary(controlDict::Dict{String,Any}, f::IOStream, indent::Str
                 StepThroughList(list,f, deepIndent)
             else
                 WriteDictionary(value,f, deepIndent)
-            end 
+            end
             println(f,indent,"\\end{$key}")
         elseif isa(value, AbstractString)
             if key != "TYPE"
                 println(f,indent,"$key = $value")
-            end 
+            end
         elseif isa(value, AbstractArray)
             if key == "LIST"
                 StepThroughList(value,f, deepIndent)
@@ -243,17 +243,17 @@ function WriteDictionary(controlDict::Dict{String,Any}, f::IOStream, indent::Str
                 arraySize = size(value)
                 for j = 1:arraySize[1]
                     println(f,deepIndent, " ", value[j,1], " ", value[j,2], " ", value[j,3], " ", value[j,4])
-                end 
+                end
                 println(f,indent,"\\end{$key}")
-            end 
-        end 
+            end
+        end
     end
 end
 #
 #--------------------------------------------------------------------------------------
 #
 function StepThroughList(lst::AbstractArray,f::IOStream, indent::String)
-    deepIndent = "   " * indent 
+    deepIndent = "   " * indent
     for dict in lst
         dtype = dict["TYPE"]
         println(f,indent, "\\begin{$dtype}")
@@ -277,19 +277,19 @@ end
 #--------------------------------------------------------------------------------------
 #
 function addToCollection(dict::Dict{String,Any}, k::AbstractString, v::AbstractString)
-    dict[k] = v 
+    dict[k] = v
 end
 #
 #--------------------------------------------------------------------------------------
 #
 function addToCollection(c::Array, k::AbstractString, v::Any)
-    push!(c,v) 
+    push!(c,v)
 end
 #
 #--------------------------------------------------------------------------------------
 #
 function addToCollection(dict::Dict{String,Any}, k::AbstractString, v::Dict{String,Any})
-    dict[k] = v 
+    dict[k] = v
 end
 #
 #--------------------------------------------------------------------------------------
@@ -301,13 +301,13 @@ function ImportSplineData( splineDict::Dict{String,Any}, f::IOStream)
     end
 
     knotString = splineDict["nKnots"]
-    nKnots = parse(Int64,knotString)
-    splineDataArray = zeros(Float64,nKnots,4)
+    nKnots = parse(Int, knotString)
+    splineDataArray = zeros(Float64, nKnots, 4)
     for i = 1:nKnots
         currentLine = split(readline(f))
         for j = 1:4
-            splineDataArray[i,j] = parse(Float64,currentLine[j])
+            splineDataArray[i,j] = parse(Float64, currentLine[j])
         end
-    end 
+    end
     splineDict["SPLINE_DATA"] = splineDataArray
 end
