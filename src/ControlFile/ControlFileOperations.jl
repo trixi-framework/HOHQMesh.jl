@@ -86,13 +86,13 @@ A PARAMETRIC_EQUATION_CURVE dictionary contains the keys
 # Four objects store their members as lists rather than
 # as dictionaries
 
-blocksThatStoreLists = Set(["OUTER_BOUNDARY",
-                            "REFINEMENT_REGIONS" ,
-                            "INNER_BOUNDARIES",
-                            "CHAIN"])
+const blocksThatStoreLists = Set(["OUTER_BOUNDARY",
+                                  "REFINEMENT_REGIONS" ,
+                                  "INNER_BOUNDARIES",
+                                  "CHAIN"])
 
+const blockRegex = r"(?<=\{).+?(?=\})"
 blockNameStack = []
-blockRegex = r"(?<=\{).+?(?=\})"
 #
 #--------------- MAIN ENTRY -----------------------------------------------
 #
