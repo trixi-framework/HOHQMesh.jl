@@ -24,9 +24,9 @@
  --- End License
 =#
 
-include("../Model/Geometry.jl")
-
 #
+#  --------------------------------------------------------------------------------------
+#           OUTER BOUNDARY FUNCTIONS
 #  --------------------------------------------------------------------------------------
 #
 """
@@ -61,6 +61,8 @@ function addCurveToOuterBoundary!(proj::Project, crv::Dict{String,Any})
     registerWithUndoManager(proj,removeOuterBoundaryCurveWithName!,(crv["name"],),"Add Outer Boundary Curve")
     postNotificationWithName(proj,"MODEL_DID_CHANGE_NOTIFICATION",(nothing,))
 end
+
+
 """
     removeOuterBoundaryCurveWithName!(proj::Project, name::String)
 
@@ -74,6 +76,8 @@ function removeOuterBoundaryCurveWithName!(proj::Project, name::String)
         removeOuterBoundaryCurveAtIndex!(proj,indx) # posts undo/notification
     end
 end
+
+
 """
     getOuterBoundaryCurveWithName(proj::Project, name::String)
 """
@@ -85,10 +89,12 @@ function getOuterBoundaryCurveWithName(proj::Project, name::String)
         end
     end
 end
-"""
-    insertOuterBoundaryCurveAtIndex(proj::Project, crv::Dict{String,Any}, indx::Int)
 
-Insert a curve at the specified index.
+
+"""
+    insertOuterBoundaryCurveAtIndex!(proj::Project, crv::Dict{String,Any}, indx::Int)
+
+Insert a curve into the outer boundary chain at the specified index.
 """
 function insertOuterBoundaryCurveAtIndex!(proj::Project, crv::Dict{String,Any}, indx::Int)
     lst = getOuterBoundaryChainList(proj)
@@ -100,6 +106,11 @@ function insertOuterBoundaryCurveAtIndex!(proj::Project, crv::Dict{String,Any}, 
     postNotificationWithName(proj,"MODEL_DID_CHANGE_NOTIFICATION",(nothing,))
 end
 
+"""
+    removeOuterBoundaryCurveAtIndex!(proj::Project, indx::Int)
+
+Remove a curve from the outer boundary chain at the specified index.
+"""
 function removeOuterBoundaryCurveAtIndex!(proj::Project, indx::Int)
     lst = getOuterBoundaryChainList(proj)
     crv = lst[indx]
@@ -131,6 +142,8 @@ function addOuterBoundary!(proj::Project, outerBoundary::Dict{String,Any})
     registerWithUndoManager(proj,removeOuterBoundary!, (nothing,), "Add Outer Boundary")
     postNotificationWithName(proj,"MODEL_DID_CHANGE_NOTIFICATION",(nothing,))
 end
+
+
 """
     removeOuterboundary!(proj::Project)
 
@@ -150,13 +163,13 @@ function removeOuterBoundary!(proj::Project)
     end
 end
 
+
 # function addOuterBoundary(proj::Project,obDict::Dict{String,Any})
 #     modelDict = getModelDict(proj)
 #     modelDict["OUTER_BOUNDARY"] = obDict
 # end
-#
-#  --------------------------------------------------------------------------------------
-#
+
+
 """
     getOuterBoundaryChainList(proj::Project)
 
@@ -173,6 +186,7 @@ function getOuterBoundaryChainList(proj::Project)
         return lst
     end
 end
+
 #
 #  --------------------------------------------------------------------------------------
 #           INNER BOUNDARY FUNCTIONS
@@ -219,6 +233,8 @@ function addCurveToInnerBoundary!(proj::Project, crv::Dict{String,Any}, boundary
                             "Add Inner Boundary Curve")
     postNotificationWithName(proj,"MODEL_DID_CHANGE_NOTIFICATION",(nothing,))
 end
+
+
 """
     removeInnerBoundaryCurve!(proj::Project, name::String)
 
@@ -284,6 +300,8 @@ function removeInnerBoundaryCurveAtIndex!(proj::Project, indx::Int, chainName::S
         postNotificationWithName(proj,"MODEL_DID_CHANGE_NOTIFICATION",(nothing,))
     end
 end
+
+
 """
     removeInnerBoundary!(proj::Project, chainName::String)
 
@@ -302,6 +320,8 @@ function removeInnerBoundary!(proj::Project, chainName::String)
     deleteat!(ibChains,i)
     postNotificationWithName(proj,"MODEL_DID_CHANGE_NOTIFICATION",(nothing,))
 end
+
+
 """
     insertInnerBoundaryAtIndex!(proj::Project, chainName::String, indx::Int, chain::??)
 
@@ -320,9 +340,8 @@ function insertInnerBoundaryAtIndex!(proj::Project, chainName::String, i::Int, c
                             "Remove Inner Boundary")
     postNotificationWithName(proj,"MODEL_DID_CHANGE_NOTIFICATION",(nothing,))
 end
-#
-#  --------------------------------------------------------------------------------------
-#
+
+
 """
     addInnerBoundaryWithName!(proj::Project,name::String)
 
@@ -349,9 +368,8 @@ function addInnerBoundaryWithName!(proj::Project,name::String)
 
     return bndryChain
 end
-#
-#----------------------------------------------------------------------------------------
-#
+
+
 function getChainIndex(chain::Vector{Dict{String, Any}},name)
     for (i,dict) in enumerate(chain)
         if dict["name"] == name
@@ -365,9 +383,8 @@ end
 
 Returns an array of the inner boundaries
 """
-#
-#  --------------------------------------------------------------------------------------
-#
+
+
 function getAllInnerBoundaries(proj::Project)
     innerBndryDict = getDictInModelDictNamed(proj,"INNER_BOUNDARIES")
     if haskey(innerBndryDict,"LIST")
@@ -380,9 +397,8 @@ function getAllInnerBoundaries(proj::Project)
     end
     return nothing
 end
-#
-#  --------------------------------------------------------------------------------------
-#
+
+
 """
     getInnerBoundaryWithName(proj::Project, name::String)
 
@@ -425,6 +441,8 @@ function getInnerBoundaryCurve(proj::Project, curveName::String, boundaryName::S
     println("No curve ", curveName, " in boundary ", boundaryName, ". Try again.")
     return nothing
 end
+
+
 """
     innerBoundaryIndices(proj::Project, curveName::String)
 
@@ -446,9 +464,8 @@ function innerBoundaryIndices(proj::Project, curveName::String)
     end
     return (0,0)
 end
-#
-#  --------------------------------------------------------------------------------------
-#
+
+
 function getModelDict(proj::Project)
     if haskey(proj.projectDictionary,"MODEL")
         return proj.projectDictionary["MODEL"]
@@ -459,6 +476,7 @@ function getModelDict(proj::Project)
         return modelDict
     end
 end
+
 
 function getDictInModelDictNamed(proj::Project,name::String)
     modelDict = getModelDict(proj)

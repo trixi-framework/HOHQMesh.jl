@@ -304,18 +304,36 @@ Return the path to the directory with some example mesh setups.
 examples_dir() = joinpath(pathof(HOHQMesh) |> dirname |> dirname, "examples")
 
 
-# Include functionality for interactive reading, writing, and plotting of a model for HOHQMesh
-include("Viz/VizMesh.jl")
-include("Misc/NotificationCenter.jl")
-include("Misc/DictionaryOperations.jl")
-include("Curves/Spline.jl")
+#
+# Include functionality for interactive reading and writing a model for HOHQMesh
+# Note, The visualzation routines are included above in the `__init__` above because
+# Makie is required
+#
+
+# Core interactive tool routines for control file readin, curve evaluation, etc.
 include("ControlFile/ControlFileOperations.jl")
 include("Curves/CurveOperations.jl")
+include("Curves/Spline.jl")
+include("Misc/DictionaryOperations.jl")
+include("Misc/NotificationCenter.jl")
+include("Model/Geometry.jl")
+
+# Project itself and some helper generic and undo functionality
 include("Project/Project.jl")
-include("Project/CurvesAPI.jl")
-include("Project/Undo.jl")
-include("Mesh/Meshing.jl")
 include("Project/Generics.jl")
+include("Project/Undo.jl")
+
+# Front facing API of the interactive tool for the `Project`
+include("Project/BackgroundGridAPI.jl")
+include("Project/ControlInputAPI.jl")
+include("Project/CurvesAPI.jl")
+include("Project/ModelAPI.jl")
+include("Project/RefinementRegionsAPI.jl")
+include("Project/RunParametersAPI.jl")
+include("Project/SmootherAPI.jl")
+
+# Main routine that uses HOHQMesh to generate a mesh from an interactive `Project`
+include("Mesh/Meshing.jl")
 
 #
 #---------------- Routines for demonstrating the HQMTool ---------------------------------

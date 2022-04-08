@@ -55,19 +55,12 @@ mutable struct Project
     meshShouldUpdate        ::Bool
 end
 
-defaultPlotPts  = 50
-meshFileFormats = Set(["ISM", "ISM-V2", "ABAQUS"])
-plotFileFormats = Set(["sem", "skeleton"])
-smootherTypes   = Set(["LinearSpring", "LinearAndCrossbarSpring"])
-statusValues    = Set(["ON", "OFF"])
-refinementTypes = Set(["smooth", "sharp"])
-
-include("./ControlInputAPI.jl")
-include("./BackgroundGridAPI.jl")
-include("./ModelAPI.jl")
-include("./RefinementRegionsAPI.jl")
-include("./RunParametersAPI.jl")
-include("./SmootherAPI.jl")
+const defaultPlotPts  = 50
+const meshFileFormats = Set(["ISM", "ISM-V2", "ABAQUS"])
+const plotFileFormats = Set(["sem", "skeleton"])
+const smootherTypes   = Set(["LinearSpring", "LinearAndCrossbarSpring"])
+const statusValues    = Set(["ON", "OFF"])
+const refinementTypes = Set(["smooth", "sharp"])
 
 """
     openProject(fileName::String, folder::String)
