@@ -297,7 +297,7 @@ function ImportSplineData( splineDict::Dict{String,Any}, f::IOStream)
     end
 
     knotString = splineDict["nKnots"]
-    nKnots = parse(Int, knotString)
+    nKnots = parse(Int64, knotString)
     splineDataArray = zeros(Float64, nKnots, 4)
     for i = 1:nKnots
         currentLine = split(readline(f))

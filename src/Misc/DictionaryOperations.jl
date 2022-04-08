@@ -38,7 +38,7 @@ end
 
 function intForKeyFromDictionary(key::AbstractString, d::Dict{String,Any})
     v = d[key]
-    return parse(Int,v)
+    return parse(Int64,v)
 end
 
 
@@ -61,7 +61,7 @@ function intArrayForKeyFromDictionary(key::AbstractString, d::Dict{String,Any})
     v = d[key]
     values = match(arrayRegex,v)
     s      = split(values.match,",")
-    array = [parse(Int,s[1]),parse(Int,s[2]),parse(Int,s[3])]
+    array = [parse(Int64,s[1]),parse(Int64,s[2]),parse(Int64,s[3])]
     return array
 end
 

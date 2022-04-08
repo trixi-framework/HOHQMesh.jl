@@ -33,8 +33,7 @@ export new,
        remove!
 
 #
-#  TODO: Go through and cleanup this exporting. Most of this will only be
-#        exported for automatic testing purposes
+#  TODO: Go through and cleanup this exporting.
 #
 # Functions from `BackgroundGridAPI.jl`
 export addBackgroundGrid!,
@@ -108,7 +107,7 @@ export addCurveToOuterBoundary!,
        getModelDict,
        getDictInModelDictNamed
 
-# Functions from `Project.jl` (this is main object of HQMTool)
+# Functions from `Project.jl`
 export openProject,
        saveProject,
        newProject,

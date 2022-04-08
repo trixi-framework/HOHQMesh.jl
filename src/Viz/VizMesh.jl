@@ -32,8 +32,8 @@ function getMeshFromMeshFile(meshFile::AbstractString, meshFileFormat::AbstractS
            line   = readline(f) # Numbers of nodes, edges ...
            values = split(line)
 
-           nNodes = parse(Int, values[1])
-           nEdges = parse(Int, values[2])
+           nNodes = parse(Int64, values[1])
+           nEdges = parse(Int64, values[2])
 #
 #          Read the nodes
 #
@@ -53,8 +53,8 @@ function getMeshFromMeshFile(meshFile::AbstractString, meshFileFormat::AbstractS
            for i = 1:3:3*nEdges
 
                values = split(readline(f))
-               n      = parse(Int,values[1])
-               m      = parse(Int,values[2])
+               n      = parse(Int64,values[1])
+               m      = parse(Int64,values[2])
 
                xMesh[i]   = nodes[n,1]
                xMesh[i+1] = nodes[m,1]
@@ -73,9 +73,9 @@ function getMeshFromMeshFile(meshFile::AbstractString, meshFileFormat::AbstractS
            line   = readline(f) # Numbers of corners, elements and boundary polynomial order
            values = split(line)
 
-           nNodes = parse(Int, values[1])
-           nElements = parse(Int, values[2])
-           nBndy = parse(Int, values[3])
+           nNodes = parse(Int64, values[1])
+           nElements = parse(Int64, values[2])
+           nBndy = parse(Int64, values[3])
 #
 #          Read the nodes
 #
@@ -89,16 +89,16 @@ function getMeshFromMeshFile(meshFile::AbstractString, meshFileFormat::AbstractS
 #
 #          Read the element ids (and skip all the boundary information)
 #
-           elements = zeros(Int,nElements,4)
-           temp = zeros(Int, 4)
+           elements = zeros(Int64,nElements,4)
+           temp = zeros(Int64, 4)
            for i = 1:nElements
                values = split(readline(f))
                for j = 1:4
-                   elements[i,j] = parse(Int, values[j])
+                   elements[i,j] = parse(Int64, values[j])
                end
                values = split(readline(f))
                for j = 1:4
-                   temp[j] = parse(Int, values[j])
+                   temp[j] = parse(Int64, values[j])
                end
                if sum(temp) == 0
                    # straight-sided edge so just skip the boundary labels
@@ -119,7 +119,7 @@ function getMeshFromMeshFile(meshFile::AbstractString, meshFileFormat::AbstractS
            # Build the edges. This is only for plotting purposes so we might have some
            # repeated edges
            edge_id = 0
-           edges = Dict{Int, Any}()
+           edges = Dict{Int64, Any}()
            for j in 1:nElements
                for k in 1:4
                    id1 = elements[j , p[1,k]]
@@ -157,11 +157,11 @@ function getMeshFromMeshFile(meshFile::AbstractString, meshFileFormat::AbstractS
         # number of corner nodes
         file_idx = findfirst(contains("*ELEMENT"), file_lines) - 1
         current_line = split(file_lines[file_idx], ",")
-        nNodes = parse(Int, current_line[1])
+        nNodes = parse(Int64, current_line[1])
         # number of elements
         file_idx = findfirst(contains("** ***** HOHQMesh boundary information ***** **"), file_lines) - 1
         current_line = split(file_lines[file_idx], ",")
-        nElements = parse(Int, current_line[1])
+        nElements = parse(Int64, current_line[1])
 #
 #       Read in the nodes
 #
@@ -177,13 +177,13 @@ function getMeshFromMeshFile(meshFile::AbstractString, meshFileFormat::AbstractS
 #
 #       Read the element ids (and skip all the boundary information)
 #
-        elements = zeros(Int, nElements, 4)
+        elements = zeros(Int64, nElements, 4)
         # eat the element header
         file_idx += 1
         for i = 1:nElements
             current_line = split(file_lines[file_idx], ",")
             for j = 2:5
-                elements[i,j-1] = parse(Int, current_line[j])
+                elements[i,j-1] = parse(Int64, current_line[j])
             end
             file_idx += 1
         end
@@ -193,7 +193,7 @@ function getMeshFromMeshFile(meshFile::AbstractString, meshFileFormat::AbstractS
         # Build the edges. This is only for plotting purposes so we might have some
         # repeated edges
         edge_id = 0
-        edges = Dict{Int, Any}()
+        edges = Dict{Int64, Any}()
         for j in 1:nElements
             for k in 1:4
                 id1 = elements[j , p[1,k]]
