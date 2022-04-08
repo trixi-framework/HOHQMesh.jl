@@ -41,6 +41,7 @@ function generate_mesh(proj::Project)
     return nothing
 end
 
+
 function remove_mesh!(proj::Project)
     meshFile = getMeshFileName(proj)
     rm(meshFile)

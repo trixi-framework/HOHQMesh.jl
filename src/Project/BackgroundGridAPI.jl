@@ -39,6 +39,8 @@ function addBackgroundGrid!(proj::Project, bgSize::Array{Float64})
     enableNotifications()
     postNotificationWithName(proj,"BGRID_DID_CHANGE_NOTIFICATION",(nothing,))
 end
+
+
 """
     addBackgroundGrid!(proj::Project, box::Array{Float64},  N::Array{Int} )
 
@@ -65,6 +67,7 @@ function addBackgroundGrid!(proj::Project, box::Array{Float64}, N::Array{Int})
     postNotificationWithName(proj,"BGRID_DID_CHANGE_NOTIFICATION",(nothing,))
     return nothing
 end
+
 
 """
     addBackgroundGrid!(proj::Project, x0::Array{Float64}, dx::Array{Float64}, N::Array{Int})
@@ -99,6 +102,7 @@ function addBackgroundGrid!(proj::Project, x0::Array{Float64}, dx::Array{Float64
     return nothing
 end
 
+
 """
     removeBackgroundGrid!(proj::Project)
 
@@ -111,6 +115,7 @@ function removeBackgroundGrid!(proj::Project)
     postNotificationWithName(proj,"BGRID_DID_CHANGE_NOTIFICATION",(nothing,))
     return nothing
 end
+
 
 """
     setBackgroundGridSpacing!(proj::Project, dx::Float64, dy::Float64, dz::Float64 = 0.0)
@@ -142,6 +147,8 @@ function setBackgroundGridSize!(proj::Project, dx::Float64, dy::Float64, dz::Flo
                             (oldSpacing[1],oldSpacing[2],0.0),"Set Background Grid Spacing")
     return nothing
 end
+
+
 """
     getBackgroundGridSize(proj::Project)
 
@@ -157,6 +164,8 @@ function getBackgroundGridSize(proj::Project)
         error("No background grid size is present.")
     end
 end
+
+
 """
     function getBackgroundGridLowerLeft(proj::Project)
 
@@ -170,6 +179,8 @@ function getBackgroundGridLowerLeft(proj::Project)
         error("No background grid initial point x0 is present.")
     end
 end
+
+
 """
     function getBackgroundGridSteps(proj::Project)
 
@@ -183,6 +194,8 @@ function getBackgroundGridSteps(proj::Project)
         error("No background grid step size is present.")
     end
 end
+
+
 """
     setBackgroundGridLowerLeft!(proj::Project, x0::Array{Float64})
 
@@ -204,6 +217,8 @@ function setBackgroundGridLowerLeft!(proj::Project, x0::Array{Float64})
     postNotificationWithName(proj,"BGRID_DID_CHANGE_NOTIFICATION",(nothing,))
     return nothing
 end
+
+
 """
     setBackgroundGridSteps!(proj::Project, N::Array{Int})
 
@@ -225,6 +240,8 @@ function setBackgroundGridSteps!(proj::Project, N::Array{Int})
     postNotificationWithName(proj,"BGRID_DID_CHANGE_NOTIFICATION",(nothing,))
     return nothing
 end
+
+
 """
     setBackgroundGridSize!(proj::Project, dx::Array{Float64},key::String)
 """
@@ -232,6 +249,8 @@ function setBackgroundGridSize!(proj::Project, dx::Array{Float64}, key::String)
     setBackgroundGridSize!(proj, dx[1], dx[2], key)
     return nothing
 end
+
+
 """
     setBackgroundGridSize!(proj::Project, dx::Float64, dy::Float64,key::String)
 """
@@ -249,6 +268,7 @@ function setBackgroundGridSize!(proj::Project, dx::Float64, dy::Float64,key::Str
     postNotificationWithName(proj,"BGRID_DID_CHANGE_NOTIFICATION",(nothing,))
     return nothing
 end
+
 
 """
     addBackgroundGrid!(proj::Project, dict::Dict{String,Any})

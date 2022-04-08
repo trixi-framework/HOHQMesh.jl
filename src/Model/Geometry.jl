@@ -3,24 +3,24 @@
 
  Copyright (c) 2010-present David A. Kopriva and other contributors: AUTHORS.md
 
- Permission is hereby granted, free of charge, to any person obtaining a copy  
- of this software and associated documentation files (the "Software"), to deal  
- in the Software without restriction, including without limitation the rights  
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell  
- copies of the Software, and to permit persons to whom the Software is  
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
 
- The above copyright notice and this permission notice shall be included in all  
+ The above copyright notice and this permission notice shall be included in all
  copies or substantial portions of the Software.
 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR  
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,  
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE  
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER  
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,  
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
- 
+
  --- End License
 =#
 
@@ -38,7 +38,7 @@ function curveBounds(crvPoints::Array{Float64,2})
     left    =  Inf64
     bottom  =  Inf64
     right   =  -Inf64
-    
+
     for i = 1:s[1]
         right  = max(right,crvPoints[i,1])
         left   = min(left,crvPoints[i,1])
@@ -55,14 +55,16 @@ function curveBounds(crvPoints::Array{Float64,2})
     return bounds
 end
 
+
 function chainBounds(chain::Array{Any})
     bounds = emptyBounds()
     for crv in chain
         crvBounds = curveBounds(crv)
         bounds    = bboxUnion(bounds,crvBounds)
-    end 
+    end
     return bounds
 end
+
 
 """
     bboxUnion(box1::Array{Float64}, box2::Array{Float64})
@@ -78,9 +80,12 @@ function bboxUnion(box1::Array{Float64}, box2::Array{Float64})
 
     return union
 end
-"""
 
-Returns an array that will always be ignored when unioned with 
+
+"""
+    emptyBounds()
+
+Returns an array that will always be ignored when unioned with
 another bounding box.
 """
 function emptyBounds()

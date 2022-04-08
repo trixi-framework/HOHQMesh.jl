@@ -93,6 +93,7 @@ const blocksThatStoreLists = Set(["OUTER_BOUNDARY",
 
 const blockRegex = r"(?<=\{).+?(?=\})"
 blockNameStack = []
+
 #
 #--------------- MAIN ENTRY -----------------------------------------------
 #
@@ -104,6 +105,7 @@ function ImportControlFile(fileName::String)
     return controlDict
 end
 
+
 function WriteControlFile(controlDict::Dict{String,Any}, fileName::String)
     open(fileName,"w") do controlFile
         indent = ""
@@ -114,6 +116,7 @@ end
 #
 #------------- END MAIN ENTRY ------------------------------------------
 #
+
 function performImport(collection, f::IOStream)
 
     for line in eachline(f)
@@ -215,9 +218,8 @@ function performImport(collection, f::IOStream)
         end
     end
 end
-#
-#--------------------------------------------------------------------------------------
-#
+
+
 function WriteDictionary(controlDict::Dict{String,Any}, f::IOStream, indent::String)
 
     deepIndent = "   " * indent
@@ -249,9 +251,8 @@ function WriteDictionary(controlDict::Dict{String,Any}, f::IOStream, indent::Str
         end
     end
 end
-#
-#--------------------------------------------------------------------------------------
-#
+
+
 function StepThroughList(lst::AbstractArray,f::IOStream, indent::String)
     deepIndent = "   " * indent
     for dict in lst
@@ -261,9 +262,8 @@ function StepThroughList(lst::AbstractArray,f::IOStream, indent::String)
         println(f,indent, "\\end{$dtype}")
     end
 end
-#
-#--------------------------------------------------------------------------------------
-#
+
+
 function keyAndValueOnLine(s)
     indxOfEqual = findfirst("=",s)
     if indxOfEqual === nothing
@@ -273,27 +273,23 @@ function keyAndValueOnLine(s)
     value = strip(s[indxOfEqual.stop+1:end],[' ','\t'])
     return (key,value)
 end
-#
-#--------------------------------------------------------------------------------------
-#
+
+
 function addToCollection(dict::Dict{String,Any}, k::AbstractString, v::AbstractString)
     dict[k] = v
 end
-#
-#--------------------------------------------------------------------------------------
-#
+
+
 function addToCollection(c::Array, k::AbstractString, v::Any)
     push!(c,v)
 end
-#
-#--------------------------------------------------------------------------------------
-#
+
+
 function addToCollection(dict::Dict{String,Any}, k::AbstractString, v::Dict{String,Any})
     dict[k] = v
 end
-#
-#--------------------------------------------------------------------------------------
-#
+
+
 function ImportSplineData( splineDict::Dict{String,Any}, f::IOStream)
 
     if !haskey(splineDict, "nKnots")

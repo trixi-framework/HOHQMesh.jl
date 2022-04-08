@@ -25,16 +25,16 @@
 =#
 
 """
-newRefinementCenter(type,
-                          center, meshSize,
-                          width )
+    newRefinementCenter(name, type,
+                        center, meshSize,
+                        width)
 
 Create refinement center of `type` "smooth" or "sharp" centered at `center = [x,y,z]``
 with a mesh size `meshSize` spread over a radius `width`.
 """
 function newRefinementCenter(name::String, type::String,
                               x0::Array{Float64}, h::Float64,
-                              w::Float64 )
+                              w::Float64)
     disableUndo()
     disableNotifications()
     centerDict = Dict{String,Any}()
@@ -48,6 +48,8 @@ function newRefinementCenter(name::String, type::String,
     enableUndo()
     return centerDict
 end
+
+
 """
     addRefinementRegion!(proj::Project,r::Dict{String,Any})
 
@@ -62,6 +64,8 @@ function addRefinementRegion!(proj::Project,r::Dict{String,Any})
     enableNotifications()
     postNotificationWithName(proj,"REFINEMENT_WAS_ADDED_NOTIFICATION",(nothing,))
 end
+
+
 """
     addRefinementRegionPoints!(proj::Project, r::Dict{String,Any})
 
@@ -75,10 +79,12 @@ function addRefinementRegionPoints!(proj::Project, r::Dict{String,Any})
         center = getRefinementRegionCenter(r)
         push!(proj.refinementRegionLoc,center)
 end
+
+
 """
     refinementRegionPoints(r::Dict{String,Any})
 
-    Returns Array{Float64,2} being the plotting points of a refinement region
+Returns Array{Float64,2} being the plotting points of a refinement region
 """
 function refinementRegionPoints(r::Dict{String,Any})
 
@@ -116,6 +122,8 @@ function refinementRegionPoints(r::Dict{String,Any})
     end
 
 end
+
+
 """
     getRefinementRegionCenter(r::Dict{String,Any})
 
@@ -132,6 +140,8 @@ function getRefinementRegionCenter(r::Dict{String,Any})
         return xAvg[1:2]
     end
 end
+
+
 """
     removeRefinementRegion!(proj::Project, name::String)
 
@@ -148,6 +158,8 @@ function removeRefinementRegion!(proj::Project, name::String)
     enableNotifications()
     postNotificationWithName(proj,"REFINEMENT_WAS_ADDED_NOTIFICATION",(nothing,))
 end
+
+
 """
     insertRefinementRegion!(proj::Project, r::Dict{String,Any}, indx::Int)
 
@@ -164,14 +176,13 @@ function insertRefinementRegion!(proj::Project, r::Dict{String,Any}, indx::Int)
     insert!(proj.refinementRegionNames,indx,r["name"])
     postNotificationWithName(proj,"REFINEMENT_WAS_ADDED_NOTIFICATION",(nothing,))
 end
-#
-#  --------------------------------------------------------------------------------------
-#
+
+
 """
-    newRefinementLine(type,
-                        start, end,
-                        meshSize,
-                        width )
+    newRefinementLine(name, type,
+                      start, end,
+                      meshSize,
+                      width)
 
 Create refinement line of type "smooth" or "sharp" between `start` = [x,y,z] and `end` = [x,y,z]
 with a mesh size `meshSize` spread over a width `width`.
@@ -179,7 +190,7 @@ with a mesh size `meshSize` spread over a width `width`.
 function newRefinementLine(name::String, type::String,
                             x0::Array{Float64}, x1::Array{Float64},
                             h::Float64,
-                            w::Float64 )
+                            w::Float64)
     disableUndo()
     disableNotifications()
     lineDict = Dict{String,Any}()
@@ -194,9 +205,8 @@ function newRefinementLine(name::String, type::String,
     enableUndo()
     return lineDict
 end
-#
-#  --------------------------------------------------------------------------------------
-#
+
+
 """
     getRefinementRegion(proj::Project, indx)
 
@@ -210,9 +220,8 @@ function getRefinementRegion(proj::Project, indx::Int)
     end
     return lst[indx]
 end
-#
-#  --------------------------------------------------------------------------------------
-#
+
+
 """
     getAllRefinementRegions(proj::Project)
 
@@ -222,9 +231,8 @@ function getAllRefinementRegions(proj::Project)
     lst = getListInControlDictNamed(proj,"REFINEMENT_REGIONS")
     return lst
 end
-#
-#  --------------------------------------------------------------------------------------
-#
+
+
 """
     (i,r) = getRefinementRegion(project, name)
 
@@ -239,9 +247,8 @@ function getRefinementRegion(proj::Project, name::String)
     end
     error("Refinement region with name ", name, " not found!")
 end
-#
-#  --------------------------------------------------------------------------------------
-#
+
+
 """
     setRefinementType!(refinementRegion, type)
 
@@ -259,9 +266,8 @@ function setRefinementType!(r::Dict{String,Any}, type::String)
     end
     r["type"] = type
 end
-#
-#  --------------------------------------------------------------------------------------
-#
+
+
 """
     getRefinementType(r::Dict{String,Any})
 
@@ -271,11 +277,13 @@ represents the refinement region.
 function getRefinementType(r::Dict{String,Any})
     return r["type"]
 end
+
+
 """
     setRefinementName!(r::Dict{String,Any}, type)
 
 Set a name for the refinement region.`r` is the dictionary that
-    represents the refinement region.
+represents the refinement region.
 """
 function setRefinementName!(r::Dict{String,Any}, name::String)
     if haskey(r,"name")
@@ -285,20 +293,18 @@ function setRefinementName!(r::Dict{String,Any}, name::String)
     r["name"] = name
     postNotificationWithName(r,"REFINEMENT_WAS_CHANGED_NOTIFICATION",(nothing,))
 end
-#
-#  --------------------------------------------------------------------------------------
-#
+
+
 """
     getRefinementName(r::Dict{String,Any})
 
-Return name of the refinement. `r` is the dictionary that
-represents the refinement region.
+Return name of the refinement. `r` is the dictionary that represents the refinement region.
 """
 function getRefinementName(r::Dict{String,Any})
     return r["name"]
-end#
-#  --------------------------------------------------------------------------------------
-#
+end
+
+
 """
     setRefinementLocation!(refinementCenter, location)
 
@@ -310,6 +316,7 @@ function setRefinementLocation!(r::Dict{String,Any}, x::Array{Float64})
     return nothing
 end
 
+
 function setRefinementLocation!(r::Dict{String,Any}, x0Str::String)
     if haskey(r,"x0")
         old = r["x0"]
@@ -319,9 +326,8 @@ function setRefinementLocation!(r::Dict{String,Any}, x0Str::String)
     postNotificationWithName(r,"REFINEMENT_WAS_CHANGED_NOTIFICATION",(nothing,))
     return nothing
 end
-#
-#  --------------------------------------------------------------------------------------
-#
+
+
 """
     getRefinementLocation(r::Dict{String,Any})
 
@@ -331,9 +337,8 @@ represents the refinement region.
 function getRefinementLocation(r::Dict{String,Any})
     return realArrayForKeyFromDictionary("x0",r)
 end
-#
-#  --------------------------------------------------------------------------------------
-#
+
+
 """
     setRefinementGridSize!(r::Dict{String,Any}, h)
 
@@ -349,13 +354,13 @@ function setRefinementGridSize!(r::Dict{String,Any}, h::Float64)
     postNotificationWithName(r,"REFINEMENT_WAS_CHANGED_NOTIFICATION",(nothing,))
 end
 
+
 function setRefinementGridSize!(r::Dict{String,Any}, h::String)
     hf = parse(Float64,h)
     setRefinementGridSize!(r,hf)
 end
-#
-#  --------------------------------------------------------------------------------------
-#
+
+
 """
     getRefinementGridSize(r::Dict{String,Any})
 
@@ -365,9 +370,8 @@ represents the refinement region.
 function getRefinementGridSize(r::Dict{String,Any})
     return parse(Float64,r["h"])
 end
-#
-#  --------------------------------------------------------------------------------------
-#
+
+
 """
     setRefinementWidth!(r::Dict{String,Any}, width)
 
@@ -382,6 +386,7 @@ function setRefinementWidth!(r::Dict{String,Any},w::Float64)
     r["w"] = string(w)
     postNotificationWithName(r,"REFINEMENT_WAS_CHANGED_NOTIFICATION",(nothing,))
 end
+
 
 function setRefinementWidth!(r::Dict{String,Any},w::String)
     wf = parse(Float64,w)
@@ -399,9 +404,8 @@ represents the refinement region.
 function getRefinementWidth(r::Dict{String,Any})
     return parse(Float64,r["w"])
 end
-#
-#  --------------------------------------------------------------------------------------
-#
+
+
 """
     setRefinementStart!(refinementRegion, location)
 
@@ -412,6 +416,7 @@ function setRefinementStart!(r::Dict{String,Any}, x::Array{Float64})
     setRefinementStart!(r,x0Str)
 end
 
+
 function setRefinementStart!(r::Dict{String,Any}, x0Str::String)
     if haskey(r,"x0")
         old = r["x0"]
@@ -420,9 +425,8 @@ function setRefinementStart!(r::Dict{String,Any}, x0Str::String)
     r["x0"] = x0Str
     postNotificationWithName(r,"REFINEMENT_WAS_CHANGED_NOTIFICATION",(nothing,))
 end
-#
-#  --------------------------------------------------------------------------------------
-#
+
+
 """
     getRefinementStart  (r::Dict{String,Any})
 
@@ -432,9 +436,8 @@ represents the refinement region.
 function getRefinementStart(r::Dict{String,Any})
     return realArrayForKeyFromDictionary("x0",r)
 end
-#
-#  --------------------------------------------------------------------------------------
-#
+
+
 """
     setRefinementEnd!(refinementRegion, location)
 
@@ -453,9 +456,8 @@ function setRefinementEnd!(r::Dict{String,Any}, x0Str::String)
     r["x1"] = x0Str
     postNotificationWithName(r,"REFINEMENT_WAS_CHANGED_NOTIFICATION",(nothing,))
 end
-#
-#  --------------------------------------------------------------------------------------
-#
+
+
 """
     getRefinementEnd(r::Dict{String,Any})
 

@@ -37,6 +37,7 @@ end
 HQMNotificationCenter = Dict{String,Vector{HQMNotificationObject}}()
 HQMNotificationsON    = true
 
+
 """
     addObserver(observer::Any, note::String, fnction::Any)
 
@@ -54,6 +55,7 @@ function addObserver(observer::Any, note::String, fnction::Any)
     end
     push!(HQMNotificationCenter[note],noteObj)
 end
+
 
 """
     unRegisterForNotification(observer::Any, note::String)
@@ -78,6 +80,7 @@ function unRegisterForNotification(observer::Any, note::String)
     end
 end
 
+
 """
     postNotificationWithName(sender::Any, name::String, userInfo::Tuple)
 
@@ -100,9 +103,11 @@ function postNotificationWithName(sender::Any, note::String, userInfo::Tuple)
     end
 end
 
+
 function enableNotifications()
     global HQMNotificationsON = true
 end
+
 
 function disableNotifications()
     global HQMNotificationsON = false

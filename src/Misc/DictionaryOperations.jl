@@ -27,6 +27,7 @@
 #=
     Some useful getters for a dictionary
 =#
+
 const arrayRegex = r"(?<=\[).+?(?=\])"
 
 function realForKeyFromDictionary(key::AbstractString, d::Dict{String,Any})
@@ -34,15 +35,18 @@ function realForKeyFromDictionary(key::AbstractString, d::Dict{String,Any})
     return parse(Float64,v)
 end
 
+
 function intForKeyFromDictionary(key::AbstractString, d::Dict{String,Any})
     v = d[key]
     return parse(Int,v)
 end
 
+
 function stringForKeyFromDictionary(key::AbstractString, d::Dict{String,Any})
     v = d[key]
     return v
 end
+
 
 function realArrayForKeyFromDictionary(key::AbstractString, d::Dict{String,Any})
     v = d[key]
@@ -52,6 +56,7 @@ function realArrayForKeyFromDictionary(key::AbstractString, d::Dict{String,Any})
     return array
 end
 
+
 function intArrayForKeyFromDictionary(key::AbstractString, d::Dict{String,Any})
     v = d[key]
     values = match(arrayRegex,v)
@@ -59,6 +64,7 @@ function intArrayForKeyFromDictionary(key::AbstractString, d::Dict{String,Any})
     array = [parse(Int,s[1]),parse(Int,s[2]),parse(Int,s[3])]
     return array
 end
+
 
 function keyAndValueFromString(s)
     indxOfEqual = findfirst("=",s)
@@ -69,6 +75,7 @@ function keyAndValueFromString(s)
     value = strip(s[indxOfEqual.stop+1:end],[' ','\t'])
     return (key,value)
 end
+
 
 function showDescription(d::Dict, pre=1)
     todo = Vector{Tuple}()

@@ -356,6 +356,7 @@ function run_demo(folder::String; called_by_user=true)
     return p
 end
 
+
 function ice_cream_cone_verbose_demo(folder::String; called_by_user=true)
 #
 # Create a project with the name "IceCreamCone", which will be the name of the mesh, plot and stats files,
@@ -400,6 +401,7 @@ function ice_cream_cone_verbose_demo(folder::String; called_by_user=true)
 
     return p
 end
+
 
 function ice_cream_cone_demo(folder::String; called_by_user=true)
 #
@@ -446,5 +448,6 @@ function ice_cream_cone_demo(folder::String; called_by_user=true)
 
     return p
 end
+
 
 end # module

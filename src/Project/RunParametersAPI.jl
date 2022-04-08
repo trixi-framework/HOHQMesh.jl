@@ -47,6 +47,8 @@ function addRunParameters!(proj::Project,
 
     return rpDict
 end
+
+
 """
     removeRunParameters!(proj::Project)
 
@@ -58,6 +60,7 @@ function removeRunParameters!(proj::Project)
         delete!(cDict,"RUN_PARAMETERS")
     end
 end
+
 
 """
     setName(proj::Project,name::String)
@@ -72,6 +75,8 @@ function setName!(proj::Project,name::String)
     proj.name = name
     setFileNames!(proj, getMeshFileFormat(proj))
 end
+
+
 """
     getName(proj::Project)
 
@@ -81,6 +86,8 @@ stats files.
 function getName(proj::Project)
     return proj.name
 end
+
+
 """
     setPolynomialOrder(proj::Project, p::Int)
 
@@ -95,6 +102,8 @@ function setPolynomialOrder!(proj::Project, p::Int)
     end
     rpDict["polynomial order"] = string(p)
 end
+
+
 """
     getPolynomialOrder(proj::Project)
 
@@ -104,6 +113,8 @@ function getPolynomialOrder(proj::Project)
     rpDict = getDictInControlDictNamed(proj,"RUN_PARAMETERS")
     return parse(Int,rpDict["polynomial order"])
 end
+
+
 """
     setMeshFileFormat(proj::Project, meshFileFormat::String)
 
@@ -123,6 +134,8 @@ function setMeshFileFormat!(proj::Project, meshFileFormat::String)
     end
     rpDict[key] = meshFileFormat
 end
+
+
 """
     getMeshFileFormat(proj::Project)
 
@@ -132,6 +145,8 @@ function getMeshFileFormat(proj::Project)
     rpDict = getDictInControlDictNamed(proj,"RUN_PARAMETERS")
     return rpDict["mesh file format"]
 end
+
+
 """
     setPlotFileFormat(proj::Project, plotFileFormat::String)
 
@@ -152,6 +167,8 @@ function setPlotFileFormat!(proj::Project, plotFileFormat::String)
     end
     rpDict[key] = plotFileFormat
 end
+
+
 """
     getPlotFileFormat(proj::Project)
 
@@ -161,6 +178,7 @@ function getPlotFileFormat(proj::Project)
     rpDict = getDictInControlDictNamed(proj,"RUN_PARAMETERS")
     return rpDict["plot file format"]
 end
+
 
 function setFileNames!(proj::Project, meshFileFormat::String)
     rpDict = getDictInControlDictNamed(proj,"RUN_PARAMETERS")
@@ -173,15 +191,18 @@ function setFileNames!(proj::Project, meshFileFormat::String)
     rpDict["stats file name"] = joinpath(proj.projectDirectory, proj.name *".txt")
  end
 
+
  function getMeshFileName(proj::Project)
     rpDict = getDictInControlDictNamed(proj,"RUN_PARAMETERS")
     return rpDict["mesh file name"]
  end
 
+
  function getPlotFileName(proj::Project)
     rpDict = getDictInControlDictNamed(proj,"RUN_PARAMETERS")
     return rpDict["plot file name"]
  end
+
 
  function getStatsFileName(proj::Project)
     rpDict = getDictInControlDictNamed(proj,"RUN_PARAMETERS")

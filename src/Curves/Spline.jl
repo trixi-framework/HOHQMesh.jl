@@ -3,24 +3,24 @@
 
  Copyright (c) 2010-present David A. Kopriva and other contributors: AUTHORS.md
 
- Permission is hereby granted, free of charge, to any person obtaining a copy  
- of this software and associated documentation files (the "Software"), to deal  
- in the Software without restriction, including without limitation the rights  
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell  
- copies of the Software, and to permit persons to whom the Software is  
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
 
- The above copyright notice and this permission notice shall be included in all  
+ The above copyright notice and this permission notice shall be included in all
  copies or substantial portions of the Software.
 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR  
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,  
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE  
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER  
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,  
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
- 
+
  --- End License
 =#
 
@@ -38,7 +38,7 @@ function constructSpline(N::Int, x::Array{Float64},y::Array{Float64})
     b = zeros(Float64,N)
     c = zeros(Float64,N)
     d = zeros(Float64,N)
-   
+
     Nm1 = N - 1
 #
 #   Set up tri-diagonal system
@@ -76,7 +76,7 @@ function constructSpline(N::Int, x::Array{Float64},y::Array{Float64})
     for ib = 1:Nm1
         i = N - ib
         c[i] = (c[i] - d[i]*c[i+1])/b[i]
-    end 
+    end
 #
 #   Compute polynomial coefficients
 #
@@ -85,13 +85,14 @@ function constructSpline(N::Int, x::Array{Float64},y::Array{Float64})
         b[i] = (y[i+1] - y[i])/d[i] - d[i]*(c[i+1] + 2.0*c[i])
         d[i] = (c[i+1] - c[i])/d[i]
         c[i] = 3.0*c[i]
-    end 
+    end
     c[N] = 3.0*c[N]
     d[N] = d[N-1]
-    
+
     spl = Spline(N,x,y,b,c,d,1)
     return spl
 end
+
 
 function evalSpline(spl::Spline, u::Float64)
     N = spl.N
@@ -112,7 +113,7 @@ function evalSpline(spl::Spline, u::Float64)
     i = 1
     j = N+1
 
-    for ii = 1:N 
+    for ii = 1:N
         k = div(i+j,2)
         if u < spl.x[k]
             j = k

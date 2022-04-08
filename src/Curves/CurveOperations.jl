@@ -40,6 +40,7 @@ function arcCurvePoints(center::Array{Float64}, r::Float64, thetaStart::Float64,
     end
 end
 
+
 function arcCurvePoint(center::Array{Float64}, r::Float64, thetaStart::Float64, thetaEnd::Float64,
                        units::AbstractString, t::Float64, point::Array{Float64})
     fctr::Float64 = 1.0
@@ -51,15 +52,18 @@ function arcCurvePoint(center::Array{Float64}, r::Float64, thetaStart::Float64, 
     point[2] = center[2] + r*sin(theta*fctr)
 end
 
+
 function endPointsLineCurvePoints(xStart::Array{Float64}, xEnd::Array{Float64}, t::Array{Float64}, points::Array{Float64})
     for i = 1:length(t)
         points[i,1:2] = xStart[1:2] + t[i]*(xEnd[1:2] - xStart[1:2])
     end
 end
 
+
 function endPointsLineCurvePoint(xStart::Array{Float64}, xEnd::Array{Float64}, t::Float64, point::Array{Float64})
         point[1:2] = xStart[1:2] + t*(xEnd[1:2] - xStart[1:2])
 end
+
 
 function peEquationCurvePoints(xEqn, yEqn, t::Array{Float64}, points::Array{Float64,2})
 
@@ -79,6 +83,7 @@ function peEquationCurvePoints(xEqn, yEqn, t::Array{Float64}, points::Array{Floa
     end
 end
 
+
 function  peEquationCurvePoint(xEqn, yEqn, t::Float64, point::Array{Float64})
 
     argPart,eqString = keyAndValueFromString(xEqn)
@@ -96,6 +101,7 @@ function  peEquationCurvePoint(xEqn, yEqn, t::Float64, point::Array{Float64})
 
 end
 
+
 function splineCurvePoints(nKnots::Int, splineData::Array{Float64,2}, points::Array{Float64,2})
 
     xSpline = constructSpline(nKnots,splineData[:,1],splineData[:,2])
@@ -111,6 +117,7 @@ function splineCurvePoints(nKnots::Int, splineData::Array{Float64,2}, points::Ar
     end
 end
 
+
 function splineCurvePoint(nKnots::Int, splineData::Array{Float64,2}, t, point::Array{Float64})
 
     xSpline = constructSpline(nKnots,splineData[:,1],splineData[:,2])
@@ -120,6 +127,7 @@ function splineCurvePoint(nKnots::Int, splineData::Array{Float64,2}, t, point::A
     point[2] = evalSpline(ySpline,t)
 end
 
+
 # This function evaluates a string as an equation, might be redundant code
 # function parse_eval_dict(s::AbstractString, locals::Dict{Symbol})
 #     ex = Meta.parse(s)
@@ -127,10 +135,12 @@ end
 #     eval(:(let $(assignments...); $ex; end))
 # end
 
+
 function evalWithDict(ex, locals::Dict{Symbol})
     assignments = [:($sym = $val) for (sym,val) in locals]
     eval(:(let $(assignments...); $ex; end))
 end
+
 
 function curvePoints(crvDict::Dict{String,Any}, N::Int)
 # N = Number of intervals
@@ -186,6 +196,7 @@ function curvePoints(crvDict::Dict{String,Any}, N::Int)
     return x
 end
 
+
 function chainPoints(chain::Array{Dict{String,Any}}, N::Int)
 
     x = Any[]
@@ -195,6 +206,7 @@ function chainPoints(chain::Array{Dict{String,Any}}, N::Int)
     end
     return x
 end
+
 
 function curvePoint(crvDict::Dict{String,Any}, t::Float64)
 
@@ -226,6 +238,7 @@ function curvePoint(crvDict::Dict{String,Any}, t::Float64)
     end
     return x
 end
+
 
 function curvesMeet(firstCurve::Dict{String,Any}, secondCurve::Dict{String,Any})
     xFirst  = curvePoint(firstCurve,1.0)

@@ -23,6 +23,7 @@
 
  --- End License
 =#
+
 #=
     The Project is the controller in an MVC paradigm. It manages the model,
     stored in the projectDictionary, and plotting data, and responds to enableNotifications
@@ -62,6 +63,7 @@ const smootherTypes   = Set(["LinearSpring", "LinearAndCrossbarSpring"])
 const statusValues    = Set(["ON", "OFF"])
 const refinementTypes = Set(["smooth", "sharp"])
 
+
 """
     openProject(fileName::String, folder::String)
 
@@ -94,6 +96,8 @@ function openProject(fileName::String, folder::String)
 
     return proj
 end
+
+
 """
     saveProject(proj::Project)
 
@@ -104,6 +108,8 @@ function saveProject(proj::Project)
     fileName = joinpath(proj.projectDirectory,proj.name)*".control"
     WriteControlFile(proj.projectDictionary,fileName)
 end
+
+
 """
     newProject(name::String, folder::String)
 
@@ -153,6 +159,8 @@ function newProject(name::String, folder::String)
     enableUndo()
     return proj
 end
+
+
 """
 hasBackgroundGrid(proj::Project)
 
@@ -166,6 +174,7 @@ function hasBackgroundGrid(proj::Project)
         return false
     end
 end
+
 
 function assemblePlotArrays(proj::Project)
 
@@ -224,6 +233,7 @@ function assemblePlotArrays(proj::Project)
     proj.bounds = bounds
 end
 
+
 function projectBounds(proj::Project)
     bounds = emptyBounds()
 
@@ -241,6 +251,7 @@ function projectBounds(proj::Project)
     end
     return bounds
 end
+
 
 function projectGrid(proj::Project)
 
@@ -287,6 +298,8 @@ function projectGrid(proj::Project)
 
     return xGrid, yGrid
 end
+
+
 #
 # NOTIFICATION ACTIONS
 #
@@ -323,6 +336,7 @@ function curveDidChange(proj::Project,crv::Dict{String,Any})
     return nothing
 end
 
+
 function modelDidChange(proj::Project, sender::Project)
 
     if proj === sender && !isnothing(proj.plt)
@@ -333,6 +347,7 @@ function modelDidChange(proj::Project, sender::Project)
         updatePlot!(proj, options)
     end
 end
+
 
 function backgroundGridDidChange(proj::Project, sender::Project)
     if proj === sender &&  !isnothing(proj.plt)
@@ -345,6 +360,7 @@ function backgroundGridDidChange(proj::Project, sender::Project)
     end
 end
 
+
 function refinementWasAdded(proj::Project, sender::Project)
     if proj === sender &&  !isnothing(proj.plt)
         options = proj.plotOptions
@@ -354,6 +370,7 @@ function refinementWasAdded(proj::Project, sender::Project)
         updatePlot!(proj, options)
     end
 end
+
 
 function refinementDidChange(proj::Project, sender::Dict{String,Any})
     regionName = sender["name"]
@@ -387,6 +404,7 @@ function refinementDidChange(proj::Project, sender::Dict{String,Any})
     end
 end
 
+
 function meshWasGenerated(proj::Project, sender::Project)
     if proj === sender &&  !isnothing(proj.plt)
         options = proj.plotOptions
@@ -395,6 +413,7 @@ function meshWasGenerated(proj::Project, sender::Project)
         updatePlot!(proj, options)
     end
 end
+
 
 function meshWasDeleted(proj::Project, sender::Project)
     if proj === sender &&  !isnothing(proj.plt)

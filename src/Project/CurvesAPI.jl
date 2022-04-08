@@ -26,9 +26,9 @@
 
 """
     newParametricEquationCurve(name::String,
-        xEqn::String,
-        yEqn::String,
-        zEqn::String = "z(t) = 0.0" )
+                               xEqn::String,
+                               yEqn::String,
+                               zEqn::String = "z(t) = 0.0" )
 
 Creates and returns a new parametricEquationCurve in the form of a Dictionary
 """
@@ -49,6 +49,8 @@ function newParametricEquationCurve(name::String,
     enableNotifications()
     return crv
 end
+
+
 """
     newEndPointsLineCurve(name::String, xStart::Array{Float64},xEnd::Array[Float64])
 
@@ -68,6 +70,8 @@ function newEndPointsLineCurve(name::String,
     enableUndo()
     return crv
 end
+
+
 """
     newCircularArcCurve(name::String, center::Array{Float64},
         startAngle::Float64, endAngle::Float64,
@@ -96,6 +100,8 @@ function newCircularArcCurve(name::String,
     enableUndo()
     return arc
 end
+
+
 """
     newSplineCurve(name::String, nKnots::Int, data::Array{Float64,4})
 
@@ -113,6 +119,8 @@ function newSplineCurve(name::String, nKnots::Int, data::Matrix{Float64})
     enableUndo()
     return spline
 end
+
+
 """
     newSplineCurve(name::String, dataFile::String)
 
@@ -135,6 +143,8 @@ function newSplineCurve(name::String, dataFile::String)
     end
     return spline
 end
+
+
 #"""
 #    duplicateCurve(crv::Dict{String,Any}, newName::String)
 #
@@ -151,6 +161,8 @@ end
 #     enableUndo()
 #     return duplicate
 # end
+
+
 """
     setCurveName!(curveDict, name)
 
@@ -164,12 +176,16 @@ function setCurveName!(crv::Dict{String,Any}, name::String)
     end
     crv["name"] = name
 end
+
+
 """
     getCurveName(crv::Dict{String,Any})
 """
 function getCurveName(crv::Dict{String,Any})
     return crv["name"]
 end
+
+
 """
     getCurveType(crv::Dic{String,Any})
 
@@ -179,6 +195,8 @@ end
 function getCurveType(crv::Dict{String,Any})
     return crv["TYPE"]
 end
+
+
 """
     setXEqn!(parametricEquationCurve, eqn)
 
@@ -192,6 +210,8 @@ function setXEqn!(crv::Dict{String,Any}, eqn::String)
     crv["xEqn"] = eqn
     postNotificationWithName(crv,"CURVE_DID_CHANGE_NOTIFICATION",(nothing,))
 end
+
+
 """
     getXEqn(crv::Dict{String,Any})
 """
@@ -201,6 +221,8 @@ function getXEqn(crv::Dict{String,Any})
     end
     return nothing
 end
+
+
 """
     setYEqn!(parametricEquationCurve, eqn)
 
@@ -214,6 +236,8 @@ function setYEqn!(crv::Dict{String,Any}, eqn::String)
     crv["yEqn"] = eqn
     postNotificationWithName(crv,"CURVE_DID_CHANGE_NOTIFICATION",(nothing,))
 end
+
+
 """
     getYEqn(crv::Dict{String,Any})
 """
@@ -223,6 +247,8 @@ function getYEqn(crv::Dict{String,Any})
     end
     return nothing
 end
+
+
 """
     setZEqn!(parametricEquationCurve, eqn)
 
@@ -236,6 +262,8 @@ function setZEqn!(crv::Dict{String,Any}, eqn::String)
     crv["zEqn"] = eqn
     postNotificationWithName(crv,"CURVE_DID_CHANGE_NOTIFICATION",(nothing,))
 end
+
+
 """
     getZEqn(crv::Dict{String,Any})
 """
@@ -245,6 +273,8 @@ function getZEqn(crv::Dict{String,Any})
     end
     return nothing
 end
+
+
 """
     setStartPoint!(crv::Dict{String,Any}, point::Array{Float64})
 
@@ -255,6 +285,7 @@ function setStartPoint!(crv::Dict{String,Any}, point::Array{Float64})
     setStartPoint!(crv,pStr)
 end
 
+
 function setStartPoint!(crv::Dict{String,Any}, pointAsString::String)
     key = "xStart"
     if haskey(crv,key)
@@ -264,6 +295,8 @@ function setStartPoint!(crv::Dict{String,Any}, pointAsString::String)
     crv[key] = pointAsString
     postNotificationWithName(crv,"CURVE_DID_CHANGE_NOTIFICATION",(nothing,))
 end
+
+
 """
     getStartPoint(crv::Dict{String,Any}, point::Array{Float64})
 
@@ -272,6 +305,8 @@ Get the start point for a line curve as an array
 function getStartPoint(crv::Dict{String,Any})
     return realArrayForKeyFromDictionary("xStart",crv)
 end
+
+
 """
     setEndPoint!(crv::Dict{String,Any}, point::Array{Float64})
 
@@ -282,6 +317,7 @@ function setEndPoint!(crv::Dict{String,Any}, point::Array{Float64})
     setEndPoint!(crv,pStr)
 end
 
+
 function setEndPoint!(crv::Dict{String,Any}, pointAsString::String)
     key = "xEnd"
     if haskey(crv,key)
@@ -291,6 +327,8 @@ function setEndPoint!(crv::Dict{String,Any}, pointAsString::String)
     crv[key] = pointAsString
     postNotificationWithName(crv,"CURVE_DID_CHANGE_NOTIFICATION",(nothing,))
 end
+
+
 """
     getEndPoint(crv::Dict{String,Any}, point::Array{Float64})
 
@@ -299,6 +337,8 @@ Get the end point for a line curve as an array.
 function getEndPoint(crv::Dict{String,Any})
     return realArrayForKeyFromDictionary("xEnd",crv)
 end
+
+
 """
     setArcUnits(crv::Dict{String,Any}, units::String)
 
@@ -317,6 +357,8 @@ function setArcUnits!(arc::Dict{String,Any}, units::String)
         println("Units must either be `degrees` or `radians`. Try setting `units` again.")
     end
 end
+
+
 """
     getArcUnits(crv::Dict{String,Any}, units::String)
 
@@ -325,6 +367,8 @@ Get the units for the start and end angles of a circular arc curve.
 function getArcUnits(arc::Dict{String,Any})
     return arc["units"]
 end
+
+
 """
     setArcCenter!(crv::Dict{String,Any}, point::Array{Float64})
 
@@ -344,6 +388,8 @@ function setArcCenter!(arc::Dict{String,Any}, pointAsString::String)
     arc[key] = pointAsString
     postNotificationWithName(arc,"CURVE_DID_CHANGE_NOTIFICATION",(nothing,))
 end
+
+
 """
     getArcCenter(crv::Dict{String,Any}, point::Array{Float64})
 
@@ -352,10 +398,11 @@ Get the center of a circular arc as an array
 function getArcCenter(arc::Dict{String,Any})
     return realArrayForKeyFromDictionary("center",arc)
 end
+
+
 """
     setArcStartAngle!(arc::Dict{String,Any}, angle::Float64)
-
-    """
+"""
 function setArcStartAngle!(arc::Dict{String,Any}, angle::Float64)
     key = "start angle"
     if haskey(arc,key)
@@ -365,17 +412,19 @@ function setArcStartAngle!(arc::Dict{String,Any}, angle::Float64)
     arc[key] = string(angle)
     postNotificationWithName(arc,"CURVE_DID_CHANGE_NOTIFICATION",(nothing,))
 end
+
+
 """
     getArcStartAngle(arc::Dict{String,Any}, angle::Float64)
-
-    """
+"""
 function getArcStartAngle(arc::Dict{String,Any})
     return parse(Float64,arc["start angle"])
 end
+
+
 """
     setArcEndAngle!(arc::Dict{String,Any}, angle::Float64)
-
-    """
+"""
 function setArcEndAngle!(arc::Dict{String,Any}, angle::Float64)
     key = "end angle"
     if haskey(arc,key)
@@ -385,17 +434,19 @@ function setArcEndAngle!(arc::Dict{String,Any}, angle::Float64)
     arc[key] = string(angle)
     postNotificationWithName(arc,"CURVE_DID_CHANGE_NOTIFICATION",(nothing,))
 end
+
+
 """
     getArcEndAngle(arc::Dict{String,Any}, angle::Float64)
-
-    """
+"""
 function getArcEndAngle(arc::Dict{String,Any})
     return parse(Float64,arc["end angle"])
 end
+
+
 """
     setArcRadius!(arc::Dict{String,Any}, radius::Float64)
-
-    """
+"""
 function setArcRadius!(arc::Dict{String,Any}, radius::Float64)
     key = "radius"
     if haskey(arc,key)
@@ -405,6 +456,8 @@ function setArcRadius!(arc::Dict{String,Any}, radius::Float64)
     arc[key] = string(radius)
     postNotificationWithName(arc,"CURVE_DID_CHANGE_NOTIFICATION",(nothing,))
 end
+
+
 """
     getArcRadius(arc::Dict{String,Any}, radius::Float64)
 
@@ -412,6 +465,8 @@ end
 function getArcRadius(arc::Dict{String,Any})
     return parse(Float64,arc["radius"])
 end
+
+
 """
     setSplineNKnots!(spline::Dict{String,Any}, nKnots::Int)
 """
@@ -424,12 +479,16 @@ function setSplineNKnots!(spline::Dict{String,Any}, nKnots::Int)
     spline["nKnots"] = string(nKnots)
     postNotificationWithName(spline,"CURVE_DID_CHANGE_NOTIFICATION",(nothing,))
 end
+
+
 """
     getSplineNKnots(spline::Dict{String,Any})
 """
 function getSplineNKnots(spline::Dict{String,Any})
     return parse(Int,spline["nKnots"])
 end
+
+
 """
     setSplinePoints!(spline::Dict{String,Any},points::Array{Float64,4})
 """
@@ -441,6 +500,8 @@ function setSplinePoints!(spline::Dict{String,Any},points::Matrix{Float64})
     spline["SPLINE_DATA"] = points
     postNotificationWithName(spline,"CURVE_DID_CHANGE_NOTIFICATION",(nothing,))
 end
+
+
 """
     getSplinePoints(spline::Dict{String,Any})
 """

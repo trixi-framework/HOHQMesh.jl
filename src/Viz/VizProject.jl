@@ -26,6 +26,8 @@
 
 const MODEL = 1; const GRID = 2; const MESH = 4; const EMPTY = 0
 const REFINEMENTS = 8; const ALL = 15
+
+
 """
     plotProject!(proj::Project, plotOptions::Int = 0)
 
@@ -94,7 +96,7 @@ function plotProject!(proj::Project, plotOptions::Int = 0)
             plotNumbers = ["O."*string(i) for i in 1:length(proj.outerBndryNames)]
             plotNames = String[]
             for j = 1:length(proj.outerBndryNames)
-                push!(plotNames, plotNumbers[j]*"| Outer."*proj.outerBndryNames[j] ) 
+                push!(plotNames, plotNumbers[j]*"| Outer."*proj.outerBndryNames[j] )
             end
             plotChain!(plt,proj.outerBndryPoints, plotNames, plotNumbers)
         end
@@ -108,7 +110,7 @@ function plotProject!(proj::Project, plotOptions::Int = 0)
                 plotNumbers = [string(i)*"."*string(j) for j in 1:length(innerBndryNames)]
                 plotNames = String[]
                 for j = 1:length(innerBndryNames)
-                    push!(plotNames, plotNumbers[j]*"| "*innerBndryNames[j] ) 
+                    push!(plotNames, plotNumbers[j]*"| "*innerBndryNames[j] )
                 end
                 plotChain!(plt,innerBndryPts, plotNames, plotNumbers)
             end
@@ -134,6 +136,8 @@ function plotProject!(proj::Project, plotOptions::Int = 0)
     ax.aspect = DataAspect()
     display(plt)
 end
+
+
 """
     updatePlot!(proj::Project)
 
@@ -146,14 +150,16 @@ function updatePlot!(proj::Project)
         plotProject!(proj, plotOptions)
     end
 end
+
+
 """
-updatePlot!(proj::Project, plotOptions::Int)
+    updatePlot!(proj::Project, plotOptions::Int)
 
 Replot with the new plotOptions = combinations (sums) of
 
     GRID, MESH, MODEL, REFINEMENTS
 
-Example: updatePlot(p, MESH + MODEL)
+Example: updatePlot!(p, MESH + MODEL)
 """
 function updatePlot!(proj::Project, plotOptions::Int)
     if !isnothing(proj.plt)
@@ -161,6 +167,7 @@ function updatePlot!(proj::Project, plotOptions::Int)
         plotProject!(proj, plotOptions)
     end
 end
+
 
 function plotChain!(plt, chainPoints::Array{Any}, legendLabels::Array{String}, curveLabels::Array{String} )
     x = chainPoints[1]
@@ -171,15 +178,16 @@ function plotChain!(plt, chainPoints::Array{Any}, legendLabels::Array{String}, c
     for i = 2:s
         x = chainPoints[i]
         plotCurve(plt,x,legendLabels[i], curveLabels[i])
-    end 
+    end
 end
+
 
 function plotCurve(plt, points::Matrix{Float64}, legendLabel::String, curveLabel::String)
     lines!(plt[1,1],points[:,1],points[:,2], label = legendLabel, linewidth = 5 )
     s = size(points)
     np = div(s[1], 2, RoundNearest)
     if s[1] == 3
-        np = 2 
+        np = 2
     end
     # dx = points[np+1,1] - points[np-1,1]
     # dy = points[np+1,2] - points[np-1,2]
@@ -190,6 +198,7 @@ function plotCurve(plt, points::Matrix{Float64}, legendLabel::String, curveLabel
     pp = (points[np,1],points[np,2])
     text!(plt[1,1],curveLabel,textsize = 28, position = pp, align = (:center,:center) )
 end
+
 
 function plotRefinement(plt, points::Array{Matrix{Float64}}, label::Array{String}, loc::Array{Array{Float64}})
 

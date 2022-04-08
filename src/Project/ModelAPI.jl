@@ -106,6 +106,7 @@ function insertOuterBoundaryCurveAtIndex!(proj::Project, crv::Dict{String,Any}, 
     postNotificationWithName(proj,"MODEL_DID_CHANGE_NOTIFICATION",(nothing,))
 end
 
+
 """
     removeOuterBoundaryCurveAtIndex!(proj::Project, indx::Int)
 
@@ -121,6 +122,8 @@ function removeOuterBoundaryCurveAtIndex!(proj::Project, indx::Int)
     registerWithUndoManager(proj,insertOuterBoundaryCurveAtIndex!,(crv,indx),"Remove Outer Boundary Curve")
     postNotificationWithName(proj,"MODEL_DID_CHANGE_NOTIFICATION",(nothing,))
 end
+
+
 """
     addOuterBoundary!(proj::Project, outerBoundary::Dict{String,Any})
 
@@ -186,6 +189,7 @@ function getOuterBoundaryChainList(proj::Project)
         return lst
     end
 end
+
 
 #
 #  --------------------------------------------------------------------------------------

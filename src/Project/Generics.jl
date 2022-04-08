@@ -42,6 +42,7 @@ function new(name::String,
     return newParametricEquationCurve(name, xEqn, yEqn, zEqn)
 end
 
+
 """
     new(name::String,
              xStart::Array{Float64},
@@ -54,6 +55,7 @@ function new(name::String,
              xEnd::Array{Float64})
     return newEndPointsLineCurve(name, xStart, xEnd)
 end
+
 
 """
     new(name::String,
@@ -74,6 +76,7 @@ function new(name::String,
     return newCircularArcCurve(name,center,radius,startAngle,endAngle,units)
 end
 
+
 """
     new(name::String, dataFile::String)
 
@@ -83,6 +86,7 @@ function new(name::String, dataFile::String)
     return newSplineCurve(name, dataFile)
 end
 
+
 """
     new(name::String, nKnots::Int, data::Matrix{Float64})
 
@@ -91,6 +95,8 @@ Create a spline curve from an array of knots
 function new(name::String, nKnots::Int, data::Matrix{Float64})
     return newSplineCurve(name, nKnots, data)
 end
+
+
 #
 # Adding curves to a model
 #
@@ -108,6 +114,7 @@ function add!(proj::Project, obj::Dict{String,Any})
     end
 end
 
+
 """
     add!(proj::Project, crv::Dict{String,Any}, boundaryName::String)
 
@@ -116,6 +123,7 @@ Add a curve to the inner boundary named `boundaryName`.
 function add!(proj::Project, crv::Dict{String,Any}, boundaryName::String)
     addCurveToInnerBoundary!(proj, crv, boundaryName)
 end
+
 
 """
 getCurve(proj::Project, curveName::String)
@@ -126,6 +134,7 @@ function getCurve(proj::Project, curveName::String)
     return getOuterBoundaryCurveWithName(proj, curveName)
 end
 
+
 """
 getCurve(proj::Project, curveName::String, boundaryName::String)
 
@@ -134,6 +143,7 @@ Get the curve named `curveName` from the inner boundary named `boundaryName`
 function getCurve(proj::Project, curveName::String, boundaryName::String)
     return  getInnerBoundaryCurve(proj, curveName, boundaryName)
 end
+
 
 """
     getInnerBoundary(proj::Project, name::String)
@@ -144,6 +154,7 @@ function getInnerBoundary(proj::Project, name::String)
     return getInnerBoundaryChainWithName(proj, name)
 end
 
+
 """
     remove!(proj::Project, curveName::String)
 
@@ -152,6 +163,7 @@ Delete the curve named curveName from the outer boundary
 function remove!(proj::Project, curveName::String)
     removeOuterBoundaryCurveWithName!(proj, curveName)
 end
+
 
 """
     remove!(proj::Project, curveName::String, innerBoundaryName::String)
