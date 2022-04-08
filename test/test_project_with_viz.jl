@@ -21,7 +21,7 @@ using CairoMakie
 
         # Lay the background grid and plot it
         addBackgroundGrid!(p_scratch, bounds,  N)
-        plotProject!(p_scratch, HOHQMesh.GRID)
+        plotProject!(p_scratch, GRID)
 
         # Build the outer boundary chain and plot piece-by-piece
         outer_line1 = newEndPointsLineCurve("outerline1", [0.0, -7.0, 0.0], [4.0, 3.0, 0.0])
@@ -69,7 +69,7 @@ using CairoMakie
         control_file = joinpath(HOHQMesh.examples_dir(), "AllFeatures.control")
         p_file = openProject(control_file, projectPath)
 
-        @test_nowarn plotProject!(p_file, HOHQMesh.MODEL + HOHQMesh.GRID)
+        @test_nowarn plotProject!(p_file, MODEL+GRID)
 
         # Refinement regions are already present but we manually adjust
         # one of its parameters to trigger a specific piece of plot update logic

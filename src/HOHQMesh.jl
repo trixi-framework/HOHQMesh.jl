@@ -12,7 +12,10 @@ function __init__()
     using .Makie
     include("Viz/VizProject.jl")
     include("Viz/VizMesh.jl")
+    # Make the actual plotting routines available
     export plotProject!, updatePlot!
+    # Make plotting constants available for easier use
+    export MODEL, GRID, MESH, EMPTY, REFINEMENTS, ALL
   end
 end
 

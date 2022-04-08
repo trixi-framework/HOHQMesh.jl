@@ -56,7 +56,7 @@ using CairoMakie
     setFileNames!(p_visu, meshFileFormat)
 
     # Show initial the model and grid
-    @test_nowarn plotProject!(p_visu, HOHQMesh.MODEL + HOHQMesh.GRID)
+    @test_nowarn plotProject!(p_visu, MODEL+GRID)
 
     # Create the mesh which contains a plotting update for ISM
     @test_nowarn generate_mesh(p_visu)
@@ -111,7 +111,7 @@ using CairoMakie
     meshFileFormat = getMeshFileFormat(p_visu)
     setFileNames!(p_visu, meshFileFormat)
 
-    @test_nowarn updatePlot!(p_visu, HOHQMesh.MODEL + HOHQMesh.GRID + HOHQMesh.REFINEMENTS)
+    @test_nowarn updatePlot!(p_visu, MODEL+GRID+REFINEMENTS)
 
     # Create the mesh which contains a plotting update for ABAQUS
     @test_nowarn generate_mesh(p_visu)
