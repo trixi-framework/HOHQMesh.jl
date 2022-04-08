@@ -306,7 +306,7 @@ examples_dir() = joinpath(pathof(HOHQMesh) |> dirname |> dirname, "examples")
 
 #
 # Include functionality for interactive reading and writing a model for HOHQMesh
-# Note, The visualzation routines are included above in the `__init__` above because
+# Note, The visualzation routines are included above in the `__init__` because
 # Makie is required
 #
 

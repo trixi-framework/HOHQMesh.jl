@@ -147,8 +147,8 @@ using Test
         @test isapprox(pts[2,:],[0.0,2.0])
         @test isapprox(pts[3,:],[-2.0,0.0])
 
-        # purposly trigger warning with invalid units
-        setArcUnits!(crv,"Rankine")
+        # Purposly trigger warning with invalid units
+        @test_logs (:warn, "Units must either be `degrees` or `radians`. Try setting `units` again.") setArcUnits!(crv,"Rankine")
 
         setArcUnits!(crv,"radians")
         @test getArcUnits(crv) == "radians"

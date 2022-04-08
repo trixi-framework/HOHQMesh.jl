@@ -30,7 +30,7 @@ function generate_mesh(proj::Project)
 #
     controlDict = getControlDict(proj)
     if !haskey(controlDict,"BACKGROUND_GRID")
-        println("A background grid is needed before meshing. Add one and try again.")
+        @warn "A background grid is needed before meshing. Add one and try again."
         return nothing
     end
     saveProject(proj)

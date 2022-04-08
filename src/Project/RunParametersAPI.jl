@@ -123,7 +123,7 @@ are "ISM", "ISM-V2", or "ABAQUS".
 """
 function setMeshFileFormat!(proj::Project, meshFileFormat::String)
     if !in(meshFileFormat,meshFileFormats)
-        println("Acceptable file formats are: ", meshFileFormats,". Try again.") #TODO Format this nicely
+        @warn "Acceptable file formats are: `ISM-V2`, `ISM`, or `ABAQUS`. Try again."
         return
     end
     key = "mesh file format"
@@ -156,7 +156,7 @@ only the corner nodes.
 """
 function setPlotFileFormat!(proj::Project, plotFileFormat::String)
     if !in(plotFileFormat,plotFileFormats)
-        println("Acceptable plot formats are: ", plotFileFormats,". Try again.") #TODO Format this nicely
+        @warn "Acceptable plot formats are: `sem` or `skeleton`. Try again."
         return
     end
     rpDict = getDictInControlDictNamed(proj,"RUN_PARAMETERS")

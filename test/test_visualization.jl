@@ -38,8 +38,8 @@ using CairoMakie
     tup = getInnerBoundary(p_visu, "inner1")
     @test tup[2]["TYPE"] == "CHAIN"
 
-    # Attempt to generate the mesh before the background grid is set. Throws an error.
-    @test_nowarn generate_mesh(p_visu)
+    # Attempt to generate the mesh before the background grid is set. Throws a warning.
+    @test_logs (:warn, "A background grid is needed before meshing. Add one and try again.") generate_mesh(p_visu)
 
     # There is no background grid. Query the different styles of background grids
     # to test that errors are thrown correctly.
@@ -72,11 +72,12 @@ using CairoMakie
              [1.0  1.75 -1.0 0.0] ]
     spline2 = new("small_spline", 5, data)
     add!(p_visu, spline2, "inner2")
+
     #
-    # Test getting the inner curve and test
+    # Test getting the inner curve
     #
     # Purposely get the names wrong to throw a warning
-    dict = getCurve(p_visu, "small_spline", "inner1")
+    @test_logs (:warn, "No curve small_spline in boundary inner1. Try again.") dict = getCurve(p_visu, "small_spline", "inner1")
     # Do it correctly this time
     dict = getCurve(p_visu, "small_spline", "inner2")
     @test dict["TYPE"] == "SPLINE_CURVE"

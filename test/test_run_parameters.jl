@@ -68,7 +68,7 @@ using Test
     redo()
     @test getMeshFileFormat(p) == "ISM"
 
-    setMeshFileFormat!(p,"BLORP")
+    @test_logs (:warn, "Acceptable file formats are: `ISM-V2`, `ISM`, or `ABAQUS`. Try again.") setMeshFileFormat!(p,"BLORP")
     @test getMeshFileFormat(p) == "ISM"
 
     @test getPlotFileFormat(p) == "skeleton"
@@ -79,7 +79,7 @@ using Test
     redo()
     @test getPlotFileFormat(p) == "sem"
 
-    setPlotFileFormat!(p,"BLORP")
+    @test_logs (:warn, "Acceptable plot formats are: `sem` or `skeleton`. Try again.") setPlotFileFormat!(p,"BLORP")
     @test getPlotFileFormat(p) == "sem"
 
     removeRunParameters!(p)

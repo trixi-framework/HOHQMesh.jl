@@ -28,8 +28,8 @@ using Test
     q = openProject( projectName*".control", projectPath )
 
     # Trigger error statements by setting incorrect values in the smoother options
-    addSpringSmoother!(p, "PAUSE", "LinearSpring", 50)
-    addSpringSmoother!(p, "ON"   , "MagicSprings", 50)
+    @test_logs (:warn, "Acceptable smoother status are: `ON` or `OFF`. Try again.") addSpringSmoother!(p, "PAUSE", "LinearSpring", 50)
+    @test_logs (:warn, "Acceptable smoothers are: `LinearAndCrossbarSpring` or `LinearSpring`. Try again.") addSpringSmoother!(p, "ON"   , "MagicSprings", 50)
 
     setSmoothingIterations!(q, 25)
 
@@ -41,14 +41,14 @@ using Test
     @test getSmoothingStatus(q) == "OFF"
 
     # Trigger error statement by setting an invalid spring status
-    setSmoothingStatus!(q,"UNKNOWN")
+    @test_logs (:warn, "Acceptable smoother status is either: `ON` or `OFF`. Try again.") setSmoothingStatus!(q,"UNKNOWN")
     @test getSmoothingStatus(q) == "OFF"
 
     setSmoothingType!(q,"LinearSpring")
     @test getSmoothingType(q) == "LinearSpring"
 
     # Trigger error statement by setting an invalid spring type
-    setSmoothingType!(q,"TorsionalSpring")
+    @test_logs (:warn, "Acceptable smoothers are: `LinearAndCrossbarSpring` or `LinearSpring`. Try again.") setSmoothingType!(q,"TorsionalSpring")
     @test getSmoothingType(q) == "LinearSpring"
 
     cDict = getControlDict(q)

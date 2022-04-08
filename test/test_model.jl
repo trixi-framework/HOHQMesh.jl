@@ -107,22 +107,22 @@ using Test
     @test getCurveName(ibc) == "obc2"
 
 #
-#   Purposely create outer / inner boundary curves that do
-#   not join in a new project. This will trigger warning statements.
+#   Purposely create outer / inner boundary curves that do not join in a new project.
+#   Triggers appropriate warning statements.
 #
     obc1 = new("obc1",[0.0,0.0,0.0], [2.0,0.0,0.0])
     obc2 = new("obc2",[3.0,0.0,0.0], [1.0,1.0,0.0])
 
     # Failing outer boundary
     add!(p, obc1)
-    add!(p, obc2)
+    @test_logs (:warn, "The curve obc1 does not meet the previous curve, obc2. Try again.") add!(p, obc2)
 
     # Failing inner boundary
     line = newEndPointsLineCurve("line", [0.0,-2.0,0.0], [1.0,0.0,0.0])
     halfCircle  = newCircularArcCurve("halfCircle", [0.0,0.0,0.0], 1.5, 0.0, 180.0, "degrees")
 
-    add!(p, line, "failCurve")
-    addCurveToInnerBoundary!(p, halfCircle , "failCurve")
+    addCurveToInnerBoundary!(p, line, "failCurve")
+    @test_logs (:warn, "The curve line does not meet the previous curve, halfCircle. Try again.") add!(p, halfCircle , "failCurve")
 
 end
 

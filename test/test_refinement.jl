@@ -155,7 +155,7 @@ using Test
 
     c2 = newRefinementCenter("middle","smooth",[2.0,3.0,4.0],0.6,3.0)
     # Attempt to set an refinement type. Simply throws a warning to "Try again"
-    setRefinementType!(c2, "fancy")
+    @test_logs (:warn, "Acceptable refinement types are `smooth` and `sharp`. Try again.") setRefinementType!(c2, "fancy")
 
     insertRefinementRegion!(p,c2,2)
     lst = getAllRefinementRegions(p)

@@ -44,7 +44,7 @@ function addCurveToOuterBoundary!(proj::Project, crv::Dict{String,Any})
         if !curvesMeet(lastCurve,crv)
             lastName = getCurveName(lastCurve)
             newName  = getCurveName(crv)
-            println("the curve $lastName does not meet the previous curve, $newName. Try again.")
+            @warn "The curve $lastName does not meet the previous curve, $newName. Try again."
             return
         end
     end
@@ -214,7 +214,7 @@ function addCurveToInnerBoundary!(proj::Project, crv::Dict{String,Any}, boundary
         if !curvesMeet(lastCurve,crv)
             lastName = getCurveName(lastCurve)
             newName  = getCurveName(crv)
-            println("the curve $lastName does not meet the previous curve, $newName. Try again.")
+            @warn "The curve $lastName does not meet the previous curve, $newName. Try again."
             return
         end
     end
@@ -442,7 +442,7 @@ function getInnerBoundaryCurve(proj::Project, curveName::String, boundaryName::S
             return crv
         end
     end
-    println("No curve ", curveName, " in boundary ", boundaryName, ". Try again.")
+    @warn "No curve "*curveName*" in boundary "*boundaryName*". Try again."
     return nothing
 end
 

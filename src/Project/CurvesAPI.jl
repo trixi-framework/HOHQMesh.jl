@@ -354,7 +354,7 @@ function setArcUnits!(arc::Dict{String,Any}, units::String)
         arc[key] = units
         postNotificationWithName(arc,"CURVE_DID_CHANGE_NOTIFICATION",(nothing,))
     else
-        println("Units must either be `degrees` or `radians`. Try setting `units` again.")
+        @warn "Units must either be `degrees` or `radians`. Try setting `units` again."
     end
 end
 

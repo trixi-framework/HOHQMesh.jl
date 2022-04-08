@@ -256,7 +256,7 @@ Set the type, either "smooth" or "sharp" for the given refinement region.
 """
 function setRefinementType!(r::Dict{String,Any}, type::String)
     if !in(type,refinementTypes)
-        println("Acceptable refinement types are `smooth` and `sharp`. Try again.")
+        @warn "Acceptable refinement types are `smooth` and `sharp`. Try again."
         return
     end
 
