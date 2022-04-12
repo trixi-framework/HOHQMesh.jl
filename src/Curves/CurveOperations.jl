@@ -215,10 +215,10 @@ function curvePoint(crvDict::Dict{String,Any}, t::Float64)
 end
 
 
-function curvesMeet(firstCurve::Dict{String,Any}, secondCurve::Dict{String,Any})
+function curvesMeet(firstCurve::Dict{String,Any}, secondCurve::Dict{String,Any}; tol=100*eps(Float64))
     xFirst  = curvePoint(firstCurve,1.0)
     xSecond = curvePoint(secondCurve,0.0)
-    if maximum(abs.(xFirst - xSecond)) < 100*eps(Float64)
+    if maximum(abs.(xFirst - xSecond)) < tol
         return true
     else
         return false
