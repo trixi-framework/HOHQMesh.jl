@@ -1,25 +1,25 @@
 # HQMTool
-HQMTool is currently an API to generate a quad (Future:Hex) mesh using Julia.
+HQMTool is an API to generate a quad (Future:Hex) mesh using Julia. It serves as a front end to the HOHQMesh program, and is designed to let one build a meshing project interactively while graphically displaying the results.
 
 ## Contents
 
 1. [Introduction](@ref)
 2. [Basic Moves](@ref)
 3. [HQMTool API](@ref)
-  1. [Project Creation and Saving](@ref)
-  2. [Plotting](@ref)
-  3. [Modifying/Editing a Project](@ref)
-  4. [Controlling the Mesh Generation Process](@ref)
+1. [Project Creation and Saving](@ref)
+2. [Plotting](@ref)
+3. [Modifying/Editing a Project](@ref)
+4. [Controlling the Mesh Generation Process](@ref)
     1. [Editing the Run Parameters](@ref)
     2. [Changing the output file names](@ref)
     3. [Adding the background grid](@ref)
     4. [Smoothing Operations](@ref)
     5. [Manual Refinement](@ref)
-  5. [Boundary Curves](@ref)
+5. [Boundary Curves](@ref)
     1. [Adding and Removing Outer and Inner Boundaries](@ref)
     2. [Defining Curves](@ref)
     3. [Editing Curves](@ref)
-  6. [Undo/Redo](@ref)
+6. [Undo/Redo](@ref)
 4. [Advanced](@ref)
 
 ## Introduction
@@ -67,7 +67,7 @@ boundary in the shape of an ice cream cone. The "verbose" version of the script 
 
       if called_by_user
    #
-   #  Show the model and grid
+   #     Show the model and grid
    #
          plotProject!(p, MODEL+GRID)
          println("Press enter to continue and generate the mesh")
@@ -85,23 +85,23 @@ The first line creates a new project, where the mesh and plot file names will be
 from the project name, "IceCreamCone" written to the specified folder.
 
 To develop the model, one adds curves to the outer boundary or to multiple inner boundaries,
-if desired. As in HOHQMesh, there are four curve classes currently operational:
+if desired. As in HOHQMesh, there are four curve classes currently available:
 
 - Parametric equations
-- Splines
+- Cubic Splines
 - Lines defined by their end points
 - Circular arcs
 
 In the example, the outer boundary is a closed circular arc with center at [0.0, 0.0, 0.0]
 with radius 4, starting at zero and ending at 360 degrees. It is added to the project with
-`addCurveToOuterBoundary!` through the generic name `add!`. You can add any number of curves,
+`addCurveToOuterBoundary!`. You can add any number of curves to the outer boundary,
 but they must be added in order, counter-clockwise.
 
 Similarly, you create curves and add them to as many inner boundaries that you want to have.
-In the example, there is one inner boundary, "IceCreamCone" made up of two lines and a half
-circular arc. Again, add them in order, counter-clockwise.
+In the example, there is one inner boundary, "IceCreamCone" made up of two straight lines and a half
+circular arc. Again, they are added in order, counter-clockwise.
 
-For convenience, `newProject` will generate default run parameters, like the plot file format
+For convenience, `newProject` will generate default run parameters used by HOHQMesh, like the plot file format
 and the smoother. The parameters can be edited with setter commands. For example, the script
 sets the polynomial order (default = 5) and the plot file format (default = "skeleton").
 
@@ -119,7 +119,7 @@ The script finishes by generating the quad mesh and plotting the results, as sho
 
 ![iceCreamCone](https://user-images.githubusercontent.com/25242486/162193980-b80fb92c-2851-4809-af01-be856152514f.png)
 
-It also returns the project so that it can be edited further, if desired.
+Finally, the script returns the project so that it can be edited further, if desired.
 
 To save a control file for HOHQMesh, simply invoke
 ```
@@ -129,7 +129,7 @@ where outFile is the name of the control file (traditionally with a .control ext
 `saveProject` is automatically called when a mesh is generated.
 
 The third example `ice_cream_cone_demo` is identical to that which was explained above
-except that the function calls use the generic version of, e.g., `new` or `add!`.
+except that the function calls use the generic versions of functions, e.g., `new` or `add!`.
 
 Methods are available to edit a model. For example to move the center of the outer boundary.
 
@@ -146,19 +146,23 @@ To generate a mesh using HQMTool you
 2. [Create inner and outer boundary curves](#DefiningCurves)
 
    ```
-   c = new(<name>, startLocation [x, y, z], endLocation [x, y, z])                                 *Straight Line*
-   c = new(<name>, center [x, y, z], radius, startAngle, endAngle, units = "degrees" or "radians") *Circular Arc*
-   c = new(<name>, xEqn, yEqn, zEqn)                                                               *Parametric equation*
-   c = new(<name>, dataFile)                                                                       *Spline with data from a file*
-   c = new(<name>, nKnots, knotsMatrix)                                                            *Spline with given knot values*
+   c = newEndPointsLineCurve(<name>, startLocation [x, y, z], endLocation [x, y, z])                               *Straight Line*
+   c = newCircularArcCurve(<name>, center [x, y, z], radius, startAngle, endAngle, units = "degrees" or "radians") *Circular Arc*
+   c = newParametricEquationCurve(<name>, xEqn, yEqn, zEqn)                                                        *Parametric equation*
+   c = newSplineCurve(<name>, dataFile)                                                                            *Spline with data from a file*
+   c = newSpline(<name>, nKnots, knotsMatrix)                                                                      *Spline with given knot values*
    ```
+
+The generic name for each of these curve creation methods is `new!. The generic can be used instead of the longer descriptive name to save typing during interactive sessions, if desired.
+
 
 3. [Add curves](#AddingCurves) to build the model to see what you have added,
 
    ```
-   add!(p, <curveName>)                      *Add outer boundary curve*
-   add!(p, <curveName>, <InnerBoundaryName>) *Add curve to an inner boundary*
+   addOuterBoundaryCurve!(p, <curveName>)                      *Add outer boundary curve*
+   addInnerBoundaryCurve!(p, <curveName>, <InnerBoundaryName>) *Add curve to an inner boundary*
    ```
+Curves can be added by using the generic `add!` function instead of the longer descriptive name to save typing during interactive sessions, if desired.
 
 4. To [visualize](#Plotting) the project's model,
 
@@ -166,19 +170,19 @@ To generate a mesh using HQMTool you
    plotProject!(p, MODEL)
    ```
 
-   To update the plot at any time, use
+   Plots are updated in response to user interactions. However, to update the plot at any time, use
 
    ```
    updatePlot!(p, options)
    ```
 
    Options are `MODEL`, `GRID`, `MESH`, and `REFINEMENTS`. To plot combinations, sum the options, e.g.
-   `MODEL`+`GRID` or `MODEL`+`MESH`. (You normally are not intersted in the background grid once
+   `MODEL`+`GRID` or `MODEL`+`MESH`. (You normally are not interested in the background grid once
    the mesh is generated.)
 
 5. Set the [background grid](#(#BackgroundGrid))
 
-   When no outer boundary curve is present the background grid can be set with
+   When no outer boundary curve is present, the background grid can be set with
 
    ```
    addBackgroundGrid!(p, lower left [x,y,z], spacing [dx,dy,dz], num Intervals [nX,nY,nZ])
@@ -192,12 +196,12 @@ To generate a mesh using HQMTool you
 
    The first method creates the rectangular boundary with extent `[x0[1], x0[1] + N*dx[1]]` by
    `[x0[2], x0[2] + N*dx[2]]`. The second method sets a rectangular bounding box with extent
-   [top value, left value, bottom value, right value] and the number of elements in each direction.
+   [top value, left value, bottom value, right value] and the number of elements in each direction. The first exists for historical reasons; the second is probably the easiest to use.
 
    When an outer boundary is present the background grid can be set as
 
    ```
-   addBackgroundGrid!(p, grid size [dx,dy,dz])
+   addBackgroundGrid!(p,[dx,dy,dz])
    ```
 
    where the spacing controls the number of elements in each direction.
@@ -214,12 +218,14 @@ To generate a mesh using HQMTool you
    generate_mesh(p)
    ```
 
-The mesh will be stored in `<folder>` with the name `<projectName>.mesh`. The control file will also be
-saved in that folder with the name `<projectName>.control`, which you can read in again later and modify,
-remesh, etc. The function will print the mesh information and statistics, and will plot the mesh as in
-the figure above, if a plot is otherwise visible. If not, it can always be plotted with the `plotProject!`
-command.
+	The mesh will be stored in `<folder>` with the name `<projectName>.mesh`. The control file will also be
+	saved in that folder with the name `<projectName>.control`, which you can read in again later and modify,
+	remesh, etc. The function will print the mesh information and statistics, and will plot the mesh as in
+	the figure above, if a plot is otherwise visible. If not, it can always be plotted with the `plotProject!`
+	command.
 
+
+The ordering of the basic moves follows a logical pattern: The project must be created first. Curves can be added at any time, but adding curve segments to a curve must be done in order. The background grid can be added any time to the project. A mesh is ususally generated after the model (curves) and background grid are completed.
 
 ## HQMTool API
 
@@ -259,14 +265,13 @@ It can be read in again with `openProject`.
 The options are any combination of `MODEL`, `GRID`, `MESH`, and `REFINEMENTS`. `GRID` refers to the background grid,
 which you an view to make sure that it can resolve the boundary curves in the model.
 Before meshing one probably wants to view `MODEL+GRID`, and afterwards, `MODEL+MESH`. `REFINEMENTS` will show
-where [manual refinement](#ManualRefinement) is added.
+where [manual refinement](#ManualRefinement) is placed.
 
 If the model is modified and you want to re-plot with the new values, invoke
 ```
    updatePlot!(proj::Project, options)
 ```
-but genrally the plot will be updated automatically as you build the model.
-
+but generally the plot will be updated automatically as you build the model.
 
 ### Modifying/Editing a Project
 
@@ -361,8 +366,8 @@ To create a refinement center,
                                                   h::Float64,
                                                   w::Float64)
 ```
-where the type is either `smooth` or `sharp`, `x0` = [x, y, z] is the location of the center, `h` is the mesh size,
-and `w` is the extent of the refinement region.
+where the type is either "smooth" or "sharp", `x0` = [x, y, z] is the location of the center, `h` is the mesh size,
+and `w` is the extent of the refinement region. The z component must be zero.
 
 Similarly, one can create a `RefinementLine`,
 ```
@@ -378,9 +383,8 @@ To add a refinement region to the project,
    [Return:nothing] addRefinementRegion!(proj::Project, r::Dict{String,Any})
 ```
 
-To get the indx'th refinement region from the project, or to get a refinement region with a given name, use
+To get a reference to a refinement region with a given name, use
 ```
-   [Return:Dict{String,Any}] getRefinementRegion(proj::Project, indx::Int)
    [Return:Dict{String,Any}] getRefinementRegion(proj::Project, name::String)
 ```
 
@@ -389,7 +393,7 @@ Finally, to get a list of all the refinement regions,
     [Return:Array{Dict{String,Any}}] array = allRefinementRegions(proj::Project)
 ```
 
-A refinement region can be edited by using the following
+A refinement region can be edited by using the following:
 ```
    [Return:nothing]         setRefinementType!(r::Dict{String,Any}, type::String)
    [Return:String]          getRefinementType(r::Dict{String,Any})
@@ -435,8 +439,8 @@ To further edit a `RefinementLine`, use the methods
 
 2. Adding an inner boundary curve
 
-   The syntax is analogous to the creation of an outer boundary curve where, again, curve creation must
-   be ordered counter-clockwise.
+   The syntax is analogous to the creation of an outer boundary curve where, again, curve segments added to an inner curve with a given name must
+   in order, counter-clockwise.
 
    ```
    [Return:nothing] addCurveToInnerBoundary!(proj::Project, crv::Dict{String,Any}, boundaryName::String)
@@ -465,7 +469,7 @@ To further edit a `RefinementLine`, use the methods
 
    ```
    [Return:nothing] removeOuterBoundary!(proj::Project)
-   [Return:nothing] removeInnerBoundary!(proj::Project, chainName::String)
+   [Return:nothing] removeInnerBoundary!(proj::Project, boundaryName::String)
    ```
 
    Alternatively, individual pieces of the boundary curve chains can be removed.
@@ -485,7 +489,7 @@ To further edit a `RefinementLine`, use the methods
 Four curve types can be added to the outer and inner boundary curve chains. They are
 
 - Parametric equations
-- Splines
+- Cubic Splines
 - Lines defined by their end points
 - Circular arcs
 
@@ -513,9 +517,9 @@ Example:
 ```
 The z-Equation is optional, but for now must define zero for z by default.
 
-##### Spline Curve
+##### Cubic Spline Curve
 
-A spline is defined by an array of knots,  t<sub>j</sub>,x<sub>j</sub>,y<sub>j</sub>,z<sub>j</sub>.
+A cubic spline is defined by an array of knots,  t<sub>j</sub>,x<sub>j</sub>,y<sub>j</sub>,z<sub>j</sub>.
 It can either be supplied by a data file whose first line is the number of knots, and succeeding lines define
 the t,x,y,z values, e.g.
 ```
@@ -530,7 +534,7 @@ the t,x,y,z values, e.g.
    0.923076923076923 -3.00000000000000  1.00000000000000 0.0
    1.00000000000000 -3.50000000000000  3.50000000000000 0.0
 ```
-or by constructing the `nKnots` by `4` array supplying it to the new procedure. The respective constructors are
+or by constructing the `nKnots` x `4` array and supplying it to the new procedure. The respective constructors are
 ```
    [Return:Dict{String,Any}] newSplineCurve(name::String, dataFile::String)
    Generic: new(...)
