@@ -13,7 +13,6 @@ A Control file dictionary contains the keys
 TYPE is a string naming the type (class) of object stored
 
 The CONTROL_INPUT contains the blocks
-    TYPE
     RUN_PARAMETERS
     MESH_PARAMETERS
     SPRING_SMOOTHER
@@ -55,10 +54,111 @@ A PARAMETRIC_EQUATION_CURVE dictionary contains the keys
     yEqn
     zEqn
 
+A SPLINE_CURVE block contains the keys
+   TYPE
+   name
+   SPLINE_DATA
+
+SPLINE_DATA block contains keys and data
+   nKnots
+   t_1 x_1 y_1 z_1
+   t_2 x_2 y_2 z_2
+   ...
+   t_nKnots x_nKnots y_nKnots z_nKnots
+
+An END_POINTS_LINE has the following keys
+   TYPE
+   name
+   xStart
+   xEnd
+
+A CIRCULAR_ARC block contains
+   TYPE
+   name
+   units
+   center
+   radius
+   start angle
+   end angle
+
+REFINEMENT_REGIONS dictionary contains the keys
+   TYPE
+   LIST
+      LIST is a list of 
+          REFINEMENT_CENTER
+          REFINEMENT_LINE
+
+A REFINEMENT_CENTER contains the keys
+   TYPE
+   center
+   h
+   w
+
+A REFINEMENT_LINE contains the keys
+   TYPE
+   xStart
+   xEnd
+   h
+   w
+
+A ROTATION_TRANSFORMATION contains the keys
+   TYPE
+   direction
+   rotationPoint
+
+A SCALE_TRANSFORMATION contains the keys
+   TYPE
+   origin
+   scaleFactor
+
+The SWEEP_CURVE dictionary contains the keys
+   TYPE
+   LIST
+     The list contains dictionaries describing
+         PARAMETRIC_EQUATION_CURVE
+         SPLINE_CURVE
+         END_POINTS_LINE
+
+The SWEEP_SCALE_FACTOR dictionary contains the keys
+   TYPE
+   LIST
+     The list contains dictionaries describing
+         PARAMETRIC_EQUATION
+
+  But the equation definitions contain only one equation r(t) = ...
+
+The TOPOGRAPHY dictionary contains the keys
+   TYPE
+   eqn (for equation defined topography)
+   sizing
+
+The SIMPLE_EXTRUSION block contains the keys
+   TYPE
+   direction
+   height
+   subdivisions
+   start surface name
+   end surface name
+
+The SIMPLE_ROTATION block contains the keys
+   TYPE
+   direction
+   rotation angle factor
+   subdivisions 
+   start surface name
+   end surface name
+
+The SWEEP_ALONG_CURVE block contains the keys
+   TYPE
+   algorithm   (optional)
+   subdivisions per segment
+   start surface name
+   end surface name
+
 =#
 
 # Four objects store their members as lists rather than
-# as dictionaries
+# as dictionaries (See above)
 
 const blocksThatStoreLists = Set(["OUTER_BOUNDARY",
                                   "REFINEMENT_REGIONS" ,
