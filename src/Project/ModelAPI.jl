@@ -163,8 +163,6 @@ function getOuterBoundaryChainList(proj::Project)
         return lst
     end
 end
-
-
 #
 #  --------------------------------------------------------------------------------------
 #           INNER BOUNDARY FUNCTIONS
@@ -442,8 +440,13 @@ function innerBoundaryIndices(proj::Project, curveName::String)
     end
     return (0,0)
 end
+#=
+        CHAIN OPERATIONS
+=#
 
-
+#=
+        OTHER
+=#
 function getModelDict(proj::Project)
     if haskey(proj.projectDictionary,"MODEL")
         return proj.projectDictionary["MODEL"]

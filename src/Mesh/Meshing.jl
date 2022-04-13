@@ -8,6 +8,12 @@ function generate_mesh(proj::Project)
         @warn "A background grid is needed before meshing. Add one and try again."
         return nothing
     end
+    
+    if !modelCurvesAreOK(proj)
+        @warn "Meshing aborted: Ensure boundary curve segments are in order and boundary curves are closed and try again."
+        return nothing
+    end
+
     saveProject(proj)
     fileName       = joinpath(proj.projectDirectory,proj.name)*".control"
     mesherOutput   = generate_mesh(fileName, output_directory = proj.projectDirectory)

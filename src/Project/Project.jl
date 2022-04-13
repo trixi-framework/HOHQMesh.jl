@@ -399,3 +399,57 @@ function meshWasDeleted(proj::Project, sender::Project)
         updatePlot!(proj, options)
     end
 end
+
+"""
+    modelCurvesAreOK(proj::Project)
+
+Go through all curves in the model and make sure they are connected and closed. 
+
+Returns true if all curves are connected and closed, false otherwise.
+"""
+function modelCurvesAreOK(proj::Project)
+    result = true
+
+    chain  = getOuterBoundaryChainList(proj)
+    if !isempty(chain)
+        result = modelChainIsOK(chain,"Outer")
+    end
+
+    innerBoundariesList = getAllInnerBoundaries(proj)
+
+    for chain in innerBoundariesList
+        chainName = string(chain["name"])
+        chainList = chain["LIST"]
+        result = result && modelChainIsOK(chainList,chainName)
+    end
+
+    return result
+end
+"""
+        modelChainIsOK(chain::Vector{Dict{String, Any}}, chainName::String)
+
+Returns true if the chain of curves is contiguous and closed; false otherwise.
+"""
+function modelChainIsOK(chain::Vector{Dict{String, Any}}, chainName::String)
+    result = true
+    for i in 1:length(chain)-1
+        crv1 = chain[i]
+        crv2 = chain[i+1]
+        if !curvesMeet(crv1,crv2)
+            name1 = getCurveName(crv1)
+            name2 = getCurveName(crv2)
+            @warn "The curve $name2 does not meet the previous curve, $name1."
+            result = false
+        end
+    end
+    crv1 = last(chain)
+    crv2 = chain[1]
+    if !curvesMeet(crv1,crv2)
+        name1 = getCurveName(crv1)
+        name2 = getCurveName(crv2)
+        @warn "The boundary curve $chainName is not closed. Fix to generate mesh"
+        result = false
+    end
+
+    return result
+end
