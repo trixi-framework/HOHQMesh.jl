@@ -9,21 +9,21 @@ isdir(outdir) && rm(outdir, recursive=true)
 @testset "HOHQMesh.jl" begin
 
   @testset "examples_dir()" begin
-    @test occursin("examples", HOHQMesh.examples_dir())
+    @test occursin("examples", examples_dir())
   end
 
   @testset "generate_mesh()" begin
-    control_file = joinpath(HOHQMesh.examples_dir(), "GingerbreadMan.control")
+    control_file = joinpath(examples_dir(), "GingerbreadMan.control")
     @test generate_mesh(control_file) isa String
   end
 
   @testset "generate_mesh(; verbose=true)" begin
-    control_file = joinpath(HOHQMesh.examples_dir(), "GingerbreadMan.control")
+    control_file = joinpath(examples_dir(), "GingerbreadMan.control")
     @test generate_mesh(control_file, verbose=true) isa String
   end
 
   @testset "generate_mesh() in 2D with ABAQUS output" begin
-    control_file = joinpath(HOHQMesh.examples_dir(), "IceCreamCone_Abaqus.control")
+    control_file = joinpath(examples_dir(), "IceCreamCone_Abaqus.control")
     generate_mesh(control_file)
     parse_mesh = abaqus_read_mesh(joinpath(outdir, "IceCreamCone_Abaqus.inp"))
     # set some reference values for comparison. These are the corner IDs for element 114
@@ -32,7 +32,7 @@ isdir(outdir) && rm(outdir, recursive=true)
   end
 
   @testset "generate_mesh() in 3D with ABAQUS output" begin
-    control_file = joinpath(HOHQMesh.examples_dir(), "HalfCircle3DRot.control")
+    control_file = joinpath(examples_dir(), "HalfCircle3DRot.control")
     generate_mesh(control_file)
     parse_mesh = abaqus_read_mesh(joinpath(outdir, "HalfCircle3DRot.inp"))
     # set some reference values for comparison. These are the corner IDs for element 246

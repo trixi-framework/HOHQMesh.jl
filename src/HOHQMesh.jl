@@ -22,8 +22,12 @@ end
 # Main wrapper to generate a mesh from a control file
 export generate_mesh
 
+# Make the examples directory available to the user
+export examples_dir
+
 # Functions useful to demonstrate the interactive HQMTool
-export run_demo, ice_cream_cone_verbose_demo, ice_cream_cone_demo
+#export run_demo, ice_cream_cone_verbose_demo, ice_cream_cone_demo
+export ice_cream_cone_verbose_demo, ice_cream_cone_demo
 
 # Generic functions for the HQMTool interface
 export new,
@@ -338,22 +342,22 @@ include("Mesh/Meshing.jl")
 #---------------- Routines for demonstrating the HQMTool ---------------------------------
 #
 
-function run_demo(folder::String; called_by_user=true)
-#
-# Reads in an existing control file, plots the boundary curves and generates
-# a mesh.
-#
-    all_features_control_file = joinpath( examples_dir() , "AllFeatures.control" )
-    p = openProject(all_features_control_file, folder)
+# function run_demo(folder::String; called_by_user=true)
+# #
+# # Reads in an existing control file, plots the boundary curves and generates
+# # a mesh.
+# #
+#     all_features_control_file = joinpath( examples_dir() , "AllFeatures.control" )
+#     p = openProject(all_features_control_file, folder)
 
-    plotProject!(p, MODEL+REFINEMENTS+GRID)
-    println("Press enter to continue and generate the mesh")
-    if called_by_user
-      readline()
-    end
-    generate_mesh(p)
-    return p
-end
+#     plotProject!(p, MODEL+REFINEMENTS+GRID)
+#     println("Press enter to continue and generate the mesh")
+#     if called_by_user
+#       readline()
+#     end
+#     generate_mesh(p)
+#     return p
+# end
 
 
 function ice_cream_cone_verbose_demo(folder::String; called_by_user=true)

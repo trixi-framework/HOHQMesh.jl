@@ -33,7 +33,7 @@ Two 2D examples `GingerbreadMan` and `NACA0012` and a 3D example `Snake` (all
 from HOHQMesh itself) come delivered with this package. You can generate a
 mesh for them by executing
 ```julia
-julia> control_file = joinpath(HOHQMesh.examples_dir(), "GingerbreadMan.control")
+julia> control_file = joinpath(examples_dir(), "GingerbreadMan.control")
 
 julia> output = generate_mesh(control_file)
 ```

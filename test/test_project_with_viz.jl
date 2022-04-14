@@ -66,7 +66,7 @@ using CairoMakie
 
         projectPath = "out"
 
-        control_file = joinpath(HOHQMesh.examples_dir(), "AllFeatures.control")
+        control_file = joinpath(examples_dir(), "AllFeatures.control")
         p_file = openProject(control_file, projectPath)
 
         @test_nowarn plotProject!(p_file, MODEL+GRID)
