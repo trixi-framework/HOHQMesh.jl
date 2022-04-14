@@ -16,7 +16,7 @@ function constructSpline(N::Int, x::Array{Float64},y::Array{Float64})
 
     Nm1 = N - 1
 #
-#   Set up tri-diagonal system
+#   Set up tri-diagonal system for a cubic spline
 #
     d[1] = x[2] - x[1]
     c[2] = (y[2] - y[1])/d[1]
@@ -27,7 +27,8 @@ function constructSpline(N::Int, x::Array{Float64},y::Array{Float64})
         c[i]   = c[i+1] - c[i]
     end
 #
-#   end conditions
+#   "not-a-knot" end conditions where third derivatives are approximated
+#   with divided differences
 #
     b[1] = -d[1]
     b[N] = -d[N-1]

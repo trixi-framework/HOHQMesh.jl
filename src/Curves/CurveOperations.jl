@@ -161,10 +161,6 @@ function curvePoints(crvDict::Dict{String,Any}, N::Int)
 
         M = max(N,nKnots*2)
         x = zeros(Float64,M+1,2)
-        t = zeros(Float64,M+1)
-        for i = 1:M+1
-            t[i] = (i-1)/M
-        end
 
         splineCurvePoints(nKnots,splineData,x)
     end

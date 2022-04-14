@@ -15,7 +15,8 @@ end
 
 #=
 TODO: The undo framework currently works globally, within the REPL. It *should* work project-by-project.
-To make it project based, undo() would be replaced by undo(project) and an .undoStack
+Note that these projects refer to the `HQMTool` projects, not Julia projects in the sense of `Project.toml`.
+To make the undo framework project based, undo() would be replaced by undo(project) and an .undoStack
 property of the project would replace HQMglobalUndoStack. This is
 not a big deal except if multiple projects are open, and muliple objects like curves have been
 defined but not added to a project. In interactive mode curves are separate from projects until
