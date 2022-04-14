@@ -63,7 +63,7 @@ include("test_curve.jl")
 include("test_model.jl")
 
 # HQMTool demonstration test routines
-include("test_hqmtool_demos.jl")
+#include("test_hqmtool_demos.jl")
 
 # HQMTool project test routines
 include("test_hqmtool_project.jl")
