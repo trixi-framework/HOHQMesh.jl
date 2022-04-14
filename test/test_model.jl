@@ -11,7 +11,7 @@ Functions: @  = tested
     @@  insertOuterBoundaryCurveAtIndex!(proj::Project, crv::Dict{String,Any}, indx::Int)
     @@  removeOuterBoundaryCurveAtIndex!(proj::Project, indx::Int)
     @@  addOuterBoundary!(proj::Project, outerBoundary::Dict{String,Any})
-    @   removeOuterboundary!(proj::Project)
+    @   removeOuterBoundary!(proj::Project)
     @   getOuterBoundaryChainList(proj::Project)
 
     @@ addCurveToInnerBoundary!(proj::Project, crv::Dict{String,Any}, boundaryName::String)
@@ -65,10 +65,19 @@ using Test
     @test getChainIndex(obList,"obc3") == 3
     @test undoActionName() == "Add Outer Boundary Curve"
     undo()
+
     @test length(obList) == 2
+
+    # Check the outer boundary curve that are not conneted. Throws a warning
+    @test_logs (:warn, "The boundary curve Outer is not closed. Fix to generate mesh" ) HOHQMesh.modelCurvesAreOK(p)
+    @test HOHQMesh.modelCurvesAreOK(p) == false
+
     @test redoActionName() == "Remove Outer Boundary Curve"
     redo()
     @test length(obList) == 3
+
+    # Outer boundary is connected again. Check is successful now
+    @test HOHQMesh.modelCurvesAreOK(p) == true
 
     crv = getOuterBoundaryCurveWithName(p,"obc2")
     @test getCurveName(crv) == "obc2"
@@ -101,6 +110,10 @@ using Test
 
     removeInnerBoundaryCurve!(p,"obc2",ib1Name)
     @test length(ibList) == 2
+    # Check the inner boundary curve that are not conneted. Throws a warning
+    @test_logs (:warn, "The curve obc3 does not meet the previous curve, obc1.") HOHQMesh.modelCurvesAreOK(p)
+    @test HOHQMesh.modelCurvesAreOK(p) == false
+
     undo()
     @test length(ibList) == 3
     ibc = getInnerBoundaryCurve(p, "obc2",ib1Name)

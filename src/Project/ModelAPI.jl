@@ -122,7 +122,7 @@ end
 
 
 """
-    removeOuterboundary!(proj::Project)
+    removeOuterBoundary!(proj::Project)
 
 Remove the outer boundary curve if it exists.
 """
@@ -130,7 +130,6 @@ function removeOuterBoundary!(proj::Project)
     modelDict = getModelDict(proj)
     if haskey(modelDict,"OUTER_BOUNDARY")
         ob = modelDict["OUTER_BOUNDARY"]
-        println(ob)
         registerWithUndoManager(proj,addOuterBoundary!, (ob,), "Remove Outer Boundary")
         delete!(modelDict,"OUTER_BOUNDARY")
         proj.outerBndryPoints = Any[]
