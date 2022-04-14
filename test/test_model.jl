@@ -84,6 +84,10 @@ using Test
 #
 #   Test remove/add outer boundary
 #
+
+    # Attempt to remove an outer boundary curve that does not exist. Throws an error
+    @test_throws ErrorException removeOuterBoundaryCurveWithName!(p, "wrongName")
+
     removeOuterBoundary!(p)
     mDict = getModelDict(p)
     @test haskey(mDict,"OUTER_BOUNDARY") == false

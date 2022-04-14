@@ -48,6 +48,9 @@ function removeOuterBoundaryCurveWithName!(proj::Project, name::String)
     if indx > 0
         proj.backgroundGridShouldUpdate = true
         removeOuterBoundaryCurveAtIndex!(proj,indx) # posts undo/notification
+    else
+        # `name` to be deleted does not lie in outer boundary chain. Throw an error.
+        error("No curve ", name, " in boundary Outer. Try again.")
     end
 end
 
