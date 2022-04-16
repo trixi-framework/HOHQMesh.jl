@@ -132,14 +132,14 @@ using Test
 
     # Failing outer boundary
     add!(p, obc1)
-    @test_logs (:warn, "The curve obc1 does not meet the previous curve, obc2. Try again.") add!(p, obc2)
+    @test_throws ErrorException add!(p, obc2)
 
     # Failing inner boundary
     line = newEndPointsLineCurve("line", [0.0,-2.0,0.0], [1.0,0.0,0.0])
     halfCircle  = newCircularArcCurve("halfCircle", [0.0,0.0,0.0], 1.5, 0.0, 180.0, "degrees")
 
     addCurveToInnerBoundary!(p, line, "failCurve")
-    @test_logs (:warn, "The curve line does not meet the previous curve, halfCircle. Try again.") add!(p, halfCircle , "failCurve")
+    @test_throws ErrorException add!(p, halfCircle , "failCurve")
 
 end
 
