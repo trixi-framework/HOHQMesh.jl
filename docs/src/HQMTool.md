@@ -24,62 +24,75 @@ HQMTool is an API to generate a quad (Future:Hex) mesh using Julia. It serves as
 
 ## Introduction
 
-HQMTool is an API to build quad/hex meshes. Three examples are included to get you started.
-The first reads in an existing control file from the HOHQMesh examples collection.
-To see that example, run
-```
-   run_demo("out")
-```
-where `"out"` specifies the folder where the resulting mesh and TecPlot files will be saved.
+HQMTool is an API to build quad/hex meshes. Several examples are available in the `examples` folder
+to get you started. These example scripts follow the naming convention of `interactive_*` where
+the phrase interactive indicates their association with HQMTool and then trailing information
+will indicate what that interactive demonstrates. For instance, the file `interactive_splines.jl`
+provides an interactive project that creates an manipulates splines for the inner boundaries before
+generating the mesh.
 
-The second example builds a new project consisting of an outer, circular boundary, and an inner
-boundary in the shape of an ice cream cone. The "verbose" version of the script is given below.
+Below we highlight three fundamental scripts that demonstrate the functionality of HQMTool. More in depth
+explanations of the functionality is provided in the tutuorials TODO: ADD LINK
+
+First is a basic example script that reads in an existing control file from the HOHQMesh examples collection.
+To run that example, execute
 ```julia
-   function ice_cream_cone_verbose_demo(folder::String; called_by_user=true)
-   #
-   #  Create a project with the name "IceCreamCone", which will be the name of the mesh, plot and stats files,
-   #  written to `folder`. The keyword arguement `called_by_user` is there for testing purposes.
-   #
-      p = newProject("IceCreamCone", folder)
-   #
-   #  Outer boundary
-   #
-      circ = newCircularArcCurve("outerCircle", [0.0,-1.0,0.0], 4.0, 0.0, 360.0, "degrees")
-      addCurveToOuterBoundary!(p, circ)
-   #
-   #  Inner boundary
-   #
-      cone1    = newEndPointsLineCurve("cone1", [0.0,-3.0,0.0], [1.0,0.0,0.0])
-      iceCream = newCircularArcCurve("iceCream", [0.0,0.0,0.0], 1.0, 0.0, 180.0, "degrees")
-      cone2    = newEndPointsLineCurve("cone2", [-1.0,0.0,0.0], [0.0,-3.0,0.0])
-      addCurveToInnerBoundary!(p, cone1, "IceCreamCone")
-      addCurveToInnerBoundary!(p, iceCream, "IceCreamCone")
-      addCurveToInnerBoundary!(p, cone2, "IceCreamCone")
-   #
-   #  Set some control RunParameters to overwrite the defaults
-   #
-      setPolynomialOrder!(p, 4)
-      setPlotFileFormat!(p, "sem")
-   #
-   #  To mesh, a background grid is needed
-   #
-      addBackgroundGrid!(p, [0.5,0.5,0.0])
+   include("interactive_from_control_file.jl")
+```
+This command will create mesh and plot files in the `out` directory.
 
-      if called_by_user
-   #
-   #     Show the model and grid
-   #
-         plotProject!(p, MODEL+GRID)
-         println("Press enter to continue and generate the mesh")
-         readline()
-      end
-   #
-   #  Generate the mesh and plot
-   #
-      generate_mesh(p)
+The second example `interactive_outer_boundary.jl` builds a new project consisting of an outer,
+circular boundary, and an inner boundary in the shape of an ice cream cone.
+The "verbose" example script, where all functions arevalled with their full name, is given below.
+```julia
+using HOHQMesh
 
-      return p
-   end
+# Create a new project with the name "IceCreamCone", which will also be the
+# name of the mesh, plot and stats files, written to output folder `out`.
+
+p = newProject("IceCreamCone", "out")
+
+# Outer boundary for this example mesh is a complete circle. Add it into the project.
+
+circ = newCircularArcCurve("outerCircle", [0.0, -1.0, 0.0], 4.0, 0.0, 360.0, "degrees")
+addCurveToOuterBoundary!(p, circ)
+
+# Inner boundary is three curves. Two straight lines and a circular arc.
+# Note the three curve are connected to ensure a counter-clockwise orientation
+# as required by HOHQMesh
+
+cone1    = newEndPointsLineCurve("cone1", [0.0, -3.0, 0.0], [1.0, 0.0, 0.0])
+iceCream = newCircularArcCurve("iceCream", [0.0, 0.0, 0.0], 1.0, 0.0, 180.0, "degrees")
+cone2    = newEndPointsLineCurve("cone2", [-1.0, 0.0, 0.0], [0.0, -3.0, 0.0])
+addCurveToInnerBoundary!(p, cone1, "IceCreamCone")
+addCurveToInnerBoundary!(p, iceCream, "IceCreamCone")
+addCurveToInnerBoundary!(p, cone2, "IceCreamCone")
+
+# Adjust some `RunParameters` and overwrite the defaults values. In this case, we
+# set a new value for the boundary order polynomial representation and adjust the
+# output mesh file format to be `sem`
+
+setPolynomialOrder!(p, 4)
+setPlotFileFormat!(p, "sem")
+
+# A background grid is required for the mesh generation. In this example we lay a
+# background grid of Cartesian boxes with size 0.5.
+
+addBackgroundGrid!(p, [0.5, 0.5, 0.0])
+
+# To plot the project model curves and the background grid, type `using GLMakie`
+# in the REPL session, uncomment this line, and rerun this script
+
+# plotProject!(p, MODEL+GRID)
+
+# Generate the mesh. This produces the mesh and TecPlot files `AllFeatures.mesh` and `AllFeatures.tec`
+# and save them to the `out` folder. Also, if there is an active plot in the project `p` it is
+# updated with the mesh that was generated.
+
+generate_mesh(p)
+
+# After the mesh sucessfully generates mesh statistics, such as the number of corner nodes,
+# the number of elements etc., are printed to the REPL
 ```
 The first line creates a new project, where the mesh and plot file names will be derived
 from the project name, "IceCreamCone" written to the specified folder.

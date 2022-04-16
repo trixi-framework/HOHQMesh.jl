@@ -68,6 +68,9 @@ include("test_model.jl")
 # HQMTool project test routines
 include("test_hqmtool_project.jl")
 
+# HQMTool interactive examples available in examples folder
+include("test_examples.jl")
+
 # HQMTool project + visualzation test routines
 include("test_project_with_viz.jl")
 

@@ -360,50 +360,50 @@ include("Mesh/Meshing.jl")
 # end
 
 
-function ice_cream_cone_verbose_demo(folder::String; called_by_user=true)
-#
-# Create a project with the name "IceCreamCone", which will be the name of the mesh, plot and stats files,
-# written to `folder`.
-#
-    p = newProject("IceCreamCone", folder)
-#
-#   Outer boundary
-#
-    circ = newCircularArcCurve("outerCircle", [0.0,-1.0,0.0], 4.0, 0.0, 360.0, "degrees")
-    addCurveToOuterBoundary!(p, circ)
-#
-#   Inner boundary
-#
-    cone1    = newEndPointsLineCurve("cone1", [0.0,-3.0,0.0], [1.0,0.0,0.0])
-    iceCream = newCircularArcCurve("iceCream", [0.0,0.0,0.0], 1.0, 0.0, 180.0, "degrees")
-    cone2    = newEndPointsLineCurve("cone2", [-1.0,0.0,0.0], [0.0,-3.0,0.0])
-    addCurveToInnerBoundary!(p, cone1, "IceCreamCone")
-    addCurveToInnerBoundary!(p, iceCream, "IceCreamCone")
-    addCurveToInnerBoundary!(p, cone2, "IceCreamCone")
-#
-#   Set some control RunParameters to overwrite the defaults
-#
-    setPolynomialOrder!(p, 4)
-    setPlotFileFormat!(p, "sem")
-#
-#   To mesh, a background grid is needed
-#
-    addBackgroundGrid!(p, [0.5,0.5,0.0])
-#
-#   Show the model and grid
-#
-    plotProject!(p, MODEL+GRID)
-    println("Press enter to continue and generate the mesh")
-    if called_by_user
-      readline()
-    end
-#
-#   Generate the mesh and plot
-#
-    generate_mesh(p)
+# function ice_cream_cone_verbose_demo(folder::String; called_by_user=true)
+# #
+# # Create a project with the name "IceCreamCone", which will be the name of the mesh, plot and stats files,
+# # written to `folder`.
+# #
+#     p = newProject("IceCreamCone", folder)
+# #
+# #   Outer boundary
+# #
+#     circ = newCircularArcCurve("outerCircle", [0.0,-1.0,0.0], 4.0, 0.0, 360.0, "degrees")
+#     addCurveToOuterBoundary!(p, circ)
+# #
+# #   Inner boundary
+# #
+#     cone1    = newEndPointsLineCurve("cone1", [0.0,-3.0,0.0], [1.0,0.0,0.0])
+#     iceCream = newCircularArcCurve("iceCream", [0.0,0.0,0.0], 1.0, 0.0, 180.0, "degrees")
+#     cone2    = newEndPointsLineCurve("cone2", [-1.0,0.0,0.0], [0.0,-3.0,0.0])
+#     addCurveToInnerBoundary!(p, cone1, "IceCreamCone")
+#     addCurveToInnerBoundary!(p, iceCream, "IceCreamCone")
+#     addCurveToInnerBoundary!(p, cone2, "IceCreamCone")
+# #
+# #   Set some control RunParameters to overwrite the defaults
+# #
+#     setPolynomialOrder!(p, 4)
+#     setPlotFileFormat!(p, "sem")
+# #
+# #   To mesh, a background grid is needed
+# #
+#     addBackgroundGrid!(p, [0.5,0.5,0.0])
+# #
+# #   Show the model and grid
+# #
+#     plotProject!(p, MODEL+GRID)
+#     println("Press enter to continue and generate the mesh")
+#     if called_by_user
+#       readline()
+#     end
+# #
+# #   Generate the mesh and plot
+# #
+#     generate_mesh(p)
 
-    return p
-end
+#     return p
+# end
 
 
 function ice_cream_cone_demo(folder::String; called_by_user=true)
