@@ -438,13 +438,8 @@ function chainInsertionIndex(crv::Dict{String,Any}, chainList::Vector{Dict{Strin
             return i+1 # Add after the curve that matches.
         end
     end
-    println(chainList)
-#
-#   No match, so throw an error
-#
-    newName = getCurveName(crv)
-    error("The curve $newName does does connect to any curve in the chain. Try again")
-    return
+
+    return nCurves+1 # No match, so just append to the list
 end
 
 #=

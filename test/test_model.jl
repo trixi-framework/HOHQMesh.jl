@@ -125,21 +125,20 @@ using Test
 
 #
 #   Purposely create outer / inner boundary curves that do not join in a new project.
-#   Triggers appropriate warning statements.
+#   Attempt to generate a mesh and trigger an appropriate warning statement.
 #
     obc1 = new("obc1",[0.0,0.0,0.0], [2.0,0.0,0.0])
     obc2 = new("obc2",[3.0,0.0,0.0], [1.0,1.0,0.0])
 
+    # A background grid is required for the mesh generation call
+    addBackgroundGrid!(p, [0.5, 0.5, 0.0])
+
     # Failing outer boundary
     add!(p, obc1)
-    @test_throws ErrorException add!(p, obc2)
+    add!(p, obc2)
 
-    # Failing inner boundary
-    line = newEndPointsLineCurve("line", [0.0,-2.0,0.0], [1.0,0.0,0.0])
-    halfCircle  = newCircularArcCurve("halfCircle", [0.0,0.0,0.0], 1.5, 0.0, 180.0, "degrees")
-
-    addCurveToInnerBoundary!(p, line, "failCurve")
-    @test_throws ErrorException add!(p, halfCircle , "failCurve")
+    # This call actually throws multiple warnings but we just test that the main one is thrown
+    @test_logs (:warn, "Meshing aborted: Ensure boundary curve segments are in order and boundary curves are closed and try again.") match_mode=:any generate_mesh(p)
 
 end
 
