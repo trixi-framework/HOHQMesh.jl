@@ -416,37 +416,36 @@ end
         CHAIN OPERATIONS
 =#
 function chainInsertionIndex(crv::Dict{String,Any}, chainList::Vector{Dict{String, Any}})
-    #=
-        See if the endpoints of crv match up to any of the curves in the chainList. If so,
-        return the index where crv should be inserted into the list.
-    =#
-
-        if isempty(chainList)
-            return 1 # Make crv the start of the chain.
-        end
-    #
-        nCurves = length(chainList)
-        if curvesMeet(chainList[nCurves],crv)
-            return nCurves+1 # Check first in likely case that user inputs in order
-        else
-            lastName = getCurveName(chainList[nCurves])
-            newName  = getCurveName(crv)
-            error("The curve $lastName does not meet the previous curve, $newName. Try again.")
-            return
-        end
-     #
-     #  Search though list of curves to see if the start of crv matches
-     #  the end of  one of the curves already in the chain. Linear search because
-     #  it's easy and likely the list will not be that large.
-     #
-        for i in 1:nCurves
-            if curvesMeet(chainList[i],crv)
-                return i+1 # Add after the curve that matches.
-            end
-        end
-
-        return nCurves+1 # No match, so just append to the list
+#
+#   See if the endpoints of crv match up to any of the curves in the chainList. If so,
+#   return the index where crv should be inserted into the list.
+#
+    if isempty(chainList)
+        return 1 # Make crv the start of the chain.
     end
+#
+    nCurves = length(chainList)
+    if curvesMeet(chainList[nCurves],crv)
+        return nCurves+1 # Check first in likely case that user inputs in order
+    end
+#
+#   Search though list of curves to see if the start of crv matches
+#   the end of  one of the curves already in the chain. Linear search because
+#   it's easy and likely the list will not be that large.
+#
+    for i in 1:nCurves
+        if curvesMeet(chainList[i],crv)
+            return i+1 # Add after the curve that matches.
+        end
+    end
+    println(chainList)
+#
+#   No match, so throw an error
+#
+    newName = getCurveName(crv)
+    error("The curve $newName does does connect to any curve in the chain. Try again")
+    return
+end
 
 #=
         OTHER
