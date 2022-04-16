@@ -21,6 +21,7 @@ Workflow:
    updatePlot!(p, options)
 ```
 
+`options` are the sum of `GRID`, `MESH`, `MODEL`, `REFINEMENTS`
 ## Curves
 
 ```
@@ -30,6 +31,8 @@ Workflow:
    c = new(name, dataFile)                                   *Spline with data from a file*
    c = new(name, nKnots, knotsMatrix)                        *Spline with given knot values*
 ```
+
+Shown here is the use of the function `new`, which is a shortcut to the full functions, e.g. `newCircularArcCurve`, etc. which have the same arguments.
 
 ## [Manual Refinement](@id cs-manual-refinement)
 
@@ -48,6 +51,7 @@ Workflow:
    addBackgroundGrid!(p, [top, left, bottom, right], [nX, nY, nZ]) *No outer boundary*
    addBackgroundGrid!(p, [dx, dy, dz])                             *If an outer boundary is present*
 ```
+Shown here is the use of the function `add!`, which is a shortcut to the full functions, e.g. `addOuterBoundaryCurve`, etc. which have the same arguments.
 
 ## Accessing items
 

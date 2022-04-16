@@ -10,32 +10,14 @@ Add a curve to the outer boundary. The curves must be added in order counter-clo
 """
 function addCurveToOuterBoundary!(proj::Project, crv::Dict{String,Any})
     chain = getOuterBoundaryChainList(proj)
-#
-#   Check if the new curve meets the last one added
-#
-    if !isempty(chain)
-        lastCurve = last(chain)
-        if !curvesMeet(lastCurve,crv)
-            lastName = getCurveName(lastCurve)
-            newName  = getCurveName(crv)
-            @warn "The curve $lastName does not meet the previous curve, $newName. Try again."
-            return
-        end
-    end
-#
-#   Checks out, add to model
-#
-    push!(chain,crv)
-    crvPoints = curvePoints(crv,defaultPlotPts)
-    push!(proj.outerBndryPoints, crvPoints)
-    proj.backgroundGridShouldUpdate = true
+    i     = chainInsertionIndex(crv,chain)
 
-    push!(proj.outerBndryNames,crv["name"])
+    enableNotifications()
+    insertOuterBoundaryCurveAtIndex!(proj,crv,i)
 
-    registerWithUndoManager(proj,removeOuterBoundaryCurveWithName!,(crv["name"],),"Add Outer Boundary Curve")
-    postNotificationWithName(proj,"MODEL_DID_CHANGE_NOTIFICATION",(nothing,))
+    enableUndo()
+    registerWithUndoManager(proj,removeOuterBoundaryCurveWithName!,(crv["name"],),"Add Curve")
 end
-
 
 """
     removeOuterBoundaryCurveWithName!(proj::Project, name::String)
@@ -178,40 +160,17 @@ does not exist, one is created.
 """
 function addCurveToInnerBoundary!(proj::Project, crv::Dict{String,Any}, boundaryName::String)
 
-    i, chain = getInnerBoundaryChainWithName(proj,boundaryName)
+    i, chain  = getInnerBoundaryChainWithName(proj,boundaryName)
     curveList = chain["LIST"]
-#
-#   Check if the new curve meets the last one added
-#
-    if !isempty(curveList)
-        lastCurve = last(curveList)
-        if !curvesMeet(lastCurve,crv)
-            lastName = getCurveName(lastCurve)
-            newName  = getCurveName(crv)
-            @warn "The curve $lastName does not meet the previous curve, $newName. Try again."
-            return
-        end
-    end
-#
-#   Checks out, add to model
-#
-    push!(curveList,crv)
+    j         = chainInsertionIndex(crv,curveList)
 
-    if i > length(proj.innerBoundaryPoints) # New inner boundary chain
-        a = []
-        push!(a,curvePoints(crv,defaultPlotPts))
-        push!(proj.innerBoundaryPoints,a)
-    else
-        a = proj.innerBoundaryPoints[i]
-        push!(a,curvePoints(crv,defaultPlotPts))
-    end
-    push!(proj.innerBoundaryNames[i],crv["name"])
+    enableNotifications()
+    insertInnerBoundaryCurveAtIndex!(proj,crv,j,boundaryName)
+    enableUndo()
     registerWithUndoManager(proj,removeInnerBoundaryCurve!,
                             (crv["name"],boundaryName),
                             "Add Inner Boundary Curve")
-    postNotificationWithName(proj,"MODEL_DID_CHANGE_NOTIFICATION",(nothing,))
 end
-
 
 """
     removeInnerBoundaryCurve!(proj::Project, name::String)
@@ -247,14 +206,23 @@ function removeInnerBoundaryCurve!(proj::Project, name::String, chainName::Strin
     removeInnerBoundaryCurveAtIndex!(proj,indx,chainName)
 end
 
-function insertInnerBoundaryCurveAtIndex!(proj::Project, crv::Dict{String,Any},
+function insertInnerBoundaryCurveAtIndex!(proj::Project, crv::Dict{String,Any}, 
                                           indx::Int, boundaryName::String)
     i, chain = getInnerBoundaryChainWithName(proj,boundaryName)
     lst   = chain["LIST"]
     insert!(lst,indx,crv)
+
+    if i > length(proj.innerBoundaryPoints) # New inner boundary chain
+    a = []
+    push!(a,curvePoints(crv,defaultPlotPts))
+    push!(proj.innerBoundaryPoints,a)
+    else
     innerBoundaryPoints = proj.innerBoundaryPoints[i]
     insert!(innerBoundaryPoints,indx,curvePoints(crv,defaultPlotPts))
-    insert!(proj.innerBoundaryNames[i],indx,crv["name"])
+    end
+    insert!(proj.innerBoundaryNames[i],indx,crv["name"])                           
+
+    proj.backgroundGridShouldUpdate = true
     postNotificationWithName(proj,"MODEL_DID_CHANGE_NOTIFICATION",(nothing,))
 end
 
@@ -445,7 +413,34 @@ end
 #=
         CHAIN OPERATIONS
 =#
-
+function chainInsertionIndex(crv::Dict{String,Any}, chainList::Vector{Dict{String, Any}})
+    #=
+        See if the endpoints of crv match up to any of the curves in the chainList. If so,
+        return the index where crv should be inserted into the list.
+    =#
+    
+        if isempty(chainList)
+            return 1 # Make crv the start of the chain.
+        end
+    #
+        nCurves = length(chainList)
+        if curvesMeet(chainList[nCurves],crv)
+            return nCurves+1 # Check first in likely case that user inputs in order
+        end
+     #
+     #  Search though list of curves to see if the start of crv matches
+     #  the end of  one of the curves already in the chain. Linear search because
+     #  it's easy and likely the list will not be that large.
+     #
+        for i in 1:nCurves
+            if curvesMeet(chainList[i],crv)
+                return i+1 # Add after the curve that matches.
+            end
+        end
+    
+        return nCurves+1 # No match, so just append to the list
+    end
+    
 #=
         OTHER
 =#

@@ -94,12 +94,11 @@ if desired. As in HOHQMesh, there are four curve classes currently available:
 
 In the example, the outer boundary is a closed circular arc with center at [0.0, 0.0, 0.0]
 with radius 4, starting at zero and ending at 360 degrees. It is added to the project with
-`addCurveToOuterBoundary!`. You can add any number of curves to the outer boundary,
-but they must be added in order, counter-clockwise.
+`addCurveToOuterBoundary!`. You can add any number of curves to the outer boundary.
 
 Similarly, you create curves and add them to as many inner boundaries that you want to have.
 In the example, there is one inner boundary, "IceCreamCone" made up of two straight lines and a half
-circular arc. Again, they are added in order, counter-clockwise.
+circular arc. Again, they are defined counter-clockwise.
 
 For convenience, `newProject` will generate default run parameters used by HOHQMesh, like the plot file format
 and the smoother. The parameters can be edited with setter commands. For example, the script
@@ -225,7 +224,7 @@ Curves can be added by using the generic `add!` function instead of the longer d
 	command.
 
 
-The ordering of the basic moves follows a logical pattern: The project must be created first. Curves can be added at any time, but adding curve segments to a curve must be done in order. The background grid can be added any time to the project. A mesh is ususally generated after the model (curves) and background grid are completed.
+The ordering of the basic moves follows a logical pattern: The project must be created first. Curves can be added at any time. The background grid can be added any time to the project. A mesh is ususally generated after the model (curves) and background grid are completed.
 
 ## HQMTool API
 
@@ -420,8 +419,7 @@ To further edit a `RefinementLine`, use the methods
 
 1. Adding an outer boundary curve
 
-   Using the curve creation routines, described in the next section below, create curves in sucessive
-   order counter-clockwise along the outer boundary and add them to the outer boundary curve using
+   Using the curve creation routines, described in the next section below, create curves counter-clockwise along the outer boundary and add them to the outer boundary curve using
 
    ```
    [Return:nothing] addCurveToOuterBoundary!(proj::Project, crv::Dict{String,Any})
@@ -439,8 +437,7 @@ To further edit a `RefinementLine`, use the methods
 
 2. Adding an inner boundary curve
 
-   The syntax is analogous to the creation of an outer boundary curve where, again, curve segments added to an inner curve with a given name must
-   in order, counter-clockwise.
+   The syntax is analogous to the creation of an outer boundary curve where.
 
    ```
    [Return:nothing] addCurveToInnerBoundary!(proj::Project, crv::Dict{String,Any}, boundaryName::String)
