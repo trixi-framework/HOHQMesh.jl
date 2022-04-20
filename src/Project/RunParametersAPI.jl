@@ -12,7 +12,6 @@ function addRunParameters!(proj::Project,
                            meshFileFormat::String = "ISM-V2",
                            polynomialOrder::Int   = 5)
 
-    setFileNames!(proj, meshFileFormat)
     setPlotFileFormat!(proj, plotFormat)
     setMeshFileFormat!(proj, meshFileFormat)
     setPolynomialOrder!(proj, polynomialOrder)
@@ -43,7 +42,7 @@ end
 The `name` of the project is the filename to be used by the mesh, plot, and
 stats files. It is also the name of the control file the tool will produce.
 """
-function setName!(proj::Project,name::String)
+function setName!(proj::Project, name::String)
 
     oldName = proj.name
     registerWithUndoManager(proj,setName!,(oldName,),"Set Project Name")
@@ -108,6 +107,9 @@ function setMeshFileFormat!(proj::Project, meshFileFormat::String)
         registerWithUndoManager(proj,setMeshFileFormat!,(oldFormat,),"Set Mesh Format")
     end
     rpDict[key] = meshFileFormat
+
+    # Set the appropriate file names and extensions from the given `meshFileFormat`
+    setFileNames!(proj, meshFileFormat)
 end
 
 
