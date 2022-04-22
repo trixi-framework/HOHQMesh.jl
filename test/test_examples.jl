@@ -29,6 +29,12 @@ using Test
     # Test against the mesh file format type for this example
     @test format == "ABAQUS"
 
+    test_file = joinpath(examples_dir(), "interactive_spline_curves.jl")
+    include(test_file)
+    spline = getCurve(p, "big_spline", "inner1")
+    # Test against the number of spline knots from the testing file
+    @test spline["nKnots"] == "77"
+
 end
 
 end #module
