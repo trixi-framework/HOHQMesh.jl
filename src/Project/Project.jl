@@ -371,10 +371,6 @@ function refinementDidChange(proj::Project, sender::Dict{String,Any})
             end
             updatePlot!(proj, options)
         end
-    # TODO: Remove this? It triggers to the screen frequently during example that work
-    #       correctly. Not sure why it is here.
-    # else
-    #     println("Refinement region with name $regionName not found.")
     end
 end
 
@@ -400,31 +396,45 @@ function meshWasDeleted(proj::Project, sender::Project)
     end
 end
 
+
 """
     modelCurvesAreOK(proj::Project)
 
-Go through all curves in the model and make sure they are connected and closed. 
+Go through all curves in the model and make sure they are connected and closed.
+Also, remove any empty outer / inner boundary chains.
 
 Returns true if all curves are connected and closed, false otherwise.
 """
 function modelCurvesAreOK(proj::Project)
     result = true
-
-    chain  = getOuterBoundaryChainList(proj)
-    if !isempty(chain)
-        result = modelChainIsOK(chain,"Outer")
+    if !haskey(proj.projectDictionary,"MODEL")
+        return true
     end
-
-    innerBoundariesList = getAllInnerBoundaries(proj)
-
-    for chain in innerBoundariesList
-        chainName = string(chain["name"])
-        chainList = chain["LIST"]
-        result = result && modelChainIsOK(chainList,chainName)
+    modelDict = getModelDict(proj)
+    if haskey(modelDict,"OUTER_BOUNDARY")
+        chain  = getOuterBoundaryChainList(proj)
+        if !isempty(chain)
+            result = modelChainIsOK(chain,"Outer")
+        else
+            delete!(modelDict,"OUTER_BOUNDARY")
+        end
     end
-
+    if haskey(modelDict,"INNER_BOUNDARIES")
+        innerBoundariesList = getAllInnerBoundaries(proj)
+        if isempty(innerBoundariesList)
+            delete!(modelDict,"INNER_BOUNDARIES")
+            return result
+        end
+        for chain in innerBoundariesList
+            chainName = string(chain["name"])
+            chainList = chain["LIST"]
+            result = result && modelChainIsOK(chainList,chainName)
+        end
+    end
     return result
 end
+
+
 """
         modelChainIsOK(chain::Vector{Dict{String, Any}}, chainName::String)
 
