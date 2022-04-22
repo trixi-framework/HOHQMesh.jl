@@ -1,8 +1,9 @@
 # Interactive mesh with a rectangular outer boundary and two circular inner boundaries
 #
-# TODO
+# Create a domain with two circular inner boundaries and a rectangular outer boundary
+# that is straight-sided. Set the output mesh file format to be ABAQUS.
 #
-# Keywords: TODO
+# Keywords: Straight-sided outer boundary, inner boundary chain, ABAQUS file format
 
 using HOHQMesh
 
