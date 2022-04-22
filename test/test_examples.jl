@@ -17,6 +17,13 @@ using Test
     include(test_file)
     @test p.name == "IceCreamCone"
 
+    test_file = joinpath(examples_dir(), "interactive_outer_boundary_generic.jl")
+    include(test_file)
+    N = getPolynomialOrder(p)
+    println(N)
+    # Test against the default polynomial order of 5 that gets reset in this include
+    @test N == 5
+
 end
 
 end #module

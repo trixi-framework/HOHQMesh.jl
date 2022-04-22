@@ -31,4 +31,4 @@ p = openProject(all_features_control_file, "out")
 generate_mesh(p)
 
 # After the mesh sucessfully generates mesh statistics, such as the number of corner nodes,
-# the number of elements etc., are printed to the REPL
+# the number of elements etc., are printed to the REPL.
