@@ -51,6 +51,7 @@ spline_data = [ [0.0  1.75 -1.0 0.0]
                 [0.5  2.7  -1.0 0.0]
                 [0.75 0.6  -2.0 0.0]
                 [1.0  1.75 -1.0 0.0] ]
+
 spline2 = newSplineCurve("small_spline", 5, spline_data)
 addCurveToInnerBoundary!(p, spline2, "inner2")
 
