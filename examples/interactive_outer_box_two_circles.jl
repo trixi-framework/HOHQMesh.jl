@@ -7,7 +7,8 @@
 
 using HOHQMesh
 
-# TODO: Comment here
+# Create a new project with the name "box_two_circles", which will also be the
+# name of the mesh, plot and stats files, written to output folder `out`.
 
 p = newProject("box_two_circles", "out")
 
