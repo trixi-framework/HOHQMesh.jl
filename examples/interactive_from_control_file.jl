@@ -19,10 +19,15 @@ all_features_control_file = joinpath( examples_dir() , "AllFeatures.control" )
 
 p = openProject(all_features_control_file, "out")
 
-# To plot the project, type `using GLMakie` in the REPL session, uncomment this line, and rerun
-# this script
+# Plot the project model curves and background grid
 
-# plotProject!(p, MODEL+REFINEMENTS+GRID)
+if isdefined(Main, :Makie)
+    plotProject!(p, MODEL+GRID)
+    @info "Press enter to generate the mesh and update the plot."
+    readline()
+ else # Throw an informational message about plotting to the user
+    @info "To visualize the project (boundary curves, background grid, mesh, etc.), include `GLMakie` and run again."
+ end
 
 # Generate the mesh. This produces the mesh and TecPlot files `AllFeatures.mesh` and `AllFeatures.tec`
 # and save them to the `out` folder. Also, if there is an active plot in the project `p` it is
