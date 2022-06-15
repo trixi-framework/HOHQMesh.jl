@@ -5,4 +5,4 @@ Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [compat]
 AbaqusReader = "0.2.5"
-CairoMakie = "0.6, 0.7"
+CairoMakie = "0.6, 0.7, 0.8"
