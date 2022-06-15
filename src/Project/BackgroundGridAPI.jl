@@ -57,7 +57,6 @@ backgroundGrid block, but the version
 is a lot easier to use.
 
 TODO: Change HOHQMesh and delete this way to specify the domain and use the bounding box one instead.
-
 """
 function addBackgroundGrid!(proj::Project, x0::Array{Float64}, dx::Array{Float64}, N::Array{Int})
     bgDict = getDictInControlDictNamed(proj,"BACKGROUND_GRID")
@@ -218,7 +217,10 @@ end
 
 
 """
-    setBackgroundGridSize!(proj::Project, dx::Array{Float64},key::String)
+    setBackgroundGridSize!(proj::Project, dx::Array{Float64}, key::String)
+
+Set the grid size dx of an existing background grid withing `proj`. Here, `dx`
+is passed an array.
 """
 function setBackgroundGridSize!(proj::Project, dx::Array{Float64}, key::String)
     setBackgroundGridSize!(proj, dx[1], dx[2], key)
@@ -227,9 +229,12 @@ end
 
 
 """
-    setBackgroundGridSize!(proj::Project, dx::Float64, dy::Float64,key::String)
+    setBackgroundGridSize!(proj::Project, dx::Float64, dy::Float64, key::String)
+
+Set the grid size dx of an existing background grid withing `proj`. Here, the new grid
+size in either direction is passed individually with `dx`and `dy`.
 """
-function setBackgroundGridSize!(proj::Project, dx::Float64, dy::Float64,key::String)
+function setBackgroundGridSize!(proj::Project, dx::Float64, dy::Float64, key::String)
     bgDict = getDictInControlDictNamed(proj,"BACKGROUND_GRID")
 
     if haskey(bgDict,key)
