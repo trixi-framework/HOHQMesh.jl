@@ -36,7 +36,7 @@ makedocs(
             "HQMTool_API.md",
             "CheatSheet.md",
             ],
-        "Topics for developers" => [
+        "Advanced topics & developers" => [
             "Development" => "development.md",
             "GitHub & Git" => "github-git.md",
             "Testing" => "testing.md",
