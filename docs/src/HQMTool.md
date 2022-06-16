@@ -126,7 +126,7 @@ To generate a mesh using HQMTool you
    generate_mesh(p)
    ```
 
-   The mesh will be saved in `<folder>` with the name `<projectName>.mesh`. A HOHQMesh control file
+   The mesh file will be saved in `<folder>` with the name `<projectName>.mesh`. A HOHQMesh control file
    is automatically created from the contents of the project dictionary and is also saved in that folder
    with the name `<projectName>.control`. This control file can be read in again later and modified,
    remeshed, etc. The function `generate_mesh` will print the mesh information and statistics, and will
