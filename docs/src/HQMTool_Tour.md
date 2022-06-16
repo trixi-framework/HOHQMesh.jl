@@ -7,7 +7,7 @@ explanations of the functionality is provided in the [Tutuorials](ADD LINK).
 ## Mesh from a control file
 
 A first example script reads in an existing control file from the HOHQMesh examples collection
-and create a HQMTool project dictionary.
+and make it into a HQMTool project dictionary.
 To run this example, execute
 ```julia
    include(joinpath(HOHQMesh.examples_dir(), "interactive_from_control_file.jl"))
@@ -16,8 +16,8 @@ This command will create mesh and plot files in the `out` directory.
 
 ## Build a mesh from scratch
 
-A second example script `interactive_outer_boundary.jl` creates a new project consisting of an outer,
-circular boundary, and an inner boundary in the shape of an ice cream cone.
+A second example script `interactive_outer_boundary.jl` makes a new HQMTool project consisting
+of an outer, circular boundary, and an inner boundary in the shape of an ice cream cone.
 For completeness, we provide the example script and clarify each step in the construction
 of the project dictionary below.
 ```julia
