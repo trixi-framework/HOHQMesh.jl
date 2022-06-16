@@ -59,7 +59,7 @@ changes or dive in and change something themselves.
     multiple times) by running `git reset HEAD~` (see also [Undo last
     commit](@ref)). However, this strategy only works if you have **not yet
     pushed your changes**. If you *did* push your changes, please talk to one of
-    the principle developers on how to proceed.
+    the principal developers on how to proceed.
 
 ### Keep your branch in sync with `main`
 For larger features with longer-living branches, it may make sense to
@@ -102,7 +102,7 @@ After you are confident that your branch is cleaned up properly, commit all
 changes and push them to the repository.
 
 ### Get reviewed
-Ask one of the principle developers to review your code. This review will be
+Ask one of the principal developers to review your code. This review will be
 conducted asynchronously, with the reviewer leaving comments and annotations in the PR.
 In some cases it will be necessary to do multiple rounds of reviews, especially if
 there are larger changes to be added. Just commit and push your changes to your
@@ -165,7 +165,7 @@ considerably over time.
 
 #### Remove large file from repository
 If a large file was accidentally committed **and pushed** to the HOHQMesh
-repository, please talk to one of the principle developers as soon as possible so
+repository, please talk to one of the principal developers as soon as possible so
 that they can fix it.
 
 !!! danger "Large files"

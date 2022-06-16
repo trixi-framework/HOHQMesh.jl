@@ -2,7 +2,7 @@
 
 HOHQMesh.jl is maintained by the
 [Trixi authors](https://github.com/trixi-framework/Trixi.jl/blob/main/AUTHORS.md).
-Its development is coordinated by the *principle developers* who are its main
+Its development is coordinated by the *principal developers* who are its main
 contributors and can be contacted in case of questions about HOHQMesh. In addition,
 there are *contributors* who have provided substantial additions or modifications.
 The [*HOHQMesh*](https://github.com/trixi-framework/HOHQMesh) mesh generator itself
