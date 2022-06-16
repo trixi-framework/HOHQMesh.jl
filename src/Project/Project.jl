@@ -136,7 +136,7 @@ end
 
 
 """
-hasBackgroundGrid(proj::Project)
+    hasBackgroundGrid(proj::Project)
 
 Tests to see if the project has a backgroundGrid dictionary defined.
 """
@@ -436,7 +436,7 @@ end
 
 
 """
-        modelChainIsOK(chain::Vector{Dict{String, Any}}, chainName::String)
+    modelChainIsOK(chain::Vector{Dict{String, Any}}, chainName::String)
 
 Returns true if the chain of curves is contiguous and closed; false otherwise.
 """

@@ -435,7 +435,6 @@ end
 
 """
     getArcRadius(arc::Dict{String,Any}, radius::Float64)
-
 """
 function getArcRadius(arc::Dict{String,Any})
     return parse(Float64,arc["radius"])

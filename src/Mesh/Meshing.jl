@@ -1,4 +1,17 @@
 
+"""
+    generate_mesh(proj::Project)
+
+Generate a mesh based on the `proj` created using the HQMTool. First a check is made
+if a background grid exists and all inner/outer boundary curves are valid.
+
+This function will then make a HOHQMesh control file from the control dictionary `proj.controlDict`
+and use it to call the wrapper function that interfaces with HOHQMesh. The resulting mesh and control files
+will be saved to `proj.projectDirectory`. Also, if there is an active plot of the mesh project it
+will update to display the generated mesh.
+
+This function returns the output to `stdout` of the HOHQMesh binary when generating the mesh.
+"""
 function generate_mesh(proj::Project)
 #
 #   Check to be sure background grid has been created (everything else is defaults)
