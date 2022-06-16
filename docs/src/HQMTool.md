@@ -11,6 +11,10 @@ will indicate what that interactive demonstrates. For instance, the file `intera
 provides an interactive project that creates an manipulates splines for the inner boundaries before
 generating the mesh.
 
+Below we give a broad overview of the interactive mesh HQMTool workflow. Further clarification on
+this workflow is provided in the [Tour of HQMTool in action](@ref). Several [Tutorials](add link)
+are also available to demonstrate the functionality of HQMTool.
+
 ## Workflow and basic moves
 
 The order of the workflow and basic moves follow a logical pattern: The project must be created first.
