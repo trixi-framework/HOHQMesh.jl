@@ -30,9 +30,11 @@ makedocs(
     # Explicitly specify documentation structure
     pages = [
         "Home" => "index.md",
-        "Interactive mesh generation" => ["HQMTool_2.md","HQMTool_intro.md"],
-#        "Interactive mesh generation" => "HQMTool.md",
-        "Cheat sheet" => "CheatSheet.md",
+        "Interactive mesh generation" => [
+            "HQMTool.md",
+            "HQMTool_API.md",
+            "CheatSheet.md",
+            ],
          "Topics for developers" => [
             "Development" => "development.md",
             "GitHub & Git" => "github-git.md",
