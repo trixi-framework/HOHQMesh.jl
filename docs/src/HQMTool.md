@@ -122,7 +122,7 @@ To save a control file for HOHQMesh, simply invoke
 where outFile is the name of the control file (traditionally with a .control extension).
 `saveProject` is automatically called when a mesh is generated.
 
-The third example `ice_cream_cone_demo` is identical to that which was explained above
+The third example `interactive_outer_boundary_generic.jl` is identical to that which was explained above
 except that the function calls use the generic versions of functions, e.g., `new` or `add!`.
 
 Methods are available to edit a model. For example to move the center of the outer boundary.
