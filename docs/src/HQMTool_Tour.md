@@ -1,19 +1,25 @@
 # Tour of HQMTool in action
 
-In this brief overview, we highlight three scripts from the `examples` folder
+In this brief overview, we highlight two scripts from the `examples` folder
 that demonstrate the functionality of HQMTool. More in depth
 explanations of the functionality is provided in the [Tutuorials](ADD LINK).
 
-First is a basic example script that reads in an existing control file from the HOHQMesh examples collection.
-To run that example, execute
+## Mesh from a control file
+
+A first example script reads in an existing control file from the HOHQMesh examples collection
+and create a HQMTool project dictionary.
+To run this example, execute
 ```julia
    include(joinpath(HOHQMesh.examples_dir(), "interactive_from_control_file.jl"))
 ```
 This command will create mesh and plot files in the `out` directory.
 
-The second example `interactive_outer_boundary.jl` builds a new project consisting of an outer,
+## Build a mesh from scratch
+
+A second example script `interactive_outer_boundary.jl` creates a new project consisting of an outer,
 circular boundary, and an inner boundary in the shape of an ice cream cone.
-The "verbose" example script, where all functions arevalled with their full name, is given below.
+For completeness, we provide the example script and clarify each step in the construction
+of the project dictionary below.
 ```julia
 using HOHQMesh
 
@@ -115,7 +121,6 @@ To save a control file for HOHQMesh, simply invoke
 where outFile is the name of the control file (traditionally with a .control extension).
 `saveProject` is automatically called when a mesh is generated.
 
-The third example `interactive_outer_boundary_generic.jl` is identical to that which was explained above
-except that the function calls use the generic versions of functions, e.g., `new` or `add!`.
-
-Methods are available to edit a model. For example to move the center of the outer boundary.
+Note, a third example script `interactive_outer_boundary_generic.jl` is identical to that
+which was explained above except that the function calls use the generic versions of
+functions, e.g., `new` or `add!`.
