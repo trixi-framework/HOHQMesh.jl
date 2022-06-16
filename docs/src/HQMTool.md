@@ -23,13 +23,13 @@ A mesh is ususally generated after the model (curves) and background grid are co
 
 To generate a mesh using HQMTool you
 
-1. [Create a project](#newProject) with a user given `projectName` and `folder` where any generated files are to be saved
+1. Create a project with a user given `projectName` and `folder` where any generated files are to be saved
 
    ```
    p = newProject(<projectName>,<folder>)
    ```
 
-2. [Create inner and outer boundary curves](#DefiningCurves) from the available types
+2. Create inner and outer boundary curves from the available types
 
    ```
    c = newEndPointsLineCurve(<name>, startLocation [x, y, z], endLocation [x, y, z])                               *Straight Line*
@@ -43,7 +43,7 @@ To generate a mesh using HQMTool you
 
    The generic name for each of these curve creation methods is `new!`. The generic can be used instead of the longer descriptive name to save typing during interactive sessions, if desired.
 
-3. [Add curves](#AddingCurves) to build the model to see what you have added,
+3. Add curves to build the model to see what you have added,
 
    ```
    addOuterBoundaryCurve!(p, <curveName>)                      *Add outer boundary curve*
@@ -54,7 +54,7 @@ To generate a mesh using HQMTool you
 
    Curves can be added by using the generic `add!` function instead of the longer descriptive name to save typing during interactive sessions, if desired.
 
-4. To [visualize](#Plotting) the project's model,
+4. Visualize the project's model, if desired
 
    ```
    plotProject!(p, MODEL)
@@ -76,7 +76,7 @@ To generate a mesh using HQMTool you
        load a Makie backend (for example, [GLMakie](https://github.com/JuliaPlots/GLMakie.jl/) or
        [CairoMakie](https://github.com/JuliaPlots/CairoMakie.jl)) if visualization is desired.
 
-5. Set the [background grid](#(#BackgroundGrid))
+5. Set the background grid
 
    When no outer boundary curve is present, the background grid can be set with
 
@@ -107,7 +107,7 @@ To generate a mesh using HQMTool you
        A background grid is required by HOHQMesh. If one is not present in the project dictionary
        and a user attempts to generate the mesh a warning is thrown.
 
-6. [Adjust parameters](#RunParameters), if desired. For instance, one can adjust the polynomial
+6. Adjust meshing parameters, if desired. For instance, one can adjust the polynomial
    `order` in the project dictionary for any curved boundaries by
 
    ```
