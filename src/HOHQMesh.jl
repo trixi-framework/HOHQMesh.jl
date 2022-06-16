@@ -19,11 +19,39 @@ function __init__()
   end
 end
 
+#
+# Include functionality for HQMTool interactive reading and writing a model for HOHQMesh
+# Note, The visualzation routines are included above in the `__init__` because
+# Makie is required
+#
+
+# Core interactive tool routines for control file readin, curve evaluation, etc.
+include("ControlFile/ControlFileOperations.jl")
+include("Curves/CurveOperations.jl")
+include("Curves/Spline.jl")
+include("Misc/DictionaryOperations.jl")
+include("Misc/NotificationCenter.jl")
+include("Model/Geometry.jl")
+
+# Project itself and some helper generic and undo functionality
+include("Project/Project.jl")
+include("Project/Generics.jl")
+include("Project/Undo.jl")
+
+# Front facing API of the interactive tool for the `Project`
+include("Project/BackgroundGridAPI.jl")
+include("Project/ControlInputAPI.jl")
+include("Project/CurvesAPI.jl")
+include("Project/ModelAPI.jl")
+include("Project/RefinementRegionsAPI.jl")
+include("Project/RunParametersAPI.jl")
+include("Project/SmootherAPI.jl")
+
+# Main routine that uses HOHQMesh to generate a mesh from an interactive `Project`
+include("Mesh/Meshing.jl")
+
 # Main wrapper to generate a mesh from a control file
 export generate_mesh
-
-# Make the examples directory available to the user
-export examples_dir
 
 # Generic functions for the HQMTool interface
 export new,
@@ -301,37 +329,5 @@ end
 Return the path to the directory with some example mesh setups.
 """
 examples_dir() = joinpath(pathof(HOHQMesh) |> dirname |> dirname, "examples")
-
-
-#
-# Include functionality for interactive reading and writing a model for HOHQMesh
-# Note, The visualzation routines are included above in the `__init__` because
-# Makie is required
-#
-
-# Core interactive tool routines for control file readin, curve evaluation, etc.
-include("ControlFile/ControlFileOperations.jl")
-include("Curves/CurveOperations.jl")
-include("Curves/Spline.jl")
-include("Misc/DictionaryOperations.jl")
-include("Misc/NotificationCenter.jl")
-include("Model/Geometry.jl")
-
-# Project itself and some helper generic and undo functionality
-include("Project/Project.jl")
-include("Project/Generics.jl")
-include("Project/Undo.jl")
-
-# Front facing API of the interactive tool for the `Project`
-include("Project/BackgroundGridAPI.jl")
-include("Project/ControlInputAPI.jl")
-include("Project/CurvesAPI.jl")
-include("Project/ModelAPI.jl")
-include("Project/RefinementRegionsAPI.jl")
-include("Project/RunParametersAPI.jl")
-include("Project/SmootherAPI.jl")
-
-# Main routine that uses HOHQMesh to generate a mesh from an interactive `Project`
-include("Mesh/Meshing.jl")
 
 end # module

@@ -11,7 +11,7 @@ using HOHQMesh
 
 # Set the file path of the control file to be read in for this example
 
-all_features_control_file = joinpath( examples_dir() , "AllFeatures.control" )
+all_features_control_file = joinpath( HOHQMesh.examples_dir() , "AllFeatures.control" )
 
 # Read in the HOHQMesh control file and create the project dictionary that stores
 # the different components of a mesh, i.e., boundary curves, refinement regions, etc.

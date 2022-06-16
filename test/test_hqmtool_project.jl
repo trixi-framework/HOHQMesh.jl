@@ -48,7 +48,7 @@ using Test
     @test haskey(cDict,"SPRING_SMOOTHER") == false
 
     # read in the AllFeatures example
-    control_file = joinpath(examples_dir(), "AllFeatures.control")
+    control_file = joinpath(HOHQMesh.examples_dir(), "AllFeatures.control")
     p = openProject(control_file, projectPath)
 
     @test hasBackgroundGrid(p) == true
@@ -73,7 +73,7 @@ using Test
     HOHQMesh.stringForKeyFromDictionary("CONTROL_INPUT", p.projectDictionary)
 
     # Use the NACA0012 example because it sets the background grid differently
-    control_file = joinpath(examples_dir(), "NACA0012.control")
+    control_file = joinpath(HOHQMesh.examples_dir(), "NACA0012.control")
     p = openProject(control_file, projectPath)
 
     sizes = [2.0, 2.0, 1.0]
