@@ -32,6 +32,7 @@ makedocs(
         "Home" => "index.md",
         "HQMTool" => [
             "HQMTool.md",
+            "HQMTool_Tour.md",
             "HQMTool_API.md",
             "CheatSheet.md",
             ],

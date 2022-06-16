@@ -6,7 +6,7 @@ for the HQMTool. When possible, the commands presented below give
 generic versions of the function calls, e.g., for creating a new curve or
 adding the curve to a boundary chain. The script
 `interactive_outer_boundary_generic.jl` in the `examples` folder
-constructs an identical example mesh as shown in the [HQMTool Introduction](@ref)
+constructs an identical example mesh as shown in the [Tour of HQMTool in action](@ref)
 except using HQMTool's generic function calls.
 
 A through description of the functions can be found in the [HQMTool API](@ref) section.
@@ -15,8 +15,8 @@ The workflow of the HQMTool within a REPL session is
 
 1. Create a project
 2. Add boundary curves
-4. Add a background grid
-3. Add manual refinement (if desired)
+3. Add a background grid
+4. Add manual refinement (if desired)
 5. Generate mesh
 
 ## Project
