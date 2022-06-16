@@ -1,4 +1,4 @@
-# HQMTool CheatSheet
+# Commands Cheat Sheet
 
 This provides a quick reference for the syntax
 of the interactive construction of boundary curves, background grid, etc.

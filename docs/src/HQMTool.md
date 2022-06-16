@@ -1,4 +1,4 @@
-# HQMTool
+# [Overview of interactive mesh generation](@id HQMTool)
 
 HQMTool is an API to generate a quadrilateral (Future: hexahedral) mesh using Julia.
 It serves as a front end to the HOHQMesh program, and is designed to let one build a
@@ -6,7 +6,7 @@ meshing project interactively while graphically displaying the results.
 
 ## [Introduction](@id HQMTool-Introduction)
 
-Several examples are available in the `examples` folder
+Several scripts are available in the `examples` folder
 to get you started. These example scripts follow the naming convention of `interactive_*` where
 the phrase interactive indicates their association with HQMTool and then trailing information
 will indicate what that interactive demonstrates. For instance, the file `interactive_splines.jl`
