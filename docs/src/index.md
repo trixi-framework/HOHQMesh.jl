@@ -50,6 +50,33 @@ while the 3D file `Snake.control` produces this mesh:
 
 ![snake_400px](https://user-images.githubusercontent.com/3637659/117241963-8ce0b080-ae34-11eb-9b79-d091807d9a23.png)
 
+Examples scripts of interactive mesh generation with the HQMTool are available in the
+[examples/](https://github.com/trixi-framework/HOHQMesh.jl/tree/main/examples) subdirectory.
+The HQMTool example scripts are prefaced with the phrase `interactive_`.
+There is a brief summary at the top of each `interactive` example script that describes
+the mesh it will create and the features of HOHQMesh it uses.
+An example script can be executed from a Julia REPL session with an `include(...)` statement, e.g.,
+```julia
+julia> include(joinpath(HOHQMesh.examples_dir(), "interactive_outer_box_two_circles.jl"))
+```
+The resulting output mesh and plot files are saved in the output directory `out` as
+designated in the example script. Mesh statistics are printed to the screen.
+
+HQMTool uses [Makie.jl](https://github.com/JuliaPlots/Makie.jl/) to visualize the
+boundary curves and mesh from the interactive tool. A Makie backend, such as
+[GLMakie](https://github.com/JuliaPlots/GLMakie.jl/), can
+be loaded in addition to HOHQMesh
+```julia
+julia> using Pkg; Pkg.add("GLMakie")
+julia> using GLMakie
+```
+Now, running the example script produces a figure in addition to the mesh and plot
+files that are saved and the output of mesh statistics to the screen.
+
+![box_two_circles](./figs/front-page.png)
+
+Further explanation of the HQMTool functionality can be found [here](@ref HQMTool).
+Additional examples are available in the [Tutorials](add link).
 
 ## [Authors](@id authors-index-md)
 HOHQMesh.jl is maintained by the
