@@ -11,7 +11,7 @@ except using HQMTool's generic function calls.
 
 A through description of the functions can be found in the [HQMTool API](@ref) section.
 
-The workflow of the HQMTool within a REPL session is
+The general workflow of the HQMTool within a REPL session is
 
 1. Create a project
 2. Add boundary curves
@@ -32,7 +32,7 @@ The workflow of the HQMTool within a REPL session is
    updatePlot!(p, options)
 ```
 
-`options` are the sum of `GRID`, `MESH`, `MODEL`, `REFINEMENTS`
+The `options` are any sum of `MODEL`, `GRID`, `REFINEMENTS`, and `MESH`.
 ## Curves
 
 ```

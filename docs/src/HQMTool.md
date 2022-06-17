@@ -26,8 +26,10 @@ To generate a mesh using HQMTool you
 1. Create a project with a user given `projectName` and `folder` where any generated files are to be saved
 
    ```
-   p = newProject(<projectName>,<folder>)
+   p = newProject(<projectName>, <folder>)
    ```
+
+   Both of these input arguments are strings.
 
 2. Create inner and outer boundary curves from the available types
 
@@ -67,8 +69,8 @@ To generate a mesh using HQMTool you
    ```
 
    Options are `MODEL`, `GRID`, `MESH`, and `REFINEMENTS`. To plot combinations, sum the options, e.g.
-   `MODEL`+`GRID` or `MODEL`+`MESH`. (You normally are not interested in the background grid once
-   the mesh is generated.)
+   `MODEL`+`GRID` or `MODEL`+`MESH`. You normally are not interested in the background grid once
+   the mesh is generated.
 
    !!! note "Visualization requirement"
        HQMTool uses [Makie.jl](https://github.com/JuliaPlots/Makie.jl/) to visualize

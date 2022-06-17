@@ -1,8 +1,8 @@
 # Tour of HQMTool in action
 
 In this brief overview, we highlight two scripts from the `examples` folder
-that demonstrate the functionality of HQMTool. More in depth
-explanations of the functionality is provided in the [Tutuorials](ADD LINK).
+that demonstrate the functionality of HQMTool. In depth
+explanations of the functionality are provided in the [Tutuorials](ADD LINK).
 
 ## Mesh from a control file
 
@@ -10,7 +10,7 @@ A first example script reads in an existing control file from the HOHQMesh examp
 and make it into a HQMTool project dictionary.
 To run this example, execute
 ```julia
-   include(joinpath(HOHQMesh.examples_dir(), "interactive_from_control_file.jl"))
+julia> include(joinpath(HOHQMesh.examples_dir(), "interactive_from_control_file.jl"))
 ```
 This command will create mesh and plot files in the `out` directory.
 
@@ -18,7 +18,12 @@ This command will create mesh and plot files in the `out` directory.
 
 A second example script `interactive_outer_boundary.jl` makes a new HQMTool project consisting
 of an outer, circular boundary, and an inner boundary in the shape of an ice cream cone.
-For completeness, we provide the example script and clarify each step in the construction
+To run this example, execute
+```julia
+julia> include(joinpath(HOHQMesh.examples_dir(), "interactive_outer_boundary.jl"))
+```
+
+For completeness, we provide the example script and walkthrough each step in the construction
 of the project dictionary below.
 ```julia
 using HOHQMesh
@@ -118,7 +123,7 @@ To save a control file for HOHQMesh, simply invoke
 ```
    saveProject(proj::Project, outFile::String)
 ```
-where outFile is the name of the control file (traditionally with a .control extension).
+where `outFile` is the name of the control file (traditionally with a .control extension).
 `saveProject` is automatically called when a mesh is generated.
 
 Note, a third example script `interactive_outer_boundary_generic.jl` is identical to that
