@@ -27,9 +27,8 @@ in the supplied `folder`.
 writes a control file to the folder designated when creating the new project.
 It can be read in again with `openProject`.
 
-## Plotting
+## Plotting a `Project`
 
-### Plotting a `Project`
 ```
    plotProject!(proj::Project, options)
 ```
@@ -63,7 +62,7 @@ The project name can be fetched from the project dictionary and printed to the s
    [Return:String] getName(proj::Project)
 ```
 
-## Controlling the mesh generation process
+## Controlling the mesh generation
 
 ### Editing the `RunParameters`
 
@@ -101,6 +100,29 @@ By default, the mesh, plot and stats files will be written with the name and pat
    [Return:String]  getFolder(proj::Project)
 ```
 
+### Smoothing operations
+
+A default smoother is created when `newProject` is called, which sets the status to `ON`, type to
+`LinearAndCrossbarSpring`, and number of iterations = 25. These are generally good enough for most purposes.
+The most likely parameter to change is the number of iterations. Further details on the smoothing strategy
+and how it works are available [here](https://trixi-framework.github.io/HOHQMesh/the-control-input/#the-smoother).
+
+To change the defaults, the smoother parameters can be set/enquired with the functions
+```
+   [Return:nothing] setSmoothingStatus!(proj::Project, status::String)
+   [Return:String]  getSmoothingStatus(proj::Project)
+   [Return:nothing] setSmoothingType!(proj::Project, type::String)
+   [Return:String]  getSmoothingType(proj::Project)
+   [Return:nothing] setSmoothingIterations!(proj::Project, iterations::Int)
+   [Return:Int]     getSmoothingIterations(proj::Project)
+```
+The smooth `status` is either "ON" or "OFF".
+
+To remove the smoother altogether, use
+```
+   [Return:nothing] removeSpringSmoother!(proj::Project)
+```
+
 ### Adding the background grid
 
 There are three forms for the background grid definition, one for when there is an outer boundary,
@@ -126,34 +148,15 @@ with the vector `bgSize`.
 
 ### Changing the background grid
 
-src//HOHQMesh.jl:69:       setBackgroundGridSize!,
-src//HOHQMesh.jl:73:       setBackgroundGridLowerLeft!,
-src//HOHQMesh.jl:74:       setBackgroundGridSteps!
-
-### Smoothing operations
-
-A default smoother is created when `newProject` is called, which sets the status to `ON`, type to
-`LinearAndCrossbarSpring`, and number of iterations = 25. These are generally good enough for most purposes.
-The most likely parameter to change is the number of iterations. Further details on the smoothing strategy
-and how it works are available [here](https://trixi-framework.github.io/HOHQMesh/the-control-input/#the-smoother).
-
-To change the defaults, the smoother parameters can be set/enquired with the functions
+The size of an existing background grid in a `projectDictionary` can be adjusted with
 ```
-   [Return:nothing] setSmoothingStatus!(proj::Project, status::String)
-   [Return:String]  getSmoothingStatus(proj::Project)
-   [Return:nothing] setSmoothingType!(proj::Project, type::String)
-   [Return:String]  getSmoothingType(proj::Project)
-   [Return:nothing] setSmoothingIterations!(proj::Project, iterations::Int)
-   [Return:Int]     getSmoothingIterations(proj::Project)
+   [Return:nothing] setBackgroundGridSize!(proj::Project,
+                                           dx::Float64,
+                                           dy::Float64)
 ```
-The smooth `status` is either "ON" or "OFF".
+If a plot is present it will be updated automatically.
 
-To remove the smoother altogether, use
-```
-   [Return:nothing] removeSpringSmoother!(proj::Project)
-```
-
-### Manual refinement
+### Manual refinement regions
 
 Refinement can be specified either at a point, using the `RefinementCenter`, or along a line,
 using a `RefinementLine`. You can have as many of these refinement regions as you want.

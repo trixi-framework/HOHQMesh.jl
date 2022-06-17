@@ -84,7 +84,7 @@ using Test
     @test isapprox( getBackgroundGridLowerLeft(p) , lower_left )
     # Update the background grid starting point
     new_lower_left = [-25.0, -10.0, 0.0]
-    setBackgroundGridLowerLeft!(p, new_lower_left)
+    HOHQMesh.setBackgroundGridLowerLeft!(p, new_lower_left)
     @test isapprox( getBackgroundGridLowerLeft(p) , new_lower_left )
 
 end

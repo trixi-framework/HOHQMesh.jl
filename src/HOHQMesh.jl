@@ -69,9 +69,7 @@ export addBackgroundGrid!,
        setBackgroundGridSize!,
        getBackgroundGridSize,
        getBackgroundGridLowerLeft,
-       getBackgroundGridSteps,
-       setBackgroundGridLowerLeft!,
-       setBackgroundGridSteps!
+       getBackgroundGridSteps
 
 # Functions from `ControlInputAPI.jl`
 export getControlDict,

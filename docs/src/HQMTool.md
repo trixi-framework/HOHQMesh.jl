@@ -123,7 +123,7 @@ To generate a mesh using HQMTool you
    setBackgroundGridSize!(p, 0.5, 0.25)
    ```
 
-   See [Controlling the mesh generation process](@ref) for details on adjusting parameters already present
+   See [Controlling the mesh generation](@ref) for details on adjusting parameters already present
    in the project dictionary.
 
 7. Generate the mesh
