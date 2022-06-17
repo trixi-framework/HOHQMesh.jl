@@ -107,7 +107,7 @@ One run parameter that must be set manually is the background grid. Since there 
 boundary, that determines the extent of the domain to be meshed, so only the mesh size needs
 to be specified using
 ```
-   addBackgroundGrid!(proj::Project, bgSize::Array{Float64})
+addBackgroundGrid!(proj::Project, bgSize::Array{Float64})
 ```
 
 The example sets the background mesh size to be 0.1 in the x and y directions.
@@ -121,7 +121,7 @@ Finally, the script returns the project so that it can be edited further, if des
 
 To save a control file for HOHQMesh, simply invoke
 ```
-   saveProject(proj::Project, outFile::String)
+saveProject(proj::Project, outFile::String)
 ```
 where `outFile` is the name of the control file (traditionally with a .control extension).
 `saveProject` is automatically called when a mesh is generated.

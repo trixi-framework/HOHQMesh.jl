@@ -41,7 +41,7 @@ To generate a mesh using HQMTool you
    c = newSpline(<name>, nKnots, knotsMatrix)                                                                      *Spline with given knot values*
    ```
 
-   See [Defining Curves](@ref) for further details on the different curve type currently supported by HOHQMesh.
+   See [Defining curves](@ref) for further details on the different curve type currently supported by HOHQMesh.
 
    The generic name for each of these curve creation methods is `new!`. The generic can be used instead of the longer descriptive name to save typing during interactive sessions, if desired.
 
@@ -123,7 +123,7 @@ To generate a mesh using HQMTool you
    setBackgroundGridSize!(p, 0.5, 0.25)
    ```
 
-   See [Controlling the Mesh Generation Process](@ref) for details on adjusting parameters already present
+   See [Controlling the mesh generation process](@ref) for details on adjusting parameters already present
    in the project dictionary.
 
 7. Generate the mesh
@@ -141,7 +141,7 @@ To generate a mesh using HQMTool you
 
 ## Advanced
 
-All curves are actually dictionaries of type `Dict{String, Any}`, and since Julia is not a particularly object oriented language,
-the parameters can be accessed and edited directly by key and value. In fact, all objects except for the Project,
-are of type `Dict{String, Any}`. The project holds all the control and model objects in its `projectDirectory`.
-However, if you do that, then undo/redo and plot updating won't happen.
+All objects and information contained in a `projectDirectory` are actually dictionaries of type `Dict{String, Any}`.
+Since Julia is not an object oriented language, the parameters and other parts of these internal dictionaries
+can be accessed and edited directly by key and value.
+However, if you do that, then certain features like `undo`/`redo` and automatic plot updating **will not work**.
