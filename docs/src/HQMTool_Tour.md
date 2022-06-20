@@ -42,9 +42,17 @@ addCurveToOuterBoundary!(p, circ)
 # Note the three curve are connected to ensure a counter-clockwise orientation
 # as required by HOHQMesh
 
+# Create the three interior curves. The individual names of each curve in the inner
+# chain are used internally by HOHQMesh and are output as the given boundary names in
+# the mesh file.
+
 cone1    = newEndPointsLineCurve("cone1", [0.0, -3.0, 0.0], [1.0, 0.0, 0.0])
 iceCream = newCircularArcCurve("iceCream", [0.0, 0.0, 0.0], 1.0, 0.0, 180.0, "degrees")
 cone2    = newEndPointsLineCurve("cone2", [-1.0, 0.0, 0.0], [0.0, -3.0, 0.0])
+
+# Assemble the three curve in a closed chain oriented couter-clockwise. The chain
+# name `IceCreamCone` is only used internally by HOHQMesh.
+
 addCurveToInnerBoundary!(p, cone1, "IceCreamCone")
 addCurveToInnerBoundary!(p, iceCream, "IceCreamCone")
 addCurveToInnerBoundary!(p, cone2, "IceCreamCone")
