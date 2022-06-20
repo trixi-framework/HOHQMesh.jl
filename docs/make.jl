@@ -33,7 +33,10 @@ makedocs(
             "HQMTool_Tour.md",
             "HQMTool_API.md",
             "CheatSheet.md",
-            ],
+        ],
+        "Tutorials" => [
+            "Introduction" => joinpath("tutorials", "introduction.md"),
+        ],
         "Advanced topics & developers" => [
             "Development" => "development.md",
             "GitHub & Git" => "github-git.md",

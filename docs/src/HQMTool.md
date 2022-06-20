@@ -12,7 +12,7 @@ provides an interactive project that creates an manipulates splines for the inne
 generating the mesh.
 
 Below we give a broad overview of the interactive mesh HQMTool workflow. Further clarification on
-this workflow is provided in the [Tour of HQMTool in action](@ref). Several [Tutorials](add link)
+this workflow is provided in the [Tour of HQMTool in action](@ref). Several [Tutorials](@ref)
 are also available to demonstrate the functionality of HQMTool.
 
 ## Workflow and basic moves

@@ -76,7 +76,7 @@ files that are saved and the output of mesh statistics to the screen.
 ![box_two_circles](https://user-images.githubusercontent.com/25242486/174244295-40d31df3-981e-4375-bc3a-af0a43737710.png)
 
 Further explanation of the HQMTool functionality can be found [here](@ref HQMTool).
-Additional examples are available in the [Tutorials](add link).
+Additional examples are available in the [Tutorials](@ref).
 
 ## [Authors](@id authors-index-md)
 HOHQMesh.jl is maintained by the

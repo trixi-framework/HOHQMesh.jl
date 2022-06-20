@@ -2,7 +2,7 @@
 
 In this brief overview, we highlight two scripts from the `examples` folder
 that demonstrate the functionality of HQMTool. In depth
-explanations of the functionality are provided in the [Tutuorials](ADD LINK).
+explanations of the functionality are provided in the [Tutorials](@ref).
 
 ## Mesh from a control file
 
