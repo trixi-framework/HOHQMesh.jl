@@ -82,8 +82,12 @@ by the above getter/setter pair. The default polynomial order is set to `5`.
 
 The available mesh file formats are `"ISM"`, `"ISM-V2"`, or `"ABAQUS"`. See the HOHQMesh documetation,
 [Appendix A](https://trixi-framework.github.io/HOHQMesh/appendix/#appendix-a-additions-for-ism-v2)
-or [Appendix E](https://trixi-framework.github.io/HOHQMesh/appendix/#appendix-e-abaqus-mesh-file-format)
-for a discussion on the latter two mesh file formats.
+or [Appendix E](https://trixi-framework.github.io/HOHQMesh/appendix/#appendix-e-abaqus-mesh-file-format),
+as well as the Trixi.jl documentation,
+[Unstructured quadrilateral mesh](https://trixi-framework.github.io/Trixi.jl/stable/meshes/unstructured_quad_mesh/)
+or
+[P4est-based mesh](https://trixi-framework.github.io/Trixi.jl/stable/meshes/p4est_mesh/),
+for details and discussions on the latter two mesh file formats.
 
 The plot file (which can be viewed with something like VisIt or Paraview) format is either `"skeleton"` or `"sem"`.
 The former is just a low order finite element represntation of the mesh.
