@@ -15,7 +15,7 @@ the simulation framework [Trixi.jl](https://github.com/trixi-framework/Trixi.jl)
 
 ## [Straight-sided outer boundary](@ref)
 
-This tutorial gives an introduction to the main functionality of the interactive meshing HQMtool. In
+This tutorial gives an introduction to the main functionality of the interactive meshing HQMTool. In
 particular, adding a straight-sided bounding box for the outer domain and two circular inner boundary
 chains. It also demonstrates how to adjust some of the mesh parameters as well as the output mesh file
 format.
@@ -32,10 +32,8 @@ This tutorial constructs a circular outer domain and three inner boundary curves
 are constructed using cubic splines and the third inner boundary is a triangular shape built from
 three straight line "curves".
 
-## Undo/redo
+## [Creating and editing curves](@ref)
 
-This tutorial shows a user how to create curved outer and inner boundaries piece-by-piece. Additionally,
-the tutorial demonstrates the `undo` stack of the interactive tool and how straightforward it is to edit
-a boundary curve and regenerate a mesh.
-
-This last one will take the longest to write and has the most figures...
+This tutorial demonstrates how to construct and edit curve segments defined in inner / outer boundary
+chains. There is also the removal and replacement of a portion of an inner boundary chain. The tutorial
+highlights the capability of the `undo` / `redo` stack in the interactive HQMTool.
