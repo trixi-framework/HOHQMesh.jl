@@ -279,9 +279,9 @@ The z-Equation is optional, but for now must define zero for z by default.
 
 #### Cubic spline curve
 
-A cubic spline is defined by an array of knots,  t<sub>j</sub>,x<sub>j</sub>,y<sub>j</sub>,z<sub>j</sub>.
+A cubic spline is defined by an array of knots, $t_j$, $x_j$, $y_j$, $z_j$.
 It can either be supplied by a data file whose first line is the number of knots, and succeeding lines define
-the t,x,y,z values, e.g.
+the $t$, $x$, $y$, $z$ values, e.g.
 ```
    9
    0.000000000000000 -3.50000000000000  3.50000000000000 0.0
