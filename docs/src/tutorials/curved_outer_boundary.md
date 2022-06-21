@@ -102,14 +102,14 @@ outer boundary curve and the new background grid
 The new background grid that gives a finer initial resolution looks suitable to continue
 to the mesh generation.
 
-## Intial mesh and user adjustments
+## Initial mesh and user adjustments
 
 We next generate the mesh from the information contained in the project dictionary `blob_project`.
 This will output the following files to the `out` folder:
 
-* TheBlob.control: A HOHQMesh control file for the current project dictionary.
-* TheBlob.tec: A TecPlot formatted file to visualize the mesh with other software, e.g., [ParaView](https://www.paraview.org/).
-* TheBlob.mesh: A mesh file with format `ISM-V2` (the default format).
+* `TheBlob.control`: A HOHQMesh control file for the current project dictionary.
+* `TheBlob.tec`: A TecPlot formatted file to visualize the mesh with other software, e.g., [ParaView](https://www.paraview.org/).
+* `TheBlob.mesh`: A mesh file with format `ISM-V2` (the default format).
 
 To do this we execute the command
 ```julia
@@ -189,13 +189,14 @@ Note, the circular region indicating the refinement center is removed from the p
 
 ![final_blob](https://user-images.githubusercontent.com/25242486/174747066-a804bf1d-508a-480d-bde3-47687b402604.png)
 
-Now we can decide that we are satisfied with the mesh quality and resolution of the outer boundary curves.
+Now we decide that we are satisfied with the mesh quality and resolution of the outer boundary curve.
 
 ## Summary
 
-In this tutorial we demonstrated how to
+In this tutorial we demonstrated how to:
 * Define a curved outer boundary using parametric equations.
 * Add and adjust the background grid.
+* Visualize a HQMTool project.
 * Add manual refinement to a local region of the domain.
 
 For completeness, we include a script with all the commands to generate the mesh displayed in the final image.

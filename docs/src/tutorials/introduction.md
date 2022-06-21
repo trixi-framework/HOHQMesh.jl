@@ -13,9 +13,9 @@ For more information on how an unstructured mesh generated with HOHQMesh.jl can 
 the simulation framework [Trixi.jl](https://github.com/trixi-framework/Trixi.jl) see the
 [relevant tutorial](https://trixi-framework.github.io/Trixi.jl/stable/tutorials/hohqmesh_tutorial/).
 
-## Straight-sided outer boundary
+## [Straight-sided outer boundary](@ref)
 
-This tutorial gives an introduction to the main functionality of the interactive meshing tool. In
+This tutorial gives an introduction to the main functionality of the interactive meshing HQMtool. In
 particular, adding a straight-sided bounding box for the outer domain and two circular inner boundary
 chains. It also demonstrates how to adjust some of the mesh parameters as well as the output mesh file
 format.
