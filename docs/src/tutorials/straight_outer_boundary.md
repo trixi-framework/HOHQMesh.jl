@@ -112,8 +112,9 @@ circle1 = newCircularArcCurve("circle1",       # curve name
                               "degrees")       # angle units
 ```
 We use `"degrees"` to set the angle bounds, but `"radians"` can also be used.
-The name of the curve `circle1` is assigned to be `"circle1"`. This curve name is
-also the label that HOHQMesh will give to this boundary curve in the resulting mesh file.
+The name of the curve stored in the dictionary `circle1` is assigned to be `"circle1"`.
+This curve name is also the label that HOHQMesh will give to this boundary curve in the
+resulting mesh file.
 
 The new `circle1` curve is then added to the `box_project` as an inner boundary curve with
 ```julia

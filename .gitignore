@@ -9,3 +9,4 @@ coverage_report/
 .vscode/
 examples/*.tec
 examples/*.mesh
+*.png

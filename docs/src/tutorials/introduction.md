@@ -26,9 +26,11 @@ This tutorial constructs an outer domain boundary using parametric equations. Th
 set and a preliminary mesh is generated. It highlights how a user can manually add a refinement region where
 necessary from this visual inspection.
 
-## Spline curves
+## [Spline curves](@ref)
 
-build spline from file and spline from array. Also small triangular element from straight curves
+This tutorial constructs a circular outer domain and three inner boundary curves. Two of the inner curves
+are constructed using cubic splines and the third inner boundary is a triangular shape built from
+three straight line "curves".
 
 ## Undo/redo
 

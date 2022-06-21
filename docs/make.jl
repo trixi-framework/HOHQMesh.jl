@@ -38,6 +38,7 @@ makedocs(
             "Introduction" => joinpath("tutorials", "introduction.md"),
             joinpath("tutorials", "straight_outer_boundary.md"),
             joinpath("tutorials", "curved_outer_boundary.md"),
+            joinpath("tutorials", "spline_curves.md"),
         ],
         "Advanced topics & developers" => [
             "Development" => "development.md",

@@ -140,10 +140,9 @@ visualization. The background grid is *removed* from the visualization when the 
 
 !!! note "Mesh visualization"
     Currently, only the "skeleton" of the mesh is visualized. Thus, the high-order curved boundary information
-    is not seen in this plot but this information **is present** in the generated mesh file.
+    is not seen in the plot but this information **is present** in the generated mesh file.
 
 ![initial_blob](https://user-images.githubusercontent.com/25242486/174747052-d0776ca6-5451-4d9f-accb-8d97b2db1c26.png)
-
 
 Inspecting the mesh we see that the automatic subdivision in HOHQMesh does well to capture the fine features
 of the curved outer boundary. Although, we see that the mesh near the point $(-4, 0)$ is still quite coarse.
