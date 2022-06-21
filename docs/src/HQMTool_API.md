@@ -239,8 +239,8 @@ The orientation of any curve chains **must be** counter-clockwise.
 This orientation is automatically checked by HQMTool and a warning is thrown if
 a user attempts to connect the curve chain in an invalid way.
 
-See [a great tutorial](add link) for a demonstration of defining, constructing, and removing
-curves from a `Project`.
+See the tutorial [Creating and editing curves](@ref) for a demonstration of defining,
+constructing, and removing curves from a `Project`.
 
 ### Defining curves
 
