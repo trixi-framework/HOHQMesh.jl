@@ -23,7 +23,7 @@ To run this example, execute
 julia> include(joinpath(HOHQMesh.examples_dir(), "interactive_outer_boundary.jl"))
 ```
 
-For completeness, we provide the example script and walkthrough each step in the construction
+For completeness, we provide the example script and walk-through each step in the construction
 of the project dictionary below.
 ```julia
 using HOHQMesh
@@ -50,7 +50,7 @@ cone1    = newEndPointsLineCurve("cone1", [0.0, -3.0, 0.0], [1.0, 0.0, 0.0])
 iceCream = newCircularArcCurve("iceCream", [0.0, 0.0, 0.0], 1.0, 0.0, 180.0, "degrees")
 cone2    = newEndPointsLineCurve("cone2", [-1.0, 0.0, 0.0], [0.0, -3.0, 0.0])
 
-# Assemble the three curve in a closed chain oriented couter-clockwise. The chain
+# Assemble the three curve in a closed chain oriented counter-clockwise. The chain
 # name `IceCreamCone` is only used internally by HOHQMesh.
 
 addCurveToInnerBoundary!(p, cone1, "IceCreamCone")
@@ -85,7 +85,7 @@ if isdefined(Main, :Makie)
 
 generate_mesh(p)
 
-# After the mesh sucessfully generates mesh statistics, such as the number of corner nodes,
+# After the mesh successfully generates mesh statistics, such as the number of corner nodes,
 # the number of elements etc., are printed to the REPL
 ```
 The first line creates a new project, where the mesh and plot file names will be derived

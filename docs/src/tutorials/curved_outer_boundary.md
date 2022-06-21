@@ -46,7 +46,7 @@ parametric equations
 ```
 Parametric equations in HOHQMesh can be any legitimate equation and use intrinsic functions
 available in Fortran, e.g., $\sin$, $\cos$, exp.
-The constant `pi` is available for use. Exponention is done with `^`.
+The constant `pi` is available for use. Exponentiation is done with `^`.
 All number literals are interpreted as floating point numbers.
 
 The following commands create a new curve for the parametric equations above
@@ -190,7 +190,6 @@ Note, the circular region indicating the refinement center is removed from the p
 ![final_blob](https://user-images.githubusercontent.com/25242486/174747066-a804bf1d-508a-480d-bde3-47687b402604.png)
 
 Now we can decide that we are satisfied with the mesh quality and resolution of the outer boundary curves.
-
 
 ## Summary
 

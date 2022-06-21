@@ -80,7 +80,7 @@ HOHQMesh generates mesh files that contain high-order polynomial interpolations 
 curved boundaries in the model. The degree of this polynomial representation is controlled
 by the above getter/setter pair. The default polynomial order is set to `5`.
 
-The available mesh file formats are `"ISM"`, `"ISM-V2"`, or `"ABAQUS"`. See the HOHQMesh documetation,
+The available mesh file formats are `"ISM"`, `"ISM-V2"`, or `"ABAQUS"`. See the HOHQMesh documentation,
 [Appendix A](https://trixi-framework.github.io/HOHQMesh/appendix/#appendix-a-additions-for-ism-v2)
 or [Appendix E](https://trixi-framework.github.io/HOHQMesh/appendix/#appendix-e-abaqus-mesh-file-format),
 as well as the Trixi.jl documentation,
@@ -89,8 +89,8 @@ or
 [P4est-based mesh](https://trixi-framework.github.io/Trixi.jl/stable/meshes/p4est_mesh/),
 for details and discussions on the latter two mesh file formats.
 
-The plot file (which can be viewed with something like VisIt or Paraview) format is either `"skeleton"` or `"sem"`.
-The former is just a low order finite element represntation of the mesh.
+The plot file (which can be viewed with something like VisIt or ParaView) format is either `"skeleton"` or `"sem"`.
+The former is just a low order finite element representation of the mesh.
 The latter (which is a much bigger file) includes the interior degrees of freedom.
 
 ### Changing the output file names
@@ -187,8 +187,8 @@ Similarly, one can create a `RefinementLine`,
                                                h::Float64,
                                                w::Float64)
 ```
-where `x0` is the start postition and `x1` is the end of the line. The `name`, `type`, `h`, and `w` parameters are the same
-as for a `RefinementCenter`.
+where `x0` is the start position and `x1` is the end of the line. The `name`, `type`, `h`, and `w`
+parameters are the same as for a `RefinementCenter`.
 
 To add a refinement region to the project,
 ```
@@ -265,7 +265,7 @@ Returns a new set of parametric equation. Equations must be of the form
    <function name>(<argument>) = ...
 ```
 The name of the function, and the argument are arbitrary. The equation can be any legitimate equation.
-The constant `pi` is defined for use. Exponention is done with `^`. All number literals are interpreted
+The constant `pi` is defined for use. Exponentiation is done with `^`. All number literals are interpreted
 as floating point numbers.
 
 Example:

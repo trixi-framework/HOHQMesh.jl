@@ -12,7 +12,7 @@ is tested by GitHub Actions is controlled by the workflow file
 In Trixi and its related repositories, tests are triggered by
 * each `git push` to `main` and
 * each `git push` to any pull request.
-Besides checking functionality, we also analyse the [Test coverage](@ref) to
+Besides checking functionality, we also analyze the [Test coverage](@ref) to
 ensure that we do not miss important parts during testing.
 
 !!! note "Test and coverage requirements"
@@ -43,7 +43,7 @@ julia> # Run all test for the HQMtool Curve API
 ## Adding new tests
 We use Julia's built-in [unit testing capabilities](https://docs.julialang.org/en/v1/stdlib/Test/)
 to configure tests. In general, newly added code must be covered by at least one
-test, and all new scirpts added to the `examples/` directory must be used at
+test, and all new scripts added to the `examples/` directory must be used at
 least once during testing. New tests should be added to the corresponding
 `test/test_xxx.jl` file, e.g., a test involving visualization capabilities
 would go into

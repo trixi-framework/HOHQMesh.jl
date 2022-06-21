@@ -19,7 +19,7 @@ are also available to demonstrate the functionality of HQMTool.
 
 The order of the workflow and basic moves follow a logical pattern: The project must be created first.
 Curves can be added at any time. The background grid can be added any time to the project.
-A mesh is ususally generated after the model (curves) and background grid are completed.
+A mesh is usually generated after the model (curves) and background grid are completed.
 
 To generate a mesh using HQMTool you
 
@@ -52,7 +52,7 @@ To generate a mesh using HQMTool you
    addInnerBoundaryCurve!(p, <curveName>, <InnerBoundaryName>) *Add curve to an inner boundary*
    ```
 
-   For a single inner / outer boundary curve the command above directly adds the curve into the project dictionary. If the inner / outer boundary curve is a chain of multiple curves then they must be added to the project dictionary in an order which yields a closed curves with couter-clockwise orientation. See the [Tour of HQMTool in action](@ref) for an example of a chain of curves.
+   For a single inner / outer boundary curve the command above directly adds the curve into the project dictionary. If the inner / outer boundary curve is a chain of multiple curves then they must be added to the project dictionary in an order which yields a closed curves with counter-clockwise orientation. See the [Tour of HQMTool in action](@ref) for an example of a chain of curves.
 
    Curves can be added by using the generic `add!` function instead of the longer descriptive name to save typing during interactive sessions, if desired.
 
