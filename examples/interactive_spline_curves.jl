@@ -84,5 +84,5 @@ if isdefined(Main, :Makie)
 
 generate_mesh(p)
 
-# After the mesh sucessfully generates mesh statistics, such as the number of corner nodes,
+# After the mesh successfully generates mesh statistics, such as the number of corner nodes,
 # the number of elements etc., are printed to the REPL.
