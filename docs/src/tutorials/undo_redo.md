@@ -100,7 +100,7 @@ the outer boundary and background grid. The resulting plot is given below. The c
 curves is called `"Outer"` and it contains three curve segments `"Line1"`, `"Arc"`, and `"Line2"`
 labeled in the figure by `O.1`, `O.2`, and `O.3`, respectively.
 
-![background_grid](/src/figs/undo-background.png)
+![background_grid](https://user-images.githubusercontent.com/25242486/175062627-a87ed6e1-ce68-4ef4-a178-96b1ccceff0a.png)
 
 ## Edit the outer boundary chain
 
@@ -124,7 +124,7 @@ removeOuterBoundaryCurveWithName!(sandbox_project, "Line2")
 The plot automatically updates and we see that the outer boundary is open and contains
 two segments: `"Line1"` and `"Arc"`.
 
-![outer_removal](/src/figs/undo-remove-outer.png)
+![outer_removal](https://user-images.githubusercontent.com/25242486/175062663-8a0e3a4f-c444-4302-a35b-7565095ab78a.png)
 
 Next, we create a parametric cubic spline curve from a given set of data points. In order to make a
 closed outer boundary chain the cubic spline must begin at the endpoint of the curve `"Arc"`
@@ -146,10 +146,10 @@ Now we add the spline curve `outer_spline` into the `sandbox_project` dictionary
 ```julia
 addCurveToOuterBoundary!(sandbox_project, outer_spline)
 ```
-The figure updates automatically to display the `Outer` boundary chain
+The figure updates automatically to display the `"Outer"` boundary chain
 with the new `"Spline"` curve labeled `O.3`.
 
-![outer_spline](/src/figs/undo-add-spline.png)
+![outer_spline](https://user-images.githubusercontent.com/25242486/175062706-6d12840c-f5fa-49e6-ad18-d46d643dd3d8.png)
 
 ## Add an inner boundary chain
 
@@ -159,7 +159,7 @@ We create a pill shaped inner boundary curve chain composed of four pieces
 3. Straight line segment from $(-1, 3)$ to $(-1, 5)$.
 4. Half-circle arc of radius $r=1$ centered at $(0, 5)$.
 
-Similar to the construction of the `Outer` boundary chain, each segment of
+Similar to the construction of the `"Outer"` boundary chain, each segment of
 this inner boundary chain is created separately. The straight line segments are
 made with the function `newEndPointsLineCurve` and given unique names:
 ```julia
@@ -212,7 +212,7 @@ of the background grid automatically detects that curves have been added to the
 `"Line1"`, `"BottomArc"`, `"Line2"`, and `"TopArc"` labeled in the figure by
 `1.1`, `1.2`, `1.3`, and `1.4`, respectively.
 
-![inner_pill](/src/figs/undo-inner-pill.png)
+![inner_pill](https://user-images.githubusercontent.com/25242486/175062834-91aae24d-167d-4d0f-8d39-887ab189081b.png)
 
 ## Generate the mesh
 
@@ -255,7 +255,7 @@ The background grid is *removed* from the visualization when the mesh is generat
     Currently, only the "skeleton" of the mesh is visualized. Thus, the high-order curved boundary information
     is not seen in the plot but this information **is present** in the generated mesh file.
 
-![initial_mesh](/src/figs/undo-initial-mesh.png)
+![initial_mesh](https://user-images.githubusercontent.com/25242486/175062901-4f1280ae-9830-4ab3-bee2-76f895b03cbb.png)
 
 ## Delete the existing mesh
 
@@ -264,8 +264,8 @@ In preparation of edits we will make to the inner boundary chain we remove the c
 remove_mesh!(sandbox_project)
 updatePlot!(sandbox_project, MODEL+GRID)
 ```
-Additionally, the `remove_mesh!` **removes** the mesh file from the `sandbox_project`
-dictionary and `sandbox.mesh` is **deleted** from the `out` folder. However, the `sandbox.control` and `sandbox.tec` files are still present in `out`.
+Additionally, the `remove_mesh!` command **deletes** the mesh information from the `sandbox_project`
+dictionary and `sandbox.mesh` from the `out` folder. However, the `sandbox.control` and `sandbox.tec` files are still present in `out` directory.
 
 ## Edit an inner boundary chain
 
@@ -292,7 +292,7 @@ With either removal strategy, the plot automatically updates. We see that the
 inner boundary is open and contains three segments: `"BottomArc"`, `"Line2"`, and `"TopArc"`.
 Note that the index of the remaining curves has changed as shown below.
 
-![inner_removal](/src/figs/undo-remove-inner.png)
+![inner_removal](https://user-images.githubusercontent.com/25242486/175062997-6f60b3e3-b9eb-4f6b-8062-5b17de0cca2c.png)
 
 !!! note "Brief note about undo / redo"
     A HQMTool project (globally) carries an operation stack of actions that can be undone
@@ -319,7 +319,7 @@ parametric equations
 ```math
   \begin{aligned}
     x(t) &= t + 1,\\[0.2cm]
-    y(t) &= -2t + 5 - \frac{3}{2} cos(\pi t) sin(\pi t),\\[0.2cm]
+    y(t) &= -2t + 5 - \frac{3}{2} \cos(\pi t) \sin(\pi t),\\[0.2cm]
     z(t) &= 0
   \end{aligned}
   \qquad
@@ -336,17 +336,17 @@ zEqn = "z(t) = 0.0"
 inner_eqn = newParametricEquationCurve("wiggleLine", xEqn, yEqn, zEqn)
 ```
 The name of this new curve is assigned to be `"wiggleLine"`.
-We add this new curve to the `inner` chain.
+We add this new curve to the `"inner"` chain.
 ```julia
 addCurveToInnerBoundary!(sandbox_project, inner_eqn, "inner")
 ```
 The automatically updated figure now shows:
 
-![inner_open_chain](/src/figs/undo-inner-open.png)
+![inner_open_chain](https://user-images.githubusercontent.com/25242486/175063103-e8eda78c-b0d9-4229-9383-5582845d5f81.png)
 
 We see from the figure that this parametric equation curve starts at the point $(1,5)$
 and, therefore, matches the end point of the existing curve `"TopArc"` present
-in the `inner` chain. However, the
+in the `"inner"` chain. However, the
 parametric equation curve ends at the point $(2,3)$ which **does not** match
 the `"BottomArc"` curve. So, the inner boundary chain remains open.
 
@@ -359,15 +359,15 @@ the `"BottomArc"` curve. So, the inner boundary chain remains open.
 To create a closed boundary curve we must remove the `"BottomArc"` curve and replace it
 with a wider half-circle arc segment. This new half-circle arc must start at the point
 $(2, 3)$ and end at the point $(-1, 3)$ to close the inner chain **and** guarantee the
-chain is oriented counter-clockwise. So, we first remove the `"BottomArc"` from the `inner`
+chain is oriented counter-clockwise. So, we first remove the `"BottomArc"` from the `"inner"`
 chain.
 ```julia
 removeInnerBoundaryCurve!(sandbox_project, "BottomArc", "inner")
 ```
-The figure updates to display the `inner` curve chain with three segments.
+The figure updates to display the `"inner"` curve chain with three segments.
 Note that the inner curve chain indexing has, again, been automatically adjusted.
 
-![inner_remove_arc](/src/figs/undo-remove-inner-arc.png)
+![inner_remove_arc](https://user-images.githubusercontent.com/25242486/175063146-9475697a-3aa8-42c1-abdb-713343c6b8f7.png)
 
 A half-circle arc that joins the points $(2, 3)$ and $(-1, 3)$ has a radius $r=1.5$, is
 centered at $(0.5, 3)$ and has an angle that vaires from $0$ to $-180$.
@@ -385,7 +385,7 @@ The updated plot now gives the modified, closed inner curve chain that now conta
 four curve segments `"Line2"`, `"TopArc"`, `"wiggleLine"`, and `"wideBottomArc"` labeled
 in the figure by `1.1`, `1.2`, `1.3`, and `1.4`, respectively.
 
-![inner_modified](/src/figs/undo-inner-complete.png)
+![inner_modified](https://user-images.githubusercontent.com/25242486/175063184-9c2d1204-cdcd-4a33-88bd-d73e7183b3d6.png)
 
 ## Regenerate the mesh
 
@@ -416,13 +416,13 @@ generate_mesh(sandbox_project)
 ```
 The visualization updates automatically and the background grid is *removed* after when the mesh is generated.
 
-![inner_modified](/src/figs/undo-final-mesh.png)
+![inner_modified](https://user-images.githubusercontent.com/25242486/175063283-b60d8985-0fce-4010-90c5-5a924883a895.png)
 
 Inspecting the mesh we see that the automatic subdivision in HOHQMesh does well to capture the sharp corners and fine features of the curved inner and outer boundaries. For example, we zoom
 into sharp corner at the bottom of the domain and see that, although small, the elements in this
 region maintain a good quadrilateral shape.
 
-![zoom_corner](/src/figs/undo-zoom-corner.png)
+![zoom_corner](https://user-images.githubusercontent.com/25242486/175063320-57d42322-2d0e-4e69-b177-ab40d6a8df3d.png)
 
 ## Summary
 
