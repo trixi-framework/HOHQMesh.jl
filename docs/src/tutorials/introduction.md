@@ -36,3 +36,5 @@ three straight line "curves".
 
 This tutorial demonstrates how to construct and edit curve segments defined in inner / outer boundary
 chains. There is also the removal and replacement of a portion of an inner boundary chain. In doing so, the tutorial highlights the capability of the `undo` / `redo` stack in the interactive HQMTool.
+
+**It also demonstrates that the curve chains can be connected segments of different curve types!!**

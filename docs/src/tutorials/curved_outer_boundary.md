@@ -156,7 +156,7 @@ Above we create a circular refinement region centered at the point $(-4, -0.5)$ 
 $0.4$ and a radius of $1.0$. Upon adding this refinement region to the project dictionary the visualization will
 update to indicate the location and size of the manual refinement region.
 
-![final_blob](https://user-images.githubusercontent.com/25242486/174747059-1f58ae14-aeec-48d5-afb3-6a0614a8e29d.png)
+![refinement_blob](https://user-images.githubusercontent.com/25242486/174747059-1f58ae14-aeec-48d5-afb3-6a0614a8e29d.png)
 
 ## Final mesh
 

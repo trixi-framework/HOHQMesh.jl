@@ -119,7 +119,7 @@ curve is called `inner1` and it contains a single curve `big_spline` labeled in 
 
 Alternatively, a parametric cubic spline curve can be constructed directly from data points
 provided in the code. These points take the form `[t, x, y, z]` where `t` is the parameter variable
-that varies between 0 and 1. For the spline construction the number of points is included as an
+that varies between $0$ and $1$. For the spline construction, the number of points is included as an
 input argument as well as the actual parametric point data.
 Again, if the spline curve is to be closed, the first and last data point **must** match.
 
