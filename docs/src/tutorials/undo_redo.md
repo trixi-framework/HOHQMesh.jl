@@ -105,7 +105,7 @@ labeled in the figure by `O.1`, `O.2`, and `O.3`, respectively.
 ## Edit the outer boundary chain
 
 Suppose that the domain boundary requires a curved segment instead of the straight line
-`Line2`. We will replace this line segment in the outer boundary chain with a cubic
+`"Line2"`. We will replace this line segment in the outer boundary chain with a cubic
 spline.
 
 First, we remove the `"Line2"` curve from the `"Outer"` chain with the command
