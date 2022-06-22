@@ -35,5 +35,4 @@ three straight line "curves".
 ## [Creating and editing curves](@ref)
 
 This tutorial demonstrates how to construct and edit curve segments defined in inner / outer boundary
-chains. There is also the removal and replacement of a portion of an inner boundary chain. The tutorial
-highlights the capability of the `undo` / `redo` stack in the interactive HQMTool.
+chains. There is also the removal and replacement of a portion of an inner boundary chain. In doing so, the tutorial highlights the capability of the `undo` / `redo` stack in the interactive HQMTool.

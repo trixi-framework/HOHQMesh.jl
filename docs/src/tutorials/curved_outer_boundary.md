@@ -95,7 +95,7 @@ size one half in each direction
 setBackgroundGridSize!(blob_project, 0.5, 0.5)
 ```
 Note, that after we execute the command above the visualization updates automatically with the
-outer boundary curve and the new background grid
+outer boundary curve and the new background grid.
 
 ![fine_grid](https://user-images.githubusercontent.com/25242486/174747046-f1bc9734-ef4e-4e4c-9055-c54ebe1537e7.png)
 
@@ -154,7 +154,7 @@ addRefinementRegion!(blob_project, center)
 ```
 Above we create a circular refinement region centered at the point $(-4, -0.5)$ with a desired resolution size
 $0.4$ and a radius of $1.0$. Upon adding this refinement region to the project dictionary the visualization will
-update to indicate the location and size of the region
+update to indicate the location and size of the manual refinement region.
 
 ![final_blob](https://user-images.githubusercontent.com/25242486/174747059-1f58ae14-aeec-48d5-afb3-6a0614a8e29d.png)
 

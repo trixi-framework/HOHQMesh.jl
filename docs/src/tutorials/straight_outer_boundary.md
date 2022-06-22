@@ -72,7 +72,7 @@ of a rectangular domain and the size of the background grid:
 1. Set the lower left corner point of the domain $(x_0, y_0)$, define the element size in each spatial direction
    $\Delta x$ and $\Delta y$, and the number of steps taken in each direction $N_x, N_y$. The resulting background
    grid will have the extent $[x_0, x_0 + N_x \Delta x]$ by $[y_0, y_0 + N_y \Delta y]$. For this example, we set
-   a background grid of Cartesian elements with size one in each dimension we use
+   a background grid of Cartesian elements with size one in each dimension with
    the following commands
    ```julia
    lower_left = [0.0, 0.0, 0.0]
@@ -101,7 +101,7 @@ visualization.
 
 Next, we add the two circular inner boundary curves with different radii.
 
-The first circle will have radius $r=2$ and be centered at the point $(4.0, 4.0)$.
+The first circle will have radius $r=2$ and be centered at the point $(4, 4)$.
 We define this circular curve with the function `newCircularArcCurve` as follows
 ```julia
 circle1 = newCircularArcCurve("circle1",       # curve name
@@ -127,7 +127,7 @@ curve is called `inner1` and it contains a single curve `circle1` labeled in the
 
 ![first_circle](https://user-images.githubusercontent.com/25242486/174775027-62a094f7-bbba-4c1c-a389-99562c2e5fe2.png)
 
-With analogous steps we create another circular curve with radius $r=4$, centered at $(20.0, 9.0)$ and
+With analogous steps we create another circular curve with radius $r=4$, centered at $(20, 9)$ and
 add it as a second inner curve to the `box_project` dictionary. Note, for this curve we use radians
 for the angle units.
 ```julia

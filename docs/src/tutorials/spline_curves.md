@@ -35,7 +35,7 @@ spline_project = newProject("spline_curves", "out")
 ## Add the outer boundary
 
 The outer boundary curve for this tutorial is a circle of radius $r=4$ centered at
-the point $(0, -1 ,0)$.
+the point $(0, -1)$.
 We define this circular curve with the function `newCircularArcCurve` as follows
 ```julia
 circ = newCircularArcCurve("outerCircle",    # curve name
@@ -83,7 +83,7 @@ curves is called `Outer` and it contains a single curve `outerCircle` labeled in
 The domain of this tutorial will contain three inner boundary curves:
 1. Cubic spline curve created from data points read in from a file.
 2. Cubic spline curve created from points directly given in the code.
-3. Triangle shape built from three straight line "curves".
+3. Triangular shape built from three straight line "curves".
 
 ### Cubic spline with data from a file
 
@@ -118,7 +118,7 @@ curve is called `inner1` and it contains a single curve `big_spline` labeled in 
 ### Cubic spline from data in Julia
 
 Alternatively, a parametric cubic spline curve can be constructed directly from data points
-provided in the code. These points take the form [t, x, y, z] where `t` is the parameter variable
+provided in the code. These points take the form `[t, x, y, z]` where `t` is the parameter variable
 that varies between 0 and 1. For the spline construction the number of points is included as an
 input argument as well as the actual parametric point data.
 Again, if the spline curve is to be closed, the first and last data point **must** match.
