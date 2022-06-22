@@ -187,8 +187,7 @@ by `3.1`, `3.2`, and `3.3`.
 
 ## Generate the mesh
 
-With the background grid, outer boundary curve, and all inner boundary curves added to the `spline_project` '
-dictionary we are ready to generate the mesh.
+With the background grid, outer boundary curve, and all inner boundary curves added to the `spline_project` dictionary we are ready to generate the mesh.
 This will output the following files to the `out` folder:
 
 * `spline_curves.control`: A HOHQMesh control file for the current project dictionary.

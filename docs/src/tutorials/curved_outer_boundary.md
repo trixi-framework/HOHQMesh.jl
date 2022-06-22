@@ -160,7 +160,7 @@ update to indicate the location and size of the manual refinement region.
 
 ## Final mesh
 
-With the refinement region added to the dictionary we can regenerate the mesh (and update the figure)
+With the refinement region added to the dictionary we can regenerate the mesh. Note, this will create and save new output files `TheBlob.control`, `TheBlob.tec`, `TheBlob.mesh` and update the figure.
 ```julia
 generate_mesh(blob_project)
 
