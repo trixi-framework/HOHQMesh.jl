@@ -35,7 +35,7 @@ makedocs(
             "CheatSheet.md",
         ],
         "Tutorials" => [
-            "Introduction" => joinpath("tutorials", "introduction.md"),
+            "Overview" => joinpath("tutorials", "introduction.md"),
             joinpath("tutorials", "straight_outer_boundary.md"),
             joinpath("tutorials", "curved_outer_boundary.md"),
             joinpath("tutorials", "spline_curves.md"),
