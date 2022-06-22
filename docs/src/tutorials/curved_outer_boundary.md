@@ -9,6 +9,14 @@ are visualized for quality inspection. The tutorial also shows how to adjust the
 background and add a local refinement region in order to better resolve a portion
 of the curved boundary.
 
+### Synopsis
+
+This tutorial demonstrates how to:
+* Define a curved outer boundary using parametric equations.
+* Add and adjust the background grid.
+* Visualize a HQMTool project.
+* Add manual refinement to a local region of the domain.
+
 ## Initialization
 
 From a Julia REPL we load the HOHQMesh package as well as
@@ -89,7 +97,7 @@ curves is called `"Outer"` and it contains a single curve `"Blob"` labeled in th
 ![coarse_grid](https://user-images.githubusercontent.com/25242486/174747035-f21bb8d1-386f-4036-b2e8-59e264c071d1.png)
 
 From the visualization we see that the background grid is likely too coarse to produce a "good"
-quadrilateral mesh for this domain. We can reset the background grid size to have elements with
+quadrilateral mesh for this domain. We reset the background grid size to have elements with
 size one half in each direction
 ```julia
 setBackgroundGridSize!(blob_project, 0.5, 0.5)

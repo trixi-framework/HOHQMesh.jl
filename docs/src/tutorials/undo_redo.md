@@ -10,6 +10,19 @@ In doing so, the `undo` and `redo` capabilities of the HQMTool are briefly discu
 The outer and inner boundary curves, background grid as well as the mesh
 will be visualized for quality inspection.
 
+### Synopsis
+
+This tutorial demonstrates how to:
+* Create and edit an outer boundary chain.
+* Create and edit an inner boundary chain.
+* Add the background grid when an outer boundary curve is present.
+* Visualize a HQMTool project.
+* Discuss undo / redo capabilities.
+* Construct and add parametric spline curves.
+* Construct and add a curve from parametric equations.
+* Construct and add straight line segments.
+* Construct and add circular arc segments.
+
 ## Initialization
 
 From a Julia REPL we load the HOHQMesh package as well as

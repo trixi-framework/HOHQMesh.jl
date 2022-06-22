@@ -10,6 +10,15 @@ will be visualized for quality inspection.
 It provides details and clarification for the script `interactive_spline_curves.jl`
 from the [examples](https://github.com/trixi-framework/HOHQMesh.jl/tree/main/examples) folder.
 
+### Synopsis
+
+This tutorial demonstrates how to:
+* Create a circular outer boundary curve.
+* Add the background grid when an outer boundary curve is present.
+* Visualize a HQMTool project.
+* Construct and add parametric spline curves.
+* Construct and add an inner boundary chain of straight line segments.
+
 ## Initialization
 
 From a Julia REPL we load the HOHQMesh package as well as

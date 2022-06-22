@@ -9,6 +9,14 @@ will be visualized for quality inspection.
 It provides details and clarification for the script `interactive_outer_box_two_circles.jl`
 from the [examples](https://github.com/trixi-framework/HOHQMesh.jl/tree/main/examples) folder.
 
+### Synopsis
+
+This tutorial demonstrates how to:
+* Query and adjust the `RunParameters` of a project dictionary.
+* Define a rectangular outer boundary and set the background grid.
+* Visualize a HQMTool project.
+* Add circular inner boundary curves.
+
 ## Initialization
 
 From a Julia REPL we load the HOHQMesh package as well as
