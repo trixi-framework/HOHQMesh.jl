@@ -84,7 +84,7 @@ plotProject!(blob_project, MODEL+GRID)
 ```
 Here, we take the sum of the keywords `MODEL` and `GRID` in order to simultaneously visualize
 the curves and background grid. The resulting plot is given below. The chain of outer boundary
-curves is called `Outer` and it contains a single curve `Blob` labeled in the figure by `O.1`.
+curves is called `"Outer"` and it contains a single curve `"Blob"` labeled in the figure by `O.1`.
 
 ![coarse_grid](https://user-images.githubusercontent.com/25242486/174747035-f21bb8d1-386f-4036-b2e8-59e264c071d1.png)
 

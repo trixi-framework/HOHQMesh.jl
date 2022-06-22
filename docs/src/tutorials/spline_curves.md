@@ -74,7 +74,7 @@ plotProject!(spline_project, MODEL+GRID)
 ```
 Here, we take the sum of the keywords `MODEL` and `GRID` in order to simultaneously visualize
 the outer boundary and background grid. The resulting plot is given below. The chain of outer boundary
-curves is called `Outer` and it contains a single curve `outerCircle` labeled in the figure by `O.1`.
+curves is called `"Outer"` and it contains a single curve `"outerCircle"` labeled in the figure by `O.1`.
 
 ![background_grid](https://user-images.githubusercontent.com/25242486/174798948-3a00c5b5-d910-45df-9a9a-088eb3fa360a.png)
 
@@ -111,7 +111,7 @@ addCurveToInnerBoundary!(spline_project, spline1, "inner1")
 This inner boundary chain name `"inner1"` is used internally by HOHQMesh. The visualization
 of the background grid automatically detects that a curve has been added to the project dictionary
 and the plot is updated appropriately, as shown below. The chain for the inner boundary
-curve is called `inner1` and it contains a single curve `big_spline` labeled in the figure by `1.1`.
+curve is called `inner1` and it contains a single curve `"big_spline"` labeled in the figure by `1.1`.
 
 ![one_curve](https://user-images.githubusercontent.com/25242486/174798958-5e4a57b3-ece0-4d11-a004-b39909fccbad.png)
 
@@ -144,7 +144,7 @@ addCurveToInnerBoundary!(spline_project, spline2, "inner2")
 This inner boundary chain name `"inner2"` is used internally by HOHQMesh. The visualization
 of the background grid automatically detects that a curve has been added to the project dictionary
 and the plot is updated appropriately, as shown below. The chain for the inner boundary
-curve is called `inner2` and it contains a single curve `small_spline` labeled in the figure by `2.1`.
+curve is called `inner2` and it contains a single curve `"small_spline"` labeled in the figure by `2.1`.
 
 ![two_curves](https://user-images.githubusercontent.com/25242486/174798962-99e0673d-e0f9-444a-a71d-7dfd9412306e.png)
 
@@ -177,10 +177,10 @@ addCurveToInnerBoundary!(spline_project, edge1, "inner3")
 addCurveToInnerBoundary!(spline_project, edge2, "inner3")
 addCurveToInnerBoundary!(spline_project, edge3, "inner3")
 ```
-The inner boundary chain name `inner3` is used internally for HOHQMesh. Again,
+The inner boundary chain name `"inner3"` is used internally for HOHQMesh. Again,
 the active visualization automatically detects that new curves have been added to the project dictionary
 and the plot is updated appropriately, as shown below. The chain for the inner triangular boundary
-is called `inner3` and it contains a three curve segments all called `triangle` labeled in the figure
+is called `inner3` and it contains a three curve segments all called `"triangle"` labeled in the figure
 by `3.1`, `3.2`, and `3.3`.
 
 ![three_curves](https://user-images.githubusercontent.com/25242486/174798968-d41d7d8e-db1e-466f-a4fa-c36f14dfae98.png)
@@ -232,7 +232,7 @@ The visualization updates automatically and the background grid is *removed* aft
 ![final_spline](https://user-images.githubusercontent.com/25242486/174798986-6b900fa8-840c-4c04-bc61-00f0749af1be.png)
 
 Inspecting the mesh we see that the automatic subdivision in HOHQMesh does well to capture the fine features
-of the curved inner boundaries, particularly near the sharp angles of the `big_spline` curve. We decide that we
+of the curved inner boundaries, particularly near the sharp angles of the `"big_spline"` curve. We decide that we
 are satisfied with the overall mesh quality.
 
 ## Summary

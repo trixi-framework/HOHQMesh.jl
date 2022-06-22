@@ -123,7 +123,7 @@ addCurveToInnerBoundary!(box_project, circle1, "inner1")
 This inner boundary chain name `"inner1"` is used internally by HOHQMesh. The visualization
 of the background grid automatically detects that a curve has been added to the project dictionary
 and the plot is updated appropriately, as shown below. The chain for the inner boundary
-curve is called `inner1` and it contains a single curve `circle1` labeled in the figure by `1.1`.
+curve is called `"inner1"` and it contains a single curve `"circle1"` labeled in the figure by `1.1`.
 
 ![first_circle](https://user-images.githubusercontent.com/25242486/174775027-62a094f7-bbba-4c1c-a389-99562c2e5fe2.png)
 
@@ -141,8 +141,8 @@ addCurveToInnerBoundary!(box_project, circle2, "inner2")
 ```
 Again, HQMTool detects that a curve has been added to the active project dictionary
 and the visualization is automatically updated with the second circular curve.
-The chain for the second inner boundary curve is called `inner2` and it contains
-a single curve `circle2` labeled in the figure by `2.1`.
+The chain for the second inner boundary curve is called `"inner2"` and it contains
+a single curve `"circle2"` labeled in the figure by `2.1`.
 
 ![second_circle](https://user-images.githubusercontent.com/25242486/174775037-a9144f93-78da-48ae-976b-7cfaeca68240.png)
 

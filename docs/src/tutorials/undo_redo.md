@@ -97,7 +97,7 @@ plotProject!(sandbox_project, MODEL+GRID)
 ```
 Here, we take the sum of the keywords `MODEL` and `GRID` in order to simultaneously visualize
 the outer boundary and background grid. The resulting plot is given below. The chain of outer boundary
-curves is called `Outer` and it contains three curve segments `"Line1"`, `"Arc"`, and `"Line2"`
+curves is called `"Outer"` and it contains three curve segments `"Line1"`, `"Arc"`, and `"Line2"`
 labeled in the figure by `O.1`, `O.2`, and `O.3`, respectively.
 
 ![background_grid](/src/figs/undo-background.png)
@@ -108,12 +108,12 @@ Suppose that the domain boundary requires a curved segment instead of the straig
 `Line2`. We will replace this line segment in the outer boundary chain with a cubic
 spline.
 
-First, we remove the `"Line2"` curve from the `Outer` chain with the command
+First, we remove the `"Line2"` curve from the `"Outer"` chain with the command
 ```julia
 removeOuterBoundaryCurveWithName!(sandbox_project, "Line2")
 ```
 !!! tip "Outer curve removal"
-    Alternatively, we can remove the curve `"Line2"` using its index in the `Outer` boundary
+    Alternatively, we can remove the curve `"Line2"` using its index in the `"Outer"` boundary
     chain.
     ```julia
     removeOuterBoundaryCurveAtIndex!(sandbox_project, 3)
@@ -294,7 +294,7 @@ Note that the index of the remaining curves has changed as shown below.
 
 ![inner_removal](/src/figs/undo-remove-inner.png)
 
-!!! note "Brief aside about undo / redo"
+!!! note "Brief note about undo / redo"
     A HQMTool project (globally) carries an operation stack of actions that can be undone
     (or redone) as the case may be. We can query and print to the REPL the top of the
     undo stack with `undoActionName`.
