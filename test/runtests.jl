@@ -63,7 +63,7 @@ include("test_curve.jl")
 include("test_model.jl")
 
 # Interactive mesh project test routines
-include("test_hqmtool_project.jl")
+include("test_interactive_project.jl")
 
 # Interactive mesh scripts available in examples folder
 include("test_examples.jl")
