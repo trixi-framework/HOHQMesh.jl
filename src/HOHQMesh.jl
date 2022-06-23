@@ -20,9 +20,9 @@ function __init__()
 end
 
 #
-# Include functionality for HQMTool interactive reading and writing a model for HOHQMesh
+# Include interactive mesh functionality for creating, reading, and writing a model for HOHQMesh.
 # Note, The visualzation routines are included above in the `__init__` because
-# Makie is required
+# Makie is required.
 #
 
 # Core interactive tool routines for control file readin, curve evaluation, etc.
@@ -50,10 +50,11 @@ include("Project/SmootherAPI.jl")
 # Main routine that uses HOHQMesh to generate a mesh from an interactive `Project`
 include("Mesh/Meshing.jl")
 
-# Main wrapper to generate a mesh from a control file
+# Generic main function to generate a mesh from a control file
+# or an interactive mesh `Project`
 export generate_mesh
 
-# Generic functions for the HQMTool interface
+# Generic functions for the interactice mesh interface
 export new,
        add!,
        getCurve,
@@ -61,13 +62,12 @@ export new,
        remove!
 
 #
-#  TODO: Go through and cleanup this exporting.
+# Export the front facing interactive mesh functionality, e.g., getter/setter pairs.
 #
+
 # Functions from `BackgroundGridAPI.jl`
-export addBackgroundGrid!,
-       removeBackgroundGrid!,
-       setBackgroundGridSize!,
-       getBackgroundGridSize,
+export addBackgroundGrid!, removeBackgroundGrid!,
+       setBackgroundGridSize!, getBackgroundGridSize,
        getBackgroundGridLowerLeft,
        getBackgroundGridSteps
 
@@ -81,48 +81,29 @@ export newParametricEquationCurve,
        newEndPointsLineCurve,
        newCircularArcCurve,
        newSplineCurve,
-       setCurveName!,
-       getCurveName,
+       setCurveName!, getCurveName,
        getCurveType,
        setXEqn!, getXEqn,
        setYEqn!, getYEqn,
        setZEqn!, getZEqn,
-       setStartPoint!,
-       getStartPoint,
-       setEndPoint!,
-       getEndPoint,
-       setArcUnits!,
-       getArcUnits,
-       setArcCenter!,
-       getArcCenter,
-       setArcStartAngle!,
-       getArcStartAngle,
-       setArcEndAngle!,
-       getArcEndAngle,
-       setArcRadius!,
-       getArcRadius,
-       setSplineNKnots!,
-       getSplineNKnots,
-       setSplinePoints!,
-       getSplinePoints,
-       curvePoint,
-       curvePoints,
-       peEquationCurvePoints,
-       peEquationCurvePoint
+       setStartPoint!, getStartPoint,
+       setEndPoint!, getEndPoint,
+       setArcUnits!, getArcUnits,
+       setArcCenter!, getArcCenter,
+       setArcStartAngle!, getArcStartAngle,
+       setArcEndAngle!, getArcEndAngle,
+       setArcRadius!, getArcRadius,
+       setSplineNKnots!, getSplineNKnots,
+       setSplinePoints!, getSplinePoints
 
 # Functions from `ModelAPI.jl`
-export addCurveToOuterBoundary!,
-       removeOuterBoundaryCurveWithName!,
+export addCurveToOuterBoundary!, removeOuterBoundaryCurveWithName!,
        getOuterBoundaryCurveWithName,
-       insertOuterBoundaryCurveAtIndex!,
-       removeOuterBoundaryCurveAtIndex!,
-       addOuterBoundary!,
-       removeOuterBoundary!,
+       insertOuterBoundaryCurveAtIndex!, removeOuterBoundaryCurveAtIndex!,
+       addOuterBoundary!, removeOuterBoundary!,
        getOuterBoundaryChainList,
-       addCurveToInnerBoundary!,
-       removeInnerBoundaryCurve!,
-       insertInnerBoundaryCurveAtIndex!,
-       removeInnerBoundaryCurveAtIndex!,
+       addCurveToInnerBoundary!, removeInnerBoundaryCurve!,
+       insertInnerBoundaryCurveAtIndex!, removeInnerBoundaryCurveAtIndex!,
        removeInnerBoundary!,
        addInnerBoundaryWithName!,
        getChainIndex,
@@ -134,85 +115,42 @@ export addCurveToOuterBoundary!,
        getDictInModelDictNamed
 
 # Functions from `Project.jl`
-export openProject,
-       saveProject,
-       newProject,
-       hasBackgroundGrid,
-       assemblePlotArrays,
-       projectBounds,
-       projectGrid,
-       curveDidChange,
-       modelDidChange,
-       backgroundGridDidChange,
-       refinementWasAdded,
-       refinementDidChange,
-       meshWasGenerated,
-       meshWasDeleted
+export newProject,
+       openProject,
+       saveProject
 
 # Functions from `RefinementRegionsAPI.jl`
 export newRefinementCenter,
-       addRefinementRegion!,
-       addRefinementRegionPoints!,
-       refinementRegionPoints,
-       getRefinementRegionCenter,
-       removeRefinementRegion!,
-       insertRefinementRegion!,
        newRefinementLine,
-       getRefinementRegion,
-       getAllRefinementRegions,
-       getRefinementRegion,
-       setRefinementType!,
-       getRefinementType,
-       setRefinementName!,
-       getRefinementName,
-       setRefinementLocation!,
-       getRefinementLocation,
-       setRefinementGridSize!,
-       getRefinementGridSize,
-       setRefinementWidth!,
-       getRefinementWidth,
-       setRefinementStart!,
-       getRefinementStart,
-       setRefinementEnd!,
-       getRefinementEnd
+       addRefinementRegion!, getRefinementRegion, getAllRefinementRegions,
+       getRefinementRegionCenter,
+       insertRefinementRegion!, removeRefinementRegion!,
+       setRefinementType!, getRefinementType,
+       setRefinementName!, getRefinementName,
+       setRefinementLocation!, getRefinementLocation,
+       setRefinementGridSize!, getRefinementGridSize,
+       setRefinementWidth!, getRefinementWidth,
+       setRefinementStart!, getRefinementStart,
+       setRefinementEnd!, getRefinementEnd
 
 # Functions from `RunParametersAPI.jl`
-export addRunParameters!,
-       removeRunParameters!,
-       setName!,
-       getName,
-       setPolynomialOrder!,
-       getPolynomialOrder,
-       setMeshFileFormat!,
-       getMeshFileFormat,
-       setPlotFileFormat!,
-       getPlotFileFormat,
-       setFileNames!,
-       getMeshFileName,
-       getPlotFileName,
-       getStatsFileName
+export addRunParameters!, removeRunParameters!,
+       setName!, getName,
+       setPolynomialOrder!, getPolynomialOrder,
+       setMeshFileFormat!, getMeshFileFormat,
+       setPlotFileFormat!, getPlotFileFormat,
+       setFileNames!, getMeshFileName, getPlotFileName, getStatsFileName
 
 # Functions from `SmootherAPI.jl`
-export addSpringSmoother!,
-       setSmoothingStatus!,
-       getSmoothingStatus,
-       setSmoothingType!,
-       getSmoothingType,
-       setSmoothingIterations!,
-       getSmoothingIterations,
-       removeSpringSmoother!
+export addSpringSmoother!, removeSpringSmoother!,
+       setSmoothingStatus!, getSmoothingStatus,
+       setSmoothingType!, getSmoothingType,
+       setSmoothingIterations!, getSmoothingIterations
 
 # Functions from `Undo.jl`
-export undo,
-       redo,
-       registerUndo,
-       registerWithUndoManager,
-       registerRedo,
-       clearUndoRedo,
-       undoActionName,
-       redoActionName,
-       disableUndo,
-       enableUndo
+export undo, undoActionName,
+       redo, redoActionName,
+       clearUndoRedo
 
 # Functions from `Meshing.jl`, generate_mesh is already exported
 export remove_mesh!
