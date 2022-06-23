@@ -8,7 +8,7 @@ meshing project interactively while graphically displaying the results.
 Several scripts are available in the `examples` folder
 to get you started. These example scripts follow the naming convention of `interactive_*` where
 the phrase interactive indicates their association with this API and then trailing information
-will indicate what that script demonstrates. For instance, the file `interactive_splines.jl`
+will indicate what that script demonstrates. For instance, the file `interactive_spline_curves.jl`
 provides an interactive project that creates an manipulates splines for the inner boundaries before
 generating the mesh.
 

@@ -131,6 +131,13 @@ function newProject(name::String, folder::String)
     addRunParameters!(proj)
     addSpringSmoother!(proj)
     enableUndo()
+#
+#   Create the output directory if it does not exist
+#
+    if !isdir(abspath(normpath(folder)))
+       mkdir(abspath(normpath(folder)))
+    end
+
     return proj
 end
 
