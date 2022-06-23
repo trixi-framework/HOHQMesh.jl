@@ -14,7 +14,7 @@ from the [examples](https://github.com/trixi-framework/HOHQMesh.jl/tree/main/exa
 This tutorial demonstrates how to:
 * Query and adjust the `RunParameters` of a project.
 * Define a rectangular outer boundary and set the background grid.
-* Visualize a HQMTool project.
+* Visualize an interactive mesh project.
 * Add circular inner boundary curves.
 
 ## Initialization
@@ -147,7 +147,7 @@ circle2 = newCircularArcCurve("circle2",        # curve name
                               "radians")        # angle units
 addCurveToInnerBoundary!(box_project, circle2, "inner2")
 ```
-Again, HQMTool detects that a curve has been added to the active project
+Again, the `box_project` detects that a curve has been added to it
 and the visualization is automatically updated with the second circular curve.
 The chain for the second inner boundary curve is called `"inner2"` and it contains
 a single curve `"circle2"` labeled in the figure by `2.1`.
@@ -202,5 +202,5 @@ the inner circular boundaries.
 In this tutorial we demonstrated how to:
 * Query and adjust the `RunParameters` of a project.
 * Define a rectangular outer boundary and set the background grid.
-* Visualize a HQMTool project.
+* Visualize an interactive mesh project.
 * Add circular inner boundary curves.

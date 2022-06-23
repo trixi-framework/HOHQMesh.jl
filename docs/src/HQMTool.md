@@ -1,19 +1,20 @@
-# [Overview of interactive mesh generation](@id HQMTool)
+# [Overview](@id InteractiveTool)
 
-HQMTool is an API to generate a quadrilateral (Future: hexahedral) mesh using Julia.
+The interactive functionality is an API to generate a quadrilateral (future: hexahedral)
+mesh using Julia.
 It serves as a front end to the HOHQMesh program, and is designed to let one build a
 meshing project interactively while graphically displaying the results.
 
 Several scripts are available in the `examples` folder
 to get you started. These example scripts follow the naming convention of `interactive_*` where
-the phrase interactive indicates their association with HQMTool and then trailing information
-will indicate what that interactive demonstrates. For instance, the file `interactive_splines.jl`
+the phrase interactive indicates their association with this API and then trailing information
+will indicate what that script demonstrates. For instance, the file `interactive_splines.jl`
 provides an interactive project that creates an manipulates splines for the inner boundaries before
 generating the mesh.
 
-Below we give a broad overview of the interactive mesh HQMTool workflow. Further clarification on
-this workflow is provided in the [Tour of HQMTool in action](@ref). Several [Tutorials](@ref)
-are also available to demonstrate the functionality of HQMTool.
+Below we provide a broad overview of the interactive mesh workflow. Further clarification on
+this workflow is provided in the [Guided tour](@ref). Several [Tutorials](@ref)
+are also available to demonstrate this functionality.
 
 ## Workflow and basic moves
 
@@ -21,7 +22,7 @@ The order of the workflow and basic moves follow a logical pattern: The project 
 Curves can be added at any time. The background grid can be added any time to the project.
 A mesh is usually generated after the model (curves) and background grid are completed.
 
-To generate a mesh using HQMTool you
+To generate a mesh interactively you
 
 1. Create a project with a user given `projectName` and `folder` where any generated files are to be saved
 
@@ -55,7 +56,7 @@ To generate a mesh using HQMTool you
    For a single inner / outer boundary curve the command above directly adds the curve into the `Project`.
    If the inner / outer boundary curve is a chain of multiple curves then they must be added to the `Project`
    in an order which yields a closed curves with counter-clockwise orientation.
-   See the [Tour of HQMTool in action](@ref) for an example of a chain of curves.
+   See the [Guided tour](@ref) for an example of a chain of curves.
 
    Curves can be added by using the generic `add!` function instead of the longer descriptive
    name to save typing during interactive sessions, if desired.
@@ -77,8 +78,8 @@ To generate a mesh using HQMTool you
    the mesh is generated.
 
    !!! note "Visualization requirement"
-       HQMTool uses [Makie.jl](https://github.com/JuliaPlots/Makie.jl/) to visualize
-       the `Project` information. Therefore, in addition to HOHQMesh.jl a user must
+       The interactive functionality uses [Makie.jl](https://github.com/JuliaPlots/Makie.jl/)
+       to visualize the `Project` information. Therefore, in addition to HOHQMesh.jl a user must
        load a Makie backend (for example, [GLMakie](https://github.com/JuliaPlots/GLMakie.jl/) or
        [CairoMakie](https://github.com/JuliaPlots/CairoMakie.jl)) if visualization is desired.
 

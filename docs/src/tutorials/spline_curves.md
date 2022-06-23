@@ -15,7 +15,7 @@ from the [examples](https://github.com/trixi-framework/HOHQMesh.jl/tree/main/exa
 This tutorial demonstrates how to:
 * Create a circular outer boundary curve.
 * Add the background grid when an outer boundary curve is present.
-* Visualize a HQMTool project.
+* Visualize an interactive mesh project.
 * Construct and add parametric spline curves.
 * Construct and add an inner boundary chain of straight line segments.
 
@@ -249,6 +249,6 @@ are satisfied with the overall mesh quality.
 In this tutorial we demonstrated how to:
 * Create a circular outer boundary curve.
 * Add the background grid when an outer boundary curve is present.
-* Visualize a HQMTool project.
+* Visualize an interactive mesh project.
 * Construct and add parametric spline curves.
 * Construct and add an inner boundary chain of straight line segments.

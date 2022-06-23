@@ -28,7 +28,7 @@ makedocs(
     # Explicitly specify documentation structure
     pages = [
         "Home" => "index.md",
-        "HQMTool" => [
+        "Interactive mesh generation" => [
             "HQMTool.md",
             "HQMTool_Tour.md",
             "HQMTool_API.md",
@@ -39,7 +39,7 @@ makedocs(
             joinpath("tutorials", "straight_outer_boundary.md"),
             joinpath("tutorials", "curved_outer_boundary.md"),
             joinpath("tutorials", "spline_curves.md"),
-            joinpath("tutorials", "undo_redo.md"),
+            joinpath("tutorials", "create_edit_curves.md"),
         ],
         "Advanced topics & developers" => [
             "Development" => "development.md",

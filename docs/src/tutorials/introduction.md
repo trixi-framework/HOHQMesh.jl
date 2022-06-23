@@ -2,7 +2,7 @@
 
 The tutorial section for [HOHQMesh.jl](https://github.com/trixi-framework/HOHQMesh.jl)
 provides step-by-step commands and accompanying explanations for the major features of the
-interactive mesh generation tools provided by [HQMTool](@ref HQMTool).
+[interactive mesh generation tools](@ref InteractiveTool).
 
 For a general overview of the capabilities and features of HOHQMesh to generate quadrilateral
 and hexahedral meshes we refer to the
@@ -15,7 +15,7 @@ the simulation framework [Trixi.jl](https://github.com/trixi-framework/Trixi.jl)
 
 ## [Straight-sided outer boundary](@ref)
 
-This tutorial gives an introduction to the main functionality of the interactive meshing HQMTool. In
+This tutorial gives an introduction to the main functionality of the interactive meshing. In
 particular, adding a straight-sided bounding box for the outer domain and two circular inner boundary
 chains. It also demonstrates how to adjust some of the mesh parameters as well as the output mesh file
 format.
@@ -25,7 +25,7 @@ format.
 Demonstrates how to:
 * Query and adjust the `RunParameters` of a project.
 * Define a rectangular outer boundary and set the background grid.
-* Visualize a HQMTool project.
+* Visualize an interactive mesh project.
 * Add circular inner boundary curves.
 
 ## [Curved outer boundary](@ref)
@@ -39,7 +39,7 @@ necessary from this visual inspection.
 Demonstrates how to:
 * Define a curved outer boundary using parametric equations.
 * Add and adjust the background grid.
-* Visualize a HQMTool project.
+* Visualize an interactive mesh project.
 * Add manual refinement to a local region of the domain.
 
 ## [Spline curves](@ref)
@@ -53,7 +53,7 @@ three straight line "curves".
 Demonstrates how to:
 * Create a circular outer boundary curve.
 * Add the background grid when an outer boundary curve is present.
-* Visualize a HQMTool project.
+* Visualize an interactive mesh project.
 * Construct and add parametric spline curves.
 * Construct and add an inner boundary chain of straight line segments.
 
@@ -72,7 +72,7 @@ Demonstrates how to:
 * Create and edit an outer boundary chain.
 * Create and edit an inner boundary chain.
 * Add the background grid when an outer boundary curve is present.
-* Visualize a HQMTool project.
+* Visualize an interactive mesh project.
 * Discuss undo / redo capabilities.
 * Construct and add parametric spline curves.
 * Construct and add a curve from parametric equations.

@@ -1,6 +1,6 @@
 # Testing
 
-During the development of HOHQMesh and HQMTool, we rely on
+During the development of HOHQMesh and its interactive functionality, we rely on
 [continuous testing](https://en.wikipedia.org/wiki/Continuous_testing) to ensure
 that modifications or new features do not break existing
 functionality or add other errors. In the main
@@ -35,7 +35,7 @@ parts of the code.
 Thus in addition to performing all tests, you can also just `include` one of the
 files named `test_xxx.jl` to run only a specific subset, e.g.,
 ```julia
-julia> # Run all test for the HQMtool Curve API
+julia> # Run all test for the interactive Curve API
        include(joinpath("test", "test_curve.jl"))
 ```
 

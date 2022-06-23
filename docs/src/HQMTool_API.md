@@ -1,4 +1,4 @@
-# [HQMTool API](@id HQMTool-API)
+# API
 
 ## Project creation and saving
 
@@ -236,7 +236,7 @@ HOHQMesh can be found [here](https://trixi-framework.github.io/HOHQMesh/the-mode
 The domain can have a single outer boundary chain and an arbitrary number of inner boundary chains.
 
 The orientation of any curve chains must be counter-clockwise.
-This orientation is automatically checked by HQMTool and a warning is thrown if
+This orientation is automatically checked in `generate_mesh` and a warning is thrown if
 a user attempts to connect the curve chain in an invalid way.
 
 See the tutorial [Creating and editing curves](@ref) for a demonstration of defining,
@@ -461,7 +461,7 @@ Otherwise there are special functions to change the parameters of curves
 
 ## Undo/redo
 
-The HQMTool has unlimited undo/redo for most actions.
+The interactive mesh functionality has unlimited undo/redo for most actions.
 
 In interactive mode, actions can be undone by the commands
 ```

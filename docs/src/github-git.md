@@ -1,7 +1,7 @@
 # GitHub & Git
 
 This page contains information on how to use GitHub and Git when developing
-HOHQMesh and HQMTool.
+HOHQMesh.
 
 ## Development workflow
 
@@ -95,7 +95,7 @@ review. That is, you should
     around)
   * remove debug statements
   * add a script `interactive_xxx.jl` that uses your feature (only relevant for new
-    features with HQMTool)
+    features within the interactive mesh funtionality)
   * describe changes in `NEWS.md` if appropriate
 
 After you are confident that your branch is cleaned up properly, commit all

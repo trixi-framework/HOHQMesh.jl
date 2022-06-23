@@ -6,7 +6,7 @@ By a "chain" we mean a closed curve that is composed of multiple pieces.
 Each chain can be a combination of different curve types, e.g., a circular
 arc can connect to a spline.
 It also shows how to modify, remove, and add new pieces to an existing curve chain.
-In doing so, the `undo` and `redo` capabilities of the HQMTool are briefly discussed.
+The `undo` and `redo` capabilities of the interactive mesh tool are briefly discussed.
 The outer and inner boundary curves, background grid as well as the mesh
 will be visualized for quality inspection.
 
@@ -16,7 +16,7 @@ This tutorial demonstrates how to:
 * Create and edit an outer boundary chain.
 * Create and edit an inner boundary chain.
 * Add the background grid when an outer boundary curve is present.
-* Visualize a HQMTool project.
+* Visualize an interactive mesh project.
 * Discuss undo / redo capabilities.
 * Construct and add parametric spline curves.
 * Construct and add a curve from parametric equations.
@@ -311,7 +311,7 @@ Note that the index of the remaining curves has changed as shown below.
 ![inner_removal](https://user-images.githubusercontent.com/25242486/175062997-6f60b3e3-b9eb-4f6b-8062-5b17de0cca2c.png)
 
 !!! note "Brief note about undo / redo"
-    A HQMTool project (globally) carries an operation stack of actions that can be undone
+    The interactive functionality (globally) carries an operation stack of actions that can be undone
     (or redone) as the case may be. We can query and print to the REPL the top of the
     undo stack with `undoActionName`.
     ```julia
@@ -326,7 +326,7 @@ Note that the index of the remaining curves has changed as shown below.
     In addition to reinstating `"Line1"` into the `sandbox_project`, this undo
     prints the action that was undone to the REPL and will update the figure.
 
-    Analogously, HQMTool has a redo operation stack. We query and print to the REPL the top
+    Analogously, there is a redo operation stack. We query and print to the REPL the top
     the redo stack with `redoActionName` and can use `redo` to perform
     the operation.
 
@@ -446,7 +446,7 @@ In this tutorial we demonstrated how to:
 * Create and edit an outer boundary chain.
 * Create and edit an inner boundary chain.
 * Add the background grid when an outer boundary curve is present.
-* Visualize a HQMTool project.
+* Visualize an interactive mesh project.
 * Discuss undo / redo capabilities.
 * Construct and add parametric spline curves.
 * Construct and add a curve from parametric equations.

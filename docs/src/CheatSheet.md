@@ -2,16 +2,16 @@
 
 This provides a quick reference for the syntax
 of the interactive construction of boundary curves, background grid, etc.
-for the HQMTool. When possible, the commands presented below give
+When possible, the commands presented below give
 generic versions of the function calls, e.g., for creating a new curve or
 adding the curve to a boundary chain. The script
 `interactive_outer_boundary_generic.jl` in the `examples` folder
-constructs an identical example mesh as shown in the [Tour of HQMTool in action](@ref)
-except using HQMTool's generic function calls.
+constructs an identical example mesh as shown in the [Guided tour](@ref)
+using generic function calls.
 
-A through description of the functions can be found in the [HQMTool API](@ref) section.
+A thorough description of the functions can be found in the [API](@ref) section.
 
-The general workflow of the HQMTool within a REPL session is
+The general workflow of the interactive mesh functionality within a REPL session is
 
 1. Create a project
 2. Add boundary curves

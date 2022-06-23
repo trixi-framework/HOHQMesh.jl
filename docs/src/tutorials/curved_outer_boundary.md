@@ -14,7 +14,7 @@ of the curved boundary.
 This tutorial demonstrates how to:
 * Define a curved outer boundary using parametric equations.
 * Add and adjust the background grid.
-* Visualize a HQMTool project.
+* Visualize an interactive mesh project.
 * Add manual refinement to a local region of the domain.
 
 ## Initialization
@@ -204,7 +204,7 @@ Now we decide that we are satisfied with the mesh quality and resolution of the 
 In this tutorial we demonstrated how to:
 * Define a curved outer boundary using parametric equations.
 * Add and adjust the background grid.
-* Visualize a HQMTool project.
+* Visualize an interactive mesh project.
 * Add manual refinement to a local region of the domain.
 
 For completeness, we include a script with all the commands to generate the mesh displayed in the final image.

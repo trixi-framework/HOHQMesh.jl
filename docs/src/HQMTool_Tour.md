@@ -1,8 +1,11 @@
-# Tour of HQMTool in action
+# Guided tour
 
 In this brief overview, we highlight two scripts from the `examples` folder
-that demonstrate the functionality of HQMTool. In depth
+that demonstrate the interactive mesh functionality of HOHQMesh.jl. In depth
 explanations of the functionality are provided in the [Tutorials](@ref).
+
+See the [HOHQMesh documentation](https://trixi-framework.github.io/HOHQMesh/)
+for more details about its terminology and capabilities.
 
 ## Mesh from a control file
 
@@ -16,7 +19,7 @@ This command will create mesh and plot files in the `out` directory.
 
 ## Build a mesh from scratch
 
-A second example script `interactive_outer_boundary.jl` makes a new HQMTool project consisting
+A second example script `interactive_outer_boundary.jl` makes a new project consisting
 of an outer, circular boundary, and an inner boundary in the shape of an ice cream cone.
 To run this example, execute
 ```julia
