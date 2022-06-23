@@ -28,7 +28,7 @@ julia> using GLMakie, HOHQMesh
 ```
 Now we are ready to interactively generate unstructured quadrilateral meshes!
 
-We create a new HQMTool project dictionary with the name `"TheBlob"` and
+We create a new project with the name `"TheBlob"` and
 assign `"out"` to be the folder where any output files from the mesh generation process
 will be saved. By default, the output files created by HOHQMesh will carry the same name
 as the project. For example, the resulting mesh file from this tutorial will be named
@@ -68,7 +68,7 @@ The name of this curve is assigned to be `"Blob"`. This name is also the label t
 will give to this boundary curve in the resulting mesh file.
 
 Now that we have created the boundary curve it must be added as an outer boundary
-in the `blob_project` dictionary.
+in the `blob_project`.
 ```julia
 addCurveToOuterBoundary!(blob_project, blob)
 ```
@@ -112,10 +112,10 @@ to the mesh generation.
 
 ## Initial mesh and user adjustments
 
-We next generate the mesh from the information contained in the project dictionary `blob_project`.
+We next generate the mesh from the information contained in the `blob_project`.
 This will output the following files to the `out` folder:
 
-* `TheBlob.control`: A HOHQMesh control file for the current project dictionary.
+* `TheBlob.control`: A HOHQMesh control file for the current project.
 * `TheBlob.tec`: A TecPlot formatted file to visualize the mesh with other software, e.g., [ParaView](https://www.paraview.org/).
 * `TheBlob.mesh`: A mesh file with format `ISM-V2` (the default format).
 
@@ -155,20 +155,21 @@ visualization. The background grid is *removed* from the visualization when the 
 Inspecting the mesh we see that the automatic subdivision in HOHQMesh does well to capture the fine features
 of the curved outer boundary. Although, we see that the mesh near the point $(-4, 0)$ is still quite coarse.
 To remedy this we manually add a `RefinementCenter` near this region of the domain to force HOHQMesh to increase
-the resolution in this area. We create and add this refinement region to the current project dictionary with
+the resolution in this area. We create and add this refinement region to the current project with
 ```julia
 center = newRefinementCenter("region", "smooth", [-4.0, -0.5, 0.0], 0.4, 1.0)
 addRefinementRegion!(blob_project, center)
 ```
 Above we create a circular refinement region centered at the point $(-4, -0.5)$ with a desired resolution size
-$0.4$ and a radius of $1.0$. Upon adding this refinement region to the project dictionary the visualization will
+$0.4$ and a radius of $1.0$. Upon adding this refinement region to `blob_project`, the visualization will
 update to indicate the location and size of the manual refinement region.
 
 ![refinement_blob](https://user-images.githubusercontent.com/25242486/174747059-1f58ae14-aeec-48d5-afb3-6a0614a8e29d.png)
 
 ## Final mesh
 
-With the refinement region added to the dictionary we can regenerate the mesh. Note, this will create and save new output files `TheBlob.control`, `TheBlob.tec`, `TheBlob.mesh` and update the figure.
+With the refinement region added to the project we can regenerate the mesh. Note, this will create
+and save new output files `TheBlob.control`, `TheBlob.tec`, `TheBlob.mesh` and update the figure.
 ```julia
 generate_mesh(blob_project)
 
@@ -217,7 +218,7 @@ Note, we **do not** include the plotting in this script.
 # Keywords: outer boundary, parametric equations, refinement center
 using HOHQMesh
 
-# Instantiate the project dictionary
+# Instantiate the project
 blob_project = newProject("TheBlob", "out")
 
 # Create and add the outer boundary curve

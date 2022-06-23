@@ -34,7 +34,7 @@ julia> using GLMakie, HOHQMesh
 ```
 Now we are ready to interactively generate unstructured quadrilateral meshes!
 
-We create a new HQMTool project dictionary with the name `"sandbox"` and
+We create a new project with the name `"sandbox"` and
 assign `"out"` to be the folder where any output files from the mesh generation process
 will be saved. By default, the output files created by HOHQMesh will carry the same name
 as the project. For example, the resulting HOHQMesh control file from this tutorial
@@ -82,7 +82,7 @@ The curve names  `"Line1"`, `"Line2"`, and `"Arc"` are the labels that
 HOHQMesh will give to these boundary curve segments in the resulting mesh file.
 
 The three curve segments stored in the variables `outer_line1`, `outer_line2`, and `outer_arc`
-are then added to the `sandbox_project` dictionary with a counter-clockwise
+are then added to the `sandbox_project` with a counter-clockwise
 orientation as required by HOHQMesh.
 ```julia
 addCurveToOuterBoundary!(sandbox_project, outer_line1)
@@ -155,7 +155,7 @@ spline_data = [ [0.0  -5.0  3.0 0.0]
                 [1.0   0.0 -7.0 0.0] ]
 outer_spline = newSplineCurve("Spline", 5, spline_data)
 ```
-Now we add the spline curve `outer_spline` into the `sandbox_project` dictionary.
+Now we add the spline curve `outer_spline` into the `sandbox_project`.
 ```julia
 addCurveToOuterBoundary!(sandbox_project, outer_spline)
 ```
@@ -212,7 +212,7 @@ The curve names  `"Line1"`, `"Line2"`, `"BottomArc"`, and `"TopArc"` are the lab
 HOHQMesh will give to these inner boundary curve segments in the resulting mesh file.
 
 The four curve segments stored in the variables `inner_line1`, `inner_line2`,
-`inner_bottom_arc` and `outer_arc` are added to the `sandbox_project` dictionary in  counter-clockwise order as required by HOHQMesh.
+`inner_bottom_arc` and `outer_arc` are added to the `sandbox_project` in  counter-clockwise order as required by HOHQMesh.
 ```julia
 addCurveToInnerBoundary!(sandbox_project, inner_line1,      "inner")
 addCurveToInnerBoundary!(sandbox_project, inner_bottom_arc, "inner")
@@ -221,7 +221,7 @@ addCurveToInnerBoundary!(sandbox_project, inner_top_arc,    "inner")
 ```
 This inner boundary chain name `"inner"` is used internally by HOHQMesh. The visualization
 of the background grid automatically detects that curves have been added to the
-`sandbox_project` dictionary and the plot is updated, as shown below. The chain for the inner boundary curve chain is called `inner` and it contains a four curve segments
+`sandbox_project` and the plot is updated, as shown below. The chain for the inner boundary curve chain is called `inner` and it contains a four curve segments
 `"Line1"`, `"BottomArc"`, `"Line2"`, and `"TopArc"` labeled in the figure by
 `1.1`, `1.2`, `1.3`, and `1.4`, respectively.
 
@@ -229,10 +229,10 @@ of the background grid automatically detects that curves have been added to the
 
 ## Generate the mesh
 
-We next generate the mesh from the information contained in the project dictionary `sandbox_project`.
+We next generate the mesh from the information contained in the `sandbox_project`.
 This will output the following files to the `out` folder:
 
-* `sandbox.control`: A HOHQMesh control file for the current project dictionary.
+* `sandbox.control`: A HOHQMesh control file for the current project.
 * `sandbox.tec`: A TecPlot formatted file to visualize the mesh with other software, e.g., [ParaView](https://www.paraview.org/).
 * `sandbox.mesh`: A mesh file with format `ISM-V2` (the default format).
 
@@ -272,13 +272,16 @@ The background grid is *removed* from the visualization when the mesh is generat
 
 ## Delete the existing mesh
 
-In preparation of edits we will make to the inner boundary chain we remove the current mesh from the plot and re-plot the model curves and background grid. Note, this step is not required, but it helps avoid confusion when editing several curves.
+In preparation of edits we will make to the inner boundary chain we remove the current mesh from the plot
+and re-plot the model curves and background grid.
+Note, this step is not required, but it helps avoid confusion when editing several curves.
 ```julia
 remove_mesh!(sandbox_project)
 updatePlot!(sandbox_project, MODEL+GRID)
 ```
-Additionally, the `remove_mesh!` command **deletes** the mesh information from the `sandbox_project`
-dictionary and `sandbox.mesh` from the `out` folder. However, the `sandbox.control` and `sandbox.tec` files are still present in `out` directory.
+Additionally, the `remove_mesh!` command deletes the mesh information from the `sandbox_project`
+and `sandbox.mesh` from the `out` folder. However, the `sandbox.control` and `sandbox.tec` files
+are still present in `out` directory.
 
 ## Edit an inner boundary chain
 
@@ -320,7 +323,7 @@ Note that the index of the remaining curves has changed as shown below.
     undo()
     "Undo Remove Inner Boundary Curve"
     ```
-    In addition to reinstating `"Line1"` into the `sandbox_project` dictionary, this undo
+    In addition to reinstating `"Line1"` into the `sandbox_project`, this undo
     prints the action that was undone to the REPL and will update the figure.
 
     Analogously, HQMTool has a redo operation stack. We query and print to the REPL the top
@@ -365,7 +368,7 @@ the `"BottomArc"` curve. So, the inner boundary chain remains open.
 
 !!! warning "Attempt to generate a mesh with an open curve chain"
     An open curve chain is **invalid** in HOHQMesh. All inner and/or outer curve chains
-    must be closed. If we attempt to send a project dictionary that contains an open
+    must be closed. If we attempt to send a project that contains an open
     curve chain to `generate_mesh` a warning is thrown and no mesh or output files
     are generated.
 
@@ -384,7 +387,7 @@ Note that the inner curve chain indexing has, again, been automatically adjusted
 
 A half-circle arc that joins the points $(2, 3)$ and $(-1, 3)$ has a radius $r=1.5$, is
 centered at $(0.5, 3)$ and has an angle that vaires from $0$ to $-180$.
-We construct this circle arc and directly add it to the `sandbox_project` dictionary.
+We construct this circle arc and directly add it to the `sandbox_project`.
 ```julia
 new_bottom_arc = newCircularArcCurve("wideBottomArc", # curve name
                                      [0.5, 3.0, 0.0], # center
@@ -462,7 +465,7 @@ Note, we **do not** include the plotting in this script.
 #           circle arcs, cubic spline, curve removal
 using HOHQMesh
 
-# Instantiate the project dictionary
+# Instantiate the project
 sandbox_project = newProject("sandbox", "out")
 
 # Add the background grid

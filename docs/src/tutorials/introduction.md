@@ -23,7 +23,7 @@ format.
 ### Synopsis
 
 Demonstrates how to:
-* Query and adjust the `RunParameters` of a project dictionary.
+* Query and adjust the `RunParameters` of a project.
 * Define a rectangular outer boundary and set the background grid.
 * Visualize a HQMTool project.
 * Add circular inner boundary curves.

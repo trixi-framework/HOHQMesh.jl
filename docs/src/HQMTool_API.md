@@ -57,7 +57,7 @@ It can be changed at any time with
 ```
 
 ### Getting the current name of a `Project`
-The project name can be fetched from the project dictionary and printed to the screen with
+The project name can be fetched and printed to the screen with
 ```
    [Return:String] getName(proj::Project)
 ```
@@ -152,7 +152,7 @@ with the vector `bgSize`.
 
 ### Changing the background grid
 
-The size of an existing background grid in a `projectDictionary` can be adjusted with
+The size of an existing background grid in a `Project` can be adjusted with
 ```
    [Return:nothing] setBackgroundGridSize!(proj::Project,
                                            dx::Float64,
@@ -228,14 +228,14 @@ To further edit a `RefinementLine`, use the methods
 
 ## Boundary curves
 
-The `projectDictionary` contains a model that contains information about any inner and/or outer
+The `Project` contains a model that contains information about any inner and/or outer
 boundary curves that a user can add to define a domain to be meshed. Each curve is defined as a
 "chain" that can be built from multiple connected curves. More details on boundary curves and
 HOHQMesh can be found [here](https://trixi-framework.github.io/HOHQMesh/the-model/).
 
 The domain can have a single outer boundary chain and an arbitrary number of inner boundary chains.
 
-The orientation of any curve chains **must be** counter-clockwise.
+The orientation of any curve chains must be counter-clockwise.
 This orientation is automatically checked by HQMTool and a warning is thrown if
 a user attempts to connect the curve chain in an invalid way.
 

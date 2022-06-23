@@ -52,9 +52,13 @@ To generate a mesh using HQMTool you
    addInnerBoundaryCurve!(p, <curveName>, <InnerBoundaryName>) *Add curve to an inner boundary*
    ```
 
-   For a single inner / outer boundary curve the command above directly adds the curve into the project dictionary. If the inner / outer boundary curve is a chain of multiple curves then they must be added to the project dictionary in an order which yields a closed curves with counter-clockwise orientation. See the [Tour of HQMTool in action](@ref) for an example of a chain of curves.
+   For a single inner / outer boundary curve the command above directly adds the curve into the `Project`.
+   If the inner / outer boundary curve is a chain of multiple curves then they must be added to the `Project`
+   in an order which yields a closed curves with counter-clockwise orientation.
+   See the [Tour of HQMTool in action](@ref) for an example of a chain of curves.
 
-   Curves can be added by using the generic `add!` function instead of the longer descriptive name to save typing during interactive sessions, if desired.
+   Curves can be added by using the generic `add!` function instead of the longer descriptive
+   name to save typing during interactive sessions, if desired.
 
 4. Visualize the project's model, if desired
 
@@ -74,7 +78,7 @@ To generate a mesh using HQMTool you
 
    !!! note "Visualization requirement"
        HQMTool uses [Makie.jl](https://github.com/JuliaPlots/Makie.jl/) to visualize
-       the project dictionary information. Therefore, in addition to HOHQMesh.jl a user must
+       the `Project` information. Therefore, in addition to HOHQMesh.jl a user must
        load a Makie backend (for example, [GLMakie](https://github.com/JuliaPlots/GLMakie.jl/) or
        [CairoMakie](https://github.com/JuliaPlots/CairoMakie.jl)) if visualization is desired.
 
@@ -106,11 +110,11 @@ To generate a mesh using HQMTool you
    where the spacing controls the number of elements in each direction.
 
    !!! note "Background grid"
-       A background grid is required by HOHQMesh. If one is not present in the project dictionary
+       A background grid is required by HOHQMesh. If one is not present in the `Project`
        and a user attempts to generate the mesh a warning is thrown.
 
 6. Adjust meshing parameters, if desired. For instance, one can adjust the polynomial
-   `order` in the project dictionary for any curved boundaries by
+   `order` in the `Project` for any curved boundaries by
 
    ```
    setPolynomialOrder!(p, order)
@@ -124,7 +128,7 @@ To generate a mesh using HQMTool you
    ```
 
    See [Controlling the mesh generation](@ref) for details on adjusting parameters already present
-   in the project dictionary.
+   in the `Project`.
 
 7. Generate the mesh
 
@@ -133,7 +137,7 @@ To generate a mesh using HQMTool you
    ```
 
    The mesh file will be saved in `<folder>` with the name `<projectName>.mesh`. A HOHQMesh control file
-   is automatically created from the contents of the project dictionary and is also saved in that folder
+   is automatically created from the contents of the `Project` and is also saved in that folder
    with the name `<projectName>.control`. This control file can be read in again later and modified,
    remeshed, etc. The function `generate_mesh` will print the mesh information and statistics, and will
    plot the mesh as in the figure above, if a plot is otherwise visible.
@@ -141,7 +145,7 @@ To generate a mesh using HQMTool you
 
 ## Advanced
 
-All objects and information contained in a `projectDirectory` are actually dictionaries of type `Dict{String, Any}`.
+All objects and information contained in the variable type `Project` are actually dictionaries of type `Dict{String, Any}`.
 Since Julia is not an object oriented language, the parameters and other parts of these internal dictionaries
 can be accessed and edited directly by key and value.
 However, if you do that, then certain features like `undo`/`redo` and automatic plot updating **will not work**.

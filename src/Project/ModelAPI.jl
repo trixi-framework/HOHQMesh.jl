@@ -17,7 +17,7 @@ function addCurveToOuterBoundary!(proj::Project, crv::Dict{String,Any})
 
     enableUndo()
     registerWithUndoManager(proj,removeOuterBoundaryCurveWithName!,(crv["name"],),"Add Outer Boundary Curve")
-    println("Added ",getCurveName(crv)," to the outer boundary chain.")
+    println("Added curve ",getCurveName(crv)," to the outer boundary chain.")
 end
 
 
@@ -172,7 +172,7 @@ function addCurveToInnerBoundary!(proj::Project, crv::Dict{String,Any}, boundary
     registerWithUndoManager(proj,removeInnerBoundaryCurve!,
                             (crv["name"],boundaryName),
                             "Add Inner Boundary Curve")
-    println("Added ",getCurveName(crv)," to the ",boundaryName," chain.")
+    println("Added curve ",getCurveName(crv)," to the ",boundaryName," chain.")
 end
 
 """

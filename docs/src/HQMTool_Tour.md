@@ -7,7 +7,7 @@ explanations of the functionality are provided in the [Tutorials](@ref).
 ## Mesh from a control file
 
 A first example script reads in an existing control file from the HOHQMesh examples collection
-and make it into a HQMTool project dictionary.
+and makes it into a `Project`.
 To run this example, execute
 ```julia
 julia> include(joinpath(HOHQMesh.examples_dir(), "interactive_from_control_file.jl"))
@@ -24,7 +24,7 @@ julia> include(joinpath(HOHQMesh.examples_dir(), "interactive_outer_boundary.jl"
 ```
 
 For completeness, we provide the example script and walk-through each step in the construction
-of the project dictionary below.
+of the `Project` below.
 ```julia
 using HOHQMesh
 

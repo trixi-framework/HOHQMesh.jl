@@ -30,7 +30,7 @@ julia> using GLMakie, HOHQMesh
 ```
 Now we are ready to interactively generate unstructured quadrilateral meshes!
 
-We create a new HQMTool project dictionary with the name `"spline_curves"` and
+We create a new project with the name `"spline_curves"` and
 assign `"out"` to be the folder where any output files from the mesh generation process
 will be saved. By default, the output files created by HOHQMesh will carry the same name
 as the project. For example, the resulting HOHQMesh control file from this tutorial
@@ -99,7 +99,7 @@ The domain of this tutorial will contain three inner boundary curves:
 A parametric cubic spline curve can be constructed from a file of data points. The first line
 of this plain text file must indicate the number of nodes. Then line-by-line the file contains
 the knots $t_j$, $x_j$, $y_j$, $z_j$ where $j$ indexes the number of nodes.
-If the spline curve is to be closed. The last data point **must** be the same as the first.
+If the spline curve is to be closed. The last data point must be the same as the first.
 For examples, see the
 [HOHQMesh documentation](https://trixi-framework.github.io/HOHQMesh/the-model/#the-spline-curve-definition)
 or open the file `test_spline_curve_data.txt` in the
@@ -118,7 +118,7 @@ The new `spline1` curve is then added to the `spline_project` as an inner bounda
 addCurveToInnerBoundary!(spline_project, spline1, "inner1")
 ```
 This inner boundary chain name `"inner1"` is used internally by HOHQMesh. The visualization
-of the background grid automatically detects that a curve has been added to the project dictionary
+of the background grid automatically detects that a curve has been added to the project
 and the plot is updated appropriately, as shown below. The chain for the inner boundary
 curve is called `inner1` and it contains a single curve `"big_spline"` labeled in the figure by `1.1`.
 
@@ -151,7 +151,7 @@ The new `spline2` curve is then added to the `spline_project` as an inner bounda
 addCurveToInnerBoundary!(spline_project, spline2, "inner2")
 ```
 This inner boundary chain name `"inner2"` is used internally by HOHQMesh. The visualization
-of the background grid automatically detects that a curve has been added to the project dictionary
+of the background grid automatically detects that a curve has been added to the project
 and the plot is updated appropriately, as shown below. The chain for the inner boundary
 curve is called `inner2` and it contains a single curve `"small_spline"` labeled in the figure by `2.1`.
 
@@ -187,7 +187,7 @@ addCurveToInnerBoundary!(spline_project, edge2, "inner3")
 addCurveToInnerBoundary!(spline_project, edge3, "inner3")
 ```
 The inner boundary chain name `"inner3"` is used internally for HOHQMesh. Again,
-the active visualization automatically detects that new curves have been added to the project dictionary
+the active visualization automatically detects that new curves have been added to the project
 and the plot is updated appropriately, as shown below. The chain for the inner triangular boundary
 is called `inner3` and it contains a three curve segments all called `"triangle"` labeled in the figure
 by `3.1`, `3.2`, and `3.3`.
@@ -196,10 +196,10 @@ by `3.1`, `3.2`, and `3.3`.
 
 ## Generate the mesh
 
-With the background grid, outer boundary curve, and all inner boundary curves added to the `spline_project` dictionary we are ready to generate the mesh.
+With the background grid, outer boundary curve, and all inner boundary curves added to the `spline_project` we are ready to generate the mesh.
 This will output the following files to the `out` folder:
 
-* `spline_curves.control`: A HOHQMesh control file for the current project dictionary.
+* `spline_curves.control`: A HOHQMesh control file for the current project.
 * `spline_curves.tec`: A TecPlot formatted file to visualize the mesh with other software, e.g., [ParaView](https://www.paraview.org/).
 * `spline_curves.mesh`: A mesh file with format `ISM-V2` (the default format).
 

@@ -12,7 +12,7 @@ from the [examples](https://github.com/trixi-framework/HOHQMesh.jl/tree/main/exa
 ### Synopsis
 
 This tutorial demonstrates how to:
-* Query and adjust the `RunParameters` of a project dictionary.
+* Query and adjust the `RunParameters` of a project.
 * Define a rectangular outer boundary and set the background grid.
 * Visualize a HQMTool project.
 * Add circular inner boundary curves.
@@ -28,7 +28,7 @@ julia> using GLMakie, HOHQMesh
 ```
 Now we are ready to interactively generate unstructured quadrilateral meshes!
 
-We create a new HQMTool project dictionary with the name `"box_two_circles"` and
+We create a new project with the name `"box_two_circles"` and
 assign `"out"` to be the folder where any output files from the mesh generation process
 will be saved. By default, the output files created by HOHQMesh will carry the same name
 as the project. For example, the resulting HOHQMesh control file from this tutorial
@@ -41,7 +41,7 @@ box_project = newProject("box_two_circles", "out")
 
 ## Adjusting project parameters
 
-When a new project dictionary is created it is filled with several default
+When a new project is created it is filled with several default
 `RunParameters` such as the polynomial order used to represent curved boundaries
 or the mesh file format. These `RunParameters` can be queried and adjusted with
 appropriate getter/setter pairs, see [Controlling the mesh generation](@ref)
@@ -57,7 +57,7 @@ julia> getMeshFileFormat(box_project)
 "ISM-V2"
 ```
 
-We change these quantities in the `box_project` dictionary with the corresponding
+We change these quantities in the `box_project` with the corresponding
 setter functions. For this we will set the polynomial order to be $4$ and the mesh file format
 to be `ABAQUS`. See the
 [P4est-based mesh](https://trixi-framework.github.io/Trixi.jl/stable/meshes/p4est_mesh/)
@@ -129,14 +129,14 @@ The new `circle1` curve is then added to the `box_project` as an inner boundary 
 addCurveToInnerBoundary!(box_project, circle1, "inner1")
 ```
 This inner boundary chain name `"inner1"` is used internally by HOHQMesh. The visualization
-of the background grid automatically detects that a curve has been added to the project dictionary
+of the background grid automatically detects that a curve has been added to the project
 and the plot is updated appropriately, as shown below. The chain for the inner boundary
 curve is called `"inner1"` and it contains a single curve `"circle1"` labeled in the figure by `1.1`.
 
 ![first_circle](https://user-images.githubusercontent.com/25242486/174775027-62a094f7-bbba-4c1c-a389-99562c2e5fe2.png)
 
 With analogous steps we create another circular curve with radius $r=4$, centered at $(20, 9)$ and
-add it as a second inner curve to the `box_project` dictionary. Note, for this curve we use radians
+add it as a second inner curve to the `box_project`. Note, for this curve we use radians
 for the angle units.
 ```julia
 circle2 = newCircularArcCurve("circle2",        # curve name
@@ -147,7 +147,7 @@ circle2 = newCircularArcCurve("circle2",        # curve name
                               "radians")        # angle units
 addCurveToInnerBoundary!(box_project, circle2, "inner2")
 ```
-Again, HQMTool detects that a curve has been added to the active project dictionary
+Again, HQMTool detects that a curve has been added to the active project
 and the visualization is automatically updated with the second circular curve.
 The chain for the second inner boundary curve is called `"inner2"` and it contains
 a single curve `"circle2"` labeled in the figure by `2.1`.
@@ -156,11 +156,11 @@ a single curve `"circle2"` labeled in the figure by `2.1`.
 
 ## Generate the mesh
 
-With the background grid and all inner boundary curves added to the `box_project` dictionary
+With the background grid and all inner boundary curves added to the `box_project`
 we can generate the mesh.
 This will output the following files to the `out` folder:
 
-* `box_two_circles.control`: A HOHQMesh control file for the current project dictionary.
+* `box_two_circles.control`: A HOHQMesh control file for the current project.
 * `box_two_circles.tec`: A TecPlot formatted file to visualize the mesh with other software, e.g., [ParaView](https://www.paraview.org/).
 * `box_two_circles.inp`: A mesh file with format `ABAQUS` that was set above.
 
@@ -200,7 +200,7 @@ the inner circular boundaries.
 ## Summary
 
 In this tutorial we demonstrated how to:
-* Query and adjust the `RunParameters` of a project dictionary.
+* Query and adjust the `RunParameters` of a project.
 * Define a rectangular outer boundary and set the background grid.
 * Visualize a HQMTool project.
 * Add circular inner boundary curves.
