@@ -24,7 +24,7 @@ end
 """
     removeOuterBoundaryCurveWithName!(proj::Project, name::String)
 
-Remove the named curve in the outer boundary
+Remove the named curve in the outer boundary.
 """
 function removeOuterBoundaryCurveWithName!(proj::Project, name::String)
     lst = getOuterBoundaryChainList(proj)
@@ -176,9 +176,9 @@ function addCurveToInnerBoundary!(proj::Project, crv::Dict{String,Any}, boundary
 end
 
 """
-    removeInnerBoundaryCurve!(proj::Project, name::String)
+    removeInnerBoundaryCurve!(proj::Project, name::String, chainName::String)
 
-Remove the named curve in the inner boundary
+Remove the curve with `name` from an inner boundary chain with `chainName`.
 """
 function removeInnerBoundaryCurve!(proj::Project, name::String, chainName::String)
     i, chain = getInnerBoundaryChainWithName(proj,chainName)
@@ -209,6 +209,14 @@ function removeInnerBoundaryCurve!(proj::Project, name::String, chainName::Strin
     removeInnerBoundaryCurveAtIndex!(proj,indx,chainName)
 end
 
+
+"""
+    insertInnerBoundaryCurveAtIndex!(proj::Project, crv::Dict{String,Any},
+                                     indx::Int, boundaryName::String)
+
+Insert a curve `crv` into an inner boundary chain `boundaryName`
+at the specified index `indx`.
+"""
 function insertInnerBoundaryCurveAtIndex!(proj::Project, crv::Dict{String,Any},
                                           indx::Int, boundaryName::String)
     i, chain = getInnerBoundaryChainWithName(proj,boundaryName)
@@ -229,6 +237,12 @@ function insertInnerBoundaryCurveAtIndex!(proj::Project, crv::Dict{String,Any},
     postNotificationWithName(proj,"MODEL_DID_CHANGE_NOTIFICATION",(nothing,))
 end
 
+
+"""
+    removeInnerBoundaryCurveAtIndex!(proj::Project, indx::Int, chainName::String)
+
+Remove the curve at index `indx` from an inner boundary chain with `chainName`.
+"""
 function removeInnerBoundaryCurveAtIndex!(proj::Project, indx::Int, chainName::String)
     i, chain = getInnerBoundaryChainWithName(proj,chainName)
     lst      = chain["LIST"]

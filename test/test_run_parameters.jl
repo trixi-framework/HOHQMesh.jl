@@ -83,7 +83,7 @@ using Test
     @test getPlotFileFormat(p) == "sem"
 
     removeRunParameters!(p)
-    cDict = getControlDict(p)
+    cDict = HOHQMesh.getControlDict(p)
     @test haskey(cDict,"RUN_PARAMETERS") == false
 
 end

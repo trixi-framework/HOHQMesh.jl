@@ -41,10 +41,10 @@ using Test
     @test getSmoothingStatus(q)     == "ON"
     @test getSmoothingType(q)       == "LinearAndCrossbarSpring"
 
-    cDict = getControlDict(q)
+    cDict = HOHQMesh.getControlDict(q)
     @test haskey(cDict,"SPRING_SMOOTHER") == true
     removeSpringSmoother!(q)
-    cDict = getControlDict(q)
+    cDict = HOHQMesh.getControlDict(q)
     @test haskey(cDict,"SPRING_SMOOTHER") == false
 
     # read in the AllFeatures example

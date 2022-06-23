@@ -89,7 +89,7 @@ using Test
     @test_throws ErrorException removeOuterBoundaryCurveWithName!(p, "wrongName")
 
     removeOuterBoundary!(p)
-    mDict = getModelDict(p)
+    mDict = HOHQMesh.getModelDict(p)
     @test haskey(mDict,"OUTER_BOUNDARY") == false
     undo()
     @test haskey(mDict,"OUTER_BOUNDARY") == true

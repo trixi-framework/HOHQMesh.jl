@@ -54,27 +54,22 @@ include("Mesh/Meshing.jl")
 # or an interactive mesh `Project`
 export generate_mesh
 
-# Generic functions for the interactice mesh interface
+#
+# Export the front facing interactive mesh functionality, e.g., getter/setter pairs.
+#
+
+# Generic functions for the interactive mesh interface
 export new,
        add!,
        getCurve,
        getInnerBoundary,
        remove!
 
-#
-# Export the front facing interactive mesh functionality, e.g., getter/setter pairs.
-#
-
 # Functions from `BackgroundGridAPI.jl`
 export addBackgroundGrid!, removeBackgroundGrid!,
        setBackgroundGridSize!, getBackgroundGridSize,
        getBackgroundGridLowerLeft,
        getBackgroundGridSteps
-
-# Functions from `ControlInputAPI.jl`
-export getControlDict,
-       getDictInControlDictNamed,
-       getListInControlDictNamed
 
 # Functions from `CurvesAPI.jl`
 export newParametricEquationCurve,
@@ -97,27 +92,23 @@ export newParametricEquationCurve,
        setSplinePoints!, getSplinePoints
 
 # Functions from `ModelAPI.jl`
-export addCurveToOuterBoundary!, removeOuterBoundaryCurveWithName!,
+export addCurveToOuterBoundary!,
+       removeOuterBoundaryCurveWithName!, removeOuterBoundaryCurveAtIndex!,
        getOuterBoundaryCurveWithName,
-       insertOuterBoundaryCurveAtIndex!, removeOuterBoundaryCurveAtIndex!,
+       insertOuterBoundaryCurveAtIndex!,
        addOuterBoundary!, removeOuterBoundary!,
        getOuterBoundaryChainList,
-       addCurveToInnerBoundary!, removeInnerBoundaryCurve!,
-       insertInnerBoundaryCurveAtIndex!, removeInnerBoundaryCurveAtIndex!,
+       addCurveToInnerBoundary!,
+       removeInnerBoundaryCurve!, removeInnerBoundaryCurveAtIndex!,
+       insertInnerBoundaryCurveAtIndex!,
        removeInnerBoundary!,
        addInnerBoundaryWithName!,
        getChainIndex,
-       getAllInnerBoundaries,
        getInnerBoundaryChainWithName,
-       getInnerBoundaryCurve,
-       innerBoundaryIndices,
-       getModelDict,
-       getDictInModelDictNamed
+       getInnerBoundaryCurve
 
 # Functions from `Project.jl`
-export newProject,
-       openProject,
-       saveProject
+export newProject, openProject, saveProject
 
 # Functions from `RefinementRegionsAPI.jl`
 export newRefinementCenter,

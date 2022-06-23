@@ -51,10 +51,10 @@ using Test
     @test_logs (:warn, "Acceptable smoothers are: `LinearAndCrossbarSpring` or `LinearSpring`. Try again.") setSmoothingType!(q,"TorsionalSpring")
     @test getSmoothingType(q) == "LinearSpring"
 
-    cDict = getControlDict(q)
+    cDict = HOHQMesh.getControlDict(q)
     @test haskey(cDict,"SPRING_SMOOTHER") == true
     removeSpringSmoother!(q)
-    cDict = getControlDict(q)
+    cDict = HOHQMesh.getControlDict(q)
     @test haskey(cDict,"SPRING_SMOOTHER") == false
 
 end
