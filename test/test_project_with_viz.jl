@@ -4,7 +4,7 @@ using HOHQMesh
 using Test
 
 # We use CairoMakie to avoid some CI-related issues with GLMakie. CairoMakie can be used
-# as a testing backend for HQMTool's Makie-based visualization.
+# as a testing backend for interactive mesh tool's Makie-based visualization.
 using CairoMakie
 
 @testset "Project with Visualization Tests" begin
@@ -36,7 +36,7 @@ using CairoMakie
         # Check the computed background grid against expected values
         x_grid_control = [-8.0, -7.0, -6.0, -5.0, -4.0, -3.0, -2.0, -1.0, 0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0]
         y_grid_control = [-8.0, -7.0, -6.0, -5.0, -4.0, -3.0, -2.0, -1.0, 0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0]
-        p_scratch.xGrid, p_scratch.yGrid = projectGrid(p_scratch)
+        p_scratch.xGrid, p_scratch.yGrid = HOHQMesh.projectGrid(p_scratch)
 
         @test isapprox(p_scratch.xGrid, x_grid_control)
         @test isapprox(p_scratch.yGrid, y_grid_control)

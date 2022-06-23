@@ -51,7 +51,7 @@ isdir(outdir) && rm(outdir, recursive=true)
 
 end # testset "HOHQMesh.jl"
 
-# Unit tests for the HQMTool interactive functionality
+# Unit tests for the interactive mesh functionality
 
 # Background grid test routines
 include("test_background_grid.jl")
@@ -62,13 +62,13 @@ include("test_curve.jl")
 # Model test routines
 include("test_model.jl")
 
-# HQMTool project test routines
+# Interactive mesh project test routines
 include("test_hqmtool_project.jl")
 
-# HQMTool interactive examples available in examples folder
+# Interactive mesh scripts available in examples folder
 include("test_examples.jl")
 
-# HQMTool project + visualzation test routines
+# Interactive mesh project + visualzation test routines
 include("test_project_with_viz.jl")
 
 # Refinement test routines

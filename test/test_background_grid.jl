@@ -28,18 +28,18 @@ using Test
 #
 #   Add with method 1 (when outer boundary is present): [dx,dy,dz]
 #
-    @test hasBackgroundGrid(p) == false
+    @test HOHQMesh.hasBackgroundGrid(p) == false
     addBackgroundGrid!(p,[0.1,0.2,0.0])
-    @test hasBackgroundGrid(p) == true
+    @test HOHQMesh.hasBackgroundGrid(p) == true
     bgs = getBackgroundGridSize(p)
     @test isapprox(bgs,[0.1,0.2,0.0])
     removeBackgroundGrid!(p)
-    @test hasBackgroundGrid(p) == false
+    @test HOHQMesh.hasBackgroundGrid(p) == false
 #
 #   Add with method 2: lower left, dx, nPts
 #
     addBackgroundGrid!(p,[-1.0,-1.0,0.0],[0.1,0.1,0.0], [10,10,0])
-    @test hasBackgroundGrid(p) == true
+    @test HOHQMesh.hasBackgroundGrid(p) == true
     @test getBackgroundGridSteps(p) == [10,10,0]
     @test isapprox(getBackgroundGridSize(p),[0.1,0.1,0.0])
     @test isapprox(getBackgroundGridLowerLeft(p),[-1.0,-1.0,0.0])
@@ -47,16 +47,16 @@ using Test
 #   Test undo, redo
 #
     undo()
-    @test hasBackgroundGrid(p) == false
+    @test HOHQMesh.hasBackgroundGrid(p) == false
     redo()
-    @test hasBackgroundGrid(p) == true
+    @test HOHQMesh.hasBackgroundGrid(p) == true
     removeBackgroundGrid!(p)
-    @test hasBackgroundGrid(p) == false
+    @test HOHQMesh.hasBackgroundGrid(p) == false
 #
 #   Add with method 3 (No outer bounday, preferred): bounding box + nPts
 #
     addBackgroundGrid!(p, [10.0,-10.0,-5.0,5.0], [10,10,0])
-    @test hasBackgroundGrid(p) == true
+    @test HOHQMesh.hasBackgroundGrid(p) == true
     @test getBackgroundGridSteps(p) == [10,10,0]
     @test isapprox(getBackgroundGridSize(p),[1.5,1.5,0.0])
     @test isapprox(getBackgroundGridLowerLeft(p),[-10.0,-5.0,0.0])
@@ -68,7 +68,7 @@ using Test
     @test getBackgroundGridSteps(p) == [15,15,0]
 
     removeBackgroundGrid!(p)
-    @test hasBackgroundGrid(p) == false
+    @test HOHQMesh.hasBackgroundGrid(p) == false
 #
 #   There are no longer any background grid. Delete the notification center piece as well.
 #   Note that the notification center is global and can have multiple observers. So we test

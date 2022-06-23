@@ -1,4 +1,4 @@
-module TestHQMToolProject
+module TestInteractiveMeshProject
 #=
     Project Tests tests the "Project.jl" functions
 
@@ -51,7 +51,7 @@ using Test
     control_file = joinpath(HOHQMesh.examples_dir(), "AllFeatures.control")
     p = openProject(control_file, projectPath)
 
-    @test hasBackgroundGrid(p) == true
+    @test HOHQMesh.hasBackgroundGrid(p) == true
     bounds = [25.28, -20.0, -5.0, 20.0]
     @test isapprox(p.bounds,bounds)
     refinementNames = ["center", "line"]
@@ -64,7 +64,7 @@ using Test
     xGrid = [-23.0, -20.0, -17.0, -14.0, -11.0, -8.0, -5.0, -2.0, 1.0, 4.0, 7.0,
             10.0, 13.0, 16.0, 19.0, 22.0]
     yGrid = [-8.0, -5.0, -2.0, 1.0, 4.0, 7.0, 10.0, 13.0, 16.0, 19.0, 22.0, 25.0, 28.0]
-    p.xGrid, p.yGrid = projectGrid(p)
+    p.xGrid, p.yGrid = HOHQMesh.projectGrid(p)
     @test isapprox(p.xGrid,xGrid)
     @test isapprox(p.yGrid,yGrid)
 
