@@ -29,9 +29,9 @@ makedocs(
     pages = [
         "Home" => "index.md",
         "Interactive mesh generation" => [
-            "HQMTool.md",
-            "HQMTool_Tour.md",
-            "HQMTool_API.md",
+            "interactive_overview.md",
+            "guided-tour.md",
+            "interactive-api.md",
             "CheatSheet.md",
         ],
         "Tutorials" => [
