@@ -1,6 +1,7 @@
 **/Manifest.toml
 out*/
 docs/build
+docs/src/authors.md
 public/
 coverage/
 coverage_report/
@@ -8,3 +9,4 @@ coverage_report/
 .vscode/
 examples/*.tec
 examples/*.mesh
+*.png

@@ -14,7 +14,8 @@ p = newProject("box_two_circles", "out")
 
 # Adjust some `RunParameters` and overwrite the defaults values. In this case, we
 # set a new value for the boundary order polynomial representation and adjust the
-# output mesh file format to be `ABAQUS`, which will produce a mesh file `outer_box.inp`
+# output mesh file format to be `ABAQUS`, which will produce a mesh file
+# `box_two_circles.inp`
 
 setPolynomialOrder!(p, 4)
 setMeshFileFormat!(p, "ABAQUS")
@@ -27,7 +28,7 @@ lower_left = [0.0, 0.0, 0.0]
 spacing = [1.0, 1.0, 0.0]
 num_intervals = [30, 15, 0]
 
-# These three quanties can set the background grid that is required by HOHQMesh for a given domain.
+# These three quantities set the background grid that is required by HOHQMesh for a given domain.
 
 addBackgroundGrid!(p, lower_left, spacing, num_intervals)
 
@@ -69,5 +70,5 @@ end
 
 generate_mesh(p)
 
-# After the mesh sucessfully generates mesh statistics, such as the number of corner nodes,
+# After the mesh successfully generates mesh statistics, such as the number of corner nodes,
 # the number of elements etc., are printed to the REPL.

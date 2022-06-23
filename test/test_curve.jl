@@ -68,7 +68,7 @@ using Test
         @test getYEqn(crv)      == yEqn
         @test getZEqn(crv)      == zEqn
 
-        value = curvePoint(crv, 0.25)
+        value = HOHQMesh.curvePoint(crv, 0.25)
         @test value == [0.25, 0.5, 0.0]
 
         # tests to reset curve name and equation definitions
@@ -99,10 +99,10 @@ using Test
         @test getStartPoint(crv) == xStart
         @test getEndPoint(crv)   == xEnd
 
-        pt = curvePoint(crv, 0.5)
+        pt = HOHQMesh.curvePoint(crv, 0.5)
         @test isapprox(pt,[0.5,0.5,0.0])
 
-        pts = curvePoints(crv, 2)
+        pts = HOHQMesh.curvePoints(crv, 2)
         @test isapprox(pts[1,:],[0.0,0.0])
         @test isapprox(pts[2,:],[0.5,0.5])
         @test isapprox(pts[3,:],[1.0,1.0])
@@ -139,10 +139,10 @@ using Test
         @test getArcStartAngle(crv) == startAngleD
         @test getArcUnits(crv)      == "degrees"
 
-        pt = curvePoint(crv, 0.5)
+        pt = HOHQMesh.curvePoint(crv, 0.5)
         @test isapprox(pt,[0.0,2.0,0.0])
 
-        pts = curvePoints(crv,2)
+        pts = HOHQMesh.curvePoints(crv,2)
         @test isapprox(pts[1,:],[2.0,0.0])
         @test isapprox(pts[2,:],[0.0,2.0])
         @test isapprox(pts[3,:],[-2.0,0.0])
@@ -192,15 +192,15 @@ using Test
         @test getCurveName(crv)     == name
         @test getSplineNKnots(crv)  == nKnots
 
-        pt = curvePoint(crv, 0.5)
+        pt = HOHQMesh.curvePoint(crv, 0.5)
         @test isapprox(pt, [0.5^3, 0.5^3 + 0.5^2, 0.0])
-        pt = curvePoint(crv, 0.0)
+        pt = HOHQMesh.curvePoint(crv, 0.0)
         @test isapprox(pt, [0.0, 0.0, 0.0])
 #
 #       The curvePoints for the spline has M = max(N,nKnots*2) values
 #
         M = max(nPts, nKnots*2)
-        pts = curvePoints(crv, M)
+        pts = HOHQMesh.curvePoints(crv, M)
         d   = 1.0 / M
         for j in 1:M+1
             tj = (j-1) * d

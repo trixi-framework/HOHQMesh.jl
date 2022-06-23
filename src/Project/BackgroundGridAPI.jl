@@ -141,7 +141,7 @@ end
 
 
 """
-    function getBackgroundGridLowerLeft(proj::Project)
+    getBackgroundGridLowerLeft(proj::Project)
 
 Returns the [x,y] of the lower left point of the background grid.
 """
@@ -156,7 +156,7 @@ end
 
 
 """
-    function getBackgroundGridSteps(proj::Project)
+    getBackgroundGridSteps(proj::Project)
 
 Returns the [Nx,Ny,Nz] for the background grid.
 """
@@ -231,7 +231,7 @@ end
 """
     setBackgroundGridSize!(proj::Project, dx::Float64, dy::Float64, key::String)
 
-Set the grid size dx of an existing background grid withing `proj`. Here, the new grid
+Set the grid size dx of an existing background grid within `proj`. Here, the new grid
 size in either direction is passed individually with `dx`and `dy`.
 """
 function setBackgroundGridSize!(proj::Project, dx::Float64, dy::Float64, key::String)

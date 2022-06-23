@@ -26,19 +26,18 @@ circ = newCircularArcCurve("outerCircle", [0.0, -1.0, 0.0], 4.0, 0.0, 360.0, "de
 addCurveToOuterBoundary!(p, circ)
 
 # Inner boundaries will have three curves:
-#     (i) Cubic spline curve created from data pooints read in from a file.
+#     (i) Cubic spline curve created from data points read in from a file.
 #    (ii) Cubic spline curve created from points directly given in the code.
-#   (iii) Triangle shape built from three staight line "curves".
+#   (iii) Triangle shape built from three straight line "curves".
 
 # Create the three interior curves. The curve name are those that are output as the
 # given boundary names in the mesh file.
 
-# First inner boundary is a parametric cubic spline read in from a file. Note, for convenience,
-# we reuse a spline from the testing routines. For information on formatting cubic spline data
-# files see the HOHQMesh documentation:
+# First inner boundary is a parametric cubic spline read in from a file. For information
+# on formatting cubic spline data files see the HOHQMesh documentation:
 #   https://trixi-framework.github.io/HOHQMesh/the-model/#the-spline-curve-definition
 
-spline1 = newSplineCurve("big_spline", joinpath(@__DIR__, "..", "test", "test_spline_curve_data.txt"))
+spline1 = newSplineCurve("big_spline", joinpath(@__DIR__, "test_spline_curve_data.txt"))
 addCurveToInnerBoundary!(p, spline1, "inner1")
 
 # Second inner boundary is a parametric cubic spline with data points directly provided
@@ -84,5 +83,5 @@ if isdefined(Main, :Makie)
 
 generate_mesh(p)
 
-# After the mesh sucessfully generates mesh statistics, such as the number of corner nodes,
+# After the mesh successfully generates mesh statistics, such as the number of corner nodes,
 # the number of elements etc., are printed to the REPL.

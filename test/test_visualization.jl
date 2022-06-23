@@ -13,7 +13,7 @@ using HOHQMesh
 using Test
 
 # We use CairoMakie to avoid some CI-related issues with GLMakie. CairoMakie can be used
-# as a testing backend for HQMTool's Makie-based visualization.
+# as a testing backend for interactive mesh tool's Makie-based visualization.
 using CairoMakie
 
 @testset "Visualization Tests" begin

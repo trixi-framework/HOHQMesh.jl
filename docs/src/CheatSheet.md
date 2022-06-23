@@ -1,11 +1,22 @@
-# HQMTool CheatSheet
+# Commands Cheat Sheet
 
-Workflow:
+This provides a quick reference for the syntax
+of the interactive construction of boundary curves, background grid, etc.
+When possible, the commands presented below give
+generic versions of the function calls, e.g., for creating a new curve or
+adding the curve to a boundary chain. The script
+`interactive_outer_boundary_generic.jl` in the `examples` folder
+constructs an identical example mesh as shown in the [Guided tour](@ref)
+using generic function calls.
+
+A thorough description of the functions can be found in the [API](@ref) section.
+
+The general workflow of the interactive mesh functionality within a REPL session is
 
 1. Create a project
 2. Add boundary curves
-4. Add a background grid
-3. Add manual refinement (if desired)
+3. Add a background grid
+4. Add manual refinement (if desired)
 5. Generate mesh
 
 ## Project
@@ -21,7 +32,7 @@ Workflow:
    updatePlot!(p, options)
 ```
 
-`options` are the sum of `GRID`, `MESH`, `MODEL`, `REFINEMENTS`
+The `options` are any sum of `MODEL`, `GRID`, `REFINEMENTS`, and `MESH`.
 ## Curves
 
 ```

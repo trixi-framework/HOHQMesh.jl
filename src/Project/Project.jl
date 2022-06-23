@@ -30,7 +30,7 @@ mutable struct Project
     meshShouldUpdate        ::Bool
 end
 
-const defaultPlotPts  = 50
+const defaultPlotPts  = 200
 const meshFileFormats = Set(["ISM", "ISM-V2", "ABAQUS"])
 const plotFileFormats = Set(["sem", "skeleton"])
 const smootherTypes   = Set(["LinearSpring", "LinearAndCrossbarSpring"])
