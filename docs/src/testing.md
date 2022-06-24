@@ -47,7 +47,7 @@ test, and all new scripts added to the `examples/` directory must be used at
 least once during testing. New tests should be added to the corresponding
 `test/test_xxx.jl` file, e.g., a test involving visualization capabilities
 would go into
-[`test/test_visualization.jl`](add link).
+[`test/test_visualization.jl`](https://github.com/trixi-framework/HOHQMesh.jl/blob/main/test/test_visualization.jl).
 Please study one of the existing tests and stay consistent to the current style
 when creating new tests.
 
