@@ -42,6 +42,7 @@ using Test
     @test getName(p)          == newName
 
     setFileNames!(p, getMeshFileFormat(p))
+
     # Use string concatenation to make this more general
     @test getMeshFileName(p)  == joinpath(projectPath, newName*".mesh")
     @test getPlotFileName(p)  == joinpath(projectPath, newName*".tec")
