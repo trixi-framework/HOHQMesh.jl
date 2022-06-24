@@ -86,7 +86,7 @@ files that are saved and the output of mesh statistics to the screen.
 Further explanation of the interactive functionality can be found [here](@ref InteractiveTool).
 Additional examples are available in the [Tutorials](@ref).
 
-## [Authors](@id authors-index-md)
+## Authors
 HOHQMesh.jl is maintained by the
 [Trixi authors](https://github.com/trixi-framework/Trixi.jl/blob/main/AUTHORS.md).
 Its principal developers are [Andrew Winters](https://liu.se/en/employee/andwi94)
