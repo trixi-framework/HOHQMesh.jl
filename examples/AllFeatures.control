@@ -1,0 +1,116 @@
+%
+% Control file that exercises available 2D features
+%
+
+\begin{MODEL}
+   \begin{OUTER_BOUNDARY}
+      \begin{END_POINTS_LINE}
+         name = B1
+         xEnd = [20.0,-5,0.0]
+         xStart = [-20.0,-5.0,0.0]
+      \end{END_POINTS_LINE}
+      \begin{END_POINTS_LINE}
+         name = B2
+         xEnd = [0.0,25.28,0.0]
+         xStart = [20.0,-5.0,0.0]
+      \end{END_POINTS_LINE}
+      \begin{END_POINTS_LINE}
+         name = B3
+         xEnd = [-20.0,-5.0,0.0]
+         xStart = [0.0,25.28,0.0]
+      \end{END_POINTS_LINE}
+   \end{OUTER_BOUNDARY}
+   \begin{INNER_BOUNDARIES}
+      \begin{CHAIN}
+         name = Arc
+            \begin{CIRCULAR_ARC}
+               units = degrees
+               name = InnerCircle1
+               radius = 1.0
+               start angle = 0.0
+               center = [-12.0,-1.5,0.0]
+               end angle = 360.0
+            \end{CIRCULAR_ARC}
+      \end{CHAIN}
+      \begin{CHAIN}
+         name = InnerSpline
+            \begin{SPLINE_CURVE}
+               name = Spline
+               nKnots = 26
+               \begin{SPLINE_DATA}
+                   0.0 -3.5 3.5 0.0
+                   0.03846153846153846 -3.2 5.0 0.0
+                   0.07692307692307693 -2.0 6.0 0.0
+                   0.115384615384615 1.0 6.0 0.0
+                   0.153846153846154 2.0 5.0 0.0
+                   0.192307692307692 3.0 4.0 0.0
+                   0.230769230769231 5.0 4.0 0.0
+                   0.269230769230769 6.0 5.0 0.0
+                   0.307692307692308 7.0 7.0 0.0
+                   0.346153846153846 8.0 8.0 0.0
+                   0.384615384615385 9.0 8.0 0.0
+                   0.423076923076923 10.0 7.0 0.0
+                   0.461538461538462 11.0 5.0 0.0
+                   0.5 11.0 3.0 0.0
+                   0.538461538461539 10.0 2.0 0.0
+                   0.576923076923077 9.0 1.0 0.0
+                   0.615384615384615 7.0 1.0 0.0
+                   0.653846153846154 5.0 1.0 0.0
+                   0.692307692307692 3.0 1.0 0.0
+                   0.730769230769231 1.0 0.0 0.0
+                   0.769230769230769 0.0 -1.0 0.0
+                   0.807692307692308 -1.0 -1.0 0.0
+                   0.846153846153846 -2.0 -0.8 0.0
+                   0.884615384615385 -2.5 0.0 0.0
+                   0.923076923076923 -3.0 1.0 0.0
+                   1.0 -3.5 3.5 0.0
+               \end{SPLINE_DATA}
+            \end{SPLINE_CURVE}
+      \end{CHAIN}
+      \begin{CHAIN}
+         name = InnerCircle2
+            \begin{PARAMETRIC_EQUATION_CURVE}
+               name = Circle1
+               yEqn = f(t) =  17.0 + 1.5*sin(2*pi*t)
+               zEqn = z(t) =  0.0
+               xEqn = f(t) = 1.5*cos(2*pi*t)
+            \end{PARAMETRIC_EQUATION_CURVE}
+      \end{CHAIN}
+   \end{INNER_BOUNDARIES}
+\end{MODEL}
+\begin{CONTROL_INPUT}
+   \begin{REFINEMENT_REGIONS}
+      \begin{REFINEMENT_CENTER}
+         name = center
+         w = 0.5
+         x0 = [9.0,-3.0,0.0]
+         type = smooth
+         h = 0.1
+      \end{REFINEMENT_CENTER}
+      \begin{REFINEMENT_LINE}
+         name = line
+         x1 = [2.0,14.0,0.0]
+         w = 0.5
+         x0 = [-6.0,9.0,0.0]
+         type = smooth
+         h = 0.2
+      \end{REFINEMENT_LINE}
+   \end{REFINEMENT_REGIONS}
+   \begin{SPRING_SMOOTHER}
+      smoothing type = LinearAndCrossbarSpring
+      smoothing = ON
+      number of iterations = 25
+   \end{SPRING_SMOOTHER}
+   \begin{BACKGROUND_GRID}
+      background grid size = [3.0,3.0,0.0]
+   \end{BACKGROUND_GRID}
+   \begin{RUN_PARAMETERS}
+      mesh file name = examples/AllFeatures.mesh
+      plot file format = skeleton
+      plot file name = examples/AllFeatures.tec
+      stats file name = none
+      mesh file format = ISM-V2
+      polynomial order = 4
+   \end{RUN_PARAMETERS}
+\end{CONTROL_INPUT}
+\end{FILE}

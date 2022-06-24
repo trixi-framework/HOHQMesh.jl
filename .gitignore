@@ -1,8 +1,12 @@
 **/Manifest.toml
 out*/
 docs/build
+docs/src/authors.md
 public/
 coverage/
 coverage_report/
 **/*.jl.*.cov
 .vscode/
+examples/*.tec
+examples/*.mesh
+*.png

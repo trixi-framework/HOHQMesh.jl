@@ -1,8 +1,150 @@
 module HOHQMesh
 
-import HOHQMesh_jll
+# Include other packages that are used in HOHQMesh
+# (standard library packages first, other packages next, all of them sorted alphabetically)
 
+using HOHQMesh_jll: HOHQMesh_jll
+using Requires: @require
+
+function __init__()
+  # Enable features that depend on the availability of the Makie package
+  @require Makie="ee78f7c6-11fb-53f2-987a-cfe4a2b5a57a" begin
+    using .Makie
+    include("Viz/VizProject.jl")
+    include("Viz/VizMesh.jl")
+    # Make the actual plotting routines available
+    export plotProject!, updatePlot!
+    # Make plotting constants available for easier use
+    export MODEL, GRID, MESH, EMPTY, REFINEMENTS, ALL
+  end
+end
+
+#
+# Include interactive mesh functionality for creating, reading, and writing a model for HOHQMesh.
+# Note, The visualzation routines are included above in the `__init__` because
+# Makie is required.
+#
+
+# Core interactive tool routines for control file readin, curve evaluation, etc.
+include("ControlFile/ControlFileOperations.jl")
+include("Curves/CurveOperations.jl")
+include("Curves/Spline.jl")
+include("Misc/DictionaryOperations.jl")
+include("Misc/NotificationCenter.jl")
+include("Model/Geometry.jl")
+
+# Project itself and some helper generic and undo functionality
+include("Project/Project.jl")
+include("Project/Generics.jl")
+include("Project/Undo.jl")
+
+# Front facing API of the interactive tool for the `Project`
+include("Project/BackgroundGridAPI.jl")
+include("Project/ControlInputAPI.jl")
+include("Project/CurvesAPI.jl")
+include("Project/ModelAPI.jl")
+include("Project/RefinementRegionsAPI.jl")
+include("Project/RunParametersAPI.jl")
+include("Project/SmootherAPI.jl")
+
+# Main routine that uses HOHQMesh to generate a mesh from an interactive `Project`
+include("Mesh/Meshing.jl")
+
+# Generic main function to generate a mesh from a control file
+# or an interactive mesh `Project`
 export generate_mesh
+
+#
+# Export the front facing interactive mesh functionality, e.g., getter/setter pairs.
+#
+
+# Generic functions for the interactive mesh interface
+export new,
+       add!,
+       getCurve,
+       getInnerBoundary,
+       remove!
+
+# Functions from `BackgroundGridAPI.jl`
+export addBackgroundGrid!, removeBackgroundGrid!,
+       setBackgroundGridSize!, getBackgroundGridSize,
+       getBackgroundGridLowerLeft,
+       getBackgroundGridSteps
+
+# Functions from `CurvesAPI.jl`
+export newParametricEquationCurve,
+       newEndPointsLineCurve,
+       newCircularArcCurve,
+       newSplineCurve,
+       setCurveName!, getCurveName,
+       getCurveType,
+       setXEqn!, getXEqn,
+       setYEqn!, getYEqn,
+       setZEqn!, getZEqn,
+       setStartPoint!, getStartPoint,
+       setEndPoint!, getEndPoint,
+       setArcUnits!, getArcUnits,
+       setArcCenter!, getArcCenter,
+       setArcStartAngle!, getArcStartAngle,
+       setArcEndAngle!, getArcEndAngle,
+       setArcRadius!, getArcRadius,
+       setSplineNKnots!, getSplineNKnots,
+       setSplinePoints!, getSplinePoints
+
+# Functions from `ModelAPI.jl`
+export addCurveToOuterBoundary!,
+       removeOuterBoundaryCurveWithName!, removeOuterBoundaryCurveAtIndex!,
+       getOuterBoundaryCurveWithName,
+       insertOuterBoundaryCurveAtIndex!,
+       addOuterBoundary!, removeOuterBoundary!,
+       getOuterBoundaryChainList,
+       addCurveToInnerBoundary!,
+       removeInnerBoundaryCurve!, removeInnerBoundaryCurveAtIndex!,
+       insertInnerBoundaryCurveAtIndex!,
+       removeInnerBoundary!,
+       addInnerBoundaryWithName!,
+       getChainIndex,
+       getInnerBoundaryChainWithName,
+       getInnerBoundaryCurve
+
+# Functions from `Project.jl`
+export newProject, openProject, saveProject
+
+# Functions from `RefinementRegionsAPI.jl`
+export newRefinementCenter,
+       newRefinementLine,
+       addRefinementRegion!, getRefinementRegion, getAllRefinementRegions,
+       getRefinementRegionCenter,
+       insertRefinementRegion!, removeRefinementRegion!,
+       setRefinementType!, getRefinementType,
+       setRefinementName!, getRefinementName,
+       setRefinementLocation!, getRefinementLocation,
+       setRefinementGridSize!, getRefinementGridSize,
+       setRefinementWidth!, getRefinementWidth,
+       setRefinementStart!, getRefinementStart,
+       setRefinementEnd!, getRefinementEnd
+
+# Functions from `RunParametersAPI.jl`
+export addRunParameters!, removeRunParameters!,
+       setName!, getName,
+       setPolynomialOrder!, getPolynomialOrder,
+       setMeshFileFormat!, getMeshFileFormat,
+       setPlotFileFormat!, getPlotFileFormat,
+       setFileNames!, getMeshFileName, getPlotFileName, getStatsFileName
+
+# Functions from `SmootherAPI.jl`
+export addSpringSmoother!, removeSpringSmoother!,
+       setSmoothingStatus!, getSmoothingStatus,
+       setSmoothingType!, getSmoothingType,
+       setSmoothingIterations!, getSmoothingIterations
+
+# Functions from `Undo.jl`
+export undo, undoActionName,
+       redo, redoActionName,
+       clearUndoRedo
+
+# Functions from `Meshing.jl`, generate_mesh is already exported
+export remove_mesh!
 
 
 """
@@ -114,6 +256,5 @@ end
 Return the path to the directory with some example mesh setups.
 """
 examples_dir() = joinpath(pathof(HOHQMesh) |> dirname |> dirname, "examples")
-
 
 end # module

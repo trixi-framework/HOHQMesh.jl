@@ -1,3 +1,8 @@
 [deps]
-Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 AbaqusReader = "bc6b9049-e460-56d6-94b4-a597b2c0390d"
+CairoMakie = "13f3f980-e62b-5c42-98c6-ff1f3baf88f0"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[compat]
+AbaqusReader = "0.2.5"
+CairoMakie = "0.6, 0.7, 0.8"
