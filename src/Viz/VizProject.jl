@@ -171,7 +171,7 @@ function plotCurve(plt, points::Matrix{Float64}, legendLabel::String, curveLabel
     #     theta = 0.0
     # end
     pp = (points[np,1],points[np,2])
-    text!(plt[1,1],curveLabel,textsize = 28, position = pp, align = (:center,:center) )
+    text!(plt[1,1],curveLabel, fontsize = 28, position = pp, align = (:center,:center) )
 end
 
 
