@@ -10,6 +10,9 @@ function __init__()
   # Enable features that depend on the availability of the Makie package
   @require Makie="ee78f7c6-11fb-53f2-987a-cfe4a2b5a57a" begin
     using .Makie
+    if isdefined(Makie, :to_textsize)
+      @warn "You seem to be using an older version of Makie (< v0.19). Some plotting functions may not work."
+    end
     include("Viz/VizProject.jl")
     include("Viz/VizMesh.jl")
     # Make the actual plotting routines available
