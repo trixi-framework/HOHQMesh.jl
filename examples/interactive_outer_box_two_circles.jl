@@ -20,7 +20,7 @@ p = newProject("box_two_circles", "out")
 setPolynomialOrder!(p, 4)
 setMeshFileFormat!(p, "ABAQUS")
 
-# Outer boundary for this example mesh wil be a rectangular box. For this the user
+# Outer boundary for this example mesh will be a rectangular box. For this the user
 # can set the lower left most point of the box, the spacing size in each coordinate
 # direction `[Δx, Δy, Δz]`, and the number of intervals taken.
 

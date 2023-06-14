@@ -53,7 +53,7 @@ using Test
     removeBackgroundGrid!(p)
     @test HOHQMesh.hasBackgroundGrid(p) == false
 #
-#   Add with method 3 (No outer bounday, preferred): bounding box + nPts
+#   Add with method 3 (No outer boundary, preferred): bounding box + nPts
 #
     addBackgroundGrid!(p, [10.0,-10.0,-5.0,5.0], [10,10,0])
     @test HOHQMesh.hasBackgroundGrid(p) == true
