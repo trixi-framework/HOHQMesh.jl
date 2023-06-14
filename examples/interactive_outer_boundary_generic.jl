@@ -34,7 +34,7 @@ cone1    = new("cone1", [0.0,-3.0,0.0], [1.0,0.0,0.0])
 iceCream = new("iceCream", [0.0,0.0,0.0], 1.0, 0.0, 180.0, "degrees")
 cone2    = new("cone2", [-1.0,0.0,0.0], [0.0,-3.0,0.0])
 
-# Assemble the three curve in a closed chain oriented couter-clockwise. The chain
+# Assemble the three curve in a closed chain oriented counter-clockwise. The chain
 # name `IceCreamCone` is only used internally by HOHQMesh.
 
 add!(p, cone1, "IceCreamCone")

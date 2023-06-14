@@ -14,7 +14,7 @@ just the mesh, `plotOptions = MESH`.
 
 To plot everything, `plotOptions = MODEL + GRID + MESH + REFINEMENTS`
 
-Contents are overlayed in the order: GRID, MESH, MODEL, REFINEMENTS
+Contents are overlaid in the order: GRID, MESH, MODEL, REFINEMENTS
 """
 function plotProject!(proj::Project, plotOptions::Int = 0)
 

@@ -95,7 +95,7 @@ review. That is, you should
     around)
   * remove debug statements
   * add a script `interactive_xxx.jl` that uses your feature (only relevant for new
-    features within the interactive mesh funtionality)
+    features within the interactive mesh functionality)
 
 After you are confident that your branch is cleaned up properly, commit all
 changes and push them to the repository.

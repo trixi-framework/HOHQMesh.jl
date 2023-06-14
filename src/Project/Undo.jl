@@ -19,7 +19,7 @@ Note that these projects refer to the interactive mesh functionality projects,
 not Julia projects in the sense of `Project.toml`.
 To make the undo framework project based, undo() would be replaced by undo(project) and an .undoStack
 property of the project would replace HQMglobalUndoStack. This is
-not a big deal except if multiple projects are open, and muliple objects like curves have been
+not a big deal except if multiple projects are open, and multiple objects like curves have been
 defined but not added to a project. In interactive mode curves are separate from projects until
 added. (The same curve could be added to multiple projects.) So some logic needs to be
 figured out before modifying below. If only one project is managed per session,

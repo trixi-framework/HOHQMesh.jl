@@ -30,7 +30,7 @@ cone1    = newEndPointsLineCurve("cone1", [0.0, -3.0, 0.0], [1.0, 0.0, 0.0])
 iceCream = newCircularArcCurve("iceCream", [0.0, 0.0, 0.0], 1.0, 0.0, 180.0, "degrees")
 cone2    = newEndPointsLineCurve("cone2", [-1.0, 0.0, 0.0], [0.0, -3.0, 0.0])
 
-# Assemble the three curve in a closed chain oriented couter-clockwise. The chain
+# Assemble the three curve in a closed chain oriented counter-clockwise. The chain
 # name `IceCreamCone` is only used internally by HOHQMesh.
 
 addCurveToInnerBoundary!(p, cone1, "IceCreamCone")

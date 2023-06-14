@@ -133,7 +133,7 @@ using CairoMakie
     remove!(p_visu, "big_spline", "inner1")
     @test length(p_visu.innerBoundaryNames) == 2
 
-    # Do the rest of the inner boudary removals correctly.
+    # Do the rest of the inner boundary removals correctly.
     remove!(p_visu, "small_spline", "inner2")
     @test length(p_visu.innerBoundaryNames) == 1
     undo()
