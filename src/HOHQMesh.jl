@@ -24,7 +24,7 @@ end
 
 #
 # Include interactive mesh functionality for creating, reading, and writing a model for HOHQMesh.
-# Note, The visualzation routines are included above in the `__init__` because
+# Note, The visualization routines are included above in the `__init__` because
 # Makie is required.
 #
 

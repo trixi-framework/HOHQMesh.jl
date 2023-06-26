@@ -68,7 +68,7 @@ using Test
 
     @test length(obList) == 2
 
-    # Check the outer boundary curve that are not conneted. Throws a warning
+    # Check the outer boundary curve that are not connected. Throws a warning
     @test_logs (:warn, "The boundary curve Outer is not closed. Fix to generate mesh" ) HOHQMesh.modelCurvesAreOK(p)
     @test HOHQMesh.modelCurvesAreOK(p) == false
 
@@ -114,7 +114,7 @@ using Test
 
     removeInnerBoundaryCurve!(p,"obc2",ib1Name)
     @test length(ibList) == 2
-    # Check the inner boundary curve that are not conneted. Throws a warning
+    # Check the inner boundary curve that are not connected. Throws a warning
     @test_logs (:warn, "The curve obc3 does not meet the previous curve, obc1.") HOHQMesh.modelCurvesAreOK(p)
     @test HOHQMesh.modelCurvesAreOK(p) == false
 

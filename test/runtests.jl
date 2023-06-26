@@ -68,7 +68,7 @@ include("test_interactive_project.jl")
 # Interactive mesh scripts available in examples folder
 include("test_examples.jl")
 
-# Interactive mesh project + visualzation test routines
+# Interactive mesh project + visualization test routines
 include("test_project_with_viz.jl")
 
 # Refinement test routines
