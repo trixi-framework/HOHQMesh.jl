@@ -14,17 +14,17 @@ HQMNotificationsON    = true
 
 
 """
-    addObserver(observer::Any, note::String, fnction::Any)
+    addObserver(observer::Any, note::String, f::Any)
 
-fnction is the function to be executed (called) when a
+`f` is the function to be executed (called) when a
 notification of name `note` is given.
 
 The function called upon notification must have the signature
-fnction(observer, sender, args...)
+f(observer, sender, args...)
 """
-function addObserver(observer::Any, note::String, fnction::Any)
+function addObserver(observer::Any, note::String, f::Any)
 
-    noteObj = HQMNotificationObject(observer,fnction)
+    noteObj = HQMNotificationObject(observer,f)
     if !haskey(HQMNotificationCenter,note)
         HQMNotificationCenter[note] = HQMNotificationObject[]
     end
