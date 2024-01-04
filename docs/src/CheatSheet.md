@@ -48,7 +48,7 @@ Shown here is the use of the function `new`, which is a shortcut to the full fun
 ## [Manual Refinement](@id cs-manual-refinement)
 
 ```
-   r = newRefinementCenter(name, center, gridSize, radius)
+   r = newRefinementCenter(name, type, center, gridSize, radius)
    r = newRefinementLine(name, type, startPoint, endPoint, gridSize, width)
 ```
 
