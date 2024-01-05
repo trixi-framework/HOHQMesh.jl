@@ -15,10 +15,11 @@ the simulation framework [Trixi.jl](https://github.com/trixi-framework/Trixi.jl)
 
 ## [Straight-sided outer boundary](@ref)
 
-This tutorial gives an introduction to the main functionality of the interactive meshing. In
-particular, adding a straight-sided bounding box for the outer domain and two circular inner boundary
-chains. It also demonstrates how to adjust some of the mesh parameters as well as the output mesh file
-format.
+This tutorial gives an introduction to the main functionality of the interactive meshing.
+In particular, adding a straight-sided bounding box for the outer domain
+and two circular inner boundary chains.
+It also demonstrates how to adjust some of the mesh parameters as well as
+the output mesh file format.
 
 ### Synopsis
 
@@ -30,8 +31,9 @@ Demonstrates how to:
 
 ## [Curved outer boundary](@ref)
 
-This tutorial constructs an outer domain boundary using parametric equations. The background grid is then
-set and a preliminary mesh is generated. It highlights how a user can manually add a refinement region where
+This tutorial constructs an outer domain boundary using parametric equations.
+The background grid is then set and a preliminary mesh is generated.
+It highlights how a user can manually add a refinement region where
 necessary from this visual inspection.
 
 ### Synopsis
@@ -44,9 +46,9 @@ Demonstrates how to:
 
 ## [Spline curves](@ref)
 
-This tutorial constructs a circular outer domain and three inner boundary curves. Two of the inner curves
-are constructed using cubic splines and the third inner boundary is a triangular shape built from
-three straight line "curves".
+This tutorial constructs a circular outer domain and three inner boundary curves.
+Two of the inner curves are constructed using cubic splines and the third inner
+boundary is a triangular shape built from three straight line "curves".
 
 ### Synopsis
 
@@ -59,8 +61,9 @@ Demonstrates how to:
 
 ## [Creating and editing curves](@ref)
 
-This tutorial demonstrates how to construct and edit curve segments defined in inner / outer boundary
-chains. A curve "chain" in the HOHQMesh context means a closed curve that is
+This tutorial demonstrates how to construct and edit curve segments defined
+in inner / outer boundary chains.
+A curve "chain" in the HOHQMesh context means a closed curve that is
 composed of an arbitrary number of pieces.
 Each curve segment of a chain can be a different curve type, e.g., a circular
 arc can connect to a spline that connects to a parametric equation curve.
