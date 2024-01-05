@@ -9,7 +9,7 @@ functionality or add other errors. In the main
 which allows to run tests automatically upon certain events. When, how, and what
 is tested by GitHub Actions is controlled by the workflow file
 [`.github/workflows/ci.yml`](https://github.com/trixi-framework/HOHQMesh.jl/blob/main/.github/workflows/ci.yml).
-In Trixi and its related repositories, tests are triggered by
+In HOHQMesh and its related repositories, tests are triggered by
 * each `git push` to `main` and
 * each `git push` to any pull request.
 Besides checking functionality, we also analyze the [Test coverage](@ref) to

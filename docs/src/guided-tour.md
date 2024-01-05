@@ -1,6 +1,6 @@
 # Guided tour
 
-In this brief overview, we highlight two scripts from the `examples` folder
+In this brief overview, we highlight two scripts from the `examples/` folder
 that demonstrate the interactive mesh functionality of HOHQMesh.jl. In depth
 explanations of the functionality are provided in the [Tutorials](@ref).
 
@@ -82,7 +82,7 @@ if isdefined(Main, :Makie)
     @info "To visualize the project (boundary curves, background grid, mesh, etc.), include `GLMakie` and run again."
  end
 
-# Generate the mesh. This produces the mesh and TecPlot files `AllFeatures.mesh` and `AllFeatures.tec`
+# Generate the mesh. This produces the mesh and TecPlot files `IceCreamCone.mesh` and `IceCreamCone.tec`
 # and save them to the `out` folder. Also, if there is an active plot in the project `p` it is
 # updated with the mesh that was generated.
 
@@ -112,16 +112,16 @@ circular arc. Again, they are defined counter-clockwise.
 
 For convenience, `newProject` will generate default run parameters used by HOHQMesh, like the plot file format
 and the smoother. The parameters can be edited with setter commands. For example, the script
-sets the polynomial order (default = 5) and the plot file format (default = "skeleton").
+resets the polynomial order (default = 5) and the plot file format (default = "skeleton").
 
 One run parameter that must be set manually is the background grid. Since there is an outer
-boundary, that determines the extent of the domain to be meshed, so only the mesh size needs
+boundary, that determines the extent of the domain to be meshed, only the mesh size needs
 to be specified using
 ```
 addBackgroundGrid!(proj::Project, bgSize::Array{Float64})
 ```
 
-The example sets the background mesh size to be 0.1 in the x and y directions.
+The example sets the background mesh size to be 0.5 in the x and y directions.
 The z component is ignored.
 
 The script finishes by generating the quad mesh and plotting the results, as shown below
@@ -132,9 +132,10 @@ Finally, the script returns the project so that it can be edited further, if des
 
 To save a control file for HOHQMesh, simply invoke
 ```
-saveProject(proj::Project, outFile::String)
+saveProject(proj::Project)
 ```
-where `outFile` is the name of the control file (traditionally with a .control extension).
+where the name of the control file (traditionally with a .control extension) matches the
+name of the `proj`.
 `saveProject` is automatically called when a mesh is generated.
 
 Note, a third example script `interactive_outer_boundary_generic.jl` is identical to that
