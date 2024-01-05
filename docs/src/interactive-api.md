@@ -112,7 +112,7 @@ type to `LinearAndCrossbarSpring`, and number of iterations = 25.
 These are generally good enough for most purposes.
 The most likely parameter to change is the number of iterations.
 Further details on the smoothing strategy and how it works are available
-[here](https://trixi-framework.github.io/HOHQMesh/the-control-input/#the-smoother).
+[in the documentation](https://trixi-framework.github.io/HOHQMesh/the-control-input/#the-smoother).
 
 To change the defaults, the smoother parameters can be set/enquired with the functions
 ```

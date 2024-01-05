@@ -134,8 +134,8 @@ To save a control file for HOHQMesh, simply invoke
 ```
 saveProject(proj::Project)
 ```
-where the name of the control file (traditionally with a .control extension) matches the
-name of the `proj`.
+where the name of the control file (traditionally with a `.control` extension) matches the
+name of the project `proj`.
 `saveProject` is automatically called when a mesh is generated.
 
 Note, a third example script `interactive_outer_boundary_generic.jl` is identical to that
