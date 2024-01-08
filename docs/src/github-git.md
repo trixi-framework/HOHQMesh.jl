@@ -193,7 +193,7 @@ the following steps need to be taken (as documented for GitLab in issue
      java -jar bfg-1.13.0.jar --strip-blobs-bigger-than 10M HOHQMesh.jl.git
 
      # Enter repo
-     cd Trixi.jl.git
+     cd HOHQMesh.jl.git
 
      # Clean up reflog and force aggressive garbage collection
      git reflog expire --expire=now --all && git gc --prune=now --aggressive

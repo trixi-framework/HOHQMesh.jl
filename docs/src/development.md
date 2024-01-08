@@ -32,7 +32,8 @@ are available for almost any operating system. They also are preinstalled on
 virtually all Unix-like systems.  However, Vim and Emacs come with their own,
 steep learning curve if they have never been used before. Therefore, if in doubt, it
 is probably easier to get started with a classic GUI-based text editor (like
-Juno). If you decide to use Vim or Emacs, make sure that you install the
+VS Code with the [Julia extension](https://code.visualstudio.com/docs/languages/julia)).
+If you decide to use Vim or Emacs, make sure that you install the
 corresponding Vim plugin
 [julia-vim](https://github.com/JuliaEditorSupport/julia-vim) or Emacs major
 mode [julia-emacs](https://github.com/JuliaEditorSupport/julia-emacs).

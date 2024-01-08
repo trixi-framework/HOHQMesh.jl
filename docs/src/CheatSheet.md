@@ -5,7 +5,7 @@ of the interactive construction of boundary curves, background grid, etc.
 When possible, the commands presented below give
 generic versions of the function calls, e.g., for creating a new curve or
 adding the curve to a boundary chain. The script
-`interactive_outer_boundary_generic.jl` in the `examples` folder
+`interactive_outer_boundary_generic.jl` in the `examples/` folder
 constructs an identical example mesh as shown in the [Guided tour](@ref)
 using generic function calls.
 
@@ -36,11 +36,11 @@ The `options` are any sum of `MODEL`, `GRID`, `REFINEMENTS`, and `MESH`.
 ## Curves
 
 ```
-   c = new(name, startLocation [x,y,z],endLocation [x,y,z])  *Straight Line*
-   c = new(name,center [x,y,z],radius, startAngle, endAngle) *Circular Arc*
-   c = new(name, xEqn, yEqn, zEqn)                           *Parametric equation*
-   c = new(name, dataFile)                                   *Spline with data from a file*
-   c = new(name, nKnots, knotsMatrix)                        *Spline with given knot values*
+   c = new(name, startLocation [x,y,z], endLocation [x,y,z])   *Straight Line*
+   c = new(name, center [x,y,z], radius, startAngle, endAngle) *Circular Arc*
+   c = new(name, xEqn, yEqn, zEqn)                             *Parametric equation*
+   c = new(name, dataFile)                                     *Spline with data from a file*
+   c = new(name, nKnots, knotsMatrix)                          *Spline with given knot values*
 ```
 
 Shown here is the use of the function `new`, which is a shortcut to the full functions, e.g. `newCircularArcCurve`, etc. which have the same arguments.
@@ -55,9 +55,9 @@ Shown here is the use of the function `new`, which is a shortcut to the full fun
 ## Adding to a Project
 
 ```
-   add!(p, c)                        *Add outer boundary curve*
-   add!(p, c, <InnerBoundaryName>)   *Add curve to an inner boundary*
-   add!(p, r)                        *Add refinement region*
+   add!(p, c)                      *Add outer boundary curve*
+   add!(p, c, <InnerBoundaryName>) *Add curve to an inner boundary*
+   add!(p, r)                      *Add refinement region*
 
    addBackgroundGrid!(p, [top, left, bottom, right], [nX, nY, nZ]) *No outer boundary*
    addBackgroundGrid!(p, [dx, dy, dz])                             *If an outer boundary is present*
@@ -76,7 +76,7 @@ Shown here is the use of the function `add!`, which is a shortcut to the full fu
 ## Removing from Project
 
 ```
-   removeOuterboundary!(p)                    *Entire outer boundary curve*
+   removeOuterBoundary!(p)                    *Entire outer boundary curve*
    removeInnerBoundary!(p, innerBoundaryName) *Entire inner boundary curve*
    remove!(p, name)                           *Curve in outer boundary*
    remove!(p, name, innerBoundaryName)        *Curve in inner boundary*

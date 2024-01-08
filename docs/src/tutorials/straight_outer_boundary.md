@@ -7,7 +7,7 @@ output mesh file format. The outer boundary, background grid and mesh
 will be visualized for quality inspection.
 
 It provides details and clarification for the script `interactive_outer_box_two_circles.jl`
-from the [examples](https://github.com/trixi-framework/HOHQMesh.jl/tree/main/examples) folder.
+from the [examples/](https://github.com/trixi-framework/HOHQMesh.jl/tree/main/examples) folder.
 
 ### Synopsis
 
@@ -171,7 +171,7 @@ generate_mesh(box_project)
  *******************
  2D Mesh Statistics:
  *******************
-    Total time             =    3.5553999999999995E-002
+    Total time             =    2.9116999999999997E-002
     Number of nodes        =          498
     Number of Edges        =          921
     Number of Elements     =          422
@@ -179,13 +179,13 @@ generate_mesh(box_project)
 
  Mesh Quality:
          Measure         Minimum         Maximum         Average  Acceptable Low Acceptable High       Reference
-     Signed Area      0.34513058      1.15383206      0.91833833      0.00000000    999.99900000      1.00000000
-    Aspect Ratio      1.00000004      1.71083844      1.08733476      1.00000000    999.99900000      1.00000000
-       Condition      1.00000000      1.46558793      1.04922640      1.00000000      4.00000000      1.00000000
-      Edge Ratio      1.00000006      2.43503343      1.16700825      1.00000000      4.00000000      1.00000000
-        Jacobian      0.17863168      1.07210721      0.86801359      0.00000000    999.99900000      1.00000000
-   Minimum Angle     50.56155029     89.99999787     83.84466557     40.00000000     90.00000000     90.00000000
-   Maximum Angle     90.00000259    136.97479459     96.69930735     90.00000000    135.00000000     90.00000000
+     Signed Area      0.34513977      1.15385313      0.91833886      0.00000000    999.99900000      1.00000000
+    Aspect Ratio      1.00000004      1.71084672      1.08736698      1.00000000    999.99900000      1.00000000
+       Condition      1.00000000      1.46547984      1.04928616      1.00000000      4.00000000      1.00000000
+      Edge Ratio      1.00000006      2.43578615      1.16710823      1.00000000      4.00000000      1.00000000
+        Jacobian      0.17854786      1.07210200      0.86801191      0.00000000    999.99900000      1.00000000
+   Minimum Angle     50.57680338     89.99999787     83.84338772     40.00000000     90.00000000     90.00000000
+   Maximum Angle     90.00000259    136.97085026     96.70176380     90.00000000    135.00000000     90.00000000
        Area Sign      1.00000000      1.00000000      1.00000000      1.00000000      1.00000000      1.00000000
 ```
 The call to `generate_mesh` also prints mesh quality statistics to the screen and updates the
