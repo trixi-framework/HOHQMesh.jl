@@ -61,7 +61,7 @@ jobs:
           flag-name: run-${{ matrix.os }}-${{ matrix.version }}-${{ matrix.arch }}
           parallel: true
           path-to-lcov: ./lcov.info
-      - uses: codecov/codecov-action@v3
+      - uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
           files: ./lcov.info # optional
@@ -69,6 +69,8 @@ jobs:
           name: codecov-umbrella # optional
           fail_ci_if_error: true # optional (default = false)
           # verbose: true # optional (default = false)
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }} # now required for public repos
 
   finish:
     needs: test
