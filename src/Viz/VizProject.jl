@@ -19,7 +19,7 @@ Contents are overlaid in the order: GRID, MESH, MODEL, REFINEMENTS
 function plotProject!(proj::Project, plotOptions::Int = 0)
 
     if isnothing(proj.plt)
-        proj.plt = Figure(resolution = (1000, 1000))
+        proj.plt = Figure(size = (1000, 1000))
     end
     plt = proj.plt
     ax = plt[1,1] = Axis(plt)
@@ -120,7 +120,7 @@ This version replots the figure with the current options. Legacy.
 """
 function updatePlot!(proj::Project)
     if !isnothing(proj.plt)
-        proj.plt = Figure(resolution = (1000, 1000))
+        proj.plt = Figure(size = (1000, 1000))
         plotOptions = proj.plotOptions
         plotProject!(proj, plotOptions)
     end
@@ -138,7 +138,7 @@ Example: updatePlot!(p, MESH + MODEL)
 """
 function updatePlot!(proj::Project, plotOptions::Int)
     if !isnothing(proj.plt)
-        proj.plt = Figure(resolution = (1000, 1000))
+        proj.plt = Figure(size = (1000, 1000))
         plotProject!(proj, plotOptions)
     end
 end
