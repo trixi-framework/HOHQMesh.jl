@@ -18,8 +18,8 @@ end
 
 #
 # Include interactive mesh functionality for creating, reading, and writing a model for HOHQMesh.
-# Note, The visualization routines are included above in the `__init__` because
-# Makie is required.
+# Note, Empty visualization routines are included and exported below but are extended within
+# `../ext/HOHQMeshMakieExt.jl`
 #
 
 # Core interactive tool routines for control file readin, curve evaluation, etc.
