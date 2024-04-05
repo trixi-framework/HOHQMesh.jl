@@ -114,20 +114,6 @@ end
 
 
 """
-    updatePlot!(proj::Project)
-
-This version replots the figure with the current options. Legacy.
-"""
-function updatePlot!(proj::Project)
-    if !isnothing(proj.plt)
-        proj.plt = Figure(size = (1000, 1000))
-        plotOptions = proj.plotOptions
-        plotProject!(proj, plotOptions)
-    end
-end
-
-
-"""
     updatePlot!(proj::Project, plotOptions::Int)
 
 Replot with the new plotOptions = combinations (sums) of
