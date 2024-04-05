@@ -87,8 +87,6 @@ using CairoMakie
     meshFileFormat = getMeshFileFormat(p_visu)
     setFileNames!(p_visu, meshFileFormat)
 
-    @test_nowarn updatePlot!(p_visu)
-
     # Create the mesh which contains a plotting update for ISM-V2
     @test_nowarn generate_mesh(p_visu)
 
