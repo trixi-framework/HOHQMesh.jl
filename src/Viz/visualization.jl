@@ -18,11 +18,10 @@ just the mesh, `plotOptions = MESH`.
 
 To plot everything, `plotOptions = MODEL + GRID + MESH + REFINEMENTS`
 
-Contents are overlaid in the order: GRID, MESH, MODEL, REFINEMENTS
-!!! note
-    The function implementation is found in `ext/VizProject.jl`.
+Contents are overlaid in the order: `GRID`, `MESH`, `MODEL`, `REFINEMENTS`
 """
 function plotProject! end
+# Note: The function implementation is found in `ext/VizProject.jl`.
 
 
 """
@@ -32,9 +31,7 @@ Replot with the new plotOptions = combinations (sums) of
 
     GRID, MESH, MODEL, REFINEMENTS
 
-Example: updatePlot!(p, MESH + MODEL)
-
-!!! note
-    The function implementation is found in `ext/VizProject.jl`.
+Example: `updatePlot!(p, MESH + MODEL)`
 """
 function updatePlot! end
+# Note: The function implementation is found in `ext/VizProject.jl`.
