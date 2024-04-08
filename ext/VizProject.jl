@@ -96,6 +96,17 @@ function plotProject!(proj::Project, plotOptions::Int = 0)
 end
 
 
+#     updatePlot!(proj::Project)
+# This version replots the figure with the current options. Legacy.
+function updatePlot!(proj::Project)
+    if !isnothing(proj.plt)
+        proj.plt = Figure(size = (1000, 1000))
+        plotOptions = proj.plotOptions
+        plotProject!(proj, plotOptions)
+    end
+end
+
+
 function updatePlot!(proj::Project, plotOptions::Int)
     if !isnothing(proj.plt)
         proj.plt = Figure(size = (1000, 1000))
