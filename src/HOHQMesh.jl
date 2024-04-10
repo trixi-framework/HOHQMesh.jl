@@ -7,25 +7,19 @@ using HOHQMesh_jll: HOHQMesh_jll
 using Requires: @require
 
 function __init__()
-  # Enable features that depend on the availability of the Makie package
-  @require Makie="ee78f7c6-11fb-53f2-987a-cfe4a2b5a57a" begin
-    using .Makie
-    if isdefined(Makie, :to_textsize)
-      @warn "You seem to be using an older version of Makie (< v0.19). Some plotting functions may not work."
+    # Enable features that depend on the availability of the Makie package
+    # Until Julia v1.9 is the minimum required version for HOHQMesh.jl, we still support Requires.jl
+    @static if !isdefined(Base, :get_extension)
+        @require Makie="ee78f7c6-11fb-53f2-987a-cfe4a2b5a57a" begin
+            include("../ext/HOHQMeshMakieExt.jl")
+        end
     end
-    include("Viz/VizProject.jl")
-    include("Viz/VizMesh.jl")
-    # Make the actual plotting routines available
-    export plotProject!, updatePlot!
-    # Make plotting constants available for easier use
-    export MODEL, GRID, MESH, EMPTY, REFINEMENTS, ALL
-  end
 end
 
 #
 # Include interactive mesh functionality for creating, reading, and writing a model for HOHQMesh.
-# Note, The visualization routines are included above in the `__init__` because
-# Makie is required.
+# Note, Empty visualization routines are included and exported below but are extended within
+# `../ext/HOHQMeshMakieExt.jl`
 #
 
 # Core interactive tool routines for control file readin, curve evaluation, etc.
@@ -52,6 +46,9 @@ include("Project/SmootherAPI.jl")
 
 # Main routine that uses HOHQMesh to generate a mesh from an interactive `Project`
 include("Mesh/Meshing.jl")
+
+# Empty routines for visualization extended in `ext/HOHQMeshMakieExt.jl`
+include("Viz/visualization.jl")
 
 # Generic main function to generate a mesh from a control file
 # or an interactive mesh `Project`
@@ -149,6 +146,9 @@ export undo, undoActionName,
 # Functions from `Meshing.jl`, generate_mesh is already exported
 export remove_mesh!
 
+# Functions and constants for visualization purposes
+export plotProject!, updatePlot!
+export MODEL, GRID, MESH, EMPTY, REFINEMENTS, ALL
 
 """
     generate_mesh(control_file;

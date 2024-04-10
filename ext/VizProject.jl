@@ -1,21 +1,4 @@
 
-const MODEL = 1; const GRID = 2; const MESH = 4; const EMPTY = 0
-const REFINEMENTS = 8; const ALL = 15
-
-
-"""
-    plotProject!(proj::Project, plotOptions::Int = 0)
-
-Plot objects specified by the `plotOptions`. Construct the `plotOptions` by the sum
-of what is to be drawn from the choices `MODEL`, `GRID`, `MESH`, `REFINEMENTS`.
-
-Example: To plot the model and the grid, `plotOptions = MODEL + GRID`. To plot
-just the mesh, `plotOptions = MESH`.
-
-To plot everything, `plotOptions = MODEL + GRID + MESH + REFINEMENTS`
-
-Contents are overlaid in the order: GRID, MESH, MODEL, REFINEMENTS
-"""
 function plotProject!(proj::Project, plotOptions::Int = 0)
 
     if isnothing(proj.plt)
@@ -113,11 +96,8 @@ function plotProject!(proj::Project, plotOptions::Int = 0)
 end
 
 
-"""
-    updatePlot!(proj::Project)
-
-This version replots the figure with the current options. Legacy.
-"""
+#     updatePlot!(proj::Project)
+# This version replots the figure with the current options. Legacy.
 function updatePlot!(proj::Project)
     if !isnothing(proj.plt)
         proj.plt = Figure(size = (1000, 1000))
@@ -127,15 +107,6 @@ function updatePlot!(proj::Project)
 end
 
 
-"""
-    updatePlot!(proj::Project, plotOptions::Int)
-
-Replot with the new plotOptions = combinations (sums) of
-
-    GRID, MESH, MODEL, REFINEMENTS
-
-Example: updatePlot!(p, MESH + MODEL)
-"""
 function updatePlot!(proj::Project, plotOptions::Int)
     if !isnothing(proj.plt)
         proj.plt = Figure(size = (1000, 1000))
