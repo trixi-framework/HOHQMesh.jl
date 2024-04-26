@@ -146,7 +146,17 @@ To generate a mesh interactively you
 
 ## Advanced
 
-All objects and information contained in the variable type `Project` are actually dictionaries of type `Dict{String, Any}`.
+The `generate_mesh` function has two optional arguments. The first is the logical `verbose`
+argument. One can pass `verbose=true` to output additional messages and information during
+the meshing process. The second is the integer `subdivision_maximum` argument.
+The default value is `subdivision_maximum=8`, meaning that elements can be up
+to a factor of `2^8` smaller than the existing background grid.
+Note, think before adjusting the `subdivision_maximum` level! It is often the case that
+adjusting the boundary curves, background grid size, adding local refinement regions,
+or some combination of these adjustments removes the need to adjust the subdivision depth.
+
+All objects and information contained in the variable type `Project` are actually dictionaries
+of type `Dict{String, Any}`.
 Since Julia is not an object oriented language, the parameters and other parts of these internal dictionaries
 can be accessed and edited directly by key and value.
 However, if you do that, then certain features like `undo`/`redo` and automatic plot updating **will not work**.
