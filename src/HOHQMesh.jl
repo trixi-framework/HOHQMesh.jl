@@ -168,12 +168,19 @@ control file name. For example, `path/to/ControlFile.control` will result in out
 You can activate verbose output from HOHQMesh that prints additional messages and debugging
 mesh information with the keyword argument `verbose`.
 
+To override the maximum number of allowable subdivisions in the quad tree during meshing
+adjust the value of `subdivision_maximum`. The default value of `subdivision_maximum` is 8,
+meaning that elements can be up to a factor of `2^8` smaller than the background grid.
+Note, think before doing this! It could be adjusting the boundary curves, background grid size,
+adding local refinement regions, or some combination may remove the need to adjust
+the subdivision depth.
+
 This function returns the output to `stdout` of the HOHQMesh binary when generating the mesh.
 """
 function generate_mesh(control_file;
                        output_directory="out",
                        mesh_filename=nothing, plot_filename=nothing, stats_filename=nothing,
-                       verbose=false)
+                       verbose=false, subdivision_maximum=8)
   @assert isfile(control_file) "'$control_file' is not a valid path to an existing file"
 
   # Determine output filenames
@@ -223,10 +230,11 @@ function generate_mesh(control_file;
     flush(tmpio)
 
     # Run HOHQMesh and store output
+    str_subdivision_maximum = string(subdivision_maximum)
     if verbose
-      readchomp(`$(HOHQMesh_jll.HOHQMesh()) -verbose -f $tmppath`)
+      readchomp(`$(HOHQMesh_jll.HOHQMesh()) -sLimit $str_subdivision_maximum -verbose -f $tmppath`)
     else
-      readchomp(`$(HOHQMesh_jll.HOHQMesh()) -f $tmppath`)
+      readchomp(`$(HOHQMesh_jll.HOHQMesh()) -sLimit $str_subdivision_maximum -f $tmppath`)
     end
   end
 

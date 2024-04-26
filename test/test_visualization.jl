@@ -59,7 +59,7 @@ using CairoMakie
     @test_nowarn plotProject!(p_visu, MODEL+GRID)
 
     # Create the mesh which contains a plotting update for ISM
-    @test_nowarn generate_mesh(p_visu)
+    @test_nowarn generate_mesh(p_visu, verbose=true)
 
     # Destroy the mesh and reset the background grid
     @test_nowarn remove_mesh!(p_visu)
