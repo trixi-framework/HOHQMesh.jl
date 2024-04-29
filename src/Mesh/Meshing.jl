@@ -1,6 +1,6 @@
 
 """
-    generate_mesh(proj::Project; verbose::Bool, subdivision_maximum::Integer)
+    generate_mesh(proj::Project; verbose=false, subdivision_maximum=8)
 
 Generate a mesh from the information stored in a `Project` created using the
 interactive mesh functionality. First a check is made
@@ -40,8 +40,8 @@ function generate_mesh(proj::Project; verbose=false, subdivision_maximum=8)
 
     saveProject(proj)
     fileName       = joinpath(proj.projectDirectory,proj.name)*".control"
-    mesherOutput   = generate_mesh(fileName, output_directory = proj.projectDirectory,
-                                   verbose=verbose, subdivision_maximum=subdivision_maximum)
+    mesherOutput   = generate_mesh(fileName; output_directory = proj.projectDirectory,
+                                   verbose, subdivision_maximum)
     println(mesherOutput)
     postNotificationWithName(proj,"MESH_WAS_GENERATED_NOTIFICATION",(nothing,))
     return nothing

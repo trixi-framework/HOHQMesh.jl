@@ -180,7 +180,7 @@ This function returns the output to `stdout` of the HOHQMesh binary when generat
 function generate_mesh(control_file;
                        output_directory="out",
                        mesh_filename=nothing, plot_filename=nothing, stats_filename=nothing,
-                       verbose=false, subdivision_maximum=8)
+                       verbose=false, subdivision_maximum::Int=8)
   @assert isfile(control_file) "'$control_file' is not a valid path to an existing file"
 
   # Determine output filenames
@@ -230,11 +230,10 @@ function generate_mesh(control_file;
     flush(tmpio)
 
     # Run HOHQMesh and store output
-    str_subdivision_maximum = string(subdivision_maximum)
     if verbose
-      readchomp(`$(HOHQMesh_jll.HOHQMesh()) -sLimit $str_subdivision_maximum -verbose -f $tmppath`)
+      readchomp(`$(HOHQMesh_jll.HOHQMesh()) -sLimit $subdivision_maximum -verbose -f $tmppath`)
     else
-      readchomp(`$(HOHQMesh_jll.HOHQMesh()) -sLimit $str_subdivision_maximum -f $tmppath`)
+      readchomp(`$(HOHQMesh_jll.HOHQMesh()) -sLimit $subdivision_maximum -f $tmppath`)
     end
   end
 

@@ -146,7 +146,7 @@ To generate a mesh interactively you
 
 ## Advanced
 
-The `generate_mesh` function has two optional arguments. The first is the logical `verbose`
+The `generate_mesh` function has two optional arguments. The first is the Boolean `verbose`
 argument. One can pass `verbose=true` to output additional messages and information during
 the meshing process. The second is the integer `subdivision_maximum` argument.
 The default value is `subdivision_maximum=8`, meaning that elements can be up
