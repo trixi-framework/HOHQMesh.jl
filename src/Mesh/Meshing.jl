@@ -23,7 +23,7 @@ the subdivision depth.
 
 This function returns the output to `stdout` of the HOHQMesh binary when generating the mesh.
 """
-function generate_mesh(proj::Project; verbose=false, subdivision_maximum=8)
+function generate_mesh(proj::Project; verbose=false, subdivision_maximum::Int=8)
 #
 #   Check to be sure background grid has been created (everything else is defaults)
 #
