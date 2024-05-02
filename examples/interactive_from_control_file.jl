@@ -1,7 +1,7 @@
 # Interactive mesh from a HOHQMesh control file
 #
 # Reads in the `AllFeatures.control` file, creates a `HQMTool` project,
-# and generates a mesh file. More details abuot the outer / inner boundary
+# and generates a mesh file. More details about the outer / inner boundary
 # curves, refinement regions, etc. of HOHQMesh can be found in its documentation
 # https://trixi-framework.github.io/HOHQMesh/
 #
