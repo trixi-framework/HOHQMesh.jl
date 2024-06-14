@@ -24,7 +24,7 @@ julia> using GLMakie, HOHQMesh
 ```
 Now we are ready to interactively generate unstructured quadrilateral meshes!
 
-We create a new project with the name `"symetric_mesh"` and
+We create a new project with the name `"symmetric_mesh"` and
 assign `"out"` to be the folder where any output files from the mesh generation process
 will be saved. By default, the output files created by HOHQMesh will carry the same name
 as the project. For example, the resulting HOHQMesh control file from this tutorial
@@ -151,7 +151,7 @@ the outer boundary and background grid. The resulting plot is given below. The c
 curves is called `"Outer"` and its constituent curve segments are labeled accordingly with the names
 prescribed in the curve construction above.
 
-![before_generation](add_figure1!)
+![before_generation](https://github.com/trixi-framework/HOHQMesh.jl/assets/25242486/6712cbe8-d7bf-4142-99af-dc032f26e768)
 
 ## Generate the mesh
 
@@ -194,7 +194,7 @@ The background grid is *removed* from the visualization when the mesh is generat
     Currently, only the "skeleton" of the mesh is visualized. Thus, the high-order curved boundary information
     is not seen in the plot but this information **is present** in the generated mesh file.
 
-![first_reflect_mesh](add_figure2!)
+![first_reflect_mesh](https://github.com/trixi-framework/HOHQMesh.jl/assets/25242486/daa915fa-11ac-411e-950c-e31958494df3)
 
 !!! tip "Boundary names in the mesh file"
     The boundary names of the original outer curves will be those defined by the user
@@ -236,7 +236,7 @@ We visualize the new version of outer boundary curve chain and background grid w
 plotProject!(symmetric_mesh, MODEL+GRID)
 ```
 
-![before_generation2](add_figure3!)
+![before_generation2](https://github.com/trixi-framework/HOHQMesh.jl/assets/25242486/2672e82d-6512-491a-9ff6-4ce3fd06da88)
 
 We then generate the new mesh from the information contained in `symmetric_mesh`.
 This saves the control, tec, and mesh files into the `out` folder and yields
@@ -264,7 +264,7 @@ generate_mesh(symmetric_mesh)
        Area Sign      1.00000000      1.00000000      1.00000000      1.00000000      1.00000000      1.00000000
 ```
 
-![first_reflect_mesh2](add_figure4!)
+![first_reflect_mesh2](https://github.com/trixi-framework/HOHQMesh.jl/assets/25242486/9e416528-dc42-465b-b874-3641bb0d1e7e)
 
 ## Summary
 
