@@ -330,8 +330,7 @@ line8 = newEndPointsLineCurve("B8", [1.0, 2.0, 0.0],
 line9 = newEndPointsLineCurve("symmetry", [-0.05, 2.0, 0.0],
                                           [-0.05, 0.0, 0.0])
 
-# Add all of the boundary curves into
-# the project in counter-clockwise order
+# Add all of the boundary curves into the project in counter-clockwise order
 addCurveToOuterBoundary!(symmetric_mesh, line1)
 addCurveToOuterBoundary!(symmetric_mesh, line2)
 addCurveToOuterBoundary!(symmetric_mesh, half_circle)
@@ -400,8 +399,7 @@ line8 = newEndPointsLineCurve("B8", [1.0, 2.0, 0.0],
 line9 = newEndPointsLineCurve("B9", [-0.05, 2.0, 0.0],
                                     [-0.05, 0.0, 0.0])
 
-# Add all of the boundary curves into
-# the project in counter-clockwise order
+# Add all of the boundary curves into the project in counter-clockwise order
 addCurveToOuterBoundary!(symmetric_mesh, line1)
 addCurveToOuterBoundary!(symmetric_mesh, line2)
 addCurveToOuterBoundary!(symmetric_mesh, half_circle)
