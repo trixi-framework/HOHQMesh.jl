@@ -81,3 +81,18 @@ Demonstrates how to:
 * Construct and add a curve from parametric equations.
 * Construct and add straight line segments.
 * Construct and add circular arc segments.
+
+## [Symmetric mesh](@ref)
+
+This tutorial constructs a mesh given a closed chain of outer boundary curves
+that is then reflected over a straight line indicated by the user.
+The result is a mesh that is symmetric with respect to the prescribed
+straight line.
+
+### Synopsis
+
+Demonstrates how to:
+* Indicate a symmetry boundary line.
+* Construct an outer boundary with several connected curves.
+* Add the background grid when an outer boundary curve is present.
+* Visualize an interactive mesh project.
