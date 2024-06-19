@@ -85,9 +85,8 @@ Demonstrates how to:
 ## [Symmetric mesh](@ref)
 
 This tutorial constructs a mesh given a closed chain of outer boundary curves
-that is then reflected over a straight line indicated by the user.
-The result is a mesh that is symmetric with respect to the prescribed
-straight line.
+that is then reflected over a straight line or several co-linear lines indicated by the user.
+The result is a mesh that is symmetric with respect to the prescribed straight line.
 
 ### Synopsis
 
@@ -95,4 +94,5 @@ Demonstrates how to:
 * Indicate a symmetry boundary line.
 * Construct an outer boundary with several connected curves.
 * Add the background grid when an outer boundary curve is present.
+* Rename boundaries in an existing interactive mesh project.
 * Visualize an interactive mesh project.
