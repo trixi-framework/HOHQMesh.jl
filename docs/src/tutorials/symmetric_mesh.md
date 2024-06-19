@@ -276,7 +276,8 @@ for a reflection about the left boundary line `O.1` as well as a reflection abou
 the right boundary composed of the three co-linear segments `O.3`, `O.5`, and `O.9`.
 Note, we **do not** include the plotting in these scripts.
 ```julia
-# Interactive mesh with reflection on the left
+# Interactive mesh with reflection on the left over a single symmetry boundary
+# as well as a reflection on the right over multiple co-linear symmetry boundaries.
 #
 # Keywords: outer boundary, reflection, symmetric mesh
 using HOHQMesh
