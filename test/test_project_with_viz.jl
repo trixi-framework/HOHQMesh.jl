@@ -36,7 +36,7 @@ using CairoMakie
         # Initial test the boundary name is correct
         @test getCurveName(getOuterBoundaryCurveWithName(p_scratch, "outerline2")) == "outerline2"
 
-        # Rename one of the outer boundary names and test that it was sucessful
+        # Rename one of the outer boundary names and test that it was successful
         renameCurve!(p_scratch, "outerline2", "LINE2")
         @test getCurveName(getOuterBoundaryCurveWithName(p_scratch, "LINE2")) == "LINE2"
 
