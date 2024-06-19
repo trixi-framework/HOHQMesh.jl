@@ -83,11 +83,11 @@ in counter-clockwise order as required by HOHQMesh.
 line1 = newEndPointsLineCurve("symmetry", [-0.05, 2.0, 0.0],
                                           [-0.05, 0.0, 0.0])
 
-line2 = newEndPointsLineCurve("B1", [-0.05, 0.0, 0.0],
-                                    [1.0, 0.0, 0.0])
+line2 = newEndPointsLineCurve("bottom", [-0.05, 0.0, 0.0],
+                                        [1.0, 0.0, 0.0])
 
-line3 = newEndPointsLineCurve("B2", [1.0, 0.0, 0.0],
-                                    [1.0, 0.5, 0.0])
+line3 = newEndPointsLineCurve("right", [1.0, 0.0, 0.0],
+                                       [1.0, 0.5, 0.0])
 
 half_circle = newCircularArcCurve("circle",         # curve name
                                   [1.0, 0.75, 0.0], # circle center
@@ -96,23 +96,23 @@ half_circle = newCircularArcCurve("circle",         # curve name
                                   90.0,             # end angle
                                   "degrees")        # angle units
 
-line4 = newEndPointsLineCurve("B3", [1.0, 1.0, 0.0],
-                                    [1.0, 1.5, 0.0])
+line4 = newEndPointsLineCurve("right", [1.0, 1.0, 0.0],
+                                       [1.0, 1.5, 0.0])
 
-line5 = newEndPointsLineCurve("B4", [1.0, 1.5, 0.0],
-                                    [0.75, 1.5, 0.0])
+line5 = newEndPointsLineCurve("bump", [1.0, 1.5, 0.0],
+                                      [0.75, 1.5, 0.0])
 
-line6 = newEndPointsLineCurve("B5", [0.75, 1.5, 0.0],
-                                    [0.75, 1.75, 0.0])
+line6 = newEndPointsLineCurve("bump", [0.75, 1.5, 0.0],
+                                      [0.75, 1.75, 0.0])
 
-line7 = newEndPointsLineCurve("B6", [0.75, 1.75, 0.0],
-                                    [1.0, 1.75, 0.0])
+line7 = newEndPointsLineCurve("bump", [0.75, 1.75, 0.0],
+                                      [1.0, 1.75, 0.0])
 
-line8 = newEndPointsLineCurve("B7", [1.0, 1.75, 0.0],
-                                    [1.0, 2.0, 0.0])
+line8 = newEndPointsLineCurve("right", [1.0, 1.75, 0.0],
+                                       [1.0, 2.0, 0.0])
 
-line9 = newEndPointsLineCurve("B8", [1.0, 2.0, 0.0],
-                                    [-0.05, 2.0, 0.0])
+line9 = newEndPointsLineCurve("top", [1.0, 2.0, 0.0],
+                                     [-0.05, 2.0, 0.0])
 ```
 The given boundary names will also be the names given in the resulting
 mesh file. The only exception is the final boundary curve that is given
@@ -152,7 +152,7 @@ the outer boundary and background grid. The resulting plot is given below. The c
 curves is called `"Outer"` and its constituent curve segments are labeled accordingly with the names
 prescribed in the curve construction above.
 
-![before_generation](https://github.com/trixi-framework/HOHQMesh.jl/assets/25242486/6712cbe8-d7bf-4142-99af-dc032f26e768)
+![before_generation](https://github.com/trixi-framework/HOHQMesh.jl/assets/25242486/d332e86a-f958-4362-81b9-2ad40a408d94)
 
 ## Generate the mesh
 
@@ -195,14 +195,14 @@ The background grid is *removed* from the visualization when the mesh is generat
     Currently, only the "skeleton" of the mesh is visualized. Thus, the high-order curved boundary information
     is not seen in the plot but this information **is present** in the generated mesh file.
 
-![first_reflect_mesh](https://github.com/trixi-framework/HOHQMesh.jl/assets/25242486/daa915fa-11ac-411e-950c-e31958494df3)
+![first_reflect_mesh](https://github.com/trixi-framework/HOHQMesh.jl/assets/25242486/1afd159e-e8c4-459f-ba7d-a31057b0c135)
 
 !!! tip "Boundary names in the mesh file"
     The boundary names of the original outer curves will be those defined by the user
     in their construction above. The boundary labeled `"symmetry"` is now internal and
     is marked appropriately as such. The reflected boundary names are appended
     with `_R` (for reflected) in the mesh file. For instance, the reflected version
-    of the boundary `B2` has the name `B2_R` or the boundary named `circle` has the
+    of the boundary `bottom` has the name `bottom_R` or the boundary named `circle` has the
     reflected boundary counterpart named `circle_R`.
 
 ## Changing the reflection line
@@ -219,19 +219,17 @@ from the `out` folder. However, the `symmetric_mesh.control`
 and `symmetric_mesh.tec` files are still present in `out` directory.
 
 It is also possible to create a symmetry boundary composed of multiple be co-linear segments.
-To illustrate this we first rename the current symmetry boundary curve `O.1` to have the name `"B9"`.
+To illustrate this we first rename the current symmetry boundary curve `O.1` to have the name `"left"`.
 Next, we rename the co-linear boundary curves `O.3`, `O.5`, and `O.9` to have the name `"symmetry"`.
 This is done with the function `renameCurve!`
 ```julia
 renameCurve!(symmetric_mesh, "symmetry", # existing curve name
-                             "B9")       # new curve name
-renameCurve!(symmetric_mesh, "B2", "symmetry")
-renameCurve!(symmetric_mesh, "B3", "symmetry")
-renameCurve!(symmetric_mesh, "B7", "symmetry")
+                             "left")     # new curve name
+renameCurve!(symmetric_mesh, "right", "symmetry")
 ```
 After the boundary names are adjusted the plot updates automatically to give the figure below.
 
-![before_generation2](https://github.com/trixi-framework/HOHQMesh.jl/assets/25242486/2672e82d-6512-491a-9ff6-4ce3fd06da88)
+![before_generation2](https://github.com/trixi-framework/HOHQMesh.jl/assets/25242486/314a7bc7-0cb1-4708-bbb9-98ca85798d5b)
 
 We then generate the new mesh from the information contained in `symmetric_mesh`.
 This saves the control, tec, and mesh files into the `out` folder and yields
@@ -262,7 +260,7 @@ The updated visualization is given below. Note, the flexibility to define multip
 co-linear symmetric boundaries creates a symmetric mesh with closed internal boundaries.
 In this example, a circle and a rectangle.
 
-![first_reflect_mesh2](https://github.com/trixi-framework/HOHQMesh.jl/assets/25242486/9e416528-dc42-465b-b874-3641bb0d1e7e)
+![first_reflect_mesh2](https://github.com/trixi-framework/HOHQMesh.jl/assets/25242486/2476b6fe-79a4-4d3a-98b1-089714c76ade)
 
 ## Summary
 
@@ -274,8 +272,9 @@ In this tutorial we demonstrated how to:
 * Visualize an interactive mesh project.
 
 For completeness, we include two scripts with all the commands to generate the meshes displayed
-for a reflection about the left boundary line `O.10` and a reflection about the right boundary
-line `O.2`. Note, we **do not** include the plotting in these scripts.
+for a reflection about the left boundary line `O.1` as well as a reflection about
+the right boundary composed of the three co-linear segments `O.3`, `O.5`, and `O.9`.
+Note, we **do not** include the plotting in these scripts.
 ```julia
 # Interactive mesh with reflection on the left
 #
@@ -298,11 +297,11 @@ addBackgroundGrid!(symmetric_mesh, [0.25, 0.25, 0.0])
 line1 = newEndPointsLineCurve("symmetry", [-0.05, 2.0, 0.0],
                                           [-0.05, 0.0, 0.0])
 
-line2 = newEndPointsLineCurve("B1", [-0.05, 0.0, 0.0],
-                                    [1.0, 0.0, 0.0])
+line2 = newEndPointsLineCurve("bottom", [-0.05, 0.0, 0.0],
+                                        [1.0, 0.0, 0.0])
 
-line3 = newEndPointsLineCurve("B2", [1.0, 0.0, 0.0],
-                                    [1.0, 0.5, 0.0])
+line3 = newEndPointsLineCurve("right", [1.0, 0.0, 0.0],
+                                       [1.0, 0.5, 0.0])
 
 half_circle = newCircularArcCurve("circle",         # curve name
                                   [1.0, 0.75, 0.0], # circle center
@@ -311,23 +310,23 @@ half_circle = newCircularArcCurve("circle",         # curve name
                                   90.0,             # end angle
                                   "degrees")        # angle units
 
-line4 = newEndPointsLineCurve("B3", [1.0, 1.0, 0.0],
-                                    [1.0, 1.5, 0.0])
+line4 = newEndPointsLineCurve("right", [1.0, 1.0, 0.0],
+                                       [1.0, 1.5, 0.0])
 
-line5 = newEndPointsLineCurve("B4", [1.0, 1.5, 0.0],
-                                    [0.75, 1.5, 0.0])
+line5 = newEndPointsLineCurve("bump", [1.0, 1.5, 0.0],
+                                      [0.75, 1.5, 0.0])
 
-line6 = newEndPointsLineCurve("B5", [0.75, 1.5, 0.0],
-                                    [0.75, 1.75, 0.0])
+line6 = newEndPointsLineCurve("bump", [0.75, 1.5, 0.0],
+                                      [0.75, 1.75, 0.0])
 
-line7 = newEndPointsLineCurve("B6", [0.75, 1.75, 0.0],
-                                    [1.0, 1.75, 0.0])
+line7 = newEndPointsLineCurve("bump", [0.75, 1.75, 0.0],
+                                      [1.0, 1.75, 0.0])
 
-line8 = newEndPointsLineCurve("B7", [1.0, 1.75, 0.0],
-                                    [1.0, 2.0, 0.0])
+line8 = newEndPointsLineCurve("right", [1.0, 1.75, 0.0],
+                                       [1.0, 2.0, 0.0])
 
-line9 = newEndPointsLineCurve("B8", [1.0, 2.0, 0.0],
-                                    [-0.05, 2.0, 0.0])
+line9 = newEndPointsLineCurve("top", [1.0, 2.0, 0.0],
+                                     [-0.05, 2.0, 0.0])
 
 addCurveToOuterBoundary!(symmetric_mesh, line1)
 addCurveToOuterBoundary!(symmetric_mesh, line2)
@@ -349,10 +348,8 @@ remove_mesh!(symmetric_mesh)
 # Rename the outer boundaries appropriately to set the symmetry boundary
 # on the right composed of multiple co-linear segments.
 renameCurve!(symmetric_mesh, "symmetry", # existing curve name
-                             "B9")       # new curve name
-renameCurve!(symmetric_mesh, "B2", "symmetry")
-renameCurve!(symmetric_mesh, "B3", "symmetry")
-renameCurve!(symmetric_mesh, "B7", "symmetry")
+                             "left")     # new curve name
+renameCurve!(symmetric_mesh, "right", "symmetry")
 
 # Generate the mesh. Saves the mesh file to the directory "out".
 generate_mesh(symmetric_mesh)
