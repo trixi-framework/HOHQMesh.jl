@@ -108,7 +108,7 @@ export addCurveToOuterBoundary!,
        getInnerBoundaryCurve
 
 # Functions from `Project.jl`
-export newProject, openProject, saveProject
+export newProject, openProject, saveProject, renameCurve!
 
 # Functions from `RefinementRegionsAPI.jl`
 export newRefinementCenter,

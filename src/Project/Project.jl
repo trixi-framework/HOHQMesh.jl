@@ -281,17 +281,61 @@ function projectGrid(proj::Project)
 end
 
 
+"""
+    renameCurve!(proj::Project, oldName::String, newName::String)
+
+Any curve(s) on the outer boundary or in the inner boundary chain(s)
+with `oldName` are renamed with `newName`.
+"""
+function renameCurve!(proj::Project, oldName::String, newName::String)
+#
+#   Check if the curve is in the outer boundary
+#
+    for (i, s) in enumerate(proj.outerBndryNames)
+        if s == oldName
+            # Rename in global list used in the legend of `proj.plt`
+            proj.outerBndryNames[i] = newName
+            # Rename in the appropriate `crv` used when the mesh file is created
+            crv = getOuterBoundaryCurveWithName(proj, oldName)
+            setCurveName!(crv, newName)
+        end
+    end
+#
+#   Otherwise, find the curve to rename among the inner boundary curve chain(s)
+#
+    chains = getAllInnerBoundaries(proj)
+    for (chain_idx, chain) in enumerate(chains)
+        crvList = chain["LIST"]
+        for (crv_idx, crv) in enumerate(crvList)
+            if crv["name"] == oldName
+                # Rename in global list used in the legend of `proj.plt`
+                proj.innerBoundaryNames[chain_idx][crv_idx] = newName
+                # Rename in the appropriate `crv` used when the mesh file is created
+                setCurveName!(crv, newName)
+            end
+        end
+    end
+
+    if !isnothing(proj.plt)
+        options = proj.plotOptions
+        updatePlot!(proj, options)
+    end
+
+    return nothing
+end
+
+
 #
 # NOTIFICATION ACTIONS
 #
-function curveDidChange(proj::Project,crv::Dict{String,Any})
+function curveDidChange(proj::Project, crv::Dict{String,Any})
     curveName = getCurveName(crv)
 #
 #   Find the curve location: See if the curve is in the outer boundary
 #
     for (i,s) in enumerate(proj.outerBndryNames)
         if s == curveName
-            proj.outerBndryPoints[i] = curvePoints(crv,defaultPlotPts)
+            proj.outerBndryPoints[i] = curvePoints(crv, defaultPlotPts)
             if !isnothing(proj.plt)
                 options = proj.plotOptions
                 updatePlot!(proj, options)
@@ -302,12 +346,12 @@ function curveDidChange(proj::Project,crv::Dict{String,Any})
 #
 #   Otherwise, see if it is an inner boundary
 #
-    crvNumber, bndryNumber = innerBoundaryIndices(proj,curveName)
+    crvNumber, bndryNumber = innerBoundaryIndices(proj, curveName)
     if crvNumber == 0 || bndryNumber == 0
         return nothing
     end
     innerBoundaryPoints = proj.innerBoundaryPoints[bndryNumber]
-    innerBoundaryPoints[crvNumber] = curvePoints(crv,defaultPlotPts)
+    innerBoundaryPoints[crvNumber] = curvePoints(crv, defaultPlotPts)
     proj.backgroundGridShouldUpdate = true
 
     if !isnothing(proj.plt)
