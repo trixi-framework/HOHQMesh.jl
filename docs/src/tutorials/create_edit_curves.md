@@ -279,7 +279,7 @@ Note, this step is not required, but it helps avoid confusion when editing sever
 remove_mesh!(sandbox_project)
 updatePlot!(sandbox_project, MODEL+GRID)
 ```
-Additionally, the `remove_mesh!` command deletes the mesh information from the `sandbox_project`
+The `remove_mesh!` command deletes the mesh information from the `sandbox_project`
 as well as the mesh file `sandbox.mesh`, control file `sandbox.control`, plot file `sandbox.tec`,
 and mesh statistics file `sandbox.txt` from the `out` folder.
 

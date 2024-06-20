@@ -216,7 +216,7 @@ and background grid.
 remove_mesh!(symmetric_mesh)
 updatePlot!(symmetric_mesh, MODEL+GRID)
 ```
-Additionally, the `remove_mesh!` command deletes the mesh information from
+The `remove_mesh!` command deletes the mesh information from
 the interactive mesh project `symmetric_mesh` as well as the mesh file `symmetric_mesh.mesh`,
 control file `symmetric_mesh.control`, plot file `symmetric_mesh.tec`,
 and mesh statistics file `symmetric_mesh.txt` from the `out` folder.
