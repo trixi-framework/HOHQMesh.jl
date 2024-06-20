@@ -114,7 +114,8 @@ line8 = newEndPointsLineCurve("right", [1.0, 1.75, 0.0],
 line9 = newEndPointsLineCurve("top", [1.0, 2.0, 0.0],
                                      [-0.05, 2.0, 0.0])
 ```
-The given boundary names will also be the element boundary names written to the mesh file. The only exception is the first boundary curve that is given
+The given boundary names will also be the element boundary names written to the mesh file.
+The only exception is the first boundary curve that is given
 the name `"symmetry"`. The name of this outer boundary curve is a special keyword
 in HOHQMesh that says it is the straight line across which
 a reflection will occur.
@@ -208,7 +209,8 @@ The background grid is *removed* from the visualization when the mesh is generat
 
 It is also possible to create a symmetry boundary composed of multiple be co-linear segments.
 
-To change the line along which the mesh is reflected, we remove the current mesh that was just generated and re-plot the model curves
+To change the line along which the mesh is reflected, we remove the current mesh
+that was just generated and re-plot the model curves
 and background grid.
 ```julia
 remove_mesh!(symmetric_mesh)
@@ -220,7 +222,8 @@ from the `out` folder. However, the `symmetric_mesh.control`
 and `symmetric_mesh.tec` files are still present in `out` directory.
 
 
-To illustrate the reflection about multiple boundary curves (which must be co-linear!), we first rename the current symmetry boundary curve `O.1` to have the name `"left"`.
+To illustrate the reflection about multiple boundary curves (which must be co-linear!),
+we first rename the current symmetry boundary curve `O.1` to have the name `"left"`.
 Next, we rename the co-linear boundary curves `O.3`, `O.5`, and `O.9` to have the name `"symmetry"`.
 This is done with the function `renameCurve!`
 ```julia
@@ -286,7 +289,7 @@ using HOHQMesh
 # new project
 symmetric_mesh = newProject("symmetric_mesh", "out")
 
-# reset mesh polydeg
+# reset the polynomial degree of the mesh
 setPolynomialOrder!(symmetric_mesh, 6)
 
 # A background grid is required for the mesh generation
