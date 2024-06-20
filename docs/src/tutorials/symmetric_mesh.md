@@ -119,7 +119,7 @@ the name `"symmetry"`. The name of this outer boundary curve is a special keywor
 in HOHQMesh that says it is the straight line across which
 a reflection will occur.
 
-!!! tip: "Name of the symmetry boundary"
+!!! tip "Name of the symmetry boundary"
     As noted above, `"symmetry"` is a keyword for the HOHQMesh generator that
     prescribes over which line a reflection of the mesh occurs. The Fortran implementation
     for this keyword in HOHQMesh is not case sensitive. So, within the
