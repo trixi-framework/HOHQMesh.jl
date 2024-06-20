@@ -1,7 +1,7 @@
 # Symmetric mesh
 
 The purpose of this tutorial is to demonstrate how to create an unstructured mesh
-that is symmetric with respect to a straight line outer boundary prescribed by the user.
+that is symmetric with respect to a straight line outer boundary as prescribed by the user.
 At the end of this tutorial one can find the script necessary to generate the meshes
 described herein.
 
@@ -77,7 +77,7 @@ addBackgroundGrid!(spline_project, [0.25, 0.25, 0.0])
 
 With the background grid size set, we next build the outer boundary for the present mesh project.
 This outer boundary is composed of nine straight line segments and a half circle arc.
-The curves are created such that they can be added to the mesh project `symmetric_mesh`
+The curves will afterwards be added to the mesh project `symmetric_mesh`
 in counter-clockwise order as required by HOHQMesh.
 ```julia
 line1 = newEndPointsLineCurve("symmetry", [-0.05, 2.0, 0.0],
@@ -114,13 +114,12 @@ line8 = newEndPointsLineCurve("right", [1.0, 1.75, 0.0],
 line9 = newEndPointsLineCurve("top", [1.0, 2.0, 0.0],
                                      [-0.05, 2.0, 0.0])
 ```
-The given boundary names will also be the names given in the resulting
-mesh file. The only exception is the final boundary curve that is given
-the name `"symmetry"`. This outer boundary curve is a special keyword
-in HOHQMesh that indicates the prescribed straight line over which
+The given boundary names will also be the element boundary names written to the mesh file. The only exception is the first boundary curve that is given
+the name `"symmetry"`. The name of this outer boundary curve is a special keyword
+in HOHQMesh that says it is the straight line across which
 a reflection will occur.
 
-!!! tip "Name of the symmetry boundary"
+!!! tip: "Name of the symmetry boundary"
     As noted above, `"symmetry"` is a keyword for the HOHQMesh generator that
     prescribes over which line a reflection of the mesh occurs. The Fortran implementation
     for this keyword in HOHQMesh is not case sensitive. So, within the
@@ -187,13 +186,13 @@ generate_mesh(symmetric_mesh)
    Maximum Angle     90.94150752    129.91539960    106.20679399     90.00000000    135.00000000     90.00000000
        Area Sign      1.00000000      1.00000000      1.00000000      1.00000000      1.00000000      1.00000000
 ```
-The call to `generate_mesh` also prints mesh quality statistics to the screen
+Note that the call to `generate_mesh` prints mesh quality statistics to the screen
 and updates the visualization.
 The background grid is *removed* from the visualization when the mesh is generated.
 
 !!! note "Mesh visualization"
     Currently, only the "skeleton" of the mesh is visualized. Thus, the high-order curved boundary information
-    is not seen in the plot but this information **is present** in the generated mesh file.
+    is not seen in the plot but this information **is present** in the mesh file generated.
 
 ![first_reflect_mesh](https://github.com/trixi-framework/HOHQMesh.jl/assets/25242486/1afd159e-e8c4-459f-ba7d-a31057b0c135)
 
@@ -203,11 +202,13 @@ The background grid is *removed* from the visualization when the mesh is generat
     is marked appropriately as such. The reflected boundary names are appended
     with `_R` (for reflected) in the mesh file. For instance, the reflected version
     of the boundary `bottom` has the name `bottom_R` or the boundary named `circle` has the
-    reflected boundary counterpart named `circle_R`.
+    reflected boundary counterpart named `circle_R`. These can be changed as desired by editing the mesh file.
 
 ## Changing the reflection line
 
-We remove the current mesh that was just generated and re-plot the model curves
+It is also possible to create a symmetry boundary composed of multiple be co-linear segments.
+
+To change the line along which the mesh is reflected, we remove the current mesh that was just generated and re-plot the model curves
 and background grid.
 ```julia
 remove_mesh!(symmetric_mesh)
@@ -218,8 +219,8 @@ the interactive mesh project `symmetric_mesh` and the mesh file `symmetric_mesh.
 from the `out` folder. However, the `symmetric_mesh.control`
 and `symmetric_mesh.tec` files are still present in `out` directory.
 
-It is also possible to create a symmetry boundary composed of multiple be co-linear segments.
-To illustrate this we first rename the current symmetry boundary curve `O.1` to have the name `"left"`.
+
+To illustrate the reflection about multiple boundary curves (which must be co-linear!), we first rename the current symmetry boundary curve `O.1` to have the name `"left"`.
 Next, we rename the co-linear boundary curves `O.3`, `O.5`, and `O.9` to have the name `"symmetry"`.
 This is done with the function `renameCurve!`
 ```julia
