@@ -217,10 +217,9 @@ remove_mesh!(symmetric_mesh)
 updatePlot!(symmetric_mesh, MODEL+GRID)
 ```
 Additionally, the `remove_mesh!` command deletes the mesh information from
-the interactive mesh project `symmetric_mesh` and the mesh file `symmetric_mesh.mesh`
-from the `out` folder. However, the `symmetric_mesh.control`
-and `symmetric_mesh.tec` files are still present in `out` directory.
-
+the interactive mesh project `symmetric_mesh` as well as the mesh file `symmetric_mesh.mesh`,
+control file `symmetric_mesh.control`, plot file `symmetric_mesh.tec`,
+and mesh statistics file `symmetric_mesh.txt` from the `out` folder.
 
 To illustrate the reflection about multiple boundary curves (which must be co-linear!),
 we first rename the current symmetry boundary curve `O.1` to have the name `"left"`.

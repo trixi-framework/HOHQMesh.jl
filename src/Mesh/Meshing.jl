@@ -51,11 +51,21 @@ end
 """
     remove_mesh!(proj::Project)
 
-Remove the mesh file from `proj.projectDirectory` and delete the mesh from the plot
+Remove the mesh file, control file, plot file, and stats file from `proj.projectDirectory`
+and delete the mesh from the plot.
 """
 function remove_mesh!(proj::Project)
-    meshFile = getMeshFileName(proj)
-    rm(meshFile)
+    # Remove all the output files associated with the current `proj`
+    fileName = getMeshFileName(proj)
+    rm(fileName)
+    # Get the control file name of the current project
+    fileName = joinpath(proj.projectDirectory,proj.name) * ".control"
+    rm(fileName)
+    fileName = getPlotFileName(proj)
+    rm(fileName)
+    fileName = getStatsFileName(proj)
+    rm(fileName)
+    # Delete the mesh nodes from internal storage used by the plotting routines
     proj.xMesh = Float64[]
     proj.yMesh = Float64[]
     postNotificationWithName(proj,"MESH_WAS_DELETED_NOTIFICATION",(nothing,))

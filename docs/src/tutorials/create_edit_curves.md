@@ -280,8 +280,8 @@ remove_mesh!(sandbox_project)
 updatePlot!(sandbox_project, MODEL+GRID)
 ```
 Additionally, the `remove_mesh!` command deletes the mesh information from the `sandbox_project`
-and `sandbox.mesh` from the `out` folder. However, the `sandbox.control` and `sandbox.tec` files
-are still present in `out` directory.
+as well as the mesh file `sandbox.mesh`, control file `sandbox.control`, plot file `sandbox.tec`,
+and mesh statistics file `sandbox.txt` from the `out` folder.
 
 ## Edit an inner boundary chain
 
