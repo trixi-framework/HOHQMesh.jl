@@ -437,8 +437,8 @@ and checked by
 ```
    getCurveName(crv::Dict{String,Any})
 ```
-Alternatively, the name of a curve on an outer or inner boundary
-can be changed directly in the mesh project with the function
+Alternatively, all curves on an outer or inner boundary with the same name
+can have that name changed all at once everywhere in the project with the function
 ```
    renameCurve!(proj::Project, oldName::String, newName::String)
 ```

@@ -224,8 +224,8 @@ and mesh statistics file `symmetric_mesh.txt` from the `out` folder.
 
 To illustrate the reflection about multiple boundary curves (which must be co-linear!),
 we first rename the current symmetry boundary curve `O.1` to have the name `"left"`.
-Next, we rename the co-linear boundary curves `O.3`, `O.5`, and `O.9` to have the name `":symmetry"`.
-This is done with the function `renameCurve!`
+Next, we rename all the co-linear boundary curves `O.3`, `O.5`, and `O.9` to have the name `":symmetry"`.
+Both are done with the function `renameCurve!`
 ```julia
 renameCurve!(symmetric_mesh, ":symmetry", # existing curve name
                              "left")     # new curve name
