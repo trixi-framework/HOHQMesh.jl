@@ -31,7 +31,7 @@ will be saved. By default, the output files created by HOHQMesh will carry the s
 as the project. For example, the resulting HOHQMesh control file from this tutorial
 will be named `symmetric_mesh.control`.
 If the folder `out` does not exist, it will be created automatically in
-the current file path.
+the current working directory.
 ```julia
 symmetric_mesh = newProject("symmetric_mesh", "out")
 ```
@@ -80,8 +80,8 @@ This outer boundary is composed of nine straight line segments and a half circle
 The curves will afterwards be added to the mesh project `symmetric_mesh`
 in counter-clockwise order as required by HOHQMesh.
 ```julia
-line1 = newEndPointsLineCurve("symmetry", [-0.05, 2.0, 0.0],
-                                          [-0.05, 0.0, 0.0])
+line1 = newEndPointsLineCurve(":symmetry", [-0.05, 2.0, 0.0],
+                                           [-0.05, 0.0, 0.0])
 
 line2 = newEndPointsLineCurve("bottom", [-0.05, 0.0, 0.0],
                                         [1.0, 0.0, 0.0])
@@ -116,17 +116,18 @@ line9 = newEndPointsLineCurve("top", [1.0, 2.0, 0.0],
 ```
 The given boundary names will also be the element boundary names written to the mesh file.
 The only exception is the first boundary curve that is given
-the name `"symmetry"`. The name of this outer boundary curve is a special keyword
-in HOHQMesh that says it is the straight line across which
+the name `":symmetry"`.
+This outer boundary curve name is a special keyword
+in HOHQMesh that says it is a straight line across which
 a reflection will occur.
+Two worthwhile notes are
+  1. the leading colon on this boundary name keyword is present to avoid conflicts with any other use of the *symmetry* name.
+  2. if the curve designated as `":symmetry"` is not a straight line, then an error is thrown by HOHQMesh and the mesh will not be reflected.
 
 !!! tip "Name of the symmetry boundary"
-    As noted above, `"symmetry"` is a keyword for the HOHQMesh generator that
-    prescribes over which line a reflection of the mesh occurs. The Fortran implementation
-    for this keyword in HOHQMesh is not case sensitive. So, within the
-    Julia script one can name this reflection boundary line `"symmetry"` or `"Symmetry"`
-    or `"SYMMETRY"` or even something strange like `"sYmMeTrY"` and the mesh will still
-    generate successfully.
+    The name of the reflection boundary line is not
+    case-sensitive, thus`":symmetry"` or `":Symmetry"` or `":SYMMETRY"`
+    are all valid and will be recognized as the keyword for symmetry.
 
 Now that all the outer boundary curves are defined we add them to the `symmetric_mesh`
 project in counter-clockwise order
@@ -152,7 +153,7 @@ the outer boundary and background grid. The resulting plot is given below. The c
 curves is called `"Outer"` and its constituent curve segments are labeled accordingly with the names
 prescribed in the curve construction above.
 
-![before_generation](https://github.com/trixi-framework/HOHQMesh.jl/assets/25242486/d332e86a-f958-4362-81b9-2ad40a408d94)
+![before_generation](https://github.com/trixi-framework/HOHQMesh.jl/assets/25242486/2755fb08-9796-4e79-9d2d-055ef476dd4b)
 
 ## Generate the mesh
 
@@ -195,11 +196,11 @@ The background grid is *removed* from the visualization when the mesh is generat
     Currently, only the "skeleton" of the mesh is visualized. Thus, the high-order curved boundary information
     is not seen in the plot but this information **is present** in the mesh file generated.
 
-![first_reflect_mesh](https://github.com/trixi-framework/HOHQMesh.jl/assets/25242486/1afd159e-e8c4-459f-ba7d-a31057b0c135)
+![first_reflect_mesh](https://github.com/trixi-framework/HOHQMesh.jl/assets/25242486/c271d208-6779-4e47-9045-a8cd21c5896d)
 
 !!! tip "Boundary names in the mesh file"
     The boundary names of the original outer curves will be those defined by the user
-    in their construction above. The boundary labeled `"symmetry"` is now internal and
+    in their construction above. The boundary labeled `":symmetry"` is now internal and
     is marked appropriately as such. The reflected boundary names are appended
     with `_R` (for reflected) in the mesh file. For instance, the reflected version
     of the boundary `bottom` has the name `bottom_R` or the boundary named `circle` has the
@@ -223,18 +224,20 @@ and mesh statistics file `symmetric_mesh.txt` from the `out` folder.
 
 To illustrate the reflection about multiple boundary curves (which must be co-linear!),
 we first rename the current symmetry boundary curve `O.1` to have the name `"left"`.
-Next, we rename the co-linear boundary curves `O.3`, `O.5`, and `O.9` to have the name `"symmetry"`.
+Next, we rename the co-linear boundary curves `O.3`, `O.5`, and `O.9` to have the name `":symmetry"`.
 This is done with the function `renameCurve!`
 ```julia
-renameCurve!(symmetric_mesh, "symmetry", # existing curve name
+renameCurve!(symmetric_mesh, ":symmetry", # existing curve name
                              "left")     # new curve name
-renameCurve!(symmetric_mesh, "right", "symmetry")
+renameCurve!(symmetric_mesh, "right", ":symmetry")
 ```
 After the boundary names are adjusted the plot updates automatically to give the figure below.
 
-![before_generation2](https://github.com/trixi-framework/HOHQMesh.jl/assets/25242486/314a7bc7-0cb1-4708-bbb9-98ca85798d5b)
+![before_generation2](https://github.com/trixi-framework/HOHQMesh.jl/assets/25242486/0118a02f-0343-4280-8a63-eba5a59d69e3)
 
 We then generate the new mesh from the information contained in `symmetric_mesh`.
+Again, a check ensures that the curves designated as `":symmetry"` are co-linear such that
+an error is thrown if this is not the case and the mesh will not be reflected.
 This saves the control, tec, and mesh files into the `out` folder and yields
 ```julia
 generate_mesh(symmetric_mesh)
@@ -263,7 +266,7 @@ The updated visualization is given below. Note, the flexibility to define multip
 co-linear symmetric boundaries creates a symmetric mesh with closed internal boundaries.
 In this example, a circle and a rectangle.
 
-![first_reflect_mesh2](https://github.com/trixi-framework/HOHQMesh.jl/assets/25242486/2476b6fe-79a4-4d3a-98b1-089714c76ade)
+![first_reflect_mesh2](https://github.com/trixi-framework/HOHQMesh.jl/assets/25242486/7e5baf73-9c48-45be-84e4-90eb331103a5)
 
 ## Summary
 
@@ -296,10 +299,10 @@ addBackgroundGrid!(symmetric_mesh, [0.25, 0.25, 0.0])
 
 # Create all the outer boundary curves and add them to the mesh project.
 # Note: (1) Curve names are those that will be present in the mesh file
-#       (2) Boundary named "symmetry" is where reflection occurs
+#       (2) Boundary named ":symmetry" is where reflection occurs
 
-line1 = newEndPointsLineCurve("symmetry", [-0.05, 2.0, 0.0],
-                                          [-0.05, 0.0, 0.0])
+line1 = newEndPointsLineCurve(":symmetry", [-0.05, 2.0, 0.0],
+                                           [-0.05, 0.0, 0.0])
 
 line2 = newEndPointsLineCurve("bottom", [-0.05, 0.0, 0.0],
                                         [1.0, 0.0, 0.0])
@@ -351,9 +354,9 @@ remove_mesh!(symmetric_mesh)
 
 # Rename the outer boundaries appropriately to set the symmetry boundary
 # on the right composed of multiple co-linear segments.
-renameCurve!(symmetric_mesh, "symmetry", # existing curve name
+renameCurve!(symmetric_mesh, ":symmetry", # existing curve name
                              "left")     # new curve name
-renameCurve!(symmetric_mesh, "right", "symmetry")
+renameCurve!(symmetric_mesh, "right", ":symmetry")
 
 # Generate the mesh. Saves the mesh file to the directory "out".
 generate_mesh(symmetric_mesh)
