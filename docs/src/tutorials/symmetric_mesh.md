@@ -208,7 +208,7 @@ The background grid is *removed* from the visualization when the mesh is generat
 
 ## Changing the reflection line
 
-It is also possible to create a symmetry boundary composed of multiple be co-linear segments.
+It is also possible to create a symmetry boundary composed of multiple co-linear segments.
 
 To change the line along which the mesh is reflected, we remove the current mesh
 that was just generated and re-plot the model curves
@@ -236,8 +236,8 @@ After the boundary names are adjusted the plot updates automatically to give the
 ![before_generation2](https://github.com/trixi-framework/HOHQMesh.jl/assets/25242486/0118a02f-0343-4280-8a63-eba5a59d69e3)
 
 We then generate the new mesh from the information contained in `symmetric_mesh`.
-Again, a check ensures that the curves designated as `":symmetry"` are co-linear such that
-an error is thrown if this is not the case and the mesh will not be reflected.
+Again, a check ensures that the curves designated as `":symmetry"` are co-linear. 
+An error is thrown if this is not the case and the mesh will not be reflected. 
 This saves the control, tec, and mesh files into the `out` folder and yields
 ```julia
 generate_mesh(symmetric_mesh)
