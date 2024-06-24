@@ -208,7 +208,7 @@ The background grid is *removed* from the visualization when the mesh is generat
 
 ## Changing the reflection line
 
-It is also possible to create a symmetry boundary composed of multiple be co-linear segments.
+It is also possible to create a symmetry boundary composed of multiple co-linear segments.
 
 To change the line along which the mesh is reflected, we remove the current mesh
 that was just generated and re-plot the model curves
@@ -224,8 +224,8 @@ and mesh statistics file `symmetric_mesh.txt` from the `out` folder.
 
 To illustrate the reflection about multiple boundary curves (which must be co-linear!),
 we first rename the current symmetry boundary curve `O.1` to have the name `"left"`.
-Next, we rename the co-linear boundary curves `O.3`, `O.5`, and `O.9` to have the name `":symmetry"`.
-This is done with the function `renameCurve!`
+Next, we rename all the co-linear boundary curves `O.3`, `O.5`, and `O.9` to have the name `":symmetry"`.
+Both are done with the function `renameCurve!`
 ```julia
 renameCurve!(symmetric_mesh, ":symmetry", # existing curve name
                              "left")     # new curve name
@@ -236,8 +236,8 @@ After the boundary names are adjusted the plot updates automatically to give the
 ![before_generation2](https://github.com/trixi-framework/HOHQMesh.jl/assets/25242486/0118a02f-0343-4280-8a63-eba5a59d69e3)
 
 We then generate the new mesh from the information contained in `symmetric_mesh`.
-Again, a check ensures that the curves designated as `":symmetry"` are co-linear such that
-an error is thrown if this is not the case and the mesh will not be reflected.
+Again, a check ensures that the curves designated as `":symmetry"` are co-linear. 
+An error is thrown if this is not the case and the mesh will not be reflected. 
 This saves the control, tec, and mesh files into the `out` folder and yields
 ```julia
 generate_mesh(symmetric_mesh)
