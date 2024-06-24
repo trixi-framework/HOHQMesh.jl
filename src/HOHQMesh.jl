@@ -228,6 +228,8 @@ function generate_mesh(control_file;
       end
     end
     flush(tmpio)
+    # For safety, ensure that the filestream to the `control_file` is closed.
+    close(control_file)
 
     # Run HOHQMesh and store output
     if verbose
@@ -236,8 +238,6 @@ function generate_mesh(control_file;
       readchomp(`$(HOHQMesh_jll.HOHQMesh()) -sLimit $subdivision_maximum -f $tmppath`)
     end
   end
-  # For safety, ensure that the filestream to the `control_file` is closed.
-  close(control_file)
 
   String(output)
 end
