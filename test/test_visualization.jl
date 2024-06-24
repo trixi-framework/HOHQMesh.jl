@@ -61,10 +61,6 @@ using CairoMakie
     # Create the mesh which contains a plotting update for ISM
     @test_nowarn generate_mesh(p_visu, verbose=true)
 
-    # Add a slight delay between the file creation and deletion
-    # to avoid errors on Windows systems
-    sleep(0.1)
-
     # Destroy the mesh and reset the background grid
     @test_nowarn remove_mesh!(p_visu)
 
@@ -95,10 +91,6 @@ using CairoMakie
 
     # Create the mesh which contains a plotting update for ISM-V2
     @test_nowarn generate_mesh(p_visu)
-
-    # Add a slight delay between the file creation and deletion
-    # to avoid errors on Windows systems
-    sleep(0.1)
 
     # Destroy the mesh and reset the background grid
     @test_nowarn remove_mesh!(p_visu)
