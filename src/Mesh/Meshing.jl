@@ -60,7 +60,7 @@ function remove_mesh!(proj::Project)
     rm(fileName)
     # Get the control file name of the current project
     fileName = joinpath(proj.projectDirectory,proj.name) * ".control"
-    rm(fileName; force=true)
+    rm(fileName)
     fileName = getPlotFileName(proj)
     rm(fileName)
     fileName = getStatsFileName(proj)
