@@ -58,10 +58,9 @@ function remove_mesh!(proj::Project)
     # Remove all the output files associated with the current `proj`
     fileName = getMeshFileName(proj)
     rm(fileName)
-    # TODO: See if it is only the control file that causes issues on Windows
-    # # Get the control file name of the current project
-    # fileName = joinpath(proj.projectDirectory,proj.name) * ".control"
-    # rm(fileName)
+    # Get the control file name of the current project
+    fileName = joinpath(proj.projectDirectory,proj.name) * ".control"
+    rm(fileName)
     fileName = getPlotFileName(proj)
     rm(fileName)
     fileName = getStatsFileName(proj)
