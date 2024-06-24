@@ -228,8 +228,6 @@ function generate_mesh(control_file;
       end
     end
     flush(tmpio)
-    # For safety, ensure that the filestream to the `control_file` is closed.
-    close(control_file)
 
     # Run HOHQMesh and store output
     if verbose
