@@ -61,8 +61,11 @@ using CairoMakie
     # Create the mesh which contains a plotting update for ISM
     @test_nowarn generate_mesh(p_visu, verbose=true)
 
-    # Add a delay to ensure that the Windows system has released the file handles
-    sleep(2.0) # arbitrarily pick 2 seconds
+    # Explicitly call the garbage collector to remove any temporaries
+    # before an attempt to delete any files. Helps avoid an error of type
+    #  `IOError: unlink("some_file"): resource busy or locked (EBUSY)`
+    # on Windows CI runners
+    GC.gc()
 
     # Destroy the mesh and reset the background grid
     @test_nowarn remove_mesh!(p_visu)
@@ -95,8 +98,11 @@ using CairoMakie
     # Create the mesh which contains a plotting update for ISM-V2
     @test_nowarn generate_mesh(p_visu)
 
-    # Add a delay to ensure that the Windows system has released the file handles
-    sleep(2.0) # arbitrarily pick 2 seconds
+    # Explicitly call the garbage collector to remove any temporaries
+    # before an attempt to delete any files. Helps avoid an error of type
+    #  `IOError: unlink("some_file"): resource busy or locked (EBUSY)`
+    # on Windows CI runners
+    GC.gc()
 
     # Destroy the mesh and reset the background grid
     @test_nowarn remove_mesh!(p_visu)
