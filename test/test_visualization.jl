@@ -61,8 +61,12 @@ using CairoMakie
     # Create the mesh which contains a plotting update for ISM
     @test_nowarn generate_mesh(p_visu, verbose=true)
 
-    # Add a delay to ensure that the Windows system has released the file handles
-    sleep(2.0) # arbitrarily pick 2 seconds
+    # Explicitly call the garbage collector to remove any temporaries
+    # before an attempt to delete any files
+    GC.gc()
+
+    # # Add a delay to ensure that the Windows system has released the file handles
+    # sleep(2.0) # arbitrarily pick 2 seconds
 
     # Destroy the mesh and reset the background grid
     @test_nowarn remove_mesh!(p_visu)
@@ -95,8 +99,12 @@ using CairoMakie
     # Create the mesh which contains a plotting update for ISM-V2
     @test_nowarn generate_mesh(p_visu)
 
+    # Explicitly call the garbage collector to remove any temporaries
+    # before an attempt to delete any files
+    GC.gc()
+
     # Add a delay to ensure that the Windows system has released the file handles
-    sleep(2.0) # arbitrarily pick 2 seconds
+    # sleep(2.0) # arbitrarily pick 2 seconds
 
     # Destroy the mesh and reset the background grid
     @test_nowarn remove_mesh!(p_visu)
