@@ -62,7 +62,7 @@ using CairoMakie
     @test_nowarn generate_mesh(p_visu, verbose=true)
 
     # Add a delay to ensure that the Windows system has released the file handles
-    sleep(5.0) # arbitrarily pick 5 seconds
+    sleep(2.0) # arbitrarily pick 2 seconds
 
     # Destroy the mesh and reset the background grid
     @test_nowarn remove_mesh!(p_visu)
@@ -96,7 +96,7 @@ using CairoMakie
     @test_nowarn generate_mesh(p_visu)
 
     # Add a delay to ensure that the Windows system has released the file handles
-    sleep(5.0) # arbitrarily pick 5 seconds
+    sleep(2.0) # arbitrarily pick 2 seconds
 
     # Destroy the mesh and reset the background grid
     @test_nowarn remove_mesh!(p_visu)
