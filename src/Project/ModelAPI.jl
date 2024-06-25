@@ -224,12 +224,12 @@ function insertInnerBoundaryCurveAtIndex!(proj::Project, crv::Dict{String,Any},
     insert!(lst,indx,crv)
 
     if i > length(proj.innerBoundaryPoints) # New inner boundary chain
-    a = []
-    push!(a,curvePoints(crv,defaultPlotPts))
-    push!(proj.innerBoundaryPoints,a)
+        a = []
+        push!(a,curvePoints(crv,defaultPlotPts))
+        push!(proj.innerBoundaryPoints,a)
     else
-    innerBoundaryPoints = proj.innerBoundaryPoints[i]
-    insert!(innerBoundaryPoints,indx,curvePoints(crv,defaultPlotPts))
+        innerBoundaryPoints = proj.innerBoundaryPoints[i]
+        insert!(innerBoundaryPoints,indx,curvePoints(crv,defaultPlotPts))
     end
     insert!(proj.innerBoundaryNames[i],indx,crv["name"])
 
@@ -247,7 +247,7 @@ function removeInnerBoundaryCurveAtIndex!(proj::Project, indx::Int, chainName::S
     i, chain = getInnerBoundaryChainWithName(proj,chainName)
     lst      = chain["LIST"]
     if indx > 0
-        crv      = lst[indx]
+        crv = lst[indx]
         deleteat!(lst, indx)
         if isempty(lst) # Boundary chain contained a single curve
             # Complete removal. Requires a different function to be posted
@@ -363,7 +363,7 @@ end
 
 
 """
-    getInnerBoundaryWithName(proj::Project, name::String)
+    getInnerBoundaryChainWithName(proj::Project, name::String)
 
 Get the inner boundary CHAIN with the given name. If one does not exist, it
 is created.
@@ -395,7 +395,7 @@ end
 """
 function getInnerBoundaryCurve(proj::Project, curveName::String, boundaryName::String)
     i, chain = getInnerBoundaryChainWithName(proj, boundaryName)
-    lst   = chain["LIST"]
+    lst = chain["LIST"]
     for crv in lst
         if crv["name"] == curveName
             return crv

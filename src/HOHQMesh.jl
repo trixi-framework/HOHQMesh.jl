@@ -108,7 +108,7 @@ export addCurveToOuterBoundary!,
        getInnerBoundaryCurve
 
 # Functions from `Project.jl`
-export newProject, openProject, saveProject
+export newProject, openProject, saveProject, renameCurve!
 
 # Functions from `RefinementRegionsAPI.jl`
 export newRefinementCenter,
@@ -154,7 +154,7 @@ export MODEL, GRID, MESH, EMPTY, REFINEMENTS, ALL
     generate_mesh(control_file;
                   output_directory="out",
                   mesh_filename=nothing, plot_filename=nothing, stats_filename=nothing,
-                  verbose=false)
+                  verbose=false, subdivision_maximum=8)
 
 Generate a mesh based on the `control_file` with the HOHQMesh mesh generator and store resulting
 files in `output_directory`.

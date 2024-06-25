@@ -33,6 +33,13 @@ using CairoMakie
         outer_line2 = newEndPointsLineCurve("outerline2", [-5.0, 3.0, 0.0], [0.0, -7.0, 0.0])
         add!(p_scratch, outer_line2)
 
+        # Initial test the boundary name is correct
+        @test getCurveName(getOuterBoundaryCurveWithName(p_scratch, "outerline2")) == "outerline2"
+
+        # Rename one of the outer boundary names and test that it was successful
+        renameCurve!(p_scratch, "outerline2", "LINE2")
+        @test getCurveName(getOuterBoundaryCurveWithName(p_scratch, "LINE2")) == "LINE2"
+
         # Check the computed background grid against expected values
         x_grid_control = [-8.0, -7.0, -6.0, -5.0, -4.0, -3.0, -2.0, -1.0, 0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0]
         y_grid_control = [-8.0, -7.0, -6.0, -5.0, -4.0, -3.0, -2.0, -1.0, 0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0]
@@ -51,6 +58,9 @@ using CairoMakie
         add!(p_scratch, inner_line2, "inner1")
         inner_top_arc = newCircularArcCurve("innerTopArc", [0.0, 5.0, 0.0], 1.0, 180.0, 0.0, "degrees")
         add!(p_scratch, inner_top_arc, "inner1")
+
+        # Rename one of the inner boundary names
+        renameCurve!(p_scratch, "innerBottomArc", "BottomArc")
 
         # Add in a refinement center and adjust its width manually
         cent = newRefinementCenter("center1", "smooth", [0.0, -1.0, 0.0], 0.25, 1.0)

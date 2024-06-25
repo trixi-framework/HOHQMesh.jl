@@ -40,6 +40,7 @@ makedocs(
             joinpath("tutorials", "curved_outer_boundary.md"),
             joinpath("tutorials", "spline_curves.md"),
             joinpath("tutorials", "create_edit_curves.md"),
+            joinpath("tutorials", "symmetric_mesh.md"),
         ],
         "Advanced topics & developers" => [
             "Development" => "development.md",
