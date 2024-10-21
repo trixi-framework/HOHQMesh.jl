@@ -89,6 +89,22 @@ files that are saved and the output of mesh statistics to the screen.
 Further explanation of the interactive functionality can be found [here](@ref InteractiveTool).
 Additional examples are available in the [Tutorials](@ref).
 
+
+## Referencing
+If you use HOHQMesh.jl in your own research, please cite this repository as follows:
+```bibtex
+@misc{kopriva2024hohqmesh,
+  title={{HOHQM}esh.jl: A Julia frontend to the Fortran-based HOHQMesh mesh generator for high order elements},
+  author={Kopriva, David A and Winters, Andrew R and Schlottke-Lakemper, Michael and Ranocha, Hendrik},
+  year={2024},
+  howpublished={\url{https://github.com/trixi-framework/HOHQMesh.jl}},
+  doi={10.5281/zenodo.13959071}
+}
+```
+Please also consider citing [HOHQMesh](https://github.com/trixi-framework/HOHQMesh) itself (see
+[here](https://github.com/trixi-framework/HOHQMesh#referencing) for details on how to do this).
+
+
 ## [Authors](@id authors-index-md)
 HOHQMesh.jl is maintained by the
 [Trixi authors](https://github.com/trixi-framework/Trixi.jl/blob/main/AUTHORS.md).
