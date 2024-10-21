@@ -5,6 +5,7 @@
 [![Build Status](https://github.com/trixi-framework/HOHQMesh.jl/workflows/CI/badge.svg)](https://github.com/trixi-framework/HOHQMesh.jl/actions?query=workflow%3ACI)
 [![Coveralls](https://coveralls.io/repos/github/trixi-framework/HOHQMesh.jl/badge.svg?branch=main)](https://coveralls.io/github/trixi-framework/HOHQMesh.jl?branch=main)
 [![License: MIT](https://img.shields.io/badge/License-MIT-success.svg)](https://opensource.org/licenses/MIT)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.TODO.svg)](https://doi.org/10.5281/zenodo.TODO)
 
 This package is a Julia frontend to the Fortran-based *High Order Hex-Quad Mesher*
 (a.k.a. [**HOHQMesh**](https://github.com/trixi-framework/HOHQMesh)) created and developed by
@@ -87,9 +88,25 @@ files that are saved and the output of mesh statistics to the screen.
 Further explanation of the interactive functionality can be found [here](https://trixi-framework.github.io/HOHQMesh.jl/stable/interactive_overview/).
 Additional examples are available in the [Tutorials](https://trixi-framework.github.io/HOHQMesh.jl/stable/tutorials/introduction/).
 
+
+## Referencing
+If you use HOHQMesh.jl in your own research, please cite this repository as follows:
+```bibtex
+@misc{kopriva2024hohqmesh,
+  title={{HOHQM}esh.jl: A Julia frontend to the Fortran-based HOHQMesh mesh generator for high order elements},
+  author={Kopriva, David A and Winters, Andrew R and Schlottke-Lakemper, Michael and Ranocha, Hendrik},
+  year={2024},
+  howpublished={\url{https://github.com/trixi-framework/HOHQMesh.jl}},
+  doi={10.5281/zenodo.TODO}
+}
+```
+Please also consider citing [HOHQMesh](https://github.com/trixi-framework/HOHQMesh) itself (see
+[here](https://github.com/trixi-framework/HOHQMesh#referencing) for details on how to do this).
+
+
 ## Authors
 HOHQMesh.jl is maintained by the
-[Trixi authors](https://github.com/trixi-framework/Trixi.jl/blob/main/AUTHORS.md).
+[Trixi.jl authors](https://github.com/trixi-framework/Trixi.jl/blob/main/AUTHORS.md).
 Its principal developers are [Andrew Winters](https://liu.se/en/employee/andwi94)
 (Linköping University, Sweden) and [David A. Kopriva](https://www.math.fsu.edu/~kopriva/).
 The *HOHQMesh* mesh generator itself is developed by David A. Kopriva.

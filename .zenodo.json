@@ -1,0 +1,29 @@
+{
+    "description": "A Julia frontend to the Fortran-based HOHQMesh mesh generator for high order elements",
+    "license": "MIT",
+    "title": "HOHQMesh.jl",
+    "upload_type": "software",
+    "creators": [
+        {
+            "affiliation": "Department of Mathematics, Florida State University, USA",
+            "name": "Kopriva, David A.",
+            "orcid": "0000-0002-8076-0856"
+        },
+        {
+            "affiliation": "Department of Mathematics; Computational Mathematics, Linköping University, Sweden",
+            "name": "Winters, Andrew R.",
+            "orcid": "0000-0002-5902-1522"
+        },
+        {
+            "affiliation": "High-Performance Scientific Computing, University of Augsburg, Germany",
+            "name": "Schlottke-Lakemper, Michael",
+            "orcid": "0000-0002-3195-2536"
+        },
+        {
+            "affiliation": "Numerical Mathematics, Johannes Gutenberg University Mainz, Germany",
+            "name": "Ranocha, Hendrik",
+            "orcid": "0000-0002-3456-2277"
+        }
+    ],
+    "access_right": "open"
+}
