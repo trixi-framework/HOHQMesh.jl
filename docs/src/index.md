@@ -93,7 +93,7 @@ Additional examples are available in the [Tutorials](@ref).
 ## Referencing
 If you use HOHQMesh.jl in your own research, please cite this repository as follows:
 ```bibtex
-@misc{kopriva2024hohqmesh,
+@misc{kopriva2024hohqmeshjl,
   title={{HOHQM}esh.jl: A Julia frontend to the Fortran-based HOHQMesh mesh generator for high order elements},
   author={Kopriva, David A and Winters, Andrew R and Schlottke-Lakemper, Michael and Ranocha, Hendrik},
   year={2024},
