@@ -5,7 +5,7 @@
 [![Build Status](https://github.com/trixi-framework/HOHQMesh.jl/workflows/CI/badge.svg)](https://github.com/trixi-framework/HOHQMesh.jl/actions?query=workflow%3ACI)
 [![Coveralls](https://coveralls.io/repos/github/trixi-framework/HOHQMesh.jl/badge.svg?branch=main)](https://coveralls.io/github/trixi-framework/HOHQMesh.jl?branch=main)
 [![License: MIT](https://img.shields.io/badge/License-MIT-success.svg)](https://opensource.org/licenses/MIT)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.TODO.svg)](https://doi.org/10.5281/zenodo.TODO)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.13959071.svg)](https://doi.org/10.5281/zenodo.13959071)
 
 This package is a Julia frontend to the Fortran-based *High Order Hex-Quad Mesher*
 (a.k.a. [**HOHQMesh**](https://github.com/trixi-framework/HOHQMesh)) created and developed by
@@ -92,12 +92,12 @@ Additional examples are available in the [Tutorials](https://trixi-framework.git
 ## Referencing
 If you use HOHQMesh.jl in your own research, please cite this repository as follows:
 ```bibtex
-@misc{kopriva2024hohqmesh,
+@misc{kopriva2024hohqmeshjl,
   title={{HOHQM}esh.jl: A Julia frontend to the Fortran-based HOHQMesh mesh generator for high order elements},
   author={Kopriva, David A and Winters, Andrew R and Schlottke-Lakemper, Michael and Ranocha, Hendrik},
   year={2024},
   howpublished={\url{https://github.com/trixi-framework/HOHQMesh.jl}},
-  doi={10.5281/zenodo.TODO}
+  doi={10.5281/zenodo.13959071}
 }
 ```
 Please also consider citing [HOHQMesh](https://github.com/trixi-framework/HOHQMesh) itself (see
