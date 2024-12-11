@@ -90,7 +90,22 @@ Additional examples are available in the [Tutorials](https://trixi-framework.git
 
 
 ## Referencing
-If you use HOHQMesh.jl in your own research, please cite this repository as follows:
+If you use HOHQMesh.jl in your own research, please cite the following article:
+```bibtex
+@article{kopriva2024hohqmesh:joss,
+  title={{HOHQM}esh: An All Quadrilateral/Hexahedral Unstructured Mesh Generator for High Order Elements},
+  author={David A. Kopriva and Andrew R. Winters and Michael Schlottke-Lakemper
+          and Joseph A. Schoonover and Hendrik Ranocha},
+  year={2024},
+  journal={Journal of Open Source Software},
+  doi={10.21105/joss.07476},
+  volume = {9},
+  number = {104},
+  pages = {7476},
+  publisher = {The Open Journal}
+}
+```
+In addition, you can also directly refer to this repository as
 ```bibtex
 @misc{kopriva2024hohqmeshjl,
   title={{HOHQM}esh.jl: A Julia frontend to the Fortran-based HOHQMesh mesh generator for high order elements},
@@ -100,8 +115,6 @@ If you use HOHQMesh.jl in your own research, please cite this repository as foll
   doi={10.5281/zenodo.13959071}
 }
 ```
-Please also consider citing [HOHQMesh](https://github.com/trixi-framework/HOHQMesh) itself (see
-[here](https://github.com/trixi-framework/HOHQMesh#referencing) for details on how to do this).
 
 
 ## Authors
