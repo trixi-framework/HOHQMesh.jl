@@ -70,7 +70,7 @@ For a domain bounded by an outer boundary curve, this background grid is set by 
 element size in the $x$ and $y$ directions. To start, we set the background grid for `symmetric_mesh`
 to have elements with side length $0.25$ in each direction
 ```julia
-addBackgroundGrid!(spline_project, [0.25, 0.25, 0.0])
+addBackgroundGrid!(symmetric_mesh, [0.25, 0.25, 0.0])
 ```
 
 ## Add the outer boundary
