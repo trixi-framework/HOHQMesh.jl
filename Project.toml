@@ -1,7 +1,7 @@
 name = "HOHQMesh"
 uuid = "e4f4c7b8-17cb-445a-93c5-f69190ed6c8c"
 authors = ["Michael Schlottke-Lakemper <michael@sloede.com>", "Andrew R. Winters <andrew.ross.winters@liu.se>"]
-version = "0.2.8"
+version = "0.2.9-DEV"
 
 [deps]
 HOHQMesh_jll = "1d5cbd98-5122-5a8a-bea1-c186d986ee7f"
