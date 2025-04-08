@@ -1,5 +1,6 @@
 [deps]
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+HOHQMesh = "e4f4c7b8-17cb-445a-93c5-f69190ed6c8c"
 
 [compat]
-Documenter = "0.27"
+Documenter = "1.3"
