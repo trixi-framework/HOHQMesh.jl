@@ -43,7 +43,7 @@ write(joinpath(@__DIR__, "src", "home.md"), readme_text)
 makedocs(;
     # Specify modules for which docstrings should be shown
     modules = [HOHQMesh],
-    repo = "https://github.com/trixi-framework/HOHQMesh.jl/blob/{commit}{path}#{line}",
+    repo = GitHub("trixi-framework", "HOHQMesh.jl"),
     # Set sitename to HOHQMesh
     sitename="HOHQMesh.jl",
     # Provide additional formatting options
