@@ -5,7 +5,7 @@ using HOHQMesh
 # Define module-wide setups such that the respective modules are available in doctests
 DocMeta.setdocmeta!(HOHQMesh,     :DocTestSetup, :(using HOHQMesh);     recursive=true)
 
-# Get Trixi root directory
+# Get HOHQMesh root directory
 hohqmesh_root_dir = dirname(@__DIR__)
 
 # Copy list of authors to not need to synchronize it manually.
@@ -37,13 +37,12 @@ readme_text = replace(readme_text,
                       "<p" => "```@raw html\n<p",
                       "p>" => "p>\n```",
                       r"\[comment\].*\n" => "")    # remove comments
-write(joinpath(@__DIR__, "src", "home.md"), readme_text)
+write(joinpath(@__DIR__, "src", "index.md"), readme_text)
 
 # Make documentation
 makedocs(;
     # Specify modules for which docstrings should be shown
     modules = [HOHQMesh],
-    repo = GitHub("trixi-framework", "HOHQMesh.jl"),
     # Set sitename to HOHQMesh
     sitename="HOHQMesh.jl",
     # Provide additional formatting options
@@ -79,8 +78,7 @@ makedocs(;
         "Reference" => "reference.md",
         "Authors" => "authors.md",
         "Contributing" => "contributing.md",
-        "License" => "license.md"],
-        )
+        "License" => "license.md"])
 
 deploydocs(
     repo = "github.com/trixi-framework/HOHQMesh.jl",
