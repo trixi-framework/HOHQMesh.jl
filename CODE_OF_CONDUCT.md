@@ -59,7 +59,10 @@ representative at an online or offline event.
 ## Enforcement
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported to the principal developers responsible for enforcement listed in
+reported to
+[Andrew Winters](mailto:andrew.ross.winters@liu.se),
+[Michael Schlottke-Lakemper](mailto:michael.schlottke-lakemper@uni-a.de),
+or any other of the principal developers responsible for enforcement listed in
 [AUTHORS.md](AUTHORS.md).
 All complaints will be reviewed and investigated promptly and fairly.
 

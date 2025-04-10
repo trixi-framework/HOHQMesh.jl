@@ -75,10 +75,11 @@ makedocs(;
             "GitHub & Git" => "github-git.md",
             "Testing" => "testing.md",
         ],
-        "Reference" => "reference.md",
         "Authors" => "authors.md",
         "Contributing" => "contributing.md",
-        "License" => "license.md"])
+        "Code of Conduct" => "code_of_conduct.md",
+        "License" => "license.md",
+        "Reference" => "reference.md"])
 
 deploydocs(
     repo = "github.com/trixi-framework/HOHQMesh.jl",
