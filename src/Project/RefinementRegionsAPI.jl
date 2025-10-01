@@ -136,19 +136,19 @@ end
 
 
 """
-    insertRefinementRegion!(proj::Project, r::Dict{String,Any}, indx::Int)
+    insertRefinementRegion!(proj::Project, r::Dict{String,Any}, index::Int)
 
 Used by undo()
 """
-function insertRefinementRegion!(proj::Project, r::Dict{String,Any}, indx::Int)
+function insertRefinementRegion!(proj::Project, r::Dict{String,Any}, index::Int)
     lst = getAllRefinementRegions(proj)
     registerWithUndoManager(proj,removeRefinementRegion!, (r["name"],), "Set Insert Refinement Region")
-    insert!(lst,indx,r)
+    insert!(lst,index,r)
     x = refinementRegionPoints(r)
-    insert!(proj.refinementRegionPoints,indx,x)
+    insert!(proj.refinementRegionPoints,index,x)
     center = getRefinementRegionCenter(r)
-    insert!(proj.refinementRegionLoc,indx,center)
-    insert!(proj.refinementRegionNames,indx,r["name"])
+    insert!(proj.refinementRegionLoc,index,center)
+    insert!(proj.refinementRegionNames,index,r["name"])
     postNotificationWithName(proj,"REFINEMENT_WAS_ADDED_NOTIFICATION",(nothing,))
 end
 
@@ -183,17 +183,17 @@ end
 
 
 """
-    getRefinementRegion(proj::Project, indx)
+    getRefinementRegion(proj::Project, index)
 
-Get the refinement region with index, indx from the project. Returns nothing if
+Get the refinement region with index, index from the project. Returns nothing if
 there is none. The return value is a dictionary that represents the refinement region.
 """
-function getRefinementRegion(proj::Project, indx::Int)
+function getRefinementRegion(proj::Project, index::Int)
     lst = getListInControlDictNamed(proj,"REFINEMENT_REGIONS")
-    if indx > length(lst)
-        error("Index ",indx," is larger than the number of refinement regions ", length(lst))
+    if index > length(lst)
+        error("Index ",index," is larger than the number of refinement regions ", length(lst))
     end
-    return lst[indx]
+    return lst[index]
 end
 
 

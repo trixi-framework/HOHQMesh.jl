@@ -5,7 +5,7 @@
 # chain consisting of three curves, lay a background grid and generate a HOHQMesh
 # directly from the project object.
 #
-# In particular, this example highligths available generic functionality for creating
+# In particular, this example highlights available generic functionality for creating
 # and adding new curves to a project.
 #
 # Keywords: outer boundary chain, inner boundary chain, generic functions

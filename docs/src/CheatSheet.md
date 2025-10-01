@@ -67,10 +67,10 @@ Shown here is the use of the function `add!`, which is a shortcut to the full fu
 ## Accessing items
 
 ```
-   crv         = getCurve(p, curveName)               *Get a curve in the outer boundary*
-   crv         = getCurve(p, curveName, boundaryName) *Get a curve in an inner boundary*
-   indx, chain = getChain(p, boundaryName)            *Get a complete inner boundary curve*
-   r           = getRefinementRegion(p, name)
+   crv          = getCurve(p, curveName)               *Get a curve in the outer boundary*
+   crv          = getCurve(p, curveName, boundaryName) *Get a curve in an inner boundary*
+   index, chain = getChain(p, boundaryName)            *Get a complete inner boundary curve*
+   r            = getRefinementRegion(p, name)
 ```
 
 ## Removing from Project

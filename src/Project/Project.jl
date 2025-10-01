@@ -400,20 +400,20 @@ end
 function refinementDidChange(proj::Project, sender::Dict{String,Any})
     regionName = sender["name"]
     lst = getAllRefinementRegions(proj)
-    indx = 0
+    index = 0
     for (i,r) in enumerate(lst)
         if r["name"] == regionName
-            indx = i
+            index = i
             break
         end
     end
 
-    if indx > 0
+    if index > 0
         x    = refinementRegionPoints(sender)
-        proj.refinementRegionPoints[indx] = x
-        proj.refinementRegionNames[indx] = sender["name"]
+        proj.refinementRegionPoints[index] = x
+        proj.refinementRegionNames[index] = sender["name"]
         center = getRefinementRegionCenter(sender)
-        proj.refinementRegionLoc[indx] = center
+        proj.refinementRegionLoc[index] = center
 
         if !isnothing(proj.plt)
             options = proj.plotOptions
