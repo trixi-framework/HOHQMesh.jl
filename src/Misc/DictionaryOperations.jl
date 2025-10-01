@@ -41,12 +41,12 @@ end
 
 
 function keyAndValueFromString(s)
-    indxOfEqual = findfirst("=",s)
-    if indxOfEqual === nothing
+    indexOfEqual = findfirst("=",s)
+    if indexOfEqual === nothing
         error("Equal sign = required to distinguish key and value from a string.")
     end
-    key   = strip(s[1:indxOfEqual.start-1],[' ','\t'])
-    value = strip(s[indxOfEqual.stop+1:end],[' ','\t'])
+    key   = strip(s[1:indexOfEqual.start-1],[' ','\t'])
+    value = strip(s[indexOfEqual.stop+1:end],[' ','\t'])
     return (key,value)
 end
 

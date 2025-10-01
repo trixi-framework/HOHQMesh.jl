@@ -84,7 +84,7 @@ A CIRCULAR_ARC block contains
 REFINEMENT_REGIONS dictionary contains the keys
    TYPE
    LIST
-      LIST is a list of 
+      LIST is a list of
           REFINEMENT_CENTER
           REFINEMENT_LINE
 
@@ -144,7 +144,7 @@ The SIMPLE_ROTATION block contains the keys
    TYPE
    direction
    rotation angle factor
-   subdivisions 
+   subdivisions
    start surface name
    end surface name
 
@@ -339,12 +339,12 @@ end
 
 
 function keyAndValueOnLine(s)
-    indxOfEqual = findfirst("=",s)
-    if indxOfEqual === nothing
+    indexOfEqual = findfirst("=",s)
+    if indexOfEqual === nothing
         return nothing
     end
-    key = strip(s[1:indxOfEqual.start-1],[' ','\t'])
-    value = strip(s[indxOfEqual.stop+1:end],[' ','\t'])
+    key = strip(s[1:indexOfEqual.start-1],[' ','\t'])
+    value = strip(s[indexOfEqual.stop+1:end],[' ','\t'])
     return (key,value)
 end
 
