@@ -220,3 +220,27 @@ function curvesMeet(firstCurve::Dict{String,Any}, secondCurve::Dict{String,Any};
         return false
     end
 end
+
+#=
+    Given the chain points of a boundary curve
+    as computed in assemblePlotArrays, compute the
+    circulation of the closed curve.
+=#
+function Circulation(chainPoints::Vector{Any}, nSegments::Int)
+
+    s = 0.0
+    for i in 1:nSegments
+        x = chainPoints[i]
+        for j in 1:size(x, 1)-1
+            s += x[j,1] * x[j+1,2] - x[j+1,1] * x[j,2]
+        end
+    end
+
+    if s > 0.0
+        Circulation = "COUNTERCLOCKWISE"
+    elseif s < 0.0
+        Circulation = "CLOCKWISE"
+    else
+        Circulation = "NO_DIRECTION"
+    end
+end

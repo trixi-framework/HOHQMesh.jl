@@ -462,10 +462,20 @@ function modelCurvesAreOK(proj::Project)
         return true
     end
     modelDict = getModelDict(proj)
+
+    if (isnothing(proj.plt))
+        assemblePlotArrays(proj)
+    end
+
     if haskey(modelDict,"OUTER_BOUNDARY")
         chain  = getOuterBoundaryChainList(proj)
         if !isempty(chain)
-            result = modelChainIsOK(chain,"Outer")
+            result     = modelChainIsOK(chain,"Outer")
+            resultCirc = Circulation(proj.outerBndryPoints,length(chain))
+            if resultCirc != "COUNTERCLOCKWISE"
+                result = false
+                @warn "Boundary curves must be defined counterclockwise. The outer boundary is not."
+            end
         else
             delete!(modelDict,"OUTER_BOUNDARY")
         end
@@ -476,10 +486,17 @@ function modelCurvesAreOK(proj::Project)
             delete!(modelDict,"INNER_BOUNDARIES")
             return result
         end
+        i = 0
         for chain in innerBoundariesList
             chainName = string(chain["name"])
             chainList = chain["LIST"]
             result = result && modelChainIsOK(chainList,chainName)
+            i += 1
+            resultCirc = Circulation(proj.innerBoundaryPoints[i],length(chainList))
+            if resultCirc != "COUNTERCLOCKWISE"
+                result = false
+                @warn "Boundary curves must be defined counterclockwise. Boundary $chainName is not."
+            end
         end
     end
     return result
