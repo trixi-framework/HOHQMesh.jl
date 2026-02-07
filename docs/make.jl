@@ -1,6 +1,7 @@
 using Documenter
 import Pkg
 using HOHQMesh
+using Changelog: Changelog
 
 # Define module-wide setups such that the respective modules are available in doctests
 DocMeta.setdocmeta!(HOHQMesh,     :DocTestSetup, :(using HOHQMesh);     recursive=true)
@@ -39,6 +40,24 @@ readme_text = replace(readme_text,
                       r"\[comment\].*\n" => "")    # remove comments
 write(joinpath(@__DIR__, "src", "index.md"), readme_text)
 
+# Create changelog
+Changelog.generate(Changelog.Documenter(),                        # output type
+                   joinpath(@__DIR__, "..", "NEWS.md"),           # input file
+                   joinpath(@__DIR__, "src", "changelog_tmp.md"); # output file
+                   repo = "trixi-framework/HOHQMesh.jl",          # default repository for links
+                   branch = "main",)
+# Fix edit URL of changelog
+open(joinpath(@__DIR__, "src", "changelog.md"), "w") do io
+    for line in eachline(joinpath(@__DIR__, "src", "changelog_tmp.md"))
+        if startswith(line, "EditURL")
+            line = "EditURL = \"https://github.com/trixi-framework/HOHQMesh.jl/blob/main/NEWS.md\""
+        end
+        println(io, line)
+    end
+end
+# Remove temporary file
+rm(joinpath(@__DIR__, "src", "changelog_tmp.md"))
+
 # Make documentation
 makedocs(;
     # Specify modules for which docstrings should be shown
@@ -75,11 +94,12 @@ makedocs(;
             "GitHub & Git" => "github-git.md",
             "Testing" => "testing.md",
         ],
+        "Reference" => "reference.md",
+        "Changelog" => "changelog.md",
         "Authors" => "authors.md",
         "Contributing" => "contributing.md",
         "Code of Conduct" => "code_of_conduct.md",
-        "License" => "license.md",
-        "Reference" => "reference.md"])
+        "License" => "license.md"])
 
 deploydocs(
     repo = "github.com/trixi-framework/HOHQMesh.jl",
