@@ -24,8 +24,10 @@ If you have not yet installed Julia, please [follow the instructions for your
 operating system](https://julialang.org/downloads/platform/). HOHQMesh.jl works
 with Julia v1.6 and above.
 
-HOHQMesh.jl is a registered Julia package. Hence, you can install it by executing
-the following commands in the Julia REPL:
+
+### For users
+HOHQMesh.jl and its related tools are registered Julia packages. Hence, you
+can install it by executing the following commands in the Julia REPL:
 ```julia
 julia> import Pkg; Pkg.add("HOHQMesh")
 ```
@@ -34,6 +36,39 @@ HOHQMesh.jl depends on the binary distribution of the
 mesh generator, which is available via the Julia package
 [HOHQMesh_jll.jl](https://github.com/JuliaBinaryWrappers/HOHQMesh_jll.jl)
 and which is automatically installed as a dependency.
+
+The available visualization functionality uses [Makie.jl](https://github.com/JuliaPlots/Makie.jl/).
+A Makie backend, such as [GLMakie.jl](https://github.com/JuliaPlots/GLMakie.jl/), can
+be installed in addition to HOHQMesh
+```julia
+julia> using Pkg; Pkg.add("GLMakie")
+```
+
+
+### For developers
+If you plan on editing HOHQMesh.jl itself, you can download HOHQMesh.jl
+locally and use the code from the cloned directory:
+```bash
+git clone git@github.com:trixi-framework/HOHQMesh.jl.git
+cd HOHQMesh.jl
+mkdir run
+cd run
+julia --project=. -e 'using Pkg; Pkg.develop(PackageSpec(path=".."))' # Install local HOHQMesh.jl clone
+julia --project=. -e 'using Pkg; Pkg.add("GLMakie")' # Install additional packages for plotting
+```
+Note that the additional package is optional and can be omitted.
+
+If you installed HOHQMesh.jl this way, you always have to start Julia with the `--project`
+flag set to your `run` directory, e.g.,
+```bash
+julia --project=.
+```
+if already inside the `run` directory or
+```bash
+julia --project=run
+```
+if inside the repository root directory.
+
 
 ## Usage
 In the Julia REPL, you can load HOHQMesh with
