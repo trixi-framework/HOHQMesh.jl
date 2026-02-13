@@ -225,6 +225,12 @@ end
     Given the chain points of a boundary curve
     as computed in assemblePlotArrays, compute the
     circulation of the closed curve.
+
+    This uses the trapezoid rule to approximate the integral
+    \oint_C (x dy - y dx)
+        ≈ sum_j ((x_j+1 + x_j)/2) * (y_j+1 - y_j)
+                  - ((y_j+1 + y_j)/2) * (x_j+1 - x_j)
+        = sum_j x_j * y_j+1 - x_j+1 * y_j
 =#
 function Circulation(chainPoints::Vector{Any}, nSegments::Int)
 
