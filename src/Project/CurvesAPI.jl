@@ -473,7 +473,7 @@ function setSplinePoints!(spline::Dict{String,Any},points::Matrix{Float64})
     end
     # Check if the spline data is closed (periodic) and compute its circulation.
     # If the the orientation is "CLOCKWISE" this can be corrected directly
-    # by reversing the data point order. This is also done internally within HOHQMesh
+    # by reversing the data point order as would be done internally within HOHQMesh.
     x0 = points[1, 2:3]
     xEnd = points[end, 2:3]
     tol = 100 * eps(eltype(x0))
