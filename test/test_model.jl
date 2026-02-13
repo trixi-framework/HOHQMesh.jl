@@ -115,7 +115,15 @@ using Test
     removeInnerBoundaryCurve!(p,"obc2",ib1Name)
     @test length(ibList) == 2
     # Check the inner boundary curve that are not connected. Throws a warning
-    @test_logs (:warn, "The curve obc3 does not meet the previous curve, obc1.") HOHQMesh.modelCurvesAreOK(p)
+    @test_logs match_mode=:any (:warn, "The curve obc3 does not meet the previous curve, obc1.") begin
+        HOHQMesh.modelCurvesAreOK(p)
+    end
+    # Check the inner boundary curve orientation. The inner curve is not connected, so circulation
+    # is meaningless. However, still throws a warning
+    @test_logs match_mode=:any (:warn, "Boundary curves must be defined counterclockwise. Boundary Inner1 is not.") begin
+        HOHQMesh.modelCurvesAreOK(p)
+    end
+
     @test HOHQMesh.modelCurvesAreOK(p) == false
 
     undo()
