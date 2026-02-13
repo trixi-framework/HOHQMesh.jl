@@ -470,7 +470,7 @@ function modelCurvesAreOK(proj::Project)
     if haskey(modelDict,"OUTER_BOUNDARY")
         chain  = getOuterBoundaryChainList(proj)
         if !isempty(chain)
-            result     = modelChainIsOK(chain,"Outer")
+            result = modelChainIsOK(chain,"Outer")
             resultCirc = Circulation(proj.outerBndryPoints,length(chain))
             if resultCirc != "COUNTERCLOCKWISE"
                 result = false
