@@ -231,7 +231,7 @@ using Test
         fSpline = newSplineCurve("fromFile", joinpath(@__DIR__, "test_spline_curve_data.txt"))
         fPts = getSplinePoints(fSpline)
         # Use point value 11 from the file as the test point
-        control_pt = [0.13157894736842102, -0.619074521483765, 0.470755316268511, 0.0]
+        control_pt = [0.13157894736842102, -0.619074521483765, -0.470755316268511, 0.0]
         @test isapprox(control_pt, fPts[11, :])
     end
 
