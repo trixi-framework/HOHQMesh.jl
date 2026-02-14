@@ -271,9 +271,7 @@ function Circulation(x::Array{Float64})
 
     if s > 0.0
         Circulation = "COUNTERCLOCKWISE"
-    elseif s < 0.0
+    else # s < 0.0
         Circulation = "CLOCKWISE"
-    else
-        Circulation = "NO_DIRECTION"
     end
 end
