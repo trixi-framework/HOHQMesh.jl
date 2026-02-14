@@ -480,9 +480,9 @@ function setSplinePoints!(spline::Dict{String,Any},points::Matrix{Float64})
     if isapprox(x0[1], xEnd[1], atol = tol, rtol = 0) && isapprox(x0[2], xEnd[2], atol = tol, rtol = 0)
         circSpline = Circulation(points[:, 2:3])
         if circSpline == "CLOCKWISE"
-        reverse!(points, dims = 1)
-        # Adjust that the parameter `t` should remain ordered from 0 to 1
-        @views points[:, 1] .= 1.0 .- points[:, 1]
+            reverse!(points, dims = 1)
+            # Adjust that the parameter `t` should remain ordered from 0 to 1
+            @views points[:, 1] .= 1.0 .- points[:, 1]
         end
     end
     spline["SPLINE_DATA"] = points
