@@ -97,6 +97,20 @@ using Test
     @test getCurveName(crv) == "obc2"
     redo()
     @test haskey(mDict,"OUTER_BOUNDARY") == false
+
+    # Purposely make an outer boundary with the wrong orientation
+    obc4 = new("obc4", [0.0,0.0,0.0], [1.0,1.0,0.0])
+    obc5 = new("obc5", [1.0,1.0,0.0], [2.0,0.0,0.0])
+    obc6 = new("obc6", [2.0,0.0,0.0], [0.0,0.0,0.0])
+    add!(p,obc4)
+    add!(p,obc5)
+    add!(p,obc6)
+    # Check the outer boundary curve that is CLOCKWISE oriented. Throws a warning
+    @test_logs match_mode=:any (:warn, "Boundary curves must be defined counterclockwise. The outer boundary is not.") HOHQMesh.modelCurvesAreOK(p)
+
+    # Delete the bad outer boundary before inner curve tests
+    removeOuterBoundary!(p)
+
 #
 #   Inner boundary curve tests
 #
