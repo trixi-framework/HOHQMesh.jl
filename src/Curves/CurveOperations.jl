@@ -220,3 +220,58 @@ function curvesMeet(firstCurve::Dict{String,Any}, secondCurve::Dict{String,Any};
         return false
     end
 end
+
+#=
+    Given the chain points of a boundary curve
+    as computed in assemblePlotArrays, compute the
+    circulation of the closed curve.
+
+    This uses the trapezoid rule to approximate the integral
+    \oint_C (x dy - y dx)
+        ≈ sum_j ((x_j+1 + x_j)/2) * (y_j+1 - y_j)
+                  - ((y_j+1 + y_j)/2) * (x_j+1 - x_j)
+        = sum_j x_j * y_j+1 - x_j+1 * y_j
+=#
+function Circulation(chainPoints::Vector{Any}, nSegments::Int)
+    s = 0.0
+    for i in 1:nSegments
+        x = chainPoints[i]
+        for j in 1:size(x, 1)-1
+            s += x[j, 1] * x[j+1, 2] - x[j+1, 1] * x[j, 2]
+        end
+    end
+
+    if s > 0.0
+        Circulation = "COUNTERCLOCKWISE"
+    elseif s < 0.0
+        Circulation = "CLOCKWISE"
+    else
+        Circulation = "NO_DIRECTION"
+    end
+end
+
+
+#=
+    Given a set of points from a spline that was
+    read in from a file compute its circulation.
+    Provided it is a periodic spline where the first
+    and last `(x, y)` points match then the points
+    can be reversed to "correct" if the circulation
+    is flipped.
+
+    This check and possible reversal of the circulation
+    is done in the function `setSplinePoints!`
+    within `src/Project/CurveAPI.jl`
+=#
+function Circulation(x::Array{Float64})
+    s = 0.0
+    for j in 1:size(x, 1)-1
+        s += x[j, 1] * x[j+1, 2] - x[j+1, 1] * x[j, 2]
+    end
+
+    if s > 0.0
+        Circulation = "COUNTERCLOCKWISE"
+    else # s < 0.0
+        Circulation = "CLOCKWISE"
+    end
+end

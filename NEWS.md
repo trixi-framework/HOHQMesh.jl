@@ -9,6 +9,7 @@ for human readability.
 
 #### Added
 
+- Check of outer and inner boundary curves for counterclockwise orientation [#92]
 - New option and tutorial for a symmetric mesh [#57]
 - Optional arguments to `generate_mesh` command [#52]
 - Move plotting routines into a package extension [#51]

@@ -471,6 +471,20 @@ function setSplinePoints!(spline::Dict{String,Any},points::Matrix{Float64})
     if haskey(spline,key)
         registerWithUndoManager(spline,setSplinePoints!, (spline["SPLINE_DATA"],), "Set Spline Points")
     end
+    # Check if the spline data is closed (periodic) and compute its circulation.
+    # If the the orientation is "CLOCKWISE" this can be corrected directly
+    # by reversing the data point order as would be done internally within HOHQMesh.
+    x0 = points[1, 2:3]
+    xEnd = points[end, 2:3]
+    tol = 100 * eps(eltype(x0))
+    if isapprox(x0[1], xEnd[1], atol = tol, rtol = 0) && isapprox(x0[2], xEnd[2], atol = tol, rtol = 0)
+        circSpline = Circulation(points[:, 2:3])
+        if circSpline == "CLOCKWISE"
+            reverse!(points, dims = 1)
+            # Adjust that the parameter `t` should remain ordered from 0 to 1
+            @views points[:, 1] .= 1.0 .- points[:, 1]
+        end
+    end
     spline["SPLINE_DATA"] = points
     postNotificationWithName(spline,"CURVE_DID_CHANGE_NOTIFICATION",(nothing,))
 end
