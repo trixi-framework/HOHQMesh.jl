@@ -37,7 +37,7 @@ end
 
 
 """
-    setName(proj::Project,name::String)
+    setName!(proj::Project,name::String)
 
 The `name` of the project is the filename to be used by the mesh, plot, and
 stats files. It is also the name of the control file the tool will produce.
@@ -63,7 +63,7 @@ end
 
 
 """
-    setPolynomialOrder(proj::Project, p::Int)
+    setPolynomialOrder!(proj::Project, p::Int)
 
 Set the polynomial order for boundary curves in the mesh file to `p`.
 """
@@ -90,7 +90,7 @@ end
 
 
 """
-    setMeshFileFormat(proj::Project, meshFileFormat::String)
+    setMeshFileFormat!(proj::Project, meshFileFormat::String)
 
 Set the file format for the mesh file. Acceptable choices
 are "ISM", "ISM-V2", or "ABAQUS".
@@ -125,7 +125,7 @@ end
 
 
 """
-    setPlotFileFormat(proj::Project, plotFileFormat::String)
+    setPlotFileFormat!(proj::Project, plotFileFormat::String)
 
 Set the file format for the plot file. Acceptable choices
 are "sem", which includes interior nodes and boundary nodes and "skeleton", which includes
