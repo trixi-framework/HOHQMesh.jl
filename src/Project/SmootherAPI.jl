@@ -23,7 +23,7 @@ end
 
 
 """
-    setSmoothingStatus(proj:Project, status::String)
+    setSmoothingStatus!(proj:Project, status::String)
 
 Status is either "ON" or "OFF"
 """
@@ -38,7 +38,7 @@ end
 
 
 """
-    smoothingStatus(proj::Project)
+    getSmoothingStatus(proj::Project)
 
 Returns whether the smoother will be "ON" or "OFF"
 """
