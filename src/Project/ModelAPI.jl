@@ -341,13 +341,12 @@ function getChainIndex(chain::Vector{Dict{String, Any}},name)
     end
     return 0
 end
+
 """
     getAllInnerBoundaries(proj::Project)
 
 Returns an array of the inner boundaries
 """
-
-
 function getAllInnerBoundaries(proj::Project)
     innerBndryDict = getDictInModelDictNamed(proj,"INNER_BOUNDARIES")
     if haskey(innerBndryDict,"LIST")
