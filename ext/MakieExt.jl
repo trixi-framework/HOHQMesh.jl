@@ -1,5 +1,5 @@
 # Package extension for adding Makie-based features to HOHQMesh.jl
-module HOHQMeshMakieExt
+module MakieExt
 
 # Required for visualization code
 if isdefined(Base, :get_extension)

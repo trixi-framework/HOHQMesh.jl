@@ -11,7 +11,7 @@ function __init__()
     # Until Julia v1.9 is the minimum required version for HOHQMesh.jl, we still support Requires.jl
     @static if !isdefined(Base, :get_extension)
         @require Makie="ee78f7c6-11fb-53f2-987a-cfe4a2b5a57a" begin
-            include("../ext/HOHQMeshMakieExt.jl")
+            include("../ext/MakieExt.jl")
         end
     end
 end
@@ -19,7 +19,7 @@ end
 #
 # Include interactive mesh functionality for creating, reading, and writing a model for HOHQMesh.
 # Note, Empty visualization routines are included and exported below but are extended within
-# `../ext/HOHQMeshMakieExt.jl`
+# `../ext/MakieExt.jl`
 #
 
 # Core interactive tool routines for control file readin, curve evaluation, etc.
@@ -47,7 +47,7 @@ include("Project/SmootherAPI.jl")
 # Main routine that uses HOHQMesh to generate a mesh from an interactive `Project`
 include("Mesh/Meshing.jl")
 
-# Empty routines for visualization extended in `ext/HOHQMeshMakieExt.jl`
+# Empty routines for visualization extended in `ext/MakieExt.jl`
 include("Viz/visualization.jl")
 
 # Generic main function to generate a mesh from a control file
