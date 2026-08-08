@@ -11,7 +11,7 @@ Requires = "ae029012-a4dd-5104-9daa-d747884805df"
 Makie = "ee78f7c6-11fb-53f2-987a-cfe4a2b5a57a"
 
 [extensions]
-HOHQMeshMakieExt = "Makie"
+MakieExt = "Makie"
 
 [compat]
 HOHQMesh_jll = "=1.6.0"
