@@ -167,42 +167,42 @@ with the new `"Spline"` curve labeled `O.3`.
 ## Add an inner boundary chain
 
 We create a pill shaped inner boundary curve chain composed of four pieces
-1. Straight line segment from $(1, 5)$ to $(1, 3)$.
-2. Half-circle arc of radius $r=1$ centered at $(0, 3)$.
-3. Straight line segment from $(-1, 3)$ to $(-1, 5)$.
-4. Half-circle arc of radius $r=1$ centered at $(0, 5)$.
+1. Straight line segment from $(1, 3)$ to $(1, 5)$.
+2. Half-circle arc of radius $r=1$ centered at $(0, 5)$.
+3. Straight line segment from $(-1, 5)$ to $(-1, 3)$.
+4. Half-circle arc of radius $r=1$ centered at $(0, 3)$.
 
 Similar to the construction of the `"Outer"` boundary chain, each segment of
 this inner boundary chain is created separately. The straight line segments are
 made with the function `newEndPointsLineCurve` and given unique names:
 ```julia
 inner_line1 = newEndPointsLineCurve("Line1",         # curve name
-                                    [1.0, 5.0, 0.0], # start point
-                                    [1.0, 3.0, 0.0]) # end point
+                                    [1.0, 3.0, 0.0], # start point
+                                    [1.0, 5.0, 0.0]) # end point
 
 inner_line2 = newEndPointsLineCurve("Line2",          # curve name
-                                    [-1.0, 3.0, 0.0], # start point
-                                    [-1.0, 5.0, 0.0]) # end point
+                                    [-1.0, 5.0, 0.0], # start point
+                                    [-1.0, 3.0, 0.0]) # end point
 ```
 To create the circle arcs we use the function `newCircularArcCurve` where
 we specify a name for the curve as well as the radius and center of the circle.
 In order to create an inner curve chain with counter-clockwise orientation the
-angle for the bottom half-circle arc centered at $(0, 3)$ varies from $0$ to $-180$
+angle for the bottom half-circle arc centered at $(0, 3)$ varies from $-1800$ to $0$
 degrees. The top half-circle arc centered at $(0, 5)$ has an angle that varies from
-$180$ to $0$ degrees. The construction of the two circle arcs are
+$0$ to $180$ degrees. The construction of the two circle arcs are
 ```julia
 inner_bottom_arc = newCircularArcCurve("BottomArc",     # curve name
                                        [0.0, 3.0, 0.0], # center
                                        1.0,             # radius
-                                       0.0,             # start angle
-                                       -pi,             # end angle
+                                       -pi,             # start angle
+                                       0,               # end angle
                                        "radians")       # units for angle
 
 inner_top_arc = newCircularArcCurve("TopArc",        # curve name
                                     [0.0, 5.0, 0.0], # center
                                     1.0,             # radius
-                                    180.0,           # start angle
-                                    0.0,             # end angle
+                                    0.0,             # start angle
+                                    180.0,           # end angle
                                     "degrees")       # units for angle
 ```
 Note, we use `"radians"` to set the angle bounds for `inner_bottom_arc` and `"degrees"`
@@ -212,12 +212,12 @@ The curve names  `"Line1"`, `"Line2"`, `"BottomArc"`, and `"TopArc"` are the lab
 HOHQMesh will give to these inner boundary curve segments in the resulting mesh file.
 
 The four curve segments stored in the variables `inner_line1`, `inner_line2`,
-`inner_bottom_arc` and `outer_arc` are added to the `sandbox_project` in  counter-clockwise order as required by HOHQMesh.
+`inner_bottom_arc` and `outer_arc` are added to the `sandbox_project` in counter-clockwise order as required by HOHQMesh.
 ```julia
 addCurveToInnerBoundary!(sandbox_project, inner_line1,      "inner")
-addCurveToInnerBoundary!(sandbox_project, inner_bottom_arc, "inner")
-addCurveToInnerBoundary!(sandbox_project, inner_line2,      "inner")
 addCurveToInnerBoundary!(sandbox_project, inner_top_arc,    "inner")
+addCurveToInnerBoundary!(sandbox_project, inner_line2,      "inner")
+addCurveToInnerBoundary!(sandbox_project, inner_bottom_arc, "inner")
 ```
 This inner boundary chain name `"inner"` is used internally by HOHQMesh. The visualization
 of the background grid automatically detects that curves have been added to the
@@ -243,25 +243,31 @@ generate_mesh(sandbox_project)
  *******************
  2D Mesh Statistics:
  *******************
-    Total time             =    7.5414000000000009E-002
-    Number of nodes        =          511
-    Number of Edges        =          933
-    Number of Elements     =          422
+    Total time             =    8.7094999999999978E-002
+    Number of nodes        =          550
+    Number of Edges        =         1005
+    Number of Elements     =          455
     Number of Subdivisions =            7
 
  Mesh Quality:
          Measure         Minimum         Maximum         Average  Acceptable Low Acceptable High       Reference
-     Signed Area      0.00002932      1.17335568      0.18813138      0.00000000    999.99900000      1.00000000
-    Aspect Ratio      1.00953438      2.30790024      1.31439620      1.00000000    999.99900000      1.00000000
-       Condition      1.00041663      2.41773865      1.21024584      1.00000000      4.00000000      1.00000000
-      Edge Ratio      1.01673809      3.68828437      1.59413340      1.00000000      4.00000000      1.00000000
-        Jacobian      0.00001750      1.13820387      0.14143901      0.00000000    999.99900000      1.00000000
-   Minimum Angle     32.22733574     89.35690571     68.75321248     40.00000000     90.00000000     90.00000000
-   Maximum Angle     90.61089476    152.37947944    113.36221513     90.00000000    135.00000000     90.00000000
+     Signed Area      0.00002932      1.17365275      0.17469787      0.00000000    999.99900000      1.00000000
+    Aspect Ratio      1.00972172      2.30790024      1.29940314      1.00000000    999.99900000      1.00000000
+       Condition      1.00056710      2.41773865      1.19468261      1.00000000      4.00000000      1.00000000
+      Edge Ratio      1.02257329      3.68828437      1.56695245      1.00000000      4.00000000      1.00000000
+        Jacobian      0.00001750      1.13830581      0.13217004      0.00000000    999.99900000      1.00000000
+   Minimum Angle     32.22733574     89.47760655     69.43772947     40.00000000     90.00000000     90.00000000
+   Maximum Angle     90.69193236    152.37947944    112.53677771     90.00000000    135.00000000     90.00000000
        Area Sign      1.00000000      1.00000000      1.00000000      1.00000000      1.00000000      1.00000000
+
+ Boundary Error Quality:
+                   Boundary Name    Max L2 Error     Max H1 Error
+                  Outer Boundary  2.17883727E-06  6.23052073E-04
+                           inner  1.06679487E-10  7.27142966E-08
 ```
-The call to `generate_mesh` also prints mesh quality statistics to the screen
-and updates the visualization.
+The call to `generate_mesh` prints mesh quality statistics to the screen and updates the visualization.
+The HOHQMesh output also reports the maximum $L^2$ and $H^1$ errors along the curved outer and inner boundaries
+where the inner boundary error information is given by the chain name.
 The background grid is *removed* from the visualization when the mesh is generated.
 
 !!! note "Mesh visualization"
@@ -334,8 +340,8 @@ The new inner curve segment will be an oscillating line given by the
 parametric equations
 ```math
   \begin{aligned}
-    x(t) &= t + 1,\\[0.2cm]
-    y(t) &= -2t + 5 - \frac{3}{2} \cos(\pi t) \sin(\pi t),\\[0.2cm]
+    x(t) &= 2 - t,\\[0.2cm]
+    y(t) &= -2(1 - t) + 5 - \frac{3}{2} \cos(\pi (1 - t)) \sin(\pi (1 - t)),\\[0.2cm]
     z(t) &= 0
   \end{aligned}
   \qquad
@@ -346,8 +352,8 @@ available in Fortran, e.g., $\sin$, $\cos$, exp.
 The constant `pi` is available for use.
 The following commands create a new curve for the parametric equations above
 ```julia
-xEqn = "x(t) = t + 1"
-yEqn = "y(t) = -2 * t + 5 - 1.5 * cos(pi * t) * sin(pi * t)"
+xEqn = "x(t) = 2 - t"
+yEqn = "y(t) = -2 * (1 - t) + 5 - 1.5 * cos(pi * (1 - t)) * sin(pi * (1 - t))"
 zEqn = "z(t) = 0.0"
 inner_eqn = newParametricEquationCurve("wiggleLine", xEqn, yEqn, zEqn)
 ```
@@ -360,11 +366,13 @@ The automatically updated figure now shows:
 
 ![inner_open_chain](https://user-images.githubusercontent.com/25242486/175063103-e8eda78c-b0d9-4229-9383-5582845d5f81.png)
 
-We see from the figure that this parametric equation curve starts at the point $(1,5)$
-and, therefore, matches the end point of the existing curve `"TopArc"` present
-in the `"inner"` chain. However, the
-parametric equation curve ends at the point $(2,3)$ which **does not** match
-the `"BottomArc"` curve. So, the inner boundary chain remains open.
+We see from the figure and form of the parametric equations $x(t)$ and $y(t)$
+have that the parametric equation curve starts at the point $(x(0), y(0)) = (2, 3)$
+and terminates at the point $(x(1), y(1)) = (1, 5)$.
+So, the end point of the new curve `"wiggleLine"` joins to initial point
+of the existing curve `"TopArc"` present in the `"inner"` chain.
+However, the parametric equation curve begins at the point $(2,3)$ which **does not** match
+the end point of the `"BottomArc"` curve. So, the inner boundary chain is open.
 
 !!! warning "Attempt to generate a mesh with an open curve chain"
     An open curve chain is **invalid** in HOHQMesh. All inner and/or outer curve chains
@@ -374,7 +382,7 @@ the `"BottomArc"` curve. So, the inner boundary chain remains open.
 
 To create a closed boundary curve we must remove the `"BottomArc"` curve and replace it
 with a wider half-circle arc segment. This new half-circle arc must start at the point
-$(2, 3)$ and end at the point $(-1, 3)$ to close the inner chain **and** guarantee the
+$(-1, 3)$ and end at the point $(2, 3)$ to close the inner chain **and** guarantee the
 chain is oriented counter-clockwise. So, we first remove the `"BottomArc"` from the `"inner"`
 chain.
 ```julia
@@ -385,20 +393,20 @@ Note that the inner curve chain indexing has, again, been automatically adjusted
 
 ![inner_remove_arc](https://user-images.githubusercontent.com/25242486/175063146-9475697a-3aa8-42c1-abdb-713343c6b8f7.png)
 
-A half-circle arc that joins the points $(2, 3)$ and $(-1, 3)$ has a radius $r=1.5$, is
-centered at $(0.5, 3)$ and has an angle that vaires from $0$ to $-180$.
+A half-circle arc that joins the points $(-1, 3)$ and $(2, 3)$ has a radius $r=1.5$,
+is centered at $(0.5, 3)$ and has an angle that vaires from $-180$ to $0$.
 We construct this circle arc and directly add it to the `sandbox_project`.
 ```julia
 new_bottom_arc = newCircularArcCurve("wideBottomArc", # curve name
                                      [0.5, 3.0, 0.0], # center
                                      1.5,             # radius
-                                     0.0,             # start angle
-                                     -pi,             # end angle
+                                     -pi,             # start angle
+                                     0.0,             # end angle
                                      "radians")       # units for angle
 addCurveToInnerBoundary!(sandbox_project, new_bottom_arc, "inner")
 ```
 The updated plot now gives the modified, closed inner curve chain that now contains
-four curve segments `"Line2"`, `"TopArc"`, `"wiggleLine"`, and `"wideBottomArc"` labeled
+four curve segments `"TopArc"`, `"Line2"`, `"wideBottomArc"`, and `"wiggleLine"` labeled
 in the figure by `1.1`, `1.2`, `1.3`, and `1.4`, respectively.
 
 ![inner_modified](https://user-images.githubusercontent.com/25242486/175063184-9c2d1204-cdcd-4a33-88bd-d73e7183b3d6.png)
@@ -413,24 +421,31 @@ generate_mesh(sandbox_project)
  *******************
  2D Mesh Statistics:
  *******************
-    Total time             =   0.11353599999999998
-    Number of nodes        =          712
-    Number of Edges        =         1308
-    Number of Elements     =          596
+   Total time             =   0.14115699999999998
+    Number of nodes        =          784
+    Number of Edges        =         1443
+    Number of Elements     =          659
     Number of Subdivisions =            7
 
  Mesh Quality:
          Measure         Minimum         Maximum         Average  Acceptable Low Acceptable High       Reference
-     Signed Area      0.00002932      1.15661960      0.12823902      0.00000000    999.99900000      1.00000000
-    Aspect Ratio      1.01050856      3.14732001      1.34260027      1.00000000    999.99900000      1.00000000
-       Condition      1.00037771      2.59434067      1.22850175      1.00000000      4.00000000      1.00000000
-      Edge Ratio      1.02744717      3.68828437      1.64751502      1.00000000      4.00000000      1.00000000
-        Jacobian      0.00001750      1.13149451      0.09443920      0.00000000    999.99900000      1.00000000
-   Minimum Angle     31.87236189     89.33988565     67.86178629     40.00000000     90.00000000     90.00000000
-   Maximum Angle     90.44177106    157.27121105    114.35699650     90.00000000    135.00000000     90.00000000
+     Signed Area      0.00002932      1.15443433      0.11616857      0.00000000    999.99900000      1.00000000
+    Aspect Ratio      1.00771124      2.34022215      1.29146302      1.00000000    999.99900000      1.00000000
+       Condition      1.00058000      2.47008143      1.19182565      1.00000000      4.00000000      1.00000000
+      Edge Ratio      1.02326019      3.68828437      1.55318354      1.00000000      4.00000000      1.00000000
+        Jacobian      0.00001750      1.13163339      0.08983973      0.00000000    999.99900000      1.00000000
+   Minimum Angle     32.22733574     88.97793734     69.85287528     40.00000000     90.00000000     90.00000000
+   Maximum Angle     90.70043468    152.37947955    112.33453717     90.00000000    135.00000000     90.00000000
        Area Sign      1.00000000      1.00000000      1.00000000      1.00000000      1.00000000      1.00000000
+
+ Boundary Error Quality:
+                   Boundary Name    Max L2 Error     Max H1 Error
+                  Outer Boundary  2.17883727E-06  6.23052073E-04
+                           inner  8.43706312E-09  5.16278275E-06
 ```
 The visualization updates automatically and the background grid is *removed* after when the mesh is generated.
+Note, the modified `"inner"` boundary chain with a more complicated curve influences the
+maximum $L^2$ and $H^1$ errors along the inner boundary, whereas the errors for the outer boundary remain the same.
 
 ![inner_modified](https://user-images.githubusercontent.com/25242486/175063283-b60d8985-0fce-4010-90c5-5a924883a895.png)
 
@@ -492,15 +507,15 @@ outer_spline = newSplineCurve("Spline", 5, spline_data)
 addCurveToOuterBoundary!(sandbox_project, outer_spline)
 
 # Create and add the inner boundary curves
-inner_line1 = newEndPointsLineCurve("Line1", [1.0, 5.0, 0.0], [1.0, 3.0, 0.0])
-inner_line2 = newEndPointsLineCurve("Line2", [-1.0, 3.0, 0.0], [-1.0, 5.0, 0.0])
-inner_bottom_arc = newCircularArcCurve("BottomArc", [0.0, 3.0, 0.0], 1.0, 0.0, -pi, "radians")
-inner_top_arc = newCircularArcCurve("TopArc", [0.0, 5.0, 0.0], 1.0, 180.0, 0.0, "degrees")
+inner_line1 = newEndPointsLineCurve("Line1", [1.0, 3.0, 0.0], [1.0, 5.0, 0.0])
+inner_line2 = newEndPointsLineCurve("Line2", [-1.0, 5.0, 0.0], [-1.0, 3.0, 0.0])
+inner_bottom_arc = newCircularArcCurve("BottomArc", [0.0, 3.0, 0.0], 1.0, -pi, 0.0, "radians")
+inner_top_arc = newCircularArcCurve("TopArc", [0.0, 5.0, 0.0], 1.0, 0.0, 180.0, "degrees")
 
 addCurveToInnerBoundary!(sandbox_project, inner_line1, "inner")
-addCurveToInnerBoundary!(sandbox_project, inner_bottom_arc, "inner")
-addCurveToInnerBoundary!(sandbox_project, inner_line2, "inner")
 addCurveToInnerBoundary!(sandbox_project, inner_top_arc, "inner")
+addCurveToInnerBoundary!(sandbox_project, inner_line2, "inner")
+addCurveToInnerBoundary!(sandbox_project, inner_bottom_arc, "inner")
 
 # Generate a mesh
 generate_mesh(sandbox_project)
@@ -512,12 +527,12 @@ remove_mesh!(sandbox_project)
 removeInnerBoundaryCurve!(sandbox_project, "Line1", "inner")
 removeInnerBoundaryCurve!(sandbox_project, "BottomArc", "inner")
 
-xEqn = "x(t) = t + 1"
-yEqn = "y(t) = -2 * t + 5 - 1.5 * cos(pi * t) * sin(pi * t)"
+xEqn = "x(t) = 2 - t"
+yEqn = "y(t) = -2 * (1 - t) + 5 - 1.5 * cos(pi * (1 - t)) * sin(pi * (1 - t))"
 zEqn = "z(t) = 0.0"
 inner_eqn = newParametricEquationCurve("wiggleLine", xEqn, yEqn, zEqn)
 
-new_bottom_arc = newCircularArcCurve("wideBottomArc", [0.5, 3.0, 0.0], 1.5, 0.0, -pi, "radians")
+new_bottom_arc = newCircularArcCurve("wideBottomArc", [0.5, 3.0, 0.0], 1.5, -pi, 0.0, "radians")
 
 addCurveToInnerBoundary!(sandbox_project, inner_eqn, "inner")
 addCurveToInnerBoundary!(sandbox_project, new_bottom_arc, "inner")

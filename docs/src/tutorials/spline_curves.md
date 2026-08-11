@@ -238,7 +238,7 @@ generate_mesh(spline_project)
 ```
 The call to `generate_mesh` prints mesh quality statistics to the screen.
 The HOHQMesh output also reports the maximum $L^2$ and $H^1$ errors along the curved outer and inner boundaries
-where the inner boundary error information is listed according to the chain name.
+where the inner boundaries error information is listed according to the chain name.
 HOHQMesh also reports mesh clean-up that occurred during the generation process, in this case the removal of
 "bad" chevron shaped elements that were present within the automatic subdivision procedure.
 The visualization updates automatically and the background grid is *removed* after when the mesh is generated.
