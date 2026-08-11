@@ -189,7 +189,7 @@ generate_mesh(box_project)
        Area Sign      1.00000000      1.00000000      1.00000000      1.00000000      1.00000000      1.00000000
 
  Boundary Error Quality:
-                   Boundary Name    Max L2 Error     Max H1Error
+                   Boundary Name    Max L2 Error    Max H1 Error
                           inner1  2.95974632E-08  7.37673074E-06
                           inner2  2.73798428E-09  1.17828281E-06
 ```
