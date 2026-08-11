@@ -231,9 +231,9 @@ function generate_mesh(control_file;
 
     # Run HOHQMesh and store output
     if verbose
-      readchomp(`$(HOHQMesh_jll.HOHQMesh()) -sLimit $subdivision_maximum -verbose -f $tmppath`)
+      rstrip(readchomp(`$(HOHQMesh_jll.HOHQMesh()) -sLimit $subdivision_maximum -verbose -f $tmppath`))
     else
-      readchomp(`$(HOHQMesh_jll.HOHQMesh()) -sLimit $subdivision_maximum -f $tmppath`)
+      rstrip(readchomp(`$(HOHQMesh_jll.HOHQMesh()) -sLimit $subdivision_maximum -f $tmppath`))
     end
   end
 
