@@ -222,7 +222,7 @@ addCurveToInnerBoundary!(sandbox_project, inner_bottom_arc, "inner")
 This inner boundary chain name `"inner"` is used internally by HOHQMesh. The visualization
 of the background grid automatically detects that curves have been added to the
 `sandbox_project` and the plot is updated, as shown below. The chain for the inner boundary curve chain is called `inner` and it contains a four curve segments
-`"Line1"`, `"BottomArc"`, `"Line2"`, and `"TopArc"` labeled in the figure by
+`"Line1"`, `"TopArc"`, `"Line2"`, and `"BottomArc"` labeled in the figure by
 `1.1`, `1.2`, `1.3`, and `1.4`, respectively.
 
 ![inner_pill](https://user-images.githubusercontent.com/25242486/175062834-91aae24d-167d-4d0f-8d39-887ab189081b.png)
@@ -394,7 +394,7 @@ Note that the inner curve chain indexing has, again, been automatically adjusted
 ![inner_remove_arc](https://user-images.githubusercontent.com/25242486/175063146-9475697a-3aa8-42c1-abdb-713343c6b8f7.png)
 
 A half-circle arc that joins the points $(-1, 3)$ and $(2, 3)$ has a radius $r=1.5$,
-is centered at $(0.5, 3)$ and has an angle that vaires from $-180$ to $0$.
+is centered at $(0.5, 3)$ and has an angle that varies from $-180$ to $0$.
 We construct this circle arc and directly add it to the `sandbox_project`.
 ```julia
 new_bottom_arc = newCircularArcCurve("wideBottomArc", # curve name
@@ -443,9 +443,9 @@ generate_mesh(sandbox_project)
                   Outer Boundary  2.17883727E-06  6.23052073E-04
                            inner  8.43706312E-09  5.16278275E-06
 ```
-The visualization updates automatically and the background grid is *removed* after when the mesh is generated.
 Note, the modified `"inner"` boundary chain with a more complicated curve influences the
 maximum $L^2$ and $H^1$ errors along the inner boundary, whereas the errors for the outer boundary remain the same.
+The visualization updates automatically and the background grid is *removed* after when the mesh is generated.
 
 ![inner_modified](https://user-images.githubusercontent.com/25242486/175063283-b60d8985-0fce-4010-90c5-5a924883a895.png)
 
