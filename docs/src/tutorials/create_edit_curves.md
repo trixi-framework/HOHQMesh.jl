@@ -113,7 +113,7 @@ the outer boundary and background grid. The resulting plot is given below. The c
 curves is called `"Outer"` and it contains three curve segments `"Line1"`, `"Arc"`, and `"Line2"`
 labeled in the figure by `O.1`, `O.2`, and `O.3`, respectively.
 
-![background_grid](https://user-images.githubusercontent.com/25242486/175062627-a87ed6e1-ce68-4ef4-a178-96b1ccceff0a.png)
+![background_grid](https://github.com/user-attachments/assets/535c120f-6dc1-420a-b8e5-c4810891af21)
 
 ## Edit the outer boundary chain
 
@@ -137,7 +137,7 @@ removeOuterBoundaryCurveWithName!(sandbox_project, "Line2")
 The plot automatically updates and we see that the outer boundary is open and contains
 two segments: `"Line1"` and `"Arc"`.
 
-![outer_removal](https://user-images.githubusercontent.com/25242486/175062663-8a0e3a4f-c444-4302-a35b-7565095ab78a.png)
+![outer_removal](https://github.com/user-attachments/assets/2a15e20c-789e-41ad-b9cb-b9e6d7e105eb)
 
 Next, we create a parametric cubic spline curve from a given set of data points. In order to make a
 closed outer boundary chain the cubic spline must begin at the endpoint of the curve `"Arc"`
@@ -162,7 +162,7 @@ addCurveToOuterBoundary!(sandbox_project, outer_spline)
 The figure updates automatically to display the `"Outer"` boundary chain
 with the new `"Spline"` curve labeled `O.3`.
 
-![outer_spline](https://user-images.githubusercontent.com/25242486/175062706-6d12840c-f5fa-49e6-ad18-d46d643dd3d8.png)
+![outer_spline](https://github.com/user-attachments/assets/a00206a5-0faa-42aa-b00f-d807ad830d3c)
 
 ## Add an inner boundary chain
 
@@ -225,7 +225,7 @@ of the background grid automatically detects that curves have been added to the
 `"Line1"`, `"TopArc"`, `"Line2"`, and `"BottomArc"` labeled in the figure by
 `1.1`, `1.2`, `1.3`, and `1.4`, respectively.
 
-![inner_pill](https://user-images.githubusercontent.com/25242486/175062834-91aae24d-167d-4d0f-8d39-887ab189081b.png)
+![inner_pill](https://github.com/user-attachments/assets/84cece24-15aa-4146-9a1b-0c668dc60717)
 
 ## Generate the mesh
 
@@ -274,7 +274,7 @@ The background grid is *removed* from the visualization when the mesh is generat
     Currently, only the "skeleton" of the mesh is visualized. Thus, the high-order curved boundary information
     is not seen in the plot but this information **is present** in the generated mesh file.
 
-![initial_mesh](https://user-images.githubusercontent.com/25242486/175062901-4f1280ae-9830-4ab3-bee2-76f895b03cbb.png)
+![initial_mesh](https://github.com/user-attachments/assets/72a8b7a8-bbb8-46e8-b336-a64c16e01f2a)
 
 ## Delete the existing mesh
 
@@ -314,7 +314,7 @@ With either removal strategy, the plot automatically updates. We see that the
 inner boundary is open and contains three segments: `"BottomArc"`, `"Line2"`, and `"TopArc"`.
 Note that the index of the remaining curves has changed as shown below.
 
-![inner_removal](https://user-images.githubusercontent.com/25242486/175062997-6f60b3e3-b9eb-4f6b-8062-5b17de0cca2c.png)
+![inner_removal](https://github.com/user-attachments/assets/9412a3ca-8736-49b2-bf50-6af65bb2ef95)
 
 !!! note "Brief note about undo / redo"
     The interactive functionality (globally) carries an operation stack of actions that can be undone
@@ -364,7 +364,7 @@ addCurveToInnerBoundary!(sandbox_project, inner_eqn, "inner")
 ```
 The automatically updated figure now shows:
 
-![inner_open_chain](https://user-images.githubusercontent.com/25242486/175063103-e8eda78c-b0d9-4229-9383-5582845d5f81.png)
+![inner_open_chain](https://github.com/user-attachments/assets/866603cb-51e8-4f7e-a645-054c47aabd8b)
 
 We see from the figure and form of the parametric equations $x(t)$ and $y(t)$
 have that the parametric equation curve starts at the point $(x(0), y(0)) = (2, 3)$
@@ -391,7 +391,7 @@ removeInnerBoundaryCurve!(sandbox_project, "BottomArc", "inner")
 The figure updates to display the `"inner"` curve chain with three segments.
 Note that the inner curve chain indexing has, again, been automatically adjusted.
 
-![inner_remove_arc](https://user-images.githubusercontent.com/25242486/175063146-9475697a-3aa8-42c1-abdb-713343c6b8f7.png)
+![inner_remove_arc](https://github.com/user-attachments/assets/612b1812-5df9-429f-b70f-415fbc33ebdd)
 
 A half-circle arc that joins the points $(-1, 3)$ and $(2, 3)$ has a radius $r=1.5$,
 is centered at $(0.5, 3)$ and has an angle that varies from $-180$ to $0$.
@@ -409,7 +409,7 @@ The updated plot now gives the modified, closed inner curve chain that now conta
 four curve segments `"TopArc"`, `"Line2"`, `"wideBottomArc"`, and `"wiggleLine"` labeled
 in the figure by `1.1`, `1.2`, `1.3`, and `1.4`, respectively.
 
-![inner_modified](https://user-images.githubusercontent.com/25242486/175063184-9c2d1204-cdcd-4a33-88bd-d73e7183b3d6.png)
+![inner_modified](https://github.com/user-attachments/assets/33085a4c-b425-4346-b4d2-3ccba44e0ab8)
 
 ## Regenerate the mesh
 
@@ -447,13 +447,13 @@ Note, the modified `"inner"` boundary chain with a more complicated curve influe
 maximum $L^2$ and $H^1$ errors along the inner boundary, whereas the errors for the outer boundary remain the same.
 The visualization updates automatically and the background grid is *removed* after when the mesh is generated.
 
-![inner_modified](https://user-images.githubusercontent.com/25242486/175063283-b60d8985-0fce-4010-90c5-5a924883a895.png)
+![inner_modified](https://github.com/user-attachments/assets/432ee9c7-c216-4c38-85f0-c5271a3a8175)
 
 Inspecting the mesh we see that the automatic subdivision in HOHQMesh does well to capture the sharp corners and fine features of the curved inner and outer boundaries. For example, we zoom
 into sharp corner at the bottom of the domain and see that, although small, the elements in this
 region maintain a good quadrilateral shape.
 
-![zoom_corner](https://user-images.githubusercontent.com/25242486/175063320-57d42322-2d0e-4e69-b177-ab40d6a8df3d.png)
+![zoom_corner](https://github.com/user-attachments/assets/8586077b-61e6-4065-b47e-419409273cd5)
 
 ## Summary
 
