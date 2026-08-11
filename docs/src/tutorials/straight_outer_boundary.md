@@ -171,7 +171,7 @@ generate_mesh(box_project)
  *******************
  2D Mesh Statistics:
  *******************
-    Total time             =    2.9116999999999997E-002
+    Total time             =    3.1403999999999994E-002
     Number of nodes        =          498
     Number of Edges        =          921
     Number of Elements     =          422
@@ -187,9 +187,17 @@ generate_mesh(box_project)
    Minimum Angle     50.57680338     89.99999787     83.84338772     40.00000000     90.00000000     90.00000000
    Maximum Angle     90.00000259    136.97085026     96.70176380     90.00000000    135.00000000     90.00000000
        Area Sign      1.00000000      1.00000000      1.00000000      1.00000000      1.00000000      1.00000000
+
+ Boundary Error Quality:
+                   Boundary Name    Max L2 Error     Max H1Error
+                          inner1  2.95974632E-08  7.37673074E-06
+                          inner2  2.73798428E-09  1.17828281E-06
 ```
-The call to `generate_mesh` also prints mesh quality statistics to the screen and updates the
-visualization. The background grid is *removed* from the visualization when the mesh is generated and the resulting
+The call to `generate_mesh` prints mesh quality statistics to the screen and updates the
+visualization.
+The HOHQMesh output also reports the maximum $L^2$ and $H^1$ errors along the curved inner boundaries
+where the information is listed according to the chain name.
+The background grid is *removed* from the visualization when the mesh is generated and the resulting
 mesh is visualized instead.
 
 ![final_circle](https://user-images.githubusercontent.com/25242486/174775040-e4a04503-83f3-4f80-b087-972bd8dbb5e9.png)
