@@ -49,14 +49,15 @@ using CairoMakie
         @test isapprox(p_scratch.yGrid, y_grid_control)
 
         # Build the inner pill-shaped boundary chain and plot it piece-by-piece
-        inner_line1 = newEndPointsLineCurve("innerLine1", [-1.0, 5.0, 0.0], [1.0, 3.0, 0.0])
+        inner_line1 = newEndPointsLineCurve("innerLine1", [-1.0, 3.0, 0.0], [1.0, 5.0, 0.0])
         add!(p_scratch, inner_line1, "inner1")
-        setStartPoint!(inner_line1, [1.0, 5.0, 0.0])
-        inner_bottom_arc = newCircularArcCurve("innerBottomArc", [0.0, 3.0, 0.0], 1.0, 0.0, -180.0, "degrees")
+        # Fix the start point that was purposely set wrong above
+        setStartPoint!(inner_line1, [1.0, 3.0, 0.0])
+        inner_bottom_arc = newCircularArcCurve("innerBottomArc", [0.0, 5.0, 0.0], 1.0, 0.0, 180.0, "degrees")
         add!(p_scratch, inner_bottom_arc, "inner1")
-        inner_line2 = newEndPointsLineCurve("innerLine2", [-1.0, 3.0, 0.0], [-1.0, 5.0, 0.0])
+        inner_line2 = newEndPointsLineCurve("innerLine2", [-1.0, 5.0, 0.0], [-1.0, 3.0, 0.0])
         add!(p_scratch, inner_line2, "inner1")
-        inner_top_arc = newCircularArcCurve("innerTopArc", [0.0, 5.0, 0.0], 1.0, 180.0, 0.0, "degrees")
+        inner_top_arc = newCircularArcCurve("innerTopArc", [0.0, 3.0, 0.0], 1.0, -180.0, 0.0, "degrees")
         add!(p_scratch, inner_top_arc, "inner1")
 
         # Rename one of the inner boundary names
