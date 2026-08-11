@@ -1,16 +1,16 @@
 # Interactive mesh with spline curves
 #
 # Create a mesh with a circular outer boundary and three inner boundaries.
-# Two inner boundaries are parametric splines, on econstructred from file data and
+# Two inner boundaries are parametric splines, are constructed from file data and
 # the other from given data points. The third curve is a triangular object built from
 # three internal straight-sided "curves".
 #
 # Keywords: spline from file, spline construction, outer boundary, inner boundary
 
-projectName = "spline_boundary"
+projectName = "spline_curves"
 projectPath = "out"
 
-# Create a new project with the name "spline_boundary", which will also be the
+# Create a new project with the name "spline_curves", which will also be the
 # name of the mesh, plot and stats files, written to output folder `out`.
 
 p = newProject(projectName, projectPath)
@@ -77,9 +77,9 @@ if isdefined(Main, :Makie)
     @info "To visualize the project (boundary curves, background grid, mesh, etc.), include `GLMakie` and run again."
  end
 
-# Generate the mesh. This produces the mesh and TecPlot files `IceCreamCone.mesh` and `IceCreamCone.tec`
-# and saves them to the `out` folder. Also, if there is an active plot in the project `p` it is
-# updated with the mesh that was generated.
+# Generate the mesh. This produces the mesh and TecPlot files `spline_curves.mesh` and `spline_curves.tec`
+# and saves them to the `out` folder. It also creates a control file `box_two_circles.control`.
+# If there is an active plot in the project `p` it is updated with the mesh that was generated.
 
 generate_mesh(p)
 

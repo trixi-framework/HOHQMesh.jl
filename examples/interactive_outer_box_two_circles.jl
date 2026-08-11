@@ -66,7 +66,7 @@ end
 
 # Generate the mesh. This produces the mesh and TecPlot files `box_two_circles.inp` and `box_two_circles.tec`
 # and saves them to the `out` folder. It also creates a control file `box_two_circles.control`.
-# Also, if there is an active plot in the project `p` it is updated with the mesh that was generated.
+# If there is an active plot in the project `p` it is updated with the mesh that was generated.
 
 generate_mesh(p)
 
