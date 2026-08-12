@@ -168,6 +168,25 @@ const blocksThatStoreLists = Set(["OUTER_BOUNDARY",
 const blockRegex = r"(?<=\{).+?(?=\})"
 blockNameStack = []
 
+# Control file components order to force
+# CONTROL_INPUT to come first in the file
+# followed by the MODEL
+const projectOrder = ["CONTROL_INPUT", "MODEL"]
+
+# Order on the CONTROL_INPUT to match the HOHQMesh
+# documentation.
+const controlInputOrder = ["RUN_PARAMETERS",
+                           "BACKGROUND_GRID",
+                           "SPRING_SMOOTHER",
+                           "REFINEMENT_REGIONS"]
+
+# Boundary curve optimization keyword order
+const bndryOptKeywordOrder = ["name",
+                              "optimize",
+                              "tolerance",
+                              "continuity",
+                              "connect"]
+
 #
 #--------------- MAIN ENTRY -----------------------------------------------
 #
@@ -297,30 +316,83 @@ end
 function WriteDictionary(controlDict::Dict{String,Any}, f::IOStream, indent::String)
 
     deepIndent = "   " * indent
-    for (key, value) in controlDict
-        if isa(value, AbstractDict)
-            println(f,indent,"\\begin{$key}")
-            if in(key,blocksThatStoreLists)
-                list = value["LIST"]
-                StepThroughList(list,f, deepIndent)
-            else
-                WriteDictionary(value,f, deepIndent)
+
+    # Ensure that CONTROL_INPUT comes first
+    # followed by the MODEL
+    for key in projectOrder
+        if haskey(controlDict, key)
+            value = controlDict[key]
+
+            println(f, "\\begin{$key}")
+            WriteDictionary(value, f, deepIndent)
+            println(f, "\\end{$key}")
+            println(f, "")
+        end
+    end
+
+    # Ensure that CONTROL_INPUT components
+    # match the order from the HOHQMesh docs
+    for key in controlInputOrder
+        if haskey(controlDict, key)
+            value = controlDict[key]
+
+            println(f, indent, "\\begin{$key}")
+            WriteDictionary(value, f, deepIndent)
+            println(f, indent, "\\end{$key}")
+            println(f, "")
+        end
+    end
+
+    # Write the optimization keywords in order
+    # to match the HOHQMesh documentation
+    for key in bndryOptKeywordOrder
+        if haskey(controlDict, key)
+            value = controlDict[key]
+
+#            # TODO: do we ant this skip?
+#            # Don't write an empty connect
+#            if key == "connect" && value == "[]"
+#                continue
+#            end
+
+            if isa(value, AbstractString)
+                if key != "TYPE"
+                    println(f, indent, "$key = $value")
+                end
             end
-            println(f,indent,"\\end{$key}")
+        end
+    end
+
+    # Write everything else where ordering doesn't matter
+    for (key, value) in controlDict
+        # Already handled above
+        if key in union(bndryOptKeywordOrder, projectOrder, controlInputOrder)
+            continue
+        end
+        if isa(value, AbstractDict)
+            println(f, indent, "\\begin{$key}")
+            WriteDictionary(value, f, deepIndent)
+            println(f, indent, "\\end{$key}")
+            println(f, "")
         elseif isa(value, AbstractString)
             if key != "TYPE"
-                println(f,indent,"$key = $value")
+                println(f, indent, "$key = $value")
             end
         elseif isa(value, AbstractArray)
             if key == "LIST"
-                StepThroughList(value,f, deepIndent)
+                StepThroughList(value, f, deepIndent)
             elseif key == "SPLINE_DATA"
-                println(f,indent,"\\begin{$key}")
+                println(f, indent, "\\begin{$key}")
                 arraySize = size(value)
                 for j = 1:arraySize[1]
-                    println(f,deepIndent, " ", value[j,1], " ", value[j,2], " ", value[j,3], " ", value[j,4])
+                    println(f, deepIndent, " ",
+                               value[j,1], " ",
+                               value[j,2], " ",
+                               value[j,3], " ",
+                               value[j,4])
                 end
-                println(f,indent,"\\end{$key}")
+                println(f, indent, "\\end{$key}")
+                println(f, "")
             end
         end
     end
