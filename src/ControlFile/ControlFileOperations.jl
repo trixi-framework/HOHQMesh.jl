@@ -349,7 +349,7 @@ function WriteDictionary(controlDict::Dict{String,Any}, f::IOStream, indent::Str
         if haskey(controlDict, key)
             value = controlDict[key]
 
-#            # TODO: do we ant this skip?
+#            # TODO: do we want this skip?
 #            # Don't write an empty connect
 #            if key == "connect" && value == "[]"
 #                continue
