@@ -144,11 +144,25 @@ function getOuterBoundaryChainList(proj::Project)
         lst = outerBndryDict["LIST"]
         return lst
     else
+        # This is the creation of the CHAIN for the OUTER_BOUNDARY
+        # and here we instantiate the keywords for the boundary
+        # curve optimization defaults.
+        # Default values are: optimization off,
+        #                     tol = 1e-3,
+        #                     continuity = 0
+        #                     connect = empty
+        outerBndryDict["optimize"] = "none"
+        outerBndryDict["tolerance"] = "1.0e-3"
+        outerBndryDict["continuity"] = "0"
+        outerBndryDict["connect"] = "[]"
         lst = Dict{String,Any}[]
         outerBndryDict["LIST"] = lst
         return lst
     end
 end
+
+# TODO: setter, getter functions for the OUTER_BOUNDARY optimization keywords
+
 #
 #  --------------------------------------------------------------------------------------
 #           INNER BOUNDARY FUNCTIONS
@@ -319,6 +333,17 @@ function addInnerBoundaryWithName!(proj::Project,name::String)
     bndryChain["TYPE"] = "CHAIN"
     bndryCurves        = Dict{String,Any}[]
     bndryChain["LIST"] = bndryCurves
+#
+#   Keywords in the chain for the boundary optimization
+#   Default values are: optimization off,
+#                       tol = 1e-3,
+#                       continuity = 0
+#                       connect = empty
+#
+    bndryChain["optimize"] = "none"
+    bndryChain["tolerance"] = "1.0e-3"
+    bndryChain["continuity"] = "0"
+    bndryChain["connect"] = "[]"
 
     innerBoundariesList = getAllInnerBoundaries(proj)
     push!(innerBoundariesList,bndryChain)
@@ -332,6 +357,7 @@ function addInnerBoundaryWithName!(proj::Project,name::String)
     return bndryChain
 end
 
+# TODO: setter, getter functions for the OUTER_BOUNDARY optimization keywords
 
 function getChainIndex(chain::Vector{Dict{String, Any}},name)
     for (i,dict) in enumerate(chain)

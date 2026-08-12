@@ -115,7 +115,7 @@ getCurve(proj::Project, curveName::String, boundaryName::String)
 Get the curve named `curveName` from the inner boundary named `boundaryName`
 """
 function getCurve(proj::Project, curveName::String, boundaryName::String)
-    return  getInnerBoundaryCurve(proj, curveName, boundaryName)
+    return getInnerBoundaryCurve(proj, curveName, boundaryName)
 end
 
 
