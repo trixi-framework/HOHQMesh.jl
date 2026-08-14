@@ -108,7 +108,7 @@ export addCurveToOuterBoundary!,
        getChainIndex,
        getInnerBoundaryChainWithName,
        getInnerBoundaryCurve
-# `ModelAPI.jl` functions specific to boundary curve optimzation
+# `ModelAPI.jl` functions specific to boundary curve optimization
 export getOuterBoundaryOptimizeStatus, setOuterBoundaryOptimizeStatus!,
        getOuterBoundaryTolerance, setOuterBoundaryTolerance!,
        getOuterBoundaryContinuity, setOuterBoundaryContinuity!,
