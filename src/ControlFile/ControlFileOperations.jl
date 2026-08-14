@@ -34,6 +34,7 @@ The MODEL dictionary contains the keys
             SPLINE_CURVE
             END_POINTS_LINE
             CIRCULAR_ARC
+            ELLIPTIC_ARC
     INNER_BOUNDARIES
         The INNER_BOUNDARIES block contains a ["LIST"] of
             CHAIN
@@ -46,6 +47,7 @@ A CHAIN block contains a ["LIST"] of
      SPLINE_CURVE
      END_POINTS_LINE
      CIRCULAR_ARC
+     ELLIPTIC_ARC
 
 A PARAMETRIC_EQUATION_CURVE dictionary contains the keys
     TYPE
@@ -80,6 +82,17 @@ A CIRCULAR_ARC block contains
    radius
    start angle
    end angle
+
+A ELLIPTIC_ARC block contains
+   TYPE
+   name
+   units
+   center
+   xRadius
+   yRadius
+   start angle
+   end angle
+   rotation
 
 REFINEMENT_REGIONS dictionary contains the keys
    TYPE
@@ -248,6 +261,7 @@ function performImport(collection, f::IOStream)
 #
                     if blockName == "CHAIN"
                         nextLine = readline(f)
+                        println(nextLine)
                         kvp      = keyAndValueOnLine(nextLine)
                         if kvp === nothing
                             error("Key-value pair not found in string: " * nextLine)
@@ -349,16 +363,13 @@ function WriteDictionary(controlDict::Dict{String,Any}, f::IOStream, indent::Str
         if haskey(controlDict, key)
             value = controlDict[key]
 
-#            # TODO: do we want this skip?
-#            # Don't write an empty connect
-#            if key == "connect" && value == "[]"
-#                continue
-#            end
+            # Don't write out an empty connect keyword
+            if key == "connect" && value == "[]"
+                continue
+            end
 
-            if isa(value, AbstractString)
-                if key != "TYPE"
-                    println(f, indent, "$key = $value")
-                end
+            if isa(value, AbstractString) && key != "TYPE"
+                println(f, indent, "$key = $value")
             end
         end
     end

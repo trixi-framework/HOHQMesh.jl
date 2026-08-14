@@ -75,6 +75,7 @@ export addBackgroundGrid!, removeBackgroundGrid!,
 export newParametricEquationCurve,
        newEndPointsLineCurve,
        newCircularArcCurve,
+       newEllipticArcCurve,
        newSplineCurve,
        setCurveName!, getCurveName,
        getCurveType,
@@ -88,6 +89,7 @@ export newParametricEquationCurve,
        setArcStartAngle!, getArcStartAngle,
        setArcEndAngle!, getArcEndAngle,
        setArcRadius!, getArcRadius,
+       setArcRotation!, getArcRotation,
        setSplineNKnots!, getSplineNKnots,
        setSplinePoints!, getSplinePoints
 
@@ -106,6 +108,15 @@ export addCurveToOuterBoundary!,
        getChainIndex,
        getInnerBoundaryChainWithName,
        getInnerBoundaryCurve
+# `ModelAPI.jl` functions specific to boundary curve optimzation
+export getOuterBoundaryOptimizeStatus, setOuterBoundaryOptimizeStatus!,
+       getOuterBoundaryTolerance, setOuterBoundaryTolerance!,
+       getOuterBoundaryContinuity, setOuterBoundaryContinuity!,
+       getOuterBoundaryConnect, setOuterBoundaryConnect!,
+       getInnerBoundaryChainOptimizeStatus, setInnerBoundaryChainOptimizeStatus!,
+       getInnerBoundaryChainTolerance, setInnerBoundaryChainTolerance!,
+       getInnerBoundaryChainContinuity, setInnerBoundaryChainContinuity!,
+       getInnerBoundaryChainConnect, setInnerBoundaryChainConnect!
 
 # Functions from `Project.jl`
 export newProject, openProject, saveProject, renameCurve!

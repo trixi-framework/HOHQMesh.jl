@@ -1,17 +1,18 @@
 
 const argRegex = r"(?<=\().+?(?=\))"
 
-function arcCurvePoints(center::Array{Float64}, r::Float64, thetaStart::Float64, thetaEnd::Float64, units::AbstractString, t::Array{Float64}, points::Array{Float64,2})
+function arcCurvePoints(center::Array{Float64}, r::Float64, thetaStart::Float64, thetaEnd::Float64,
+                        units::AbstractString, t::Array{Float64}, points::Array{Float64,2})
     fctr::Float64 = 1.0
     if units == "degrees"
-        fctr = pi/180.0
+        fctr = pi / 180.0
     end
 
     theta::Float64 = 0.0
     for i = 1:length(t)
         theta = thetaStart + (thetaEnd - thetaStart)*t[i]
-        points[i,1] = center[1] + r*cos(theta*fctr)
-        points[i,2] = center[2] + r*sin(theta*fctr)
+        points[i,1] = center[1] + r * cos(theta * fctr)
+        points[i,2] = center[2] + r * sin(theta * fctr)
     end
 end
 
@@ -20,22 +21,59 @@ function arcCurvePoint(center::Array{Float64}, r::Float64, thetaStart::Float64, 
                        units::AbstractString, t::Float64, point::Array{Float64})
     fctr::Float64 = 1.0
     if units == "degrees"
-        fctr = pi/180.0
+        fctr = pi / 180.0
     end
     theta = thetaStart + (thetaEnd - thetaStart)*t
-    point[1] = center[1] + r*cos(theta*fctr)
-    point[2] = center[2] + r*sin(theta*fctr)
+    point[1] = center[1] + r * cos(theta * fctr)
+    point[2] = center[2] + r * sin(theta * fctr)
 end
 
 
-function endPointsLineCurvePoints(xStart::Array{Float64}, xEnd::Array{Float64}, t::Array{Float64}, points::Array{Float64})
+function ellipseCurvePoints(center::Array{Float64}, x_r::Float64, y_r::Float64,
+                            thetaStart::Float64, thetaEnd::Float64,
+                            rot::Float64, units::AbstractString,
+                            t::Array{Float64}, points::Array{Float64,2})
+    fctr::Float64 = 1.0
+    if units == "degrees"
+        fctr = pi / 180.0
+    end
+
+    for i = 1:length(t)
+        theta = thetaStart + (thetaEnd - thetaStart) * t[i]
+        points[i, 1] = (center[1] + x_r * cos(theta * fctr) * cos(rot * fctr)
+                                  - y_r * sin(theta * fctr) * sin(rot * fctr))
+        points[i, 2] = (center[2] + x_r * cos(theta * fctr) * sin(rot * fctr)
+                                  + y_r * sin(theta * fctr) * cos(rot * fctr))
+    end
+end
+
+
+function ellipseCurvePoint(center::Array{Float64}, x_r::Float64, y_r::Float64,
+                           thetaStart::Float64, thetaEnd::Float64,
+                           rot::Float64, units::AbstractString,
+                           t::Float64, point::Array{Float64})
+    fctr::Float64 = 1.0
+    if units == "degrees"
+        fctr = pi / 180.0
+    end
+    theta = thetaStart + (thetaEnd - thetaStart) * t
+    point[1] = (center[1] + x_r * cos(theta * fctr) * cos(rot * fctr)
+                          - y_r * sin(theta * fctr) * sin(rot * fctr))
+    point[2] = (center[2] + x_r * cos(theta * fctr) * sin(rot * fctr)
+                          + y_r * sin(theta * fctr) * cos(rot * fctr))
+end
+
+
+function endPointsLineCurvePoints(xStart::Array{Float64}, xEnd::Array{Float64},
+                                  t::Array{Float64}, points::Array{Float64})
     for i = 1:length(t)
         points[i,1:2] = xStart[1:2] + t[i]*(xEnd[1:2] - xStart[1:2])
     end
 end
 
 
-function endPointsLineCurvePoint(xStart::Array{Float64}, xEnd::Array{Float64}, t::Float64, point::Array{Float64})
+function endPointsLineCurvePoint(xStart::Array{Float64}, xEnd::Array{Float64},
+                                 t::Float64, point::Array{Float64})
         point[1:2] = xStart[1:2] + t*(xEnd[1:2] - xStart[1:2])
 end
 
@@ -155,6 +193,22 @@ function curvePoints(crvDict::Dict{String,Any}, N::Int)
         end
 
         arcCurvePoints(center,radius,startAngle,endAngle,units,t,x)
+    elseif curveType == "ELLIPTIC_ARC"
+        center     = realArrayForKeyFromDictionary("center",crvDict)
+        xRadius    = realForKeyFromDictionary("xRadius",crvDict)
+        yRadius    = realForKeyFromDictionary("yRadius",crvDict)
+        startAngle = realForKeyFromDictionary("start angle",crvDict)
+        endAngle   = realForKeyFromDictionary("end angle",crvDict)
+        units      = crvDict["units"]
+        rotation   = realForKeyFromDictionary("rotation",crvDict)
+
+        x = zeros(Float64,N+1,2)
+        t = zeros(Float64,N+1)
+        for i = 1:N+1
+            t[i] = (i-1)/N
+        end
+
+        ellipseCurvePoints(center,xRadius,yRadius,startAngle,endAngle,rotation,units,t,x)
     elseif curveType == "SPLINE_CURVE"
         nKnots = intForKeyFromDictionary("nKnots",crvDict)
         splineData = crvDict["SPLINE_DATA"]
@@ -201,6 +255,16 @@ function curvePoint(crvDict::Dict{String,Any}, t::Float64)
         units      = crvDict["units"]
         x = zeros(Float64,3)
         arcCurvePoint(center,radius,startAngle,endAngle,units,t,x)
+    elseif curveType == "ELLIPTIC_ARC"
+        center     = realArrayForKeyFromDictionary("center",crvDict)
+        xRadius    = realForKeyFromDictionary("xRadius",crvDict)
+        yRadius    = realForKeyFromDictionary("yRadius",crvDict)
+        startAngle = realForKeyFromDictionary("start angle",crvDict)
+        endAngle   = realForKeyFromDictionary("end angle",crvDict)
+        units      = crvDict["units"]
+        rotation   = realForKeyFromDictionary("rotation",crvDict)
+        x = zeros(Float64,3)
+        ellipseCurvePoint(center,xRadius,yRadius,startAngle,endAngle,rotation,units,t,x)
     elseif curveType == "SPLINE_CURVE"
         nKnots = intForKeyFromDictionary("nKnots",crvDict)
         splineData = crvDict["SPLINE_DATA"]
@@ -211,7 +275,8 @@ function curvePoint(crvDict::Dict{String,Any}, t::Float64)
 end
 
 
-function curvesMeet(firstCurve::Dict{String,Any}, secondCurve::Dict{String,Any}; tol=100*eps(Float64))
+function curvesMeet(firstCurve::Dict{String,Any}, secondCurve::Dict{String,Any};
+                    tol=100*eps(Float64))
     xFirst  = curvePoint(firstCurve,1.0)
     xSecond = curvePoint(secondCurve,0.0)
     if maximum(abs.(xFirst - xSecond)) < tol

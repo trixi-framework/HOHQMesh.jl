@@ -144,7 +144,9 @@ To generate a mesh interactively you
    plot the mesh as in the figure above, if a plot is otherwise visible.
    If not, it can always be plotted with the `plotProject!` command.
 
-## Advanced
+## Advanced features
+
+### Optional arguments for mesh generation
 
 The `generate_mesh` function has two optional arguments. The first is the Boolean `verbose`
 argument. One can pass `verbose=true` to output additional messages and information during
@@ -154,6 +156,53 @@ to a factor of `2^8` smaller than the existing background grid.
 Note, think before adjusting the `subdivision_maximum` level! It is often the case that
 adjusting the boundary curves, background grid size, adding local refinement regions,
 or some combination of these adjustments removes the need to adjust the subdivision depth.
+
+### Error controlled mesh adaptation
+
+HOHQMesh automatically sizes elements according to a number of criteria,
+including the local radius of curvature of the boundary curves,
+the distance between curves, and user-defined refinement regions.
+
+A new experimental feature allows HOHQMesh to adaptively mesh a model
+to provide optimal boundary approximations to the model curves with
+user-specified smoothness to within a user-defined tolerance.
+Refer to the HOHQMesh documentation for an [overview](https://trixi-framework.org/HOHQMesh/error-controlled-adaptive-meshing/)
+and [technical details](https://trixi-framework.org/HOHQMesh/boundary-curve-optimization-details/)
+of this strategy.
+
+Error control of the boundary curves is done chain-by-chain and can be performed in
+the `"OUTER_BOUNDARY"` chain and any one of the `"INNER_BOUNDARIES"`.
+This is done by telling HOHQMesh what norm to optimize ($L^2$ or $H^1$), the error tolerance, and to what derivatives the resulting boundary approximation will be smooth.
+The keywords (together with their default values) that control this optimization
+are given below.
+They are present in any `"CHAIN"` dictionary created in HOHQMesh.jl
+```julia
+   "optimize" = "none"  # options are "L2Norm", "H1Norm" or "none"
+   "tolerance" = "1e-3" # accuracy tolerance
+   "continuity" = "0"   # highest derivative to be made smooth
+   "connect" = "[]"     # see description below
+```
+More details on the options are:
+
+1. `"optimize"`: Specifies the norm to be minimized. For convenience, `"none"` is provided to deactivate the optimization.
+2. `"tolerance"`: The accuracy to which the boundaries are to be approximated.
+3. `"continuity"`: The derivatives to which the approximation will be constrained. For example, if second derivative continuity is to be enforced, choose `"continuity" = "2"`. If zero, then the approximation is simply continuous.
+4. `"connect"`: This *optional* parameter allows one to optimize across segments of a chain. By default, optimization is done curve by curve within the chain, since usually there will be discontinuities (e.g. corners) between the curves. If it is desired to define a more global approximation across multiple curves, include the `"connect"` key.
+
+ The syntax is the following:
+ ```julia
+    "connect" = "crv_1-crv_2,crv_3-crv_4,..."
+ ```
+ where the `crv_n` are the index of the curves in the chain. For example, if a chain contains ten curves and optimization is requested across the third and fourth curves in the list and across the sixth through ninth in the list, then
+ ```julia
+    "connect" = "3-4,6-9"
+ ```
+
+When active, HOHQMesh will then find the best polynomial approximation of each curve
+in the chain to the order defined by `polynomial order` in the `"RUN_PARAMETERS"`
+of the project (the default polynomial order is `5`).
+
+## Final note
 
 All objects and information contained in the variable type `Project` are actually dictionaries
 of type `Dict{String, Any}`.

@@ -34,6 +34,7 @@ const defaultPlotPts  = 200
 const meshFileFormats = Set(["ISM", "ISM-V2", "ABAQUS"])
 const plotFileFormats = Set(["sem", "skeleton"])
 const smootherTypes   = Set(["LinearSpring", "LinearAndCrossbarSpring"])
+const optimizeTypes   = Set(["none", "L2Norm", "H1Norm"])
 const statusValues    = Set(["ON", "OFF"])
 const refinementTypes = Set(["smooth", "sharp"])
 
