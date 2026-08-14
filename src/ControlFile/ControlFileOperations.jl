@@ -261,7 +261,6 @@ function performImport(collection, f::IOStream)
 #
                     if blockName == "CHAIN"
                         nextLine = readline(f)
-                        println(nextLine)
                         kvp      = keyAndValueOnLine(nextLine)
                         if kvp === nothing
                             error("Key-value pair not found in string: " * nextLine)
