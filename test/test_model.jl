@@ -255,6 +255,12 @@ end
         setInnerBoundaryChainOptimizeStatus!(p, chainName, "invalid")
     end
 
+    setInnerBoundaryChainOptimizeStatus!(p, chainName, "L2Norm")
+    @test getInnerBoundaryChainOptimizeStatus(p, chainName) == "L2Norm"
+
+    setInnerBoundaryChainOptimizeStatus!(p, chainName, "H1Norm")
+    @test getInnerBoundaryChainOptimizeStatus(p, chainName) == "H1Norm"
+
     # Tolerance keyword functions
 
     @test getInnerBoundaryChainTolerance(p, chainName) == 1.0e-3
