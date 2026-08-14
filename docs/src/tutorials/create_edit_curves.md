@@ -187,7 +187,7 @@ inner_line2 = newEndPointsLineCurve("Line2",          # curve name
 To create the circle arcs we use the function `newCircularArcCurve` where
 we specify a name for the curve as well as the radius and center of the circle.
 In order to create an inner curve chain with counter-clockwise orientation the
-angle for the bottom half-circle arc centered at $(0, 3)$ varies from $-1800$ to $0$
+angle for the bottom half-circle arc centered at $(0, 3)$ varies from $-180$ to $0$
 degrees. The top half-circle arc centered at $(0, 5)$ has an angle that varies from
 $0$ to $180$ degrees. The construction of the two circle arcs are
 ```julia
