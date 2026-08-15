@@ -83,7 +83,7 @@ A CIRCULAR_ARC block contains
    start angle
    end angle
 
-A ELLIPTIC_ARC block contains
+An ELLIPTIC_ARC block contains
    TYPE
    name
    units
@@ -336,7 +336,7 @@ function WriteDictionary(controlDict::Dict{String,Any}, f::IOStream, indent::Str
         if haskey(controlDict, key)
             value = controlDict[key]
 
-            println(f, "\\begin{$key}")
+            println(f, "\\begin", key, "}")
             WriteDictionary(value, f, deepIndent)
             println(f, "\\end{$key}")
             println(f, "")
