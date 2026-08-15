@@ -212,7 +212,7 @@ generate_mesh(spline_project)
  *******************
  2D Mesh Statistics:
  *******************
-    Total time             =   0.25359100000000001
+    Total time             =   0.26175499999999996
     Number of nodes        =         1176
     Number of Edges        =         2225
     Number of Elements     =         1047
@@ -228,8 +228,17 @@ generate_mesh(spline_project)
    Minimum Angle     37.24189766     89.96174556     74.42003031     40.00000000     90.00000000     90.00000000
    Maximum Angle     90.03128071    157.35065162    107.91806148     90.00000000    135.00000000     90.00000000
        Area Sign      1.00000000      1.00000000      1.00000000      1.00000000      1.00000000      1.00000000
+
+ Boundary Error Quality:
+                   Boundary Name    Max L2 Error     Max H1 Error
+                  Outer Boundary  1.45176294E-11  8.54200650E-09
+                          inner1  5.30146973E-06  1.71519711E-03
+                          inner2  4.19784789E-07  2.05657113E-04
+                          inner3  1.63284650E-03  5.25449390E-01
 ```
-The call to `generate_mesh` also prints mesh quality statistics to the screen.
+The call to `generate_mesh` prints mesh quality statistics to the screen.
+The HOHQMesh output also reports the maximum $L^2$ and $H^1$ errors along the curved outer and inner boundaries
+where the inner boundaries error information is listed according to the chain name.
 HOHQMesh also reports mesh clean-up that occurred during the generation process, in this case the removal of
 "bad" chevron shaped elements that were present within the automatic subdivision procedure.
 The visualization updates automatically and the background grid is *removed* after when the mesh is generated.

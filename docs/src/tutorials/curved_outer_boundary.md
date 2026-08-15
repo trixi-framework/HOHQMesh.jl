@@ -126,7 +126,7 @@ generate_mesh(blob_project)
  *******************
  2D Mesh Statistics:
  *******************
-    Total time             =    8.4328000000000000E-002
+    Total time             =   0.12631000000000001
     Number of nodes        =          479
     Number of Edges        =          895
     Number of Elements     =          417
@@ -142,9 +142,14 @@ generate_mesh(blob_project)
    Minimum Angle     29.38249259     89.99827733     73.08294187     40.00000000     90.00000000     90.00000000
    Maximum Angle     90.00132795    156.98701187    109.36585212     90.00000000    135.00000000     90.00000000
        Area Sign      1.00000000      1.00000000      1.00000000      1.00000000      1.00000000      1.00000000
+
+ Boundary Error Quality:
+                   Boundary Name    Max L2 Error    Max H1 Error
+                  Outer Boundary  4.79189227E-05  1.58057740E-02
 ```
-The call to `generate_mesh` also prints mesh quality statistics to the screen and updates the
-visualization. The background grid is *removed* from the visualization when the mesh is generated.
+The call to `generate_mesh` prints mesh quality statistics to the screen and updates the visualization.
+The HOHQMesh output also reports the maximum $L^2$ and $H^1$ errors along the curved outer boundary.
+The background grid is *removed* from the visualization when the mesh is generated.
 
 !!! note "Mesh visualization"
     Currently, only the "skeleton" of the mesh is visualized. Thus, the high-order curved boundary information
@@ -176,7 +181,7 @@ generate_mesh(blob_project)
  *******************
  2D Mesh Statistics:
  *******************
-    Total time             =    9.2778999999999986E-002
+    Total time             =   0.11993200000000000
     Number of nodes        =          503
     Number of Edges        =          940
     Number of Elements     =          438
@@ -192,8 +197,13 @@ generate_mesh(blob_project)
    Minimum Angle     29.38249259     89.99827897     72.80049710     40.00000000     90.00000000     90.00000000
    Maximum Angle     90.00132784    156.98701188    109.63478104     90.00000000    135.00000000     90.00000000
        Area Sign      1.00000000      1.00000000      1.00000000      1.00000000      1.00000000      1.00000000
+
+ Boundary Error Quality:
+                   Boundary Name    Max L2 Error    Max H1 Error
+                  Outer Boundary  7.75495247E-06  3.51290592E-03
 ```
 Note, the circular region indicating the refinement center is removed from the plot when the mesh is generated.
+The addition of a targeted refinement region also reduced the maximum $L^2$ and $H^1$ errors of the new mesh.
 
 ![final_blob](https://user-images.githubusercontent.com/25242486/174747066-a804bf1d-508a-480d-bde3-47687b402604.png)
 
