@@ -336,9 +336,9 @@ function WriteDictionary(controlDict::Dict{String,Any}, f::IOStream, indent::Str
         if haskey(controlDict, key)
             value = controlDict[key]
 
-            println(f, "\\begin", key, "}")
+            println(f, "\\begin{", key, "}") # TODO: double check that this still works
             WriteDictionary(value, f, deepIndent)
-            println(f, "\\end{$key}")
+            println(f, "\\end{", key, "}")
             println(f, "")
         end
     end
@@ -349,9 +349,9 @@ function WriteDictionary(controlDict::Dict{String,Any}, f::IOStream, indent::Str
         if haskey(controlDict, key)
             value = controlDict[key]
 
-            println(f, indent, "\\begin{$key}")
+            println(f, indent, "\\begin{", key, "}")
             WriteDictionary(value, f, deepIndent)
-            println(f, indent, "\\end{$key}")
+            println(f, indent, "\\end{", key, "}")
             println(f, "")
         end
     end
@@ -368,7 +368,7 @@ function WriteDictionary(controlDict::Dict{String,Any}, f::IOStream, indent::Str
             end
 
             if isa(value, AbstractString) && key != "TYPE"
-                println(f, indent, "$key = $value")
+                println(f, indent, key, " = ", value)
             end
         end
     end
@@ -380,19 +380,19 @@ function WriteDictionary(controlDict::Dict{String,Any}, f::IOStream, indent::Str
             continue
         end
         if isa(value, AbstractDict)
-            println(f, indent, "\\begin{$key}")
+            println(f, indent, "\\begin{", key, "}")
             WriteDictionary(value, f, deepIndent)
-            println(f, indent, "\\end{$key}")
+            println(f, indent, "\\end{", key, "}")
             println(f, "")
         elseif isa(value, AbstractString)
             if key != "TYPE"
-                println(f, indent, "$key = $value")
+                println(f, indent, key, " = ", value)
             end
         elseif isa(value, AbstractArray)
             if key == "LIST"
                 StepThroughList(value, f, deepIndent)
             elseif key == "SPLINE_DATA"
-                println(f, indent, "\\begin{$key}")
+                println(f, indent, "\\begin{", key, "}")
                 arraySize = size(value)
                 for j = 1:arraySize[1]
                     println(f, deepIndent, " ",
@@ -401,7 +401,7 @@ function WriteDictionary(controlDict::Dict{String,Any}, f::IOStream, indent::Str
                                value[j,3], " ",
                                value[j,4])
                 end
-                println(f, indent, "\\end{$key}")
+                println(f, indent, "\\end{", key, "}")
                 println(f, "")
             end
         end
@@ -413,9 +413,9 @@ function StepThroughList(lst::AbstractArray,f::IOStream, indent::String)
     deepIndent = "   " * indent
     for dict in lst
         dtype = dict["TYPE"]
-        println(f,indent, "\\begin{$dtype}")
+        println(f,indent, "\\begin{", dtype, "}")
         WriteDictionary(dict,f, deepIndent)
-        println(f,indent, "\\end{$dtype}")
+        println(f,indent, "\\end{", dtype, "}")
     end
 end
 
