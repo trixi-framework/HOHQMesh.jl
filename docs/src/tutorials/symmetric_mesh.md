@@ -134,8 +134,8 @@ project in counter-clockwise order
 ```julia
 addCurveToOuterBoundary!(symmetric_mesh, line1)
 addCurveToOuterBoundary!(symmetric_mesh, line2)
-addCurveToOuterBoundary!(symmetric_mesh, half_circle)
 addCurveToOuterBoundary!(symmetric_mesh, line3)
+addCurveToOuterBoundary!(symmetric_mesh, half_circle)
 addCurveToOuterBoundary!(symmetric_mesh, line4)
 addCurveToOuterBoundary!(symmetric_mesh, line5)
 addCurveToOuterBoundary!(symmetric_mesh, line6)
@@ -171,7 +171,7 @@ generate_mesh(symmetric_mesh)
  *******************
  2D Mesh Statistics:
  *******************
-    Total time             =    4.0154999999999996E-002
+    Total time             =    4.4701999999999992E-002
     Number of nodes        =          343
     Number of Edges        =          626
     Number of Elements     =          284
@@ -179,17 +179,22 @@ generate_mesh(symmetric_mesh)
 
  Mesh Quality:
          Measure         Minimum         Maximum         Average  Acceptable Low Acceptable High       Reference
-     Signed Area      0.00227157      0.06552808      0.01366911      0.00000000    999.99900000      1.00000000
-    Aspect Ratio      1.00389317      2.07480912      1.22443835      1.00000000    999.99900000      1.00000000
-       Condition      1.00048947      1.93007666      1.12853177      1.00000000      4.00000000      1.00000000
-      Edge Ratio      1.00607156      3.56541719      1.44892631      1.00000000      4.00000000      1.00000000
-        Jacobian      0.00158627      0.06202757      0.01120120      0.00000000    999.99900000      1.00000000
-   Minimum Angle     48.35050023     89.33703938     75.39251039     40.00000000     90.00000000     90.00000000
-   Maximum Angle     90.94150752    129.91539960    106.20679399     90.00000000    135.00000000     90.00000000
+     Signed Area      0.00220407      0.06242615      0.01366911      0.00000000    999.99900000      1.00000000
+    Aspect Ratio      1.01394925      2.04605013      1.20933780      1.00000000    999.99900000      1.00000000
+       Condition      1.00090927      1.63712117      1.11296179      1.00000000      4.00000000      1.00000000
+      Edge Ratio      1.01202453      2.93333325      1.41191150      1.00000000      4.00000000      1.00000000
+        Jacobian      0.00153988      0.05762182      0.01128942      0.00000000    999.99900000      1.00000000
+   Minimum Angle     49.13177233     89.02555379     75.90857703     40.00000000     90.00000000     90.00000000
+   Maximum Angle     91.06976230    130.32470794    105.68124689     90.00000000    135.00000000     90.00000000
        Area Sign      1.00000000      1.00000000      1.00000000      1.00000000      1.00000000      1.00000000
+
+ Boundary Error Quality:
+                   Boundary Name    Max L2 Error    Max H1 Error
+                  Outer Boundary  2.97126900E-12  5.26628911E-09
 ```
 Note that the call to `generate_mesh` prints mesh quality statistics to the screen
 and updates the visualization.
+The HOHQMesh output also reports the maximum $L^2$ and $H^1$ errors along the outer boundary.
 The background grid is *removed* from the visualization when the mesh is generated.
 
 !!! note "Mesh visualization"
@@ -228,7 +233,7 @@ Next, we rename all the co-linear boundary curves `O.3`, `O.5`, and `O.9` to hav
 Both are done with the function `renameCurve!`
 ```julia
 renameCurve!(symmetric_mesh, ":symmetry", # existing curve name
-                             "left")     # new curve name
+                             "left")      # new curve name
 renameCurve!(symmetric_mesh, "right", ":symmetry")
 ```
 After the boundary names are adjusted the plot updates automatically to give the figure below.
@@ -236,8 +241,8 @@ After the boundary names are adjusted the plot updates automatically to give the
 ![before_generation2](https://github.com/trixi-framework/HOHQMesh.jl/assets/25242486/0118a02f-0343-4280-8a63-eba5a59d69e3)
 
 We then generate the new mesh from the information contained in `symmetric_mesh`.
-Again, a check ensures that the curves designated as `":symmetry"` are co-linear. 
-An error is thrown if this is not the case and the mesh will not be reflected. 
+Again, a check ensures that the curves designated as `":symmetry"` are co-linear.
+An error is thrown if this is not the case and the mesh will not be reflected.
 This saves the control, tec, and mesh files into the `out` folder and yields
 ```julia
 generate_mesh(symmetric_mesh)
@@ -245,7 +250,7 @@ generate_mesh(symmetric_mesh)
  *******************
  2D Mesh Statistics:
  *******************
-    Total time             =    3.7763000000000019E-002
+    Total time             =    4.7195999999999988E-002
     Number of nodes        =          337
     Number of Edges        =          622
     Number of Elements     =          284
@@ -253,16 +258,22 @@ generate_mesh(symmetric_mesh)
 
  Mesh Quality:
          Measure         Minimum         Maximum         Average  Acceptable Low Acceptable High       Reference
-     Signed Area      0.00227157      0.06552808      0.01366911      0.00000000    999.99900000      1.00000000
-    Aspect Ratio      1.00389317      2.07480912      1.22443835      1.00000000    999.99900000      1.00000000
-       Condition      1.00048947      1.93007666      1.12853177      1.00000000      4.00000000      1.00000000
-      Edge Ratio      1.00607156      3.56541719      1.44892631      1.00000000      4.00000000      1.00000000
-        Jacobian      0.00158627      0.06202757      0.01120120      0.00000000    999.99900000      1.00000000
-   Minimum Angle     48.35050023     89.33703938     75.39251039     40.00000000     90.00000000     90.00000000
-   Maximum Angle     90.94150752    129.91539960    106.20679399     90.00000000    135.00000000     90.00000000
+     Signed Area      0.00200919      0.06472958      0.01366911      0.00000000    999.99900000      1.00000000
+    Aspect Ratio      1.01394929      2.04364136      1.21258194      1.00000000    999.99900000      1.00000000
+       Condition      1.00091018      1.91814253      1.12027830      1.00000000      4.00000000      1.00000000
+      Edge Ratio      1.01202453      3.53385826      1.42073382      1.00000000      4.00000000      1.00000000
+        Jacobian      0.00135817      0.06134810      0.01120294      0.00000000    999.99900000      1.00000000
+   Minimum Angle     43.09402469     89.33487540     75.97399519     40.00000000     90.00000000     90.00000000
+   Maximum Angle     90.57451347    143.07429487    105.78829265     90.00000000    135.00000000     90.00000000
        Area Sign      1.00000000      1.00000000      1.00000000      1.00000000      1.00000000      1.00000000
+
+ Boundary Error Quality:
+                   Boundary Name    Max L2 Error    Max H1 Error
+                  Outer Boundary  2.97126900E-12  5.26628911E-09
 ```
-The updated visualization is given below. Note, the flexibility to define multiple
+The updated visualization is given below.
+Again, the HOHQMesh output also reports the maximum $L^2$ and $H^1$ errors along the outer boundary.
+Note, the flexibility to define multiple
 co-linear symmetric boundaries creates a symmetric mesh with closed internal boundaries.
 In this example, a circle and a rectangle.
 
@@ -277,10 +288,10 @@ In this tutorial we demonstrated how to:
 * Rename boundaries in an existing interactive mesh project.
 * Visualize an interactive mesh project.
 
-For completeness, we include two scripts with all the commands to generate the meshes displayed
+For completeness, we include in the script below all the commands to generate the meshes displayed
 for a reflection about the left boundary line `O.1` as well as a reflection about
 the right boundary composed of the three co-linear segments `O.3`, `O.5`, and `O.9`.
-Note, we **do not** include the plotting in these scripts.
+Note, we **do not** include the plotting in this scripts.
 ```julia
 # Interactive mesh with reflection on the left over a single symmetry boundary
 # as well as a reflection on the right over multiple co-linear symmetry boundaries.
@@ -337,8 +348,8 @@ line9 = newEndPointsLineCurve("top", [1.0, 2.0, 0.0],
 
 addCurveToOuterBoundary!(symmetric_mesh, line1)
 addCurveToOuterBoundary!(symmetric_mesh, line2)
-addCurveToOuterBoundary!(symmetric_mesh, half_circle)
 addCurveToOuterBoundary!(symmetric_mesh, line3)
+addCurveToOuterBoundary!(symmetric_mesh, half_circle)
 addCurveToOuterBoundary!(symmetric_mesh, line4)
 addCurveToOuterBoundary!(symmetric_mesh, line5)
 addCurveToOuterBoundary!(symmetric_mesh, line6)
