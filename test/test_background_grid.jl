@@ -70,7 +70,7 @@ using Test
     removeBackgroundGrid!(p)
     @test HOHQMesh.hasBackgroundGrid(p) == false
 #
-#   There are no longer any background grid. Delete the notification center piece as well.
+#   There is no longer any background grid. Delete the notification center piece as well.
 #   Note that the notification center is global and can have multiple observers. So we test
 #   this notification center removal before other observers, e.g. other projects in the
 #   testing runs, are created that will add in the background grid again.
