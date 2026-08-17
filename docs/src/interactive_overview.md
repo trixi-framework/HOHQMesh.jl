@@ -202,6 +202,32 @@ When active, HOHQMesh will then find the best polynomial approximation of each c
 in the chain to the order defined by `polynomial order` in the `"RUN_PARAMETERS"`
 of the project (the default polynomial order is `5`).
 
+One can adjust the values that control the boundary optimization for any of the boundary
+chains. There are specialized setter / getter functions for the `"OUTER_BOUNDARY"`
+(there is only one)
+```julia
+   setOuterBoundaryOptimizeStatus!(proj::Project, status::String)
+   getOuterBoundaryOptimizeStatus(proj::Project)
+   setOuterBoundaryTolerance!(proj::Project, tolerance::Float64)
+   getOuterBoundaryTolerance(proj::Project)
+   setOuterBoundaryContinuity!(proj::Project, continuity::Int)
+   getOuterBoundaryContinuity(proj::Project)
+   setOuterBoundaryConnect!(proj::Project, connect::String)
+   getOuterBoundaryConnect(proj::Project)
+```
+as well as any of the `"INNER_BOUNDARIES"` where the functions accept
+the `chainName` that should be queried or modified
+```julia
+   setInnerBoundaryChainOptimizeStatus!(proj::Project, chainName::String, status::String)
+   getInnerBoundaryChainOptimizeStatus(proj::Project, chainName::String)
+   setInnerBoundaryChainTolerance!(proj::Project, chainName::String, tolerance::Float64)
+   getInnerBoundaryChainTolerance(proj::Project, chainName::String)
+   setInnerBoundaryChainContinuity!(proj::Project, chainName::String, continuity::Int)
+   getInnerBoundaryChainContinuity(proj::Project, chainName::String)
+   setInnerBoundaryChainConnect!(proj::Project, chainName::String, connect::String)
+   getInnerBoundaryChainConnect(proj::Project, chainName::String)
+```
+
 ## Final note
 
 All objects and information contained in the variable type `Project` are actually dictionaries

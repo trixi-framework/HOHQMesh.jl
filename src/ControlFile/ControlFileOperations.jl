@@ -336,7 +336,7 @@ function WriteDictionary(controlDict::Dict{String,Any}, f::IOStream, indent::Str
         if haskey(controlDict, key)
             value = controlDict[key]
 
-            println(f, "\\begin{", key, "}") # TODO: double check that this still works
+            println(f, "\\begin{", key, "}")
             WriteDictionary(value, f, deepIndent)
             println(f, "\\end{", key, "}")
             println(f, "")
