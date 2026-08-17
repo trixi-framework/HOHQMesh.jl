@@ -189,14 +189,17 @@ More details on the options are:
 3. `"continuity"`: The derivatives to which the approximation will be constrained. For example, if second derivative continuity is to be enforced, choose `"continuity" = "2"`. If zero, then the approximation is simply continuous.
 4. `"connect"`: This *optional* parameter allows one to optimize across segments of a chain. By default, optimization is done curve by curve within the chain, since usually there will be discontinuities (e.g. corners) between the curves. If it is desired to define a more global approximation across multiple curves, include the `"connect"` key.
 
- The syntax is the following:
- ```julia
-    "connect" = "crv_1-crv_2,crv_3-crv_4,..."
- ```
- where the `crv_n` are the index of the curves in the chain. For example, if a chain contains ten curves and optimization is requested across the third and fourth curves in the list and across the sixth through ninth in the list, then
- ```julia
-    "connect" = "3-4,6-9"
- ```
+   The syntax is the following:
+
+   ```julia
+      "connect" = "crv_1-crv_2,crv_3-crv_4,..."
+   ```
+
+   where the `crv_n` are the index of the curves in the chain. For example, if a chain contains ten curves and optimization is requested across the third and fourth curves in the list and across the sixth through ninth in the list, then
+
+   ```julia
+      "connect" = "3-4,6-9"
+   ```
 
 When active, HOHQMesh will then find the best polynomial approximation of each curve
 in the chain to the order defined by `polynomial order` in the `"RUN_PARAMETERS"`
@@ -205,6 +208,7 @@ of the project (the default polynomial order is `5`).
 One can adjust the values that control the boundary optimization for any of the boundary
 chains. There are specialized setter / getter functions for the `"OUTER_BOUNDARY"`
 (there is only one)
+
 ```julia
    setOuterBoundaryOptimizeStatus!(proj::Project, status::String)
    getOuterBoundaryOptimizeStatus(proj::Project)
@@ -215,8 +219,10 @@ chains. There are specialized setter / getter functions for the `"OUTER_BOUNDARY
    setOuterBoundaryConnect!(proj::Project, connect::String)
    getOuterBoundaryConnect(proj::Project)
 ```
+
 as well as any of the `"INNER_BOUNDARIES"` where the functions accept
 the `chainName` that should be queried or modified
+
 ```julia
    setInnerBoundaryChainOptimizeStatus!(proj::Project, chainName::String, status::String)
    getInnerBoundaryChainOptimizeStatus(proj::Project, chainName::String)
