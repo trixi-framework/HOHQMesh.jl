@@ -49,10 +49,10 @@ end
 
 """
     newCircularArcCurve(name::String, center::Array{Float64},
-        startAngle::Float64, endAngle::Float64,
+        radius::Float64, startAngle::Float64, endAngle::Float64,
         units::String)
 
-Creates and returns a new circular arc curve in the form of a Dictionary
+Creates and returns a new circular arc curve in the form of a Dictionary.
 """
 function newCircularArcCurve(name::String,
                              center::Array{Float64},
@@ -74,6 +74,41 @@ function newCircularArcCurve(name::String,
     enableNotifications()
     enableUndo()
     return arc
+end
+
+
+"""
+    newEllipticArcCurve(name::String, center::Array{Float64},
+                        xRadius::Float64, yRadius::Float64,
+                        startAngle::Float64, endAngle::Float64,
+                        rotation::Float64, units::String)
+
+Creates and returns a new elliptic arc curve in the form of a Dictionary.
+"""
+function newEllipticArcCurve(name::String,
+                             center::Array{Float64},
+                             xRadius::Float64,
+                             yRadius::Float64,
+                             startAngle::Float64,
+                             endAngle::Float64,
+                             rotation::Float64 = 0.0,
+                             units::String = "degrees")
+
+    ellipse = Dict{String,Any}()
+    ellipse["TYPE"] = "ELLIPTIC_ARC"
+    disableNotifications()
+    disableUndo()
+    setCurveName!(ellipse,name)
+    setArcUnits!(ellipse,units)
+    setArcCenter!(ellipse,center)
+    setArcStartAngle!(ellipse,startAngle)
+    setArcEndAngle!(ellipse,endAngle)
+    setArcRadius!(ellipse,xRadius,"xRadius")
+    setArcRadius!(ellipse,yRadius,"yRadius")
+    setArcRotation!(ellipse,rotation)
+    enableNotifications()
+    enableUndo()
+    return ellipse
 end
 
 
@@ -165,7 +200,7 @@ end
     getCurveType(crv::Dic{String,Any})
 
     Get the type of the curve, `END_POINTSLINE_CURVE`, `PARAMETRIC_EQUATION_CURVE`,
-    `SPLINE_CURVE`, or `CIRCULAR_ARC` as a string.
+    `SPLINE_CURVE`, `CIRCULAR_ARC`, or `ELLIPTIC_ARC` as a string.
 """
 function getCurveType(crv::Dict{String,Any})
     return crv["TYPE"]
@@ -273,7 +308,7 @@ end
 
 
 """
-    getStartPoint(crv::Dict{String,Any}, point::Array{Float64})
+    getStartPoint(crv::Dict{String,Any})
 
 Get the start point for a line curve as an array
 """
@@ -305,7 +340,7 @@ end
 
 
 """
-    getEndPoint(crv::Dict{String,Any}, point::Array{Float64})
+    getEndPoint(crv::Dict{String,Any})
 
 Get the end point for a line curve as an array.
 """
@@ -317,7 +352,7 @@ end
 """
     setArcUnits!(crv::Dict{String,Any}, units::String)
 
-Set the units for the start and end angles of a circular arc curve.
+Set the units for the start and end angles of a circular or elliptic arc curve.
 """
 function setArcUnits!(arc::Dict{String,Any}, units::String)
     if units == "degrees" || units == "radians"
@@ -335,7 +370,7 @@ end
 
 
 """
-    getArcUnits(crv::Dict{String,Any}, units::String)
+    getArcUnits(crv::Dict{String,Any})
 
 Get the units for the start and end angles of a circular arc curve.
 """
@@ -347,7 +382,7 @@ end
 """
     setArcCenter!(crv::Dict{String,Any}, point::Array{Float64})
 
-Set the center of a circular arc.
+Set the center of a circular or elliptic arc.
 """
 function setArcCenter!(arc::Dict{String,Any}, point::Array{Float64})
     pStr = "[$(point[1]),$(point[2]),$(point[3])]"
@@ -366,9 +401,9 @@ end
 
 
 """
-    getArcCenter(crv::Dict{String,Any}, point::Array{Float64})
+    getArcCenter(crv::Dict{String,Any})
 
-Get the center of a circular arc as an array
+Get the center of a circular or elliptic arc as an array
 """
 function getArcCenter(arc::Dict{String,Any})
     return realArrayForKeyFromDictionary("center",arc)
@@ -390,7 +425,7 @@ end
 
 
 """
-    getArcStartAngle(arc::Dict{String,Any}, angle::Float64)
+    getArcStartAngle(arc::Dict{String,Any})
 """
 function getArcStartAngle(arc::Dict{String,Any})
     return parse(Float64,arc["start angle"])
@@ -412,7 +447,7 @@ end
 
 
 """
-    getArcEndAngle(arc::Dict{String,Any}, angle::Float64)
+    getArcEndAngle(arc::Dict{String,Any})
 """
 function getArcEndAngle(arc::Dict{String,Any})
     return parse(Float64,arc["end angle"])
@@ -420,10 +455,9 @@ end
 
 
 """
-    setArcRadius!(arc::Dict{String,Any}, radius::Float64)
+    setArcRadius!(arc::Dict{String,Any}, radius::Float64, key::String)
 """
-function setArcRadius!(arc::Dict{String,Any}, radius::Float64)
-    key = "radius"
+function setArcRadius!(arc::Dict{String,Any}, radius::Float64, key::String = "radius")
     if haskey(arc,key)
         oldVal = parse(Float64,arc[key])
         registerWithUndoManager(arc,setArcRadius!, (oldVal,), "Set Arc Radius")
@@ -434,10 +468,32 @@ end
 
 
 """
-    getArcRadius(arc::Dict{String,Any}, radius::Float64)
+    getArcRadius(arc::Dict{String,Any}, key::String = "radius")
 """
-function getArcRadius(arc::Dict{String,Any})
-    return parse(Float64,arc["radius"])
+function getArcRadius(arc::Dict{String,Any}, key::String = "radius")
+    return parse(Float64,arc[key])
+end
+
+
+"""
+    setArcRotation!(arc::Dict{String,Any}, rotation::Float64)
+"""
+function setArcRotation!(arc::Dict{String,Any}, rotation::Float64)
+    key = "rotation"
+    if haskey(arc,key)
+        oldVal = parse(Float64,arc[key])
+        registerWithUndoManager(arc,setArcRotation!, (oldVal,), "Set Arc Rotation")
+    end
+    arc[key] = string(rotation)
+    postNotificationWithName(arc,"CURVE_DID_CHANGE_NOTIFICATION",(nothing,))
+end
+
+
+"""
+    getArcRotation(arc::Dict{String,Any})
+"""
+function getArcRotation(arc::Dict{String,Any})
+    return parse(Float64,arc["rotation"])
 end
 
 

@@ -107,7 +107,7 @@ using CairoMakie
     # Destroy the mesh and reset the background grid
     @test_nowarn remove_mesh!(p_visu)
 
-    # Add a final inner boundary that contains multiple links in the chain
+    # Add a third inner boundary that contains multiple links in the chain
     edge1 = newEndPointsLineCurve("edge1", [-2.3, -1.0, 0.0], [-1.7, -1.0, 0.0])
     edge2 = newEndPointsLineCurve("edge2", [-1.7, -1.0, 0.0], [-2.0, -0.4, 0.0])
     edge3 = newEndPointsLineCurve("edge3", [-2.0, -0.4, 0.0], [-2.3, -1.0, 0.0])
@@ -115,11 +115,15 @@ using CairoMakie
     add!(p_visu, edge2, "inner3")
     add!(p_visu, edge3, "inner3")
 
+    # Add a final inner boundary that is an ellipse
+    ell = new("Ellipse", [0.0, -3.0, 0.0], 0.8, 0.35, 0.0, 360.0, -47.0, "degrees")
+    add!(p_visu, ell, "inner4")
+
     # Create a refinement center and add it with the generic method
     cent = newRefinementCenter("Center1", "smooth", [-1.25, -3.0, 0.0], 0.2, 1.0)
     add!(p_visu, cent)
 
-    # Set file format to ABAQUS (to exericise plotting routine)
+    # Set file format to ABAQUS (to exercise plotting routine)
     setMeshFileFormat!(p_visu, "ABAQUS")
     meshFileFormat = getMeshFileFormat(p_visu)
     setFileNames!(p_visu, meshFileFormat)
@@ -143,13 +147,13 @@ using CairoMakie
     @test_throws ErrorException remove!(p_visu, "big_spline", "inner2")
     #  (3) Give the correct combination and remove the inner boundary
     remove!(p_visu, "big_spline", "inner1")
-    @test length(p_visu.innerBoundaryNames) == 2
+    @test length(p_visu.innerBoundaryNames) == 3
 
     # Do the rest of the inner boundary removals correctly.
     remove!(p_visu, "small_spline", "inner2")
-    @test length(p_visu.innerBoundaryNames) == 1
-    undo()
     @test length(p_visu.innerBoundaryNames) == 2
+    undo()
+    @test length(p_visu.innerBoundaryNames) == 3
     redo()
 
     # Remove a single part of the chain with multiple curves

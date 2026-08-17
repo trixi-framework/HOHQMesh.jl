@@ -34,6 +34,7 @@ The MODEL dictionary contains the keys
             SPLINE_CURVE
             END_POINTS_LINE
             CIRCULAR_ARC
+            ELLIPTIC_ARC
     INNER_BOUNDARIES
         The INNER_BOUNDARIES block contains a ["LIST"] of
             CHAIN
@@ -46,6 +47,7 @@ A CHAIN block contains a ["LIST"] of
      SPLINE_CURVE
      END_POINTS_LINE
      CIRCULAR_ARC
+     ELLIPTIC_ARC
 
 A PARAMETRIC_EQUATION_CURVE dictionary contains the keys
     TYPE
@@ -80,6 +82,17 @@ A CIRCULAR_ARC block contains
    radius
    start angle
    end angle
+
+An ELLIPTIC_ARC block contains
+   TYPE
+   name
+   units
+   center
+   xRadius
+   yRadius
+   start angle
+   end angle
+   rotation
 
 REFINEMENT_REGIONS dictionary contains the keys
    TYPE
@@ -167,6 +180,25 @@ const blocksThatStoreLists = Set(["OUTER_BOUNDARY",
 
 const blockRegex = r"(?<=\{).+?(?=\})"
 blockNameStack = []
+
+# Control file components order to force
+# CONTROL_INPUT to come first in the file
+# followed by the MODEL
+const projectOrder = ["CONTROL_INPUT", "MODEL"]
+
+# Order on the CONTROL_INPUT to match the HOHQMesh
+# documentation.
+const controlInputOrder = ["RUN_PARAMETERS",
+                           "BACKGROUND_GRID",
+                           "SPRING_SMOOTHER",
+                           "REFINEMENT_REGIONS"]
+
+# Boundary curve optimization keyword order
+const bndryOptKeywordOrder = ["name",
+                              "optimize",
+                              "tolerance",
+                              "continuity",
+                              "connect"]
 
 #
 #--------------- MAIN ENTRY -----------------------------------------------
@@ -297,30 +329,80 @@ end
 function WriteDictionary(controlDict::Dict{String,Any}, f::IOStream, indent::String)
 
     deepIndent = "   " * indent
-    for (key, value) in controlDict
-        if isa(value, AbstractDict)
-            println(f,indent,"\\begin{$key}")
-            if in(key,blocksThatStoreLists)
-                list = value["LIST"]
-                StepThroughList(list,f, deepIndent)
-            else
-                WriteDictionary(value,f, deepIndent)
+
+    # Ensure that CONTROL_INPUT comes first
+    # followed by the MODEL
+    for key in projectOrder
+        if haskey(controlDict, key)
+            value = controlDict[key]
+
+            println(f, "\\begin{", key, "}")
+            WriteDictionary(value, f, deepIndent)
+            println(f, "\\end{", key, "}")
+            println(f, "")
+        end
+    end
+
+    # Ensure that CONTROL_INPUT components
+    # match the order from the HOHQMesh docs
+    for key in controlInputOrder
+        if haskey(controlDict, key)
+            value = controlDict[key]
+
+            println(f, indent, "\\begin{", key, "}")
+            WriteDictionary(value, f, deepIndent)
+            println(f, indent, "\\end{", key, "}")
+            println(f, "")
+        end
+    end
+
+    # Write the optimization keywords in order
+    # to match the HOHQMesh documentation
+    for key in bndryOptKeywordOrder
+        if haskey(controlDict, key)
+            value = controlDict[key]
+
+            # Don't write out an empty connect keyword
+            if key == "connect" && value == "[]"
+                continue
             end
-            println(f,indent,"\\end{$key}")
+
+            if isa(value, AbstractString) && key != "TYPE"
+                println(f, indent, key, " = ", value)
+            end
+        end
+    end
+
+    # Write everything else where ordering doesn't matter
+    for (key, value) in controlDict
+        # Already handled above
+        if key in union(bndryOptKeywordOrder, projectOrder, controlInputOrder)
+            continue
+        end
+        if isa(value, AbstractDict)
+            println(f, indent, "\\begin{", key, "}")
+            WriteDictionary(value, f, deepIndent)
+            println(f, indent, "\\end{", key, "}")
+            println(f, "")
         elseif isa(value, AbstractString)
             if key != "TYPE"
-                println(f,indent,"$key = $value")
+                println(f, indent, key, " = ", value)
             end
         elseif isa(value, AbstractArray)
             if key == "LIST"
-                StepThroughList(value,f, deepIndent)
+                StepThroughList(value, f, deepIndent)
             elseif key == "SPLINE_DATA"
-                println(f,indent,"\\begin{$key}")
+                println(f, indent, "\\begin{", key, "}")
                 arraySize = size(value)
                 for j = 1:arraySize[1]
-                    println(f,deepIndent, " ", value[j,1], " ", value[j,2], " ", value[j,3], " ", value[j,4])
+                    println(f, deepIndent, " ",
+                               value[j,1], " ",
+                               value[j,2], " ",
+                               value[j,3], " ",
+                               value[j,4])
                 end
-                println(f,indent,"\\end{$key}")
+                println(f, indent, "\\end{", key, "}")
+                println(f, "")
             end
         end
     end
@@ -331,9 +413,9 @@ function StepThroughList(lst::AbstractArray,f::IOStream, indent::String)
     deepIndent = "   " * indent
     for dict in lst
         dtype = dict["TYPE"]
-        println(f,indent, "\\begin{$dtype}")
+        println(f,indent, "\\begin{", dtype, "}")
         WriteDictionary(dict,f, deepIndent)
-        println(f,indent, "\\end{$dtype}")
+        println(f,indent, "\\end{", dtype, "}")
     end
 end
 

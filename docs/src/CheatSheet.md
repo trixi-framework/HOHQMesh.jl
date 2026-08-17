@@ -36,11 +36,12 @@ The `options` are any sum of `MODEL`, `GRID`, `REFINEMENTS`, and `MESH`.
 ## Curves
 
 ```
-   c = new(name, startLocation [x,y,z], endLocation [x,y,z])   *Straight Line*
-   c = new(name, center [x,y,z], radius, startAngle, endAngle) *Circular Arc*
-   c = new(name, xEqn, yEqn, zEqn)                             *Parametric equation*
-   c = new(name, dataFile)                                     *Spline with data from a file*
-   c = new(name, nKnots, knotsMatrix)                          *Spline with given knot values*
+   c = new(name, startLocation [x,y,z], endLocation [x,y,z])                       *Straight Line*
+   c = new(name, center [x,y,z], radius, startAngle, endAngle, units)                     *Circular Arc*
+   c = new(name, center [x,y,z], xRadius, yRadius, startAngle, endAngle, rotation, units) *Elliptic Arc*
+   c = new(name, xEqn, yEqn, zEqn)                                                 *Parametric equation*
+   c = new(name, dataFile)                                                         *Spline with data from a file*
+   c = new(name, nKnots, knotsMatrix)                                              *Spline with given knot values*
 ```
 
 Shown here is the use of the function `new`, which is a shortcut to the full functions, e.g. `newCircularArcCurve`, etc. which have the same arguments.

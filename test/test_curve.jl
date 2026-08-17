@@ -16,6 +16,14 @@ Functions: @ = tested
                              startAngle::Float64,
                              endAngle::Float64,
                              units::String = "degrees")
+    @(as new)   newEllipticArcCurve(name::String,
+                             center::Array{Float64},
+                             xradius::Float64,
+                             yradius::Float64,
+                             startAngle::Float64,
+                             endAngle::Float64,
+                             rotation::Float64,
+                             units::String = "degrees")
     @   newSplineCurve(name::String, nKnots::Int, data::Matrix{Float64})
     newSplineCurve(name::String, dataFile::String)
     @   setCurveName!(crv::Dict{String,Any}, name::String)
@@ -48,6 +56,8 @@ Functions: @ = tested
     @   getSplineNKnots(spline::Dict{String,Any})
     @   setSplinePoints!(spline::Dict{String,Any},points::Matrix{Float64})
     @   getSplinePoints(spline::Dict{String,Any})
+    @   setArcRotation!(arc::Dict{String,Any}, rotation::Float64)
+    @   getArcRotation(arc::Dict{String,Any})
 =#
 using HOHQMesh
 using Test
@@ -147,7 +157,7 @@ using Test
         @test isapprox(pts[2,:],[0.0,2.0])
         @test isapprox(pts[3,:],[-2.0,0.0])
 
-        # Purposly trigger warning with invalid units
+        # Purposely trigger warning with invalid units
         @test_logs (:warn, "Units must either be `degrees` or `radians`. Try setting `units` again.") setArcUnits!(crv,"Rankine")
 
         setArcUnits!(crv,"radians")
@@ -170,6 +180,43 @@ using Test
         @test getArcEndAngle(crv) == 270.0
         setArcRadius!(crv, 1.5)
         @test getArcRadius(crv) == 1.5
+    end
+
+    @testset "EllipticArc Tests" begin
+        center      = [0.0,0.0,0.0]
+        xradius     = 1.0
+        yradius     = 2.0
+        startAngleD = 0.0
+        endAngleD   = 180.0
+        rotation    = 0.0
+        name        = "EllipticArcCurve"
+
+        crv = new(name, center, xradius, yradius, startAngleD, endAngleD, rotation, "degrees")
+
+        @test typeof(crv)                  == Dict{String,Any}
+        @test getCurveType(crv)            == "ELLIPTIC_ARC"
+        @test getCurveName(crv)            == name
+        @test getArcCenter(crv)            == center
+        @test getArcRadius(crv, "xRadius") == xradius
+        @test getArcRadius(crv, "yRadius") == yradius
+        @test getArcStartAngle(crv)        == startAngleD
+        @test getArcRotation(crv)          == rotation
+        @test getArcUnits(crv)             == "degrees"
+
+        pt = HOHQMesh.curvePoint(crv, 0.5)
+        @test isapprox(pt,[0.0,2.0,0.0])
+
+        pts = HOHQMesh.curvePoints(crv,2)
+        @test isapprox(pts[1,:],[1.0,0.0])
+        @test isapprox(pts[2,:],[0.0,2.0])
+        @test isapprox(pts[3,:],[-1.0,0.0])
+
+        setArcRotation!(crv, -45.0)
+        @test getArcRotation(crv) == -45.0
+        undo()
+        @test getArcRotation(crv) == 0.0
+        redo()
+        @test getArcRotation(crv) == -45.0
     end
 
     @testset "Spline Tests" begin

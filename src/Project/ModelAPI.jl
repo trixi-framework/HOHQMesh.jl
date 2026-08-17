@@ -127,12 +127,6 @@ function removeOuterBoundary!(proj::Project)
 end
 
 
-# function addOuterBoundary(proj::Project,obDict::Dict{String,Any})
-#     modelDict = getModelDict(proj)
-#     modelDict["OUTER_BOUNDARY"] = obDict
-# end
-
-
 """
     getOuterBoundaryChainList(proj::Project)
 
@@ -144,11 +138,142 @@ function getOuterBoundaryChainList(proj::Project)
         lst = outerBndryDict["LIST"]
         return lst
     else
+        # This is the creation of the CHAIN for the OUTER_BOUNDARY
+        # and here we instantiate the keywords for the boundary
+        # curve optimization defaults.
+        # Default values are: optimization off,
+        #                     tol = 1e-3,
+        #                     continuity = 0
+        #                     connect = empty
+        outerBndryDict["optimize"] = "none"
+        outerBndryDict["tolerance"] = "1e-3"
+        outerBndryDict["continuity"] = "0"
+        outerBndryDict["connect"] = "[]"
         lst = Dict{String,Any}[]
         outerBndryDict["LIST"] = lst
         return lst
     end
 end
+
+
+"""
+    getOuterBoundaryOptimizeStatus(proj::Project)
+
+Returns the current type for the boundary curve optimization
+for the outer boundary chain.
+"""
+function getOuterBoundaryOptimizeStatus(proj::Project)
+    outerBndryDict = getDictInModelDictNamed(proj,"OUTER_BOUNDARY")
+    return outerBndryDict["optimize"]
+end
+
+
+"""
+    setOuterBoundaryOptimizeStatus!(proj:Project, type::String)
+
+Adjust the type for the boundary curve optimization for the outer boundary chain.
+Available types are `none`, `L2Norm`, or `H1Norm`.
+"""
+function setOuterBoundaryOptimizeStatus!(proj::Project, type::String)
+    if !in(type, optimizeTypes)
+        @warn "Acceptable optimization types are `none`, `L2Norm`, or `H1Norm`. Try again."
+        return
+    end
+    outerBndryDict = getDictInModelDictNamed(proj,"OUTER_BOUNDARY")
+    outerBndryDict["optimize"] = type
+end
+
+
+"""
+    getOuterBoundaryTolerance(proj::Project)
+
+Returns the current tolerance for the boundary optimization of the outer boundary chain.
+"""
+function getOuterBoundaryTolerance(proj::Project)
+    outerBndryDict = getDictInModelDictNamed(proj, "OUTER_BOUNDARY")
+    return parse(Float64, outerBndryDict["tolerance"])
+end
+
+
+"""
+    setOuterBoundaryTolerance!(proj::Project, tolerance::Float64)
+
+Sets the tolerance for the boundary optimization of the outer boundary chain.
+"""
+function setOuterBoundaryTolerance!(proj::Project, tolerance::Float64)
+    if tolerance < 0
+        @warn "The boundary tolerance must be non-negative. Try again."
+        return
+    elseif tolerance < 1e-5
+        @warn "Setting a low tolerance may not be achievable or the mesh generation may take an inordinate amount of time. Think about how accurate of a mesh is needed before choosing a low tolerance like $tolerance."
+    end
+
+    outerBndryDict = getDictInModelDictNamed(proj, "OUTER_BOUNDARY")
+    outerBndryDict["tolerance"] = string(tolerance)
+end
+
+
+"""
+    getOuterBoundaryContinuity(proj::Project)
+
+Returns the current continuity (number of continuous derivatives) for
+the boundary optimization of the outer boundary chain.
+"""
+function getOuterBoundaryContinuity(proj::Project)
+    outerBndryDict = getDictInModelDictNamed(proj, "OUTER_BOUNDARY")
+    return parse(Int, outerBndryDict["continuity"])
+end
+
+
+"""
+    setOuterBoundaryContinuity!(proj::Project, continuity::Int)
+
+Sets the continuity (number of continuous derivatives) for
+the boundary optimization of the outer boundary chain.
+"""
+function setOuterBoundaryContinuity!(proj::Project, continuity::Int)
+    if continuity < 0
+        @warn "The continuity must be non-negative. Try again."
+        return
+    elseif continuity > 2
+        @warn "Higher continuity constraints can lead to ill-conditioned systems in the optimization procedure."
+    end
+
+    outerBndryDict = getDictInModelDictNamed(proj, "OUTER_BOUNDARY")
+    outerBndryDict["continuity"] = string(continuity)
+end
+
+
+"""
+    getOuterBoundaryConnect(proj::Project)
+
+Returns the current connect setting for the boundary optimization of the outer boundary chain.
+"""
+function getOuterBoundaryConnect(proj::Project)
+    outerBndryDict = getDictInModelDictNamed(proj, "OUTER_BOUNDARY")
+    return outerBndryDict["connect"]
+end
+
+
+"""
+    setOuterBoundaryConnect!(proj::Project, connect::String)
+
+Sets the connect setting for the boundary optimization of the outer boundary chain.
+
+By default, boundary curve optimization is done curve by curve within the chain
+with an "empty" `connect = "[]"` key,
+as usually there will be discontinuities (e.g. corners) between the curves.
+If it is desired to define a more global approximation across multiple curves
+update the `connect` key.
+For example, if the chain has four segments then `connect = "2-3"` requests
+that optimization occurs across curve segments two and three in the list,
+where as curves 1 and 4 are optimized individually.
+"""
+function setOuterBoundaryConnect!(proj::Project, connect::String)
+    outerBndryDict = getDictInModelDictNamed(proj, "OUTER_BOUNDARY")
+    outerBndryDict["connect"] = connect
+end
+
 #
 #  --------------------------------------------------------------------------------------
 #           INNER BOUNDARY FUNCTIONS
@@ -319,6 +444,17 @@ function addInnerBoundaryWithName!(proj::Project,name::String)
     bndryChain["TYPE"] = "CHAIN"
     bndryCurves        = Dict{String,Any}[]
     bndryChain["LIST"] = bndryCurves
+#
+#   Keywords in the chain for the boundary optimization
+#   Default values are: optimization off,
+#                       tol = 1e-3,
+#                       continuity = 0
+#                       connect = empty
+#
+    bndryChain["optimize"] = "none"
+    bndryChain["tolerance"] = "1e-3"
+    bndryChain["continuity"] = "0"
+    bndryChain["connect"] = "[]"
 
     innerBoundariesList = getAllInnerBoundaries(proj)
     push!(innerBoundariesList,bndryChain)
@@ -341,6 +477,130 @@ function getChainIndex(chain::Vector{Dict{String, Any}},name)
     end
     return 0
 end
+
+
+"""
+    getInnerBoundaryChainOptimizeStatus(proj::Project, chainName::String)
+
+Returns the current type of the boundary curve optimization
+of an inner boundary CHAIN with `chainName`.
+"""
+function getInnerBoundaryChainOptimizeStatus(proj::Project, chainName::String)
+    _, innerBndryDict = getInnerBoundaryChainWithName(proj, chainName)
+    return innerBndryDict["optimize"]
+end
+
+
+"""
+    setInnerBoundaryChainOptimizeStatus!(proj:Project, chainName::String, type::String)
+
+Adjust the type for the boundary curve optimization of an inner boundary CHAIN with `chainName`.
+Available types are `none`, `L2Norm`, or `H1Norm`.
+"""
+function setInnerBoundaryChainOptimizeStatus!(proj::Project, chainName::String, type::String)
+    if !in(type, optimizeTypes)
+        @warn "Acceptable optimization types are `none`, `L2Norm`, or `H1Norm`. Try again."
+        return
+    end
+    _, innerBndryDict = getInnerBoundaryChainWithName(proj, chainName)
+    innerBndryDict["optimize"] = type
+end
+
+
+"""
+    getInnerBoundaryChainTolerance(proj::Project, chainName::String)
+
+Returns the current tolerance for the boundary curve optimization
+of an inner boundary CHAIN with `chainName`.
+"""
+function getInnerBoundaryChainTolerance(proj::Project, chainName::String)
+    _, innerBndryDict = getInnerBoundaryChainWithName(proj, chainName)
+    return parse(Float64, innerBndryDict["tolerance"])
+end
+
+
+"""
+    setInnerBoundaryChainTolerance!(proj::Project, chainName::String, tolerance::Float64)
+
+Sets the tolerance for the boundary curve optimization
+of an inner boundary CHAIN with `chainName`.
+"""
+function setInnerBoundaryChainTolerance!(proj::Project, chainName::String, tolerance::Float64)
+    if tolerance < 0
+        @warn "The boundary tolerance must be non-negative. Try again."
+        return
+    elseif tolerance < 1e-5
+        @warn "Setting a low tolerance may not be achievable or the mesh generation may take an inordinate amount of time. Think about how accurate of a mesh is needed before choosing a low tolerance like $tolerance."
+    end
+
+    _, innerBndryDict = getInnerBoundaryChainWithName(proj, chainName)
+    innerBndryDict["tolerance"] = string(tolerance)
+end
+
+
+"""
+    getInnerBoundaryChainContinuity(proj::Project, chainName::String)
+
+Returns the current continuity (number of continuous derivatives) for
+the boundary curve optimization of an inner boundary CHAIN with `chainName`.
+"""
+function getInnerBoundaryChainContinuity(proj::Project, chainName::String)
+    _, innerBndryDict = getInnerBoundaryChainWithName(proj, chainName)
+    return parse(Int, innerBndryDict["continuity"])
+end
+
+
+"""
+    setInnerBoundaryChainContinuity!(proj::Project, chainName::String, continuity::Int)
+
+Sets the continuity (number of continuous derivatives) for
+the boundary curve optimization of an inner boundary CHAIN with `chainName`.
+"""
+function setInnerBoundaryChainContinuity!(proj::Project, chainName::String, continuity::Int)
+    if continuity < 0
+        @warn "The continuity must be non-negative. Try again."
+        return
+    elseif continuity > 2
+        @warn "Higher continuity constraints can lead to ill-conditioned systems in the optimization procedure."
+    end
+
+    _, innerBndryDict = getInnerBoundaryChainWithName(proj, chainName)
+    innerBndryDict["continuity"] = string(continuity)
+end
+
+
+"""
+    getInnerBoundaryChainConnect(proj::Project, chainName::String)
+
+Returns the current connect setting for the boundary curve optimization
+of an inner boundary CHAIN with `chainName`.
+"""
+function getInnerBoundaryChainConnect(proj::Project, chainName::String)
+    _, innerBndryDict = getInnerBoundaryChainWithName(proj, chainName)
+    return innerBndryDict["connect"]
+end
+
+
+"""
+    setInnerBoundaryChainConnect!(proj::Project, chainName::String, connect::String)
+
+Sets the connect setting for the boundary curve optimization
+of an inner boundary CHAIN with `chainName`.
+
+By default, boundary curve optimization is done curve by curve within the chain
+with an "empty" `connect = "[]"` key,
+as usually there will be discontinuities (e.g. corners) between the curves.
+If it is desired to define a more global approximation across multiple curves
+update the `connect` key.
+For example, if the chain has four segments then `connect = "2-3"` requests
+that optimization occurs across curve segments two and three in the list,
+where as curves 1 and 4 are optimized individually.
+"""
+function setInnerBoundaryChainConnect!(proj::Project, chainName::String, connect::String)
+    _, innerBndryDict = getInnerBoundaryChainWithName(proj, chainName)
+    innerBndryDict["connect"] = connect
+end
+
 
 """
     getAllInnerBoundaries(proj::Project)
@@ -389,9 +649,8 @@ function getInnerBoundaryChainWithName(proj::Project, name::String)
     chain = addInnerBoundaryWithName!(proj,name)
     return l+1, chain
 end
-"""
 
-"""
+
 function getInnerBoundaryCurve(proj::Project, curveName::String, boundaryName::String)
     i, chain = getInnerBoundaryChainWithName(proj, boundaryName)
     lst = chain["LIST"]

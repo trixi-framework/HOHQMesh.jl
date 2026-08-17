@@ -248,12 +248,13 @@ constructing, and removing curves from a `Project`.
 
 ### Defining curves
 
-Four curve types can be added to the outer and inner boundary curve chains. They are
+Five curve types can be added to the outer and inner boundary curve chains. They are
 
 - Parametric equations
 - Cubic Splines
 - Lines defined by their end points
 - Circular arcs
+- Elliptic arcs
 
 #### Parametric equations
 
@@ -349,6 +350,28 @@ It is either "degrees" or "radians". That argument is optional, and defaults to 
 Example:
 ```julia
    halfCircle = newCircularArcCurve("Dome", [0.0, 0.0, 0.0], 1.0, 0.0, 180.0, "degrees")
+```
+
+#### Elliptic arc
+```
+   [Return:Dict{String,Any}] newEllipticArcCurve(name::String,
+                                                 center::Array{Float64},
+                                                 xRadius::Float64,
+                                                 yRadius::Float64,
+                                                 startAngle::Float64,
+                                                 endAngle::Float64,
+                                                 rotation::Float64,
+                                                 units::String)
+```
+The center is an array of the form [x, y, z].
+The radii `xRadius` and `yRadius` define the major and minor axes of the ellipse.
+The angle `rotation` (which defaults to `0.0`) allows one to slant the elliptic arc.
+The units argument defines the start and end angle units.
+It is either "degrees" or "radians". That argument is optional, and defaults to "degrees".
+
+Example:
+```julia
+   halfEllipse = newEllipticArcCurve("Dome", [0.0, 0.0, 0.0], 3.0, 1.0, 0.0, 180.0, 45.0, "degrees")
 ```
 
 ### Adding and removing outer and inner boundaries
@@ -454,7 +477,8 @@ Otherwise there are special functions to change the parameters of curves
    [Return:nothing] setArcCenter!(arc::Dict{String,Any}, point::Array{Float64})
    [Return:nothing] setArcStartAngle!(arc::Dict{String,Any}, angle::Float64)
    [Return:nothing] setArcEndAngle!(arc::Dict{String,Any}, angle::Float64)
-   [Return:nothing] setArcRadius!(arc::Dict{String,Any}, radius::Float64)
+   [Return:nothing] setArcRadius!(arc::Dict{String,Any}, radius::Float64, key::String = "radius")
+   [Return:nothing] setArcRotation!(arc::Dict{String,Any}, rotation::Float64)
 
    [Return:String]         getXEqn(crv::Dict{String,Any})
    [Return:String]         getYEqn(crv::Dict{String,Any})
@@ -465,7 +489,8 @@ Otherwise there are special functions to change the parameters of curves
    [Return:Array{Float64}] getArcCenter(arc::Dict{String,Any})
    [Return:Float64]        getArcStartAngle(arc::Dict{String,Any})
    [Return:Float64]        getArcEndAngle(arc::Dict{String,Any})
-   [Return:Float64]        getArcRadius(arc::Dict{String,Any})
+   [Return:Float64]        getArcRadius(arc::Dict{String,Any}, key::String = "radius")
+   [Return:Float64]        getArcRotation(arc::Dict{String,Any})
 ```
 
 ## Undo/redo

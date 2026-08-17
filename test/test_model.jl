@@ -160,4 +160,150 @@ using Test
 
 end
 
+# Tests for getter / setter functions on the OUTER_BOUNDARY
+@testset "Outer Boundary optimization getters/setters" begin
+    projectName = "TestProject"
+    projectPath = "out"
+
+    p = newProject(projectName, projectPath)
+
+    ell = new("Ellipse", [0.0, -3.0, 0.0], 0.8, 0.35, 0.0, 360.0, -47.0, "degrees")
+    addCurveToOuterBoundary!(p, ell)
+
+    @test getOuterBoundaryOptimizeStatus(p) == "none"
+
+    @test_logs (:warn, "Acceptable optimization types are `none`, `L2Norm`, or `H1Norm`. Try again.") begin
+        setOuterBoundaryOptimizeStatus!(p, "invalid")
+    end
+
+    # Invalid value should not change the current value
+    @test getOuterBoundaryOptimizeStatus(p) == "none"
+
+    setOuterBoundaryOptimizeStatus!(p, "L2Norm")
+    @test getOuterBoundaryOptimizeStatus(p) == "L2Norm"
+
+    setOuterBoundaryOptimizeStatus!(p, "H1Norm")
+    @test getOuterBoundaryOptimizeStatus(p) == "H1Norm"
+
+    # Tolerance keyword functions
+
+    @test getOuterBoundaryTolerance(p) == 1.0e-3
+
+    # Low tolerance: warning should be generated, but value
+    # should still be set
+    @test_logs (:warn, "Setting a low tolerance may not be achievable or the mesh generation may take an inordinate amount of time. Think about how accurate of a mesh is needed before choosing a low tolerance like 1.0e-6.") begin
+        setOuterBoundaryTolerance!(p, 1.0e-6)
+    end
+    @test getOuterBoundaryTolerance(p) == 1.0e-6
+
+    # Negative tolerance: warning and value should NOT change
+    oldTolerance = getOuterBoundaryTolerance(p)
+
+    @test_logs (:warn, "The boundary tolerance must be non-negative. Try again.") begin
+        setOuterBoundaryTolerance!(p, -1.0)
+    end
+
+    @test getOuterBoundaryTolerance(p) == oldTolerance
+
+    # Continuity keyword functions
+
+    @test getOuterBoundaryContinuity(p) == 0
+
+    setOuterBoundaryContinuity!(p, 2)
+    @test getOuterBoundaryContinuity(p) == 2
+
+    # > 2 generates warning but value is still set
+    @test_logs (:warn, "Higher continuity constraints can lead to ill-conditioned systems in the optimization procedure.") begin
+        setOuterBoundaryContinuity!(p, 3)
+    end
+    @test getOuterBoundaryContinuity(p) == 3
+
+    # Negative continuity generates warning and should not change value
+    oldContinuity = getOuterBoundaryContinuity(p)
+
+    @test_logs (:warn, "The continuity must be non-negative. Try again.") begin
+        setOuterBoundaryContinuity!(p, -1)
+    end
+
+    @test getOuterBoundaryContinuity(p) == oldContinuity
+
+    # Connect keyword functions
+
+    @test getOuterBoundaryConnect(p) == "[]"
+
+    setOuterBoundaryConnect!(p, "2-3, 5-7")
+    @test getOuterBoundaryConnect(p) == "2-3, 5-7"
+end
+
+# Tests for getter / setter functions on a CHAIN of INNER_BOUNDARIES
+@testset "Inner Boundary Chain getters/setters" begin
+
+    chainName = "IceCreamCone"
+    p = newProject("innerTest", "out")
+
+    cone1    = newEndPointsLineCurve("cone1", [0.0, -3.0, 0.0], [1.0, 0.0, 0.0])
+    iceCream = newCircularArcCurve("iceCream", [0.0, 0.0, 0.0], 1.0, 0.0, 180.0, "degrees")
+    cone2    = newEndPointsLineCurve("cone2", [-1.0, 0.0, 0.0], [0.0, -3.0, 0.0])
+
+    addCurveToInnerBoundary!(p, cone1, "IceCreamCone")
+    addCurveToInnerBoundary!(p, iceCream, "IceCreamCone")
+    addCurveToInnerBoundary!(p, cone2, "IceCreamCone")
+
+    @test getInnerBoundaryChainOptimizeStatus(p, chainName) == "none"
+
+    @test_logs (:warn, "Acceptable optimization types are `none`, `L2Norm`, or `H1Norm`. Try again.") begin
+        setInnerBoundaryChainOptimizeStatus!(p, chainName, "invalid")
+    end
+
+    setInnerBoundaryChainOptimizeStatus!(p, chainName, "L2Norm")
+    @test getInnerBoundaryChainOptimizeStatus(p, chainName) == "L2Norm"
+
+    setInnerBoundaryChainOptimizeStatus!(p, chainName, "H1Norm")
+    @test getInnerBoundaryChainOptimizeStatus(p, chainName) == "H1Norm"
+
+    # Tolerance keyword functions
+
+    @test getInnerBoundaryChainTolerance(p, chainName) == 1.0e-3
+
+    @test_logs (:warn, "Setting a low tolerance may not be achievable or the mesh generation may take an inordinate amount of time. Think about how accurate of a mesh is needed before choosing a low tolerance like 1.0e-6.") begin
+        setInnerBoundaryChainTolerance!(p, chainName, 1.0e-6)
+    end
+    @test getInnerBoundaryChainTolerance(p, chainName) == 1.0e-6
+
+    oldTolerance = getInnerBoundaryChainTolerance(p, chainName)
+
+    @test_logs (:warn, "The boundary tolerance must be non-negative. Try again.") begin
+        setInnerBoundaryChainTolerance!(p, chainName, -1.0)
+    end
+
+    @test getInnerBoundaryChainTolerance(p, chainName) == oldTolerance
+
+    # Continuity keyword functions
+
+    @test getInnerBoundaryChainContinuity(p, chainName) == 0
+
+    setInnerBoundaryChainContinuity!(p, chainName, 2)
+    @test getInnerBoundaryChainContinuity(p, chainName) == 2
+
+    @test_logs (:warn, "Higher continuity constraints can lead to ill-conditioned systems in the optimization procedure.") begin
+        setInnerBoundaryChainContinuity!(p, chainName, 3)
+    end
+    @test getInnerBoundaryChainContinuity(p, chainName) == 3
+
+    oldContinuity = getInnerBoundaryChainContinuity(p, chainName)
+
+    @test_logs (:warn, "The continuity must be non-negative. Try again.") begin
+        setInnerBoundaryChainContinuity!(p, chainName, -1)
+    end
+
+    @test getInnerBoundaryChainContinuity(p, chainName) == oldContinuity
+
+    # Connect keyword functions
+
+    @test getInnerBoundaryChainConnect(p, chainName) == "[]"
+
+    setInnerBoundaryChainConnect!(p, chainName, "2-3, 5-7")
+    @test getInnerBoundaryChainConnect(p, chainName) == "2-3, 5-7"
+end
+
 end # module

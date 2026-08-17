@@ -95,12 +95,13 @@ The first line creates a new project, where the mesh and plot file names will be
 from the project name, "IceCreamCone" written to the specified folder.
 
 To develop the model, one adds curves to the outer boundary or to multiple inner boundaries,
-if desired. As in HOHQMesh, there are four curve classes currently available:
+if desired. As in HOHQMesh, there are five curve classes currently available:
 
 - Parametric equations
 - Cubic Splines
 - Lines defined by their end points
 - Circular arcs
+- Elliptic arcs
 
 In the example, the outer boundary is a closed circular arc with center at [0.0, 0.0, 0.0]
 with radius 4, starting at zero and ending at 360 degrees. It is added to the project with

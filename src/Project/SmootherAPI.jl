@@ -7,7 +7,7 @@ Type is either `LinearSpring` or `LinearAndCrossbarSpring`
 """
 function addSpringSmoother!(proj::Project,status::String = "ON",
                             type::String = "LinearAndCrossbarSpring",
-                            nIterations::Int = 25)
+                            nIterations::Int = 15)
     if !in(status,statusValues)
         @warn "Acceptable smoother status are: `ON` or `OFF`. Try again."
         return
@@ -49,7 +49,7 @@ end
 
 
 """
-    setSmoothingType!(proj:Project, status::String)
+    setSmoothingType!(proj:Project, type::String)
 
 Type is either `LinearSpring` or `LinearAndCrossbarSpring`
 """
@@ -81,7 +81,7 @@ Set the number of iterations to smooth the mesh.
 """
 function setSmoothingIterations!(proj::Project, iterations::Int)
     smDict = getDictInControlDictNamed(proj,"SPRING_SMOOTHER")
-    smDict["number of iterations"] = iterations
+    smDict["number of iterations"] = string(iterations)
 end
 
 
@@ -92,7 +92,7 @@ Get the number of iterations to smooth the mesh.
 """
 function getSmoothingIterations(proj::Project)
     smDict = getDictInControlDictNamed(proj,"SPRING_SMOOTHER")
-    return smDict["number of iterations"]
+    return parse(Int, smDict["number of iterations"])
 end
 
 

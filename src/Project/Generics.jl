@@ -52,6 +52,31 @@ end
 
 
 """
+    new(name::String,
+        center::Array{Float64},
+        xradius::Float64,
+        yradius::Float64,
+        startAngle::Float64,
+        endAngle::Float64,
+        rotation::Float64,
+        units::String)
+
+Create a new elliptic arc.
+"""
+function new(name::String,
+            center::Array{Float64},
+            xradius::Float64,
+            yradius::Float64,
+            startAngle::Float64,
+            endAngle::Float64,
+            rotation::Float64 = 0.0,
+            units::String = "degrees")
+    return newEllipticArcCurve(name,center,xradius,yradius,
+                               startAngle,endAngle,rotation,units)
+end
+
+
+"""
     new(name::String, dataFile::String)
 
 Create a spline curve from the contents of a data file.
@@ -115,7 +140,7 @@ getCurve(proj::Project, curveName::String, boundaryName::String)
 Get the curve named `curveName` from the inner boundary named `boundaryName`
 """
 function getCurve(proj::Project, curveName::String, boundaryName::String)
-    return  getInnerBoundaryCurve(proj, curveName, boundaryName)
+    return getInnerBoundaryCurve(proj, curveName, boundaryName)
 end
 
 
