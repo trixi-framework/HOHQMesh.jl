@@ -5,10 +5,11 @@
 =#
 mutable struct Project
     name::String
-    projectDirectory:: String
+    projectDirectory::String
     projectDictionary::Dict{String,Any}
     plt::Any #For the plot
     plotOptions::Int # = combinations of MODEL, GRID, MESH
+    plotSize::Tuple
 #
 #   For drawing
 #
@@ -111,8 +112,9 @@ function newProject(name::String, folder::String)
     refinementRegionNames = Array{String}[]
     refinementRegionLocs  = Array{Array{Float64}}[]
     plotOptions   = 0
+    plotSize      = (0, 0)
 #
-    proj = Project(name, folder, projectDict, plt, plotOptions, obPnts, obNames,
+    proj = Project(name, folder, projectDict, plt, plotOptions, plotSize, obPnts, obNames,
                    ibChainPoints,ibNames, ibChainNames,
                    refinementRegionPts,refinementRegionNames, refinementRegionLocs,
                    bounds, userBounds, xGrid, yGrid, xMesh, yMesh,

@@ -1,8 +1,9 @@
 
-function plotProject!(proj::Project, plotOptions::Int = 0)
+function plotProject!(proj::Project, plotOptions::Int = 0; figureSize = (1000, 1000))
 
     if isnothing(proj.plt)
-        proj.plt = Figure(size = (1000, 1000))
+        proj.plt = Figure(size = figureSize)
+        proj.plotSize = figureSize
     end
     plt = proj.plt
     ax = plt[1,1] = Axis(plt)
@@ -100,7 +101,7 @@ end
 # This version replots the figure with the current options. Legacy.
 function updatePlot!(proj::Project)
     if !isnothing(proj.plt)
-        proj.plt = Figure(size = (1000, 1000))
+        proj.plt = Figure(size = proj.plotSize)
         plotOptions = proj.plotOptions
         plotProject!(proj, plotOptions)
     end
@@ -109,7 +110,7 @@ end
 
 function updatePlot!(proj::Project, plotOptions::Int)
     if !isnothing(proj.plt)
-        proj.plt = Figure(size = (1000, 1000))
+        proj.plt = Figure(size = proj.plotSize)
         plotProject!(proj, plotOptions)
     end
 end
