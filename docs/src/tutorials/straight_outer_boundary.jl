@@ -76,16 +76,16 @@ setMeshFileFormat!(box_project, "ABAQUS");
 #    grid will have the extent $[x_0, x_0 + N_x \Delta x]$ by $[y_0, y_0 + N_y \Delta y]$. For this example, we set
 #    a background grid of Cartesian elements with size one in each dimension with
 #    the following commands
-   lower_left = [0.0, 0.0, 0.0];
-   spacing = [1.0, 1.0, 0.0];
-   num_intervals = [30, 15, 0];
-   addBackgroundGrid!(box_project, lower_left, spacing, num_intervals);
+lower_left = [0.0, 0.0, 0.0];
+spacing = [1.0, 1.0, 0.0];
+num_intervals = [30, 15, 0];
+addBackgroundGrid!(box_project, lower_left, spacing, num_intervals);
 # 2. Set the bounding box with extent values ordered as `[top, left, bottom, right]` and provide the number
 #    the number of steps in each direction. To set a background grid of Cartesian elements with size one in
 #    each dimension for the rectangular box $[0,30]\times[0,15]$ we use
-   bounds = [15.0, 0.0, 0.0, 30.0];
-   N = [30, 15, 0];
-   addBackgroundGrid!(box_project, bounds, N);
+bounds = [15.0, 0.0, 0.0, 30.0];
+N = [30, 15, 0];
+addBackgroundGrid!(box_project, bounds, N);
 
 # Next, we visualize the `box_project` to ensure that the background grid has been added correctly.
 # We use the keyword and `GRID` to indicate that we want the background grid to be included in the

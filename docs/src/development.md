@@ -64,10 +64,12 @@ mode [julia-emacs](https://github.com/JuliaEditorSupport/julia-emacs).
 
 You can build the documentation of HOHQMesh.jl locally by running
 ```bash
-julia --project=docs -e 'using Pkg; Pkg.instantiate(); include("docs/make.jl")'
+julia --project=docs -e 'using Pkg; Pkg.develop(path="."); Pkg.instantiate(); include("docs/make.jl")'
 ```
 from the HOHQMesh.jl main directory. Then, you can look at the html files generated in
 `docs/build`.
+The command above places HOHQMesh as a dependency in `docs/Project.toml` this
+**should not** be committed to the repo.
 For PRs triggered from branches inside the HOHQMesh.jl main repository previews of
 the new documentation are generated at `https://trixi-framework.github.io/HOHQMesh.jl/previews/PRXXX`,
 where `XXX` is the number of the PR.
