@@ -190,6 +190,8 @@ end
 
 """
     getCurveName(crv::Dict{String,Any})
+
+Returns the "name" of a curve stored in `crv`.
 """
 function getCurveName(crv::Dict{String,Any})
     return crv["name"]
@@ -199,8 +201,9 @@ end
 """
     getCurveType(crv::Dic{String,Any})
 
-    Get the type of the curve, `END_POINTSLINE_CURVE`, `PARAMETRIC_EQUATION_CURVE`,
-    `SPLINE_CURVE`, `CIRCULAR_ARC`, or `ELLIPTIC_ARC` as a string.
+Get the type of the curve stored in `crv`.
+Generic for any curve dictionary `END_POINTSLINE_CURVE`, `PARAMETRIC_EQUATION_CURVE`,
+`SPLINE_CURVE`, `CIRCULAR_ARC`, or `ELLIPTIC_ARC` as a string.
 """
 function getCurveType(crv::Dict{String,Any})
     return crv["TYPE"]
@@ -224,6 +227,8 @@ end
 
 """
     getXEqn(crv::Dict{String,Any})
+
+Return the expression for the x(t) equation of a `PARAMETRIC_EQUATION_CURVE`.
 """
 function getXEqn(crv::Dict{String,Any})
     if(haskey(crv,"xEqn"))
@@ -250,6 +255,8 @@ end
 
 """
     getYEqn(crv::Dict{String,Any})
+
+Return the expression for the y(t) equation of a `PARAMETRIC_EQUATION_CURVE`.
 """
 function getYEqn(crv::Dict{String,Any})
     if(haskey(crv,"yEqn"))
@@ -276,6 +283,8 @@ end
 
 """
     getZEqn(crv::Dict{String,Any})
+
+Return the expression for the z(t) equation of a `PARAMETRIC_EQUATION_CURVE`.
 """
 function getZEqn(crv::Dict{String,Any})
     if(haskey(crv,"zEqn"))
@@ -412,6 +421,8 @@ end
 
 """
     setArcStartAngle!(arc::Dict{String,Any}, angle::Float64)
+
+Sets a new value for the start angle of a `CIRCULAR_ARC` or `ELLIPTIC_ARC`.
 """
 function setArcStartAngle!(arc::Dict{String,Any}, angle::Float64)
     key = "start angle"
@@ -426,6 +437,8 @@ end
 
 """
     getArcStartAngle(arc::Dict{String,Any})
+
+Returns the start angle of a `CIRCULAR_ARC` or `ELLIPTIC_ARC`.
 """
 function getArcStartAngle(arc::Dict{String,Any})
     return parse(Float64,arc["start angle"])
@@ -434,6 +447,8 @@ end
 
 """
     setArcEndAngle!(arc::Dict{String,Any}, angle::Float64)
+
+Sets a new value for the end angle of a `CIRCULAR_ARC` or `ELLIPTIC_ARC`.
 """
 function setArcEndAngle!(arc::Dict{String,Any}, angle::Float64)
     key = "end angle"
@@ -448,6 +463,8 @@ end
 
 """
     getArcEndAngle(arc::Dict{String,Any})
+
+Returns the end angle of a `CIRCULAR_ARC` or `ELLIPTIC_ARC`.
 """
 function getArcEndAngle(arc::Dict{String,Any})
     return parse(Float64,arc["end angle"])
@@ -456,6 +473,10 @@ end
 
 """
     setArcRadius!(arc::Dict{String,Any}, radius::Float64, key::String)
+
+Sets a new value for the radius of an arc. Default behavior expects a `CIRCULAR_ARC`
+with `key = "radius"`. For an `ELLIPTIC_ARC`
+use either `key = "xRadius"` or `key = "yRadius"`.
 """
 function setArcRadius!(arc::Dict{String,Any}, radius::Float64, key::String = "radius")
     if haskey(arc,key)
@@ -469,6 +490,10 @@ end
 
 """
     getArcRadius(arc::Dict{String,Any}, key::String = "radius")
+
+Returns the current radius of an arc. Default behavior expects a `CIRCULAR_ARC`
+with `key = "radius"`. For an `ELLIPTIC_ARC`
+use either `key = "xRadius"` or `key = "yRadius"`.
 """
 function getArcRadius(arc::Dict{String,Any}, key::String = "radius")
     return parse(Float64,arc[key])
@@ -477,6 +502,8 @@ end
 
 """
     setArcRotation!(arc::Dict{String,Any}, rotation::Float64)
+
+Sets a new rotation angle of an `ELLIPTIC_ARC`.
 """
 function setArcRotation!(arc::Dict{String,Any}, rotation::Float64)
     key = "rotation"
@@ -491,6 +518,8 @@ end
 
 """
     getArcRotation(arc::Dict{String,Any})
+
+Returns the current rotation angle of an `ELLIPTIC_ARC`.
 """
 function getArcRotation(arc::Dict{String,Any})
     return parse(Float64,arc["rotation"])
@@ -499,6 +528,8 @@ end
 
 """
     setSplineNKnots!(spline::Dict{String,Any}, nKnots::Int)
+
+Set a new value for the number of points (or knots) in a `spline`.
 """
 function setSplineNKnots!(spline::Dict{String,Any}, nKnots::Int)
     key = "nKnots"
@@ -513,6 +544,8 @@ end
 
 """
     getSplineNKnots(spline::Dict{String,Any})
+
+Return the number of points (or knots) for the `spline`.
 """
 function getSplineNKnots(spline::Dict{String,Any})
     return parse(Int,spline["nKnots"])
@@ -521,6 +554,8 @@ end
 
 """
     setSplinePoints!(spline::Dict{String,Any},points::Array{Float64,4})
+
+Set the parametric spline point data into the `spline` curve dictionary.
 """
 function setSplinePoints!(spline::Dict{String,Any},points::Matrix{Float64})
     key = "SPLINE_DATA"
@@ -548,6 +583,8 @@ end
 
 """
     getSplinePoints(spline::Dict{String,Any})
+
+Return the parametric spline point data from the `spline` curve dictionary.
 """
 function getSplinePoints(spline::Dict{String,Any})
     return spline["SPLINE_DATA"]

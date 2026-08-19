@@ -41,6 +41,9 @@ end
 
 """
     getOuterBoundaryCurveWithName(proj::Project, name::String)
+
+Return the curve dictionary `crv` with `name` from the `OUTER_BOUNDARY`
+curve chain.
 """
 function getOuterBoundaryCurveWithName(proj::Project, name::String)
     lst = getOuterBoundaryChainList(proj)
