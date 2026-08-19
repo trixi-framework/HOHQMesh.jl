@@ -2,11 +2,33 @@ using Documenter
 using DocumenterCodeBlocks: CodeBlocks
 import Pkg
 using HOHQMesh
+using Literate
 using Changelog: Changelog
 
 # Define module-wide setups such that the respective modules are available in doctests
 DocMeta.setdocmeta!(HOHQMesh,     :DocTestSetup, :(using HOHQMesh);     recursive=true)
 
+
+TUTORIAL_DIR = joinpath(@__DIR__, "src", "tutorials")
+OUTPUT_DIR = joinpath(@__DIR__, "src", "tutorials")
+
+tutorial_list = [
+    "straight_outer_boundary.jl"
+]
+
+tutorial_pages = [
+    "Overview" => "tutorials/introduction.md",
+    "Straight-sided outer boundary" => "tutorials/straight_outer_boundary.md",
+    "Curved outer boundary" => "tutorials/curved_outer_boundary.md",
+    "Spline curves" => "tutorials/spline_curves.md",
+    "Creating and editing curves" => "tutorials/create_edit_curves.md",
+    "Symmetric mesh" => "tutorials/symmetric_mesh.md",
+]
+
+# Create markdown files
+for tutorial in tutorial_list
+    Literate.markdown(joinpath(TUTORIAL_DIR, tutorial), OUTPUT_DIR;)
+end
 # Get HOHQMesh root directory
 hohqmesh_root_dir = dirname(@__DIR__)
 
@@ -84,14 +106,7 @@ makedocs(;
             "interactive-api.md",
             "CheatSheet.md",
         ],
-        "Tutorials" => [
-            "Overview" => joinpath("tutorials", "introduction.md"),
-            joinpath("tutorials", "straight_outer_boundary.md"),
-            joinpath("tutorials", "curved_outer_boundary.md"),
-            joinpath("tutorials", "spline_curves.md"),
-            joinpath("tutorials", "create_edit_curves.md"),
-            joinpath("tutorials", "symmetric_mesh.md"),
-        ],
+        "Tutorials" => tutorial_pages,
         "Advanced topics & developers" => [
             "Development" => "development.md",
             "GitHub & Git" => "github-git.md",
