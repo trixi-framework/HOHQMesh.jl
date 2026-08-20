@@ -15,7 +15,8 @@ OUTPUT_DIR = joinpath(@__DIR__, "src", "tutorials")
 tutorial_list = [
     "straight_outer_boundary.jl",
     "curved_outer_boundary.jl",
-    "spline_curves.jl"
+    "spline_curves.jl",
+    "symmetric_mesh.jl"
 ]
 
 tutorial_pages = [

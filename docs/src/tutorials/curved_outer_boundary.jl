@@ -4,7 +4,7 @@
 # a domain with a curved outer boundary. This outer boundary curve is defined by
 # parametric equations and contains fine features as well as smooth regions.
 
-# It provides details and clarification for the script `interactive_outer_blob.jl`
+# It provides details and clarification for the script `interactive_blob.jl`
 # from the [examples/](https://github.com/trixi-framework/HOHQMesh.jl/tree/main/examples) folder.
 
 # The outer boundary, background grid and mesh
