@@ -6,7 +6,7 @@
 # described herein.
 
 # It provides details and clarification for the script `interactive_symmetric_mesh.jl`
-# from the [examples/](https://github.com/trixi-framework/HOHQMesh.jl/tree/main/examples) folder.
+# from the [examples](https://github.com/trixi-framework/HOHQMesh.jl/tree/main/examples) folder.
 
 # ### Synopsis
 

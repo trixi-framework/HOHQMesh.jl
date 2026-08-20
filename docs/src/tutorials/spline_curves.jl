@@ -137,7 +137,7 @@ addCurveToInnerBoundary!(spline_project, spline2, "inner2")
 # of the background grid automatically detects that a curve has been added to the project
 # and the plot is updated appropriately, as shown below. The chain for the inner boundary
 # curve is called `inner2` and it contains a single curve `"small_spline"` labeled in the figure by `2.1`.
-spline_project.plt
+spline_project.plt #hide
 
 # ### Triangular shape
 
