@@ -5,7 +5,7 @@
 # parametric equations and contains fine features as well as smooth regions.
 
 # It provides details and clarification for the script `interactive_blob.jl`
-# from the [examples/](https://github.com/trixi-framework/HOHQMesh.jl/tree/main/examples) folder.
+# from the [examples](https://github.com/trixi-framework/HOHQMesh.jl/tree/main/examples) folder.
 
 # The outer boundary, background grid and mesh
 # are visualized for quality inspection. The tutorial also shows how to adjust the
