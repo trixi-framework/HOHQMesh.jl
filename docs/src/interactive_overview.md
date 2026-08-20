@@ -187,19 +187,17 @@ More details on the options are:
 1. `"optimize"`: Specifies the norm to be minimized. For convenience, `"none"` is provided to deactivate the optimization.
 2. `"tolerance"`: The accuracy to which the boundaries are to be approximated.
 3. `"continuity"`: The derivatives to which the approximation will be constrained. For example, if second derivative continuity is to be enforced, choose `"continuity" = "2"`. If zero, then the approximation is simply continuous.
-4. `"connect"`: This *optional* parameter allows one to optimize across segments of a chain. By default, optimization is done curve by curve within the chain, since usually there will be discontinuities (e.g. corners) between the curves. If it is desired to define a more global approximation across multiple curves, include the `"connect"` key.
+4. `"connect"`: This *optional* parameter allows one to optimize across segments of a chain. By default, optimization is done curve by curve within the chain, since usually there will be discontinuities (e.g. corners) between the curves. If it is desired to define a more global approximation across multiple curves, include the `"connect"` key. The syntax is the following:
 
-   The syntax is the following:
+    ```
+       "connect" = "crv_1-crv_2,crv_3-crv_4,..."
+    ```
 
-   ```julia
-      "connect" = "crv_1-crv_2,crv_3-crv_4,..."
-   ```
+    where the `crv_n` are the index of the curves in the chain. For example, if a chain contains ten curves and optimization is requested across the third and fourth curves in the list and across the sixth through ninth in the list, then
 
-   where the `crv_n` are the index of the curves in the chain. For example, if a chain contains ten curves and optimization is requested across the third and fourth curves in the list and across the sixth through ninth in the list, then
-
-   ```julia
-      "connect" = "3-4,6-9"
-   ```
+    ```
+       "connect" = "3-4,6-9"
+    ```
 
 When active, HOHQMesh will then find the best polynomial approximation of each curve
 in the chain to the order defined by `polynomial order` in the `"RUN_PARAMETERS"`

@@ -57,7 +57,7 @@ addCurveToInnerBoundary!(p, circle2, "inner2")
 # Plot the project model curves and background grid
 
 if isdefined(Main, :Makie)
-   plotProject!(p, MODEL+GRID)
+   plotProject!(p, MODEL+GRID; figureSize = (1000, 400))
    @info "Press enter to generate the mesh and update the plot."
    readline()
 else # Throw an informational message about plotting to the user
