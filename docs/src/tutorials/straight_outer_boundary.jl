@@ -23,7 +23,6 @@
 # we use [CairoMakie.jl](https://docs.makie.org/dev/) for visualization.
 # Alternatively, one can use [GLMakie](https://github.com/JuliaPlots/GLMakie.jl/)
 # for interactive visualization in a Julia REPL session.
-
 using HOHQMesh
 using CairoMakie
 

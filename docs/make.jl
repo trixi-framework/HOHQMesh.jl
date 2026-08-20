@@ -13,7 +13,8 @@ TUTORIAL_DIR = joinpath(@__DIR__, "src", "tutorials")
 OUTPUT_DIR = joinpath(@__DIR__, "src", "tutorials")
 
 tutorial_list = [
-    "straight_outer_boundary.jl"
+    "straight_outer_boundary.jl",
+    "curved_outer_boundary.jl"
 ]
 
 tutorial_pages = [
