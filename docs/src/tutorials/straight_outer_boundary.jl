@@ -7,7 +7,7 @@
 # will be visualized for quality inspection.
 
 # It provides details and clarification for the script `interactive_outer_box_two_circles.jl`
-# from the [examples/](https://github.com/trixi-framework/HOHQMesh.jl/tree/main/examples) folder.
+# from the [examples](https://github.com/trixi-framework/HOHQMesh.jl/tree/main/examples) folder.
 
 # ### Synopsis
 
