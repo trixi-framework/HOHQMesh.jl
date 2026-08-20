@@ -14,7 +14,8 @@ OUTPUT_DIR = joinpath(@__DIR__, "src", "tutorials")
 
 tutorial_list = [
     "straight_outer_boundary.jl",
-    "curved_outer_boundary.jl"
+    "curved_outer_boundary.jl",
+    "spline_curves.jl"
 ]
 
 tutorial_pages = [
@@ -95,7 +96,7 @@ makedocs(;
                              # Set canonical URL to GitHub pages URL
                              canonical = "https://trixi-framework.github.io/HOHQMesh.jl/stable",
                              edit_link = "main",
-                             size_threshold_ignore = ["index.md"],),
+                             size_threshold_ignore = ["index.md", "reference.md"],),
     # Improve code blocks in the documentation by using DocumenterCodeBlocks.jl
     plugins = [CodeBlocks()],
     # Explicitly specify documentation structure
