@@ -65,12 +65,12 @@ addCurveToOuterBoundary!(symmetric_mesh, line9)
 # Plot the project model curves and background grid
 
 if isdefined(Main, :Makie)
-    plotProject!(symmetric_mesh, MODEL+GRID; figureSize = (900, 600))
-    @info "Press enter to generate the mesh and update the plot."
-    readline()
- else # Throw an informational message about plotting to the user
-    @info "To visualize the project (boundary curves, background grid, mesh, etc.), include `GLMakie` and run again."
- end
+   plotProject!(symmetric_mesh, MODEL+GRID; figureSize = (900, 600))
+   @info "Press enter to generate the mesh and update the plot."
+   readline()
+else # Throw an informational message about plotting to the user
+   @info "To visualize the project (boundary curves, background grid, mesh, etc.), include `GLMakie` and run again."
+end
 
 # Generate the mesh. Saves the mesh file to the directory "out".
 generate_mesh(symmetric_mesh)

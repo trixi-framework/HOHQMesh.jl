@@ -70,12 +70,12 @@ addCurveToInnerBoundary!(p, edge3, "inner3")
 # Plot the project model curves and background grid
 
 if isdefined(Main, :Makie)
-    plotProject!(p, MODEL+GRID; figureSize = (900, 600))
-    @info "Press enter to generate the mesh and update the plot."
-    readline()
- else # Throw an informational message about plotting to the user
-    @info "To visualize the project (boundary curves, background grid, mesh, etc.), include `GLMakie` and run again."
- end
+   plotProject!(p, MODEL+GRID; figureSize = (900, 600))
+   @info "Press enter to generate the mesh and update the plot."
+   readline()
+else # Throw an informational message about plotting to the user
+   @info "To visualize the project (boundary curves, background grid, mesh, etc.), include `GLMakie` and run again."
+end
 
 # Generate the mesh. This produces the mesh and TecPlot files `spline_curves.mesh` and `spline_curves.tec`
 # and saves them to the `out` folder. It also creates a control file `spline_curves.control`.

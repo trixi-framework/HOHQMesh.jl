@@ -16,6 +16,7 @@ tutorial_list = [
     "straight_outer_boundary.jl",
     "curved_outer_boundary.jl",
     "spline_curves.jl",
+    "create_edit_curves.jl",
     "symmetric_mesh.jl"
 ]
 
