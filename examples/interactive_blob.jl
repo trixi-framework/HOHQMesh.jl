@@ -26,7 +26,7 @@ addRefinementRegion!(blob_project, center)
 
 # Plot the project model curves and background grid
 if isdefined(Main, :Makie)
-   plotProject!(blob_project, MODEL+GRID; figureSize = (900, 700))
+   plotProject!(blob_project, MODEL+GRID+REFINEMENTS; figureSize = (900, 700))
    @info "Press enter to generate the mesh and update the plot."
    readline()
 else # Throw an informational message about plotting to the user
