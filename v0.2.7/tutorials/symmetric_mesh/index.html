@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Symmetric mesh · HOHQMesh.jl</title><script data-outdated-warner src="../../assets/warner.js"></script><link rel="canonical" href="https://trixi-framework.github.io/HOHQMesh.jl/stable/tutorials/symmetric_mesh/"/><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.045/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.24/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="../.."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../../assets/documenter.js"></script><script src="../../siteinfo.js"></script><script src="../../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../../">HOHQMesh.jl</a></span></div><form class="docs-search" action="../../search/"><input class="docs-search-query" id="documenter-search-query" name="q" type="text" placeholder="Search docs"/></form><ul class="docs-menu"><li><a class="tocitem" href="../../">Home</a></li><li><span class="tocitem">Interactive mesh generation</span><ul><li><a class="tocitem" href="../../interactive_overview/">Overview</a></li><li><a class="tocitem" href="../../guided-tour/">Guided tour</a></li><li><a class="tocitem" href="../../interactive-api/">API</a></li><li><a class="tocitem" href="../../CheatSheet/">Commands Cheat Sheet</a></li></ul></li><li><span class="tocitem">Tutorials</span><ul><li><a class="tocitem" href="../introduction/">Overview</a></li><li><a class="tocitem" href="../straight_outer_boundary/">Straight-sided outer boundary</a></li><li><a class="tocitem" href="../curved_outer_boundary/">Curved outer boundary</a></li><li><a class="tocitem" href="../spline_curves/">Spline curves</a></li><li><a class="tocitem" href="../create_edit_curves/">Creating and editing curves</a></li><li class="is-active"><a class="tocitem" href>Symmetric mesh</a><ul class="internal"><li><a class="tocitem" href="#Initialization"><span>Initialization</span></a></li><li><a class="tocitem" href="#Adjusting-project-parameters"><span>Adjusting project parameters</span></a></li><li><a class="tocitem" href="#Add-a-background-grid"><span>Add a background grid</span></a></li><li><a class="tocitem" href="#Add-the-outer-boundary"><span>Add the outer boundary</span></a></li><li><a class="tocitem" href="#Generate-the-mesh"><span>Generate the mesh</span></a></li><li><a class="tocitem" href="#Changing-the-reflection-line"><span>Changing the reflection line</span></a></li><li><a class="tocitem" href="#Summary"><span>Summary</span></a></li></ul></li></ul></li><li><span class="tocitem">Advanced topics &amp; developers</span><ul><li><a class="tocitem" href="../../development/">Development</a></li><li><a class="tocitem" href="../../github-git/">GitHub &amp; Git</a></li><li><a class="tocitem" href="../../testing/">Testing</a></li></ul></li><li><a class="tocitem" href="../../reference/">Reference</a></li><li><a class="tocitem" href="../../authors/">Authors</a></li><li><a class="tocitem" href="../../contributing/">Contributing</a></li><li><a class="tocitem" href="../../license/">License</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">Tutorials</a></li><li class="is-active"><a href>Symmetric mesh</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Symmetric mesh</a></li></ul></nav><div class="docs-right"><a class="docs-edit-link" href="https://github.com/trixi-framework/HOHQMesh.jl/blob/main/docs/src/tutorials/symmetric_mesh.md" title="Edit on GitHub"><span class="docs-icon fab"></span><span class="docs-label is-hidden-touch">Edit on GitHub</span></a><a class="docs-settings-button fas fa-cog" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-sidebar-button fa fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a></div></header><article class="content" id="documenter-page"><h1 id="Symmetric-mesh"><a class="docs-heading-anchor" href="#Symmetric-mesh">Symmetric mesh</a><a id="Symmetric-mesh-1"></a><a class="docs-heading-anchor-permalink" href="#Symmetric-mesh" title="Permalink"></a></h1><p>The purpose of this tutorial is to demonstrate how to create an unstructured mesh that is symmetric with respect to a straight line outer boundary as prescribed by the user. At the end of this tutorial one can find the script necessary to generate the meshes described herein.</p><h3 id="Synopsis"><a class="docs-heading-anchor" href="#Synopsis">Synopsis</a><a id="Synopsis-1"></a><a class="docs-heading-anchor-permalink" href="#Synopsis" title="Permalink"></a></h3><p>This tutorial demonstrates how to:</p><ul><li>Indicate a symmetry boundary line.</li><li>Construct an outer boundary with several connected curves.</li><li>Add the background grid when an outer boundary curve is present.</li><li>Rename boundaries in an existing interactive mesh project.</li><li>Visualize an interactive mesh project.</li></ul><h2 id="Initialization"><a class="docs-heading-anchor" href="#Initialization">Initialization</a><a id="Initialization-1"></a><a class="docs-heading-anchor-permalink" href="#Initialization" title="Permalink"></a></h2><p>From a Julia REPL we load the HOHQMesh package as well as <a href="https://github.com/JuliaPlots/GLMakie.jl/">GLMakie</a>, a backend of <a href="https://github.com/JuliaPlots/Makie.jl/">Makie.jl</a>, to visualize the curves, mesh, etc. from the interactive tool.</p><pre><code class="language-julia hljs">julia&gt; using GLMakie, HOHQMesh</code></pre><p>Now we are ready to interactively generate unstructured quadrilateral meshes!</p><p>We create a new project with the name <code>&quot;symmetric_mesh&quot;</code> and assign <code>&quot;out&quot;</code> to be the folder where any output files from the mesh generation process will be saved. By default, the output files created by HOHQMesh will carry the same name as the project. For example, the resulting HOHQMesh control file from this tutorial will be named <code>symmetric_mesh.control</code>. If the folder <code>out</code> does not exist, it will be created automatically in the current working directory.</p><pre><code class="language-julia hljs">symmetric_mesh = newProject(&quot;symmetric_mesh&quot;, &quot;out&quot;)</code></pre><h2 id="Adjusting-project-parameters"><a class="docs-heading-anchor" href="#Adjusting-project-parameters">Adjusting project parameters</a><a id="Adjusting-project-parameters-1"></a><a class="docs-heading-anchor-permalink" href="#Adjusting-project-parameters" title="Permalink"></a></h2><p>When a new project is created it is filled with several default <code>RunParameters</code> such as the polynomial order used to represent curved boundaries or the mesh file format. These <code>RunParameters</code> can be queried and adjusted with appropriate getter/setter pairs, see <a href="../../interactive-api/#Controlling-the-mesh-generation">Controlling the mesh generation</a> for more details.</p><p>For the <code>symmetric_mesh</code> project we query the current values for the polynomial order and the mesh output format</p><pre><code class="language-julia hljs">julia&gt; getPolynomialOrder(symmetric_mesh)
+5
+
+julia&gt; getMeshFileFormat(symmetric_mesh)
+&quot;ISM-V2&quot;</code></pre><p>We change the default polynomial order in the <code>symmetric_mesh</code> to be <span>$6$</span> with a corresponding setter function</p><pre><code class="language-julia hljs">setPolynomialOrder!(symmetric_mesh, 6)</code></pre><h2 id="Add-a-background-grid"><a class="docs-heading-anchor" href="#Add-a-background-grid">Add a background grid</a><a id="Add-a-background-grid-1"></a><a class="docs-heading-anchor-permalink" href="#Add-a-background-grid" title="Permalink"></a></h2><p>HOHQMesh requires a background grid for the mesh generation process. This background grid sets the base resolution of the desired mesh. HOHQMesh will automatically subdivide from this background grid near sharp features of any curved boundaries.</p><p>For a domain bounded by an outer boundary curve, this background grid is set by indicating the desired element size in the <span>$x$</span> and <span>$y$</span> directions. To start, we set the background grid for <code>symmetric_mesh</code> to have elements with side length <span>$0.25$</span> in each direction</p><pre><code class="language-julia hljs">addBackgroundGrid!(spline_project, [0.25, 0.25, 0.0])</code></pre><h2 id="Add-the-outer-boundary"><a class="docs-heading-anchor" href="#Add-the-outer-boundary">Add the outer boundary</a><a id="Add-the-outer-boundary-1"></a><a class="docs-heading-anchor-permalink" href="#Add-the-outer-boundary" title="Permalink"></a></h2><p>With the background grid size set, we next build the outer boundary for the present mesh project. This outer boundary is composed of nine straight line segments and a half circle arc. The curves will afterwards be added to the mesh project <code>symmetric_mesh</code> in counter-clockwise order as required by HOHQMesh.</p><pre><code class="language-julia hljs">line1 = newEndPointsLineCurve(&quot;:symmetry&quot;, [-0.05, 2.0, 0.0],
+                                           [-0.05, 0.0, 0.0])
+
+line2 = newEndPointsLineCurve(&quot;bottom&quot;, [-0.05, 0.0, 0.0],
+                                        [1.0, 0.0, 0.0])
+
+line3 = newEndPointsLineCurve(&quot;right&quot;, [1.0, 0.0, 0.0],
+                                       [1.0, 0.5, 0.0])
+
+half_circle = newCircularArcCurve(&quot;circle&quot;,         # curve name
+                                  [1.0, 0.75, 0.0], # circle center
+                                  0.25,             # circle radius
+                                  270.0,            # start angle
+                                  90.0,             # end angle
+                                  &quot;degrees&quot;)        # angle units
+
+line4 = newEndPointsLineCurve(&quot;right&quot;, [1.0, 1.0, 0.0],
+                                       [1.0, 1.5, 0.0])
+
+line5 = newEndPointsLineCurve(&quot;bump&quot;, [1.0, 1.5, 0.0],
+                                      [0.75, 1.5, 0.0])
+
+line6 = newEndPointsLineCurve(&quot;bump&quot;, [0.75, 1.5, 0.0],
+                                      [0.75, 1.75, 0.0])
+
+line7 = newEndPointsLineCurve(&quot;bump&quot;, [0.75, 1.75, 0.0],
+                                      [1.0, 1.75, 0.0])
+
+line8 = newEndPointsLineCurve(&quot;right&quot;, [1.0, 1.75, 0.0],
+                                       [1.0, 2.0, 0.0])
+
+line9 = newEndPointsLineCurve(&quot;top&quot;, [1.0, 2.0, 0.0],
+                                     [-0.05, 2.0, 0.0])</code></pre><p>The given boundary names will also be the element boundary names written to the mesh file. The only exception is the first boundary curve that is given the name <code>&quot;:symmetry&quot;</code>. This outer boundary curve name is a special keyword in HOHQMesh that says it is a straight line across which a reflection will occur. Two worthwhile notes are</p><ol><li>the leading colon on this boundary name keyword is present to avoid conflicts with any other use of the <em>symmetry</em> name.</li><li>if the curve designated as <code>&quot;:symmetry&quot;</code> is not a straight line, then an error is thrown by HOHQMesh and the mesh will not be reflected.</li></ol><div class="admonition is-success"><header class="admonition-header">Name of the symmetry boundary</header><div class="admonition-body"><p>The name of the reflection boundary line is not case-sensitive, thus<code>&quot;:symmetry&quot;</code> or <code>&quot;:Symmetry&quot;</code> or <code>&quot;:SYMMETRY&quot;</code> are all valid and will be recognized as the keyword for symmetry.</p></div></div><p>Now that all the outer boundary curves are defined we add them to the <code>symmetric_mesh</code> project in counter-clockwise order</p><pre><code class="language-julia hljs">addCurveToOuterBoundary!(symmetric_mesh, line1)
+addCurveToOuterBoundary!(symmetric_mesh, line2)
+addCurveToOuterBoundary!(symmetric_mesh, half_circle)
+addCurveToOuterBoundary!(symmetric_mesh, line3)
+addCurveToOuterBoundary!(symmetric_mesh, line4)
+addCurveToOuterBoundary!(symmetric_mesh, line5)
+addCurveToOuterBoundary!(symmetric_mesh, line6)
+addCurveToOuterBoundary!(symmetric_mesh, line7)
+addCurveToOuterBoundary!(symmetric_mesh, line8)
+addCurveToOuterBoundary!(symmetric_mesh, line9)</code></pre><p>We visualize the outer boundary curve chain and background grid with the following</p><pre><code class="language-julia hljs">plotProject!(symmetric_mesh, MODEL+GRID)</code></pre><p>Here, we take the sum of the keywords <code>MODEL</code> and <code>GRID</code> in order to simultaneously visualize the outer boundary and background grid. The resulting plot is given below. The chain of outer boundary curves is called <code>&quot;Outer&quot;</code> and its constituent curve segments are labeled accordingly with the names prescribed in the curve construction above.</p><p><img src="https://github.com/trixi-framework/HOHQMesh.jl/assets/25242486/2755fb08-9796-4e79-9d2d-055ef476dd4b" alt="before_generation"/></p><h2 id="Generate-the-mesh"><a class="docs-heading-anchor" href="#Generate-the-mesh">Generate the mesh</a><a id="Generate-the-mesh-1"></a><a class="docs-heading-anchor-permalink" href="#Generate-the-mesh" title="Permalink"></a></h2><p>We next generate the mesh from the information contained in <code>symmetric_mesh</code>. This will output the following files to the <code>out</code> folder:</p><ul><li><code>symmetric_mesh.control</code>: A HOHQMesh control file for the current project.</li><li><code>symmetric_mesh.tec</code>: A TecPlot formatted file to visualize the mesh with other software, e.g., <a href="https://www.paraview.org/">ParaView</a>.</li><li><code>symmetric_mesh.mesh</code>: A mesh file with format <code>ISM-V2</code> (the default format).</li></ul><p>To do this we execute the command</p><pre><code class="language-julia hljs">generate_mesh(symmetric_mesh)
+
+ *******************
+ 2D Mesh Statistics:
+ *******************
+    Total time             =    4.0154999999999996E-002
+    Number of nodes        =          343
+    Number of Edges        =          626
+    Number of Elements     =          284
+    Number of Subdivisions =            2
+
+ Mesh Quality:
+         Measure         Minimum         Maximum         Average  Acceptable Low Acceptable High       Reference
+     Signed Area      0.00227157      0.06552808      0.01366911      0.00000000    999.99900000      1.00000000
+    Aspect Ratio      1.00389317      2.07480912      1.22443835      1.00000000    999.99900000      1.00000000
+       Condition      1.00048947      1.93007666      1.12853177      1.00000000      4.00000000      1.00000000
+      Edge Ratio      1.00607156      3.56541719      1.44892631      1.00000000      4.00000000      1.00000000
+        Jacobian      0.00158627      0.06202757      0.01120120      0.00000000    999.99900000      1.00000000
+   Minimum Angle     48.35050023     89.33703938     75.39251039     40.00000000     90.00000000     90.00000000
+   Maximum Angle     90.94150752    129.91539960    106.20679399     90.00000000    135.00000000     90.00000000
+       Area Sign      1.00000000      1.00000000      1.00000000      1.00000000      1.00000000      1.00000000</code></pre><p>Note that the call to <code>generate_mesh</code> prints mesh quality statistics to the screen and updates the visualization. The background grid is <em>removed</em> from the visualization when the mesh is generated.</p><div class="admonition is-info"><header class="admonition-header">Mesh visualization</header><div class="admonition-body"><p>Currently, only the &quot;skeleton&quot; of the mesh is visualized. Thus, the high-order curved boundary information is not seen in the plot but this information <strong>is present</strong> in the mesh file generated.</p></div></div><p><img src="https://github.com/trixi-framework/HOHQMesh.jl/assets/25242486/c271d208-6779-4e47-9045-a8cd21c5896d" alt="first_reflect_mesh"/></p><div class="admonition is-success"><header class="admonition-header">Boundary names in the mesh file</header><div class="admonition-body"><p>The boundary names of the original outer curves will be those defined by the user in their construction above. The boundary labeled <code>&quot;:symmetry&quot;</code> is now internal and is marked appropriately as such. The reflected boundary names are appended with <code>_R</code> (for reflected) in the mesh file. For instance, the reflected version of the boundary <code>bottom</code> has the name <code>bottom_R</code> or the boundary named <code>circle</code> has the reflected boundary counterpart named <code>circle_R</code>. These can be changed as desired by editing the mesh file.</p></div></div><h2 id="Changing-the-reflection-line"><a class="docs-heading-anchor" href="#Changing-the-reflection-line">Changing the reflection line</a><a id="Changing-the-reflection-line-1"></a><a class="docs-heading-anchor-permalink" href="#Changing-the-reflection-line" title="Permalink"></a></h2><p>It is also possible to create a symmetry boundary composed of multiple co-linear segments.</p><p>To change the line along which the mesh is reflected, we remove the current mesh that was just generated and re-plot the model curves and background grid.</p><pre><code class="language-julia hljs">remove_mesh!(symmetric_mesh)
+updatePlot!(symmetric_mesh, MODEL+GRID)</code></pre><p>The <code>remove_mesh!</code> command deletes the mesh information from the interactive mesh project <code>symmetric_mesh</code> as well as the mesh file <code>symmetric_mesh.mesh</code>, control file <code>symmetric_mesh.control</code>, plot file <code>symmetric_mesh.tec</code>, and mesh statistics file <code>symmetric_mesh.txt</code> from the <code>out</code> folder.</p><p>To illustrate the reflection about multiple boundary curves (which must be co-linear!), we first rename the current symmetry boundary curve <code>O.1</code> to have the name <code>&quot;left&quot;</code>. Next, we rename all the co-linear boundary curves <code>O.3</code>, <code>O.5</code>, and <code>O.9</code> to have the name <code>&quot;:symmetry&quot;</code>. Both are done with the function <code>renameCurve!</code></p><pre><code class="language-julia hljs">renameCurve!(symmetric_mesh, &quot;:symmetry&quot;, # existing curve name
+                             &quot;left&quot;)     # new curve name
+renameCurve!(symmetric_mesh, &quot;right&quot;, &quot;:symmetry&quot;)</code></pre><p>After the boundary names are adjusted the plot updates automatically to give the figure below.</p><p><img src="https://github.com/trixi-framework/HOHQMesh.jl/assets/25242486/0118a02f-0343-4280-8a63-eba5a59d69e3" alt="before_generation2"/></p><p>We then generate the new mesh from the information contained in <code>symmetric_mesh</code>. Again, a check ensures that the curves designated as <code>&quot;:symmetry&quot;</code> are co-linear.  An error is thrown if this is not the case and the mesh will not be reflected.  This saves the control, tec, and mesh files into the <code>out</code> folder and yields</p><pre><code class="language-julia hljs">generate_mesh(symmetric_mesh)
+
+ *******************
+ 2D Mesh Statistics:
+ *******************
+    Total time             =    3.7763000000000019E-002
+    Number of nodes        =          337
+    Number of Edges        =          622
+    Number of Elements     =          284
+    Number of Subdivisions =            2
+
+ Mesh Quality:
+         Measure         Minimum         Maximum         Average  Acceptable Low Acceptable High       Reference
+     Signed Area      0.00227157      0.06552808      0.01366911      0.00000000    999.99900000      1.00000000
+    Aspect Ratio      1.00389317      2.07480912      1.22443835      1.00000000    999.99900000      1.00000000
+       Condition      1.00048947      1.93007666      1.12853177      1.00000000      4.00000000      1.00000000
+      Edge Ratio      1.00607156      3.56541719      1.44892631      1.00000000      4.00000000      1.00000000
+        Jacobian      0.00158627      0.06202757      0.01120120      0.00000000    999.99900000      1.00000000
+   Minimum Angle     48.35050023     89.33703938     75.39251039     40.00000000     90.00000000     90.00000000
+   Maximum Angle     90.94150752    129.91539960    106.20679399     90.00000000    135.00000000     90.00000000
+       Area Sign      1.00000000      1.00000000      1.00000000      1.00000000      1.00000000      1.00000000</code></pre><p>The updated visualization is given below. Note, the flexibility to define multiple co-linear symmetric boundaries creates a symmetric mesh with closed internal boundaries. In this example, a circle and a rectangle.</p><p><img src="https://github.com/trixi-framework/HOHQMesh.jl/assets/25242486/7e5baf73-9c48-45be-84e4-90eb331103a5" alt="first_reflect_mesh2"/></p><h2 id="Summary"><a class="docs-heading-anchor" href="#Summary">Summary</a><a id="Summary-1"></a><a class="docs-heading-anchor-permalink" href="#Summary" title="Permalink"></a></h2><p>In this tutorial we demonstrated how to:</p><ul><li>Indicate a symmetry boundary line.</li><li>Construct an outer boundary with several connected curves.</li><li>Add the background grid when an outer boundary curve is present.</li><li>Rename boundaries in an existing interactive mesh project.</li><li>Visualize an interactive mesh project.</li></ul><p>For completeness, we include two scripts with all the commands to generate the meshes displayed for a reflection about the left boundary line <code>O.1</code> as well as a reflection about the right boundary composed of the three co-linear segments <code>O.3</code>, <code>O.5</code>, and <code>O.9</code>. Note, we <strong>do not</strong> include the plotting in these scripts.</p><pre><code class="language-julia hljs"># Interactive mesh with reflection on the left over a single symmetry boundary
+# as well as a reflection on the right over multiple co-linear symmetry boundaries.
+#
+# Keywords: outer boundary, reflection, symmetric mesh
+using HOHQMesh
+
+# new project
+symmetric_mesh = newProject(&quot;symmetric_mesh&quot;, &quot;out&quot;)
+
+# reset the polynomial degree of the mesh
+setPolynomialOrder!(symmetric_mesh, 6)
+
+# A background grid is required for the mesh generation
+addBackgroundGrid!(symmetric_mesh, [0.25, 0.25, 0.0])
+
+# Create all the outer boundary curves and add them to the mesh project.
+# Note: (1) Curve names are those that will be present in the mesh file
+#       (2) Boundary named &quot;:symmetry&quot; is where reflection occurs
+
+line1 = newEndPointsLineCurve(&quot;:symmetry&quot;, [-0.05, 2.0, 0.0],
+                                           [-0.05, 0.0, 0.0])
+
+line2 = newEndPointsLineCurve(&quot;bottom&quot;, [-0.05, 0.0, 0.0],
+                                        [1.0, 0.0, 0.0])
+
+line3 = newEndPointsLineCurve(&quot;right&quot;, [1.0, 0.0, 0.0],
+                                       [1.0, 0.5, 0.0])
+
+half_circle = newCircularArcCurve(&quot;circle&quot;,         # curve name
+                                  [1.0, 0.75, 0.0], # circle center
+                                  0.25,             # circle radius
+                                  270.0,            # start angle
+                                  90.0,             # end angle
+                                  &quot;degrees&quot;)        # angle units
+
+line4 = newEndPointsLineCurve(&quot;right&quot;, [1.0, 1.0, 0.0],
+                                       [1.0, 1.5, 0.0])
+
+line5 = newEndPointsLineCurve(&quot;bump&quot;, [1.0, 1.5, 0.0],
+                                      [0.75, 1.5, 0.0])
+
+line6 = newEndPointsLineCurve(&quot;bump&quot;, [0.75, 1.5, 0.0],
+                                      [0.75, 1.75, 0.0])
+
+line7 = newEndPointsLineCurve(&quot;bump&quot;, [0.75, 1.75, 0.0],
+                                      [1.0, 1.75, 0.0])
+
+line8 = newEndPointsLineCurve(&quot;right&quot;, [1.0, 1.75, 0.0],
+                                       [1.0, 2.0, 0.0])
+
+line9 = newEndPointsLineCurve(&quot;top&quot;, [1.0, 2.0, 0.0],
+                                     [-0.05, 2.0, 0.0])
+
+addCurveToOuterBoundary!(symmetric_mesh, line1)
+addCurveToOuterBoundary!(symmetric_mesh, line2)
+addCurveToOuterBoundary!(symmetric_mesh, half_circle)
+addCurveToOuterBoundary!(symmetric_mesh, line3)
+addCurveToOuterBoundary!(symmetric_mesh, line4)
+addCurveToOuterBoundary!(symmetric_mesh, line5)
+addCurveToOuterBoundary!(symmetric_mesh, line6)
+addCurveToOuterBoundary!(symmetric_mesh, line7)
+addCurveToOuterBoundary!(symmetric_mesh, line8)
+addCurveToOuterBoundary!(symmetric_mesh, line9)
+
+# Generate the mesh. Saves the mesh file to the directory &quot;out&quot;.
+generate_mesh(symmetric_mesh)
+
+# Delete the existing mesh before modifying boundary names.
+remove_mesh!(symmetric_mesh)
+
+# Rename the outer boundaries appropriately to set the symmetry boundary
+# on the right composed of multiple co-linear segments.
+renameCurve!(symmetric_mesh, &quot;:symmetry&quot;, # existing curve name
+                             &quot;left&quot;)     # new curve name
+renameCurve!(symmetric_mesh, &quot;right&quot;, &quot;:symmetry&quot;)
+
+# Generate the mesh. Saves the mesh file to the directory &quot;out&quot;.
+generate_mesh(symmetric_mesh)</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../create_edit_curves/">« Creating and editing curves</a><a class="docs-footer-nextpage" href="../../development/">Development »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.25 on <span class="colophon-date" title="Monday 21 October 2024 05:26">Monday 21 October 2024</span>. Using Julia version 1.10.5.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>

@@ -1,0 +1,93 @@
+\begin{CONTROL_INPUT}
+   \begin{RUN_PARAMETERS}
+      mesh file name = out/sandbox.mesh
+      plot file format = skeleton
+      plot file name = out/sandbox.tec
+      stats file name = out/sandbox.txt
+      mesh file format = ISM-V2
+      polynomial order = 5
+   \end{RUN_PARAMETERS}
+
+   \begin{BACKGROUND_GRID}
+      background grid size = [1.0,1.0,0.0]
+   \end{BACKGROUND_GRID}
+
+   \begin{SPRING_SMOOTHER}
+      smoothing type = LinearAndCrossbarSpring
+      smoothing = ON
+      number of iterations = 15
+   \end{SPRING_SMOOTHER}
+
+\end{CONTROL_INPUT}
+
+\begin{MODEL}
+   \begin{OUTER_BOUNDARY}
+      optimize = none
+      tolerance = 1e-3
+      continuity = 0
+         \begin{END_POINTS_LINE}
+            name = Line1
+            xEnd = [5.0,3.0,0.0]
+            xStart = [0.0,-7.0,0.0]
+         \end{END_POINTS_LINE}
+         \begin{CIRCULAR_ARC}
+            name = Arc
+            units = degrees
+            radius = 5.0
+            start angle = 0.0
+            center = [0.0,3.0,0.0]
+            end angle = 180.0
+         \end{CIRCULAR_ARC}
+         \begin{SPLINE_CURVE}
+            name = Spline
+            nKnots = 5
+            \begin{SPLINE_DATA}
+                0.0 -5.0 3.0 0.0
+                0.25 -2.0 1.0 0.0
+                0.5 -4.0 0.5 0.0
+                0.75 -2.0 -3.0 0.0
+                1.0 0.0 -7.0 0.0
+            \end{SPLINE_DATA}
+
+         \end{SPLINE_CURVE}
+   \end{OUTER_BOUNDARY}
+
+   \begin{INNER_BOUNDARIES}
+         \begin{CHAIN}
+            name = inner
+            optimize = none
+            tolerance = 1e-3
+            continuity = 0
+               \begin{CIRCULAR_ARC}
+                  name = TopArc
+                  units = degrees
+                  radius = 1.0
+                  start angle = 0.0
+                  center = [0.0,5.0,0.0]
+                  end angle = 180.0
+               \end{CIRCULAR_ARC}
+               \begin{END_POINTS_LINE}
+                  name = Line2
+                  xEnd = [-1.0,3.0,0.0]
+                  xStart = [-1.0,5.0,0.0]
+               \end{END_POINTS_LINE}
+               \begin{CIRCULAR_ARC}
+                  name = wideBottomArc
+                  units = radians
+                  radius = 1.5
+                  start angle = -3.141592653589793
+                  center = [0.5,3.0,0.0]
+                  end angle = 0.0
+               \end{CIRCULAR_ARC}
+               \begin{PARAMETRIC_EQUATION_CURVE}
+                  name = wiggleLine
+                  yEqn = y(t) = -2 * (1 - t) + 5 - 1.5 * cos(pi * (1 - t)) * sin(pi * (1 - t))
+                  zEqn = z(t) = 0.0
+                  xEqn = x(t) = 2 - t
+               \end{PARAMETRIC_EQUATION_CURVE}
+         \end{CHAIN}
+   \end{INNER_BOUNDARIES}
+
+\end{MODEL}
+
+\end{FILE}
