@@ -97,4 +97,3 @@ Demonstrates how to:
 * Add the background grid when an outer boundary curve is present.
 * Rename boundaries in an existing interactive mesh project.
 * Visualize an interactive mesh project.
-*
