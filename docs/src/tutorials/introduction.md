@@ -58,6 +58,7 @@ Demonstrates how to:
 * Visualize an interactive mesh project.
 * Construct and add parametric spline curves.
 * Construct and add an inner boundary chain of straight line segments.
+* Add manual refinement to a local region of the domain.
 
 ## [Creating and editing curves](@ref)
 
@@ -96,3 +97,4 @@ Demonstrates how to:
 * Add the background grid when an outer boundary curve is present.
 * Rename boundaries in an existing interactive mesh project.
 * Visualize an interactive mesh project.
+*
