@@ -9,7 +9,7 @@
    \end{RUN_PARAMETERS}
 
    \begin{BACKGROUND_GRID}
-      background grid size = [0.6,0.6,0.0]
+      background grid size = [0.8,0.8,0.0]
    \end{BACKGROUND_GRID}
 
    \begin{SPRING_SMOOTHER}
@@ -17,6 +17,16 @@
       smoothing = ON
       number of iterations = 15
    \end{SPRING_SMOOTHER}
+
+   \begin{REFINEMENT_REGIONS}
+         \begin{REFINEMENT_CENTER}
+            name = region
+            w = 0.5
+            x0 = [-2.0,-0.8,0.0]
+            type = smooth
+            h = 0.15
+         \end{REFINEMENT_CENTER}
+   \end{REFINEMENT_REGIONS}
 
 \end{CONTROL_INPUT}
 
