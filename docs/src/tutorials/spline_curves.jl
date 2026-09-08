@@ -222,3 +222,4 @@ spline_project.plt #hide
 # * Visualize an interactive mesh project.
 # * Construct and add parametric spline curves.
 # * Construct and add an inner boundary chain of straight line segments.
+# * Add manual refinement to a local region of the domain.
