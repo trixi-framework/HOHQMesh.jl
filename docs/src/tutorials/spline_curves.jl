@@ -18,6 +18,7 @@
 # * Visualize an interactive mesh project.
 # * Construct and add parametric spline curves.
 # * Construct and add an inner boundary chain of straight line segments.
+# * Add manual refinement to a local region of the domain.
 
 # ## Initialization
 
@@ -66,8 +67,8 @@ addCurveToOuterBoundary!(spline_project, circ)
 
 # For a domain bounded by an outer boundary curve, this background grid is set by indicating the desired
 # element size in the $x$ and $y$ directions. To start, we set the background grid for `spline_project`
-# to have elements with side length $0.6$ in each direction
-addBackgroundGrid!(spline_project, [0.6, 0.6, 0.0]);
+# to have elements with side length $0.8$ in each direction
+addBackgroundGrid!(spline_project, [0.8, 0.8, 0.0]);
 
 # We next visualize the outer boundary curve and background grid.
 # Here, we take the sum of the keywords `MODEL` and `GRID` in order to simultaneously visualize
@@ -173,6 +174,17 @@ addCurveToInnerBoundary!(spline_project, edge3, "inner3")
 # by `3.1`, `3.2`, and `3.3`.
 spline_project.plt #hide
 
+# ### Additional refinement
+
+# This triangular inner boundary introduces sharp corners that may cause issues when the
+# mesh generator attempts to find points along the boundary curves. As such, we add a
+# refinement region at the centroid of the triangular boundary with a smaller mesh
+# resolution of $h=0.15$.
+center = newRefinementCenter("region", "smooth", [-2.0, -0.8, 0.0], 0.15, 0.5)
+addRefinementRegion!(spline_project, center)
+
+spline_project.plt #hide
+
 # ## Generate the mesh
 
 # With the background grid, outer boundary curve, and all inner boundary curves added to the `spline_project` we are ready to generate the mesh.
@@ -210,3 +222,4 @@ spline_project.plt #hide
 # * Visualize an interactive mesh project.
 # * Construct and add parametric spline curves.
 # * Construct and add an inner boundary chain of straight line segments.
+# * Add manual refinement to a local region of the domain.

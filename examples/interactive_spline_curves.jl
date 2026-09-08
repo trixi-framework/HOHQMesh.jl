@@ -5,7 +5,7 @@
 # the other from given data points. The third curve is a triangular object built from
 # three internal straight-sided "curves".
 #
-# Keywords: spline from file, spline construction, outer boundary, inner boundary
+# Keywords: spline from file, spline construction, refinement region, outer boundary, inner boundary
 
 projectName = "spline_curves"
 projectPath = "out"
@@ -16,9 +16,9 @@ projectPath = "out"
 p = newProject(projectName, projectPath)
 
 # A background grid is required for the mesh generation. In this example we lay a
-# background grid of Cartesian boxes with size 0.6 in each direction.
+# background grid of Cartesian boxes with size 0.8 in each direction.
 
-addBackgroundGrid!(p, [0.6, 0.6, 0.0])
+addBackgroundGrid!(p, [0.8, 0.8, 0.0])
 
 # Outer boundary for this example mesh is a complete circle. Add it into the project.
 
@@ -67,10 +67,15 @@ addCurveToInnerBoundary!(p, edge1, "inner3")
 addCurveToInnerBoundary!(p, edge2, "inner3")
 addCurveToInnerBoundary!(p, edge3, "inner3")
 
+# Create and add a refinement region at the centroid of this triangular inner boundary
+
+center = newRefinementCenter("region", "smooth", [-2.0, -0.8, 0.0], 0.15, 0.5)
+addRefinementRegion!(p, center)
+
 # Plot the project model curves and background grid
 
 if isdefined(Main, :Makie)
-   plotProject!(p, MODEL+GRID; figureSize = (900, 600))
+   plotProject!(p, MODEL+GRID+REFINEMENTS; figureSize = (900, 600))
    @info "Press enter to generate the mesh and update the plot."
    readline()
 else # Throw an informational message about plotting to the user
