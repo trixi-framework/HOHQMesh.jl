@@ -22,7 +22,7 @@ HOHQMesh.jl is available on Linux, MacOS, and Windows.
 ## Installation
 If you have not yet installed Julia, please [follow the instructions for your
 operating system](https://julialang.org/downloads/platform/). HOHQMesh.jl works
-with Julia v1.6 and above.
+with Julia v1.10 and above.
 
 
 ### For users
