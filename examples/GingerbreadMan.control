@@ -176,7 +176,7 @@
    \begin{CHAIN}
       name = Eye2
         \begin{PARAMETRIC_EQUATION_CURVE}
-           name = Eye1
+           name = Eye2
            xEqn = x(t) = 3.1 + 1.5*cos(2*pi*t)
            yEqn = y(t) = 47.1 + 1.5*sin(2*pi*t)
            zEqn = z(t) = 0.0
