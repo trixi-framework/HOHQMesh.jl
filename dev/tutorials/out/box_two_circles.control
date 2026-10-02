@@ -1,0 +1,59 @@
+\begin{CONTROL_INPUT}
+   \begin{RUN_PARAMETERS}
+      mesh file name = out/box_two_circles.inp
+      plot file format = skeleton
+      plot file name = out/box_two_circles.tec
+      stats file name = out/box_two_circles.txt
+      mesh file format = ABAQUS
+      polynomial order = 4
+   \end{RUN_PARAMETERS}
+
+   \begin{BACKGROUND_GRID}
+      x0 = [0.0,0.0,0.0]
+      N = [30,15,0]
+      dx = [1.0,1.0,0.0]
+   \end{BACKGROUND_GRID}
+
+   \begin{SPRING_SMOOTHER}
+      smoothing type = LinearAndCrossbarSpring
+      smoothing = ON
+      number of iterations = 15
+   \end{SPRING_SMOOTHER}
+
+\end{CONTROL_INPUT}
+
+\begin{MODEL}
+   \begin{INNER_BOUNDARIES}
+         \begin{CHAIN}
+            name = inner1
+            optimize = none
+            tolerance = 1e-3
+            continuity = 0
+               \begin{CIRCULAR_ARC}
+                  name = circle1
+                  units = degrees
+                  radius = 2.0
+                  start angle = 0.0
+                  center = [4.0,4.0,0.0]
+                  end angle = 360.0
+               \end{CIRCULAR_ARC}
+         \end{CHAIN}
+         \begin{CHAIN}
+            name = inner2
+            optimize = none
+            tolerance = 1e-3
+            continuity = 0
+               \begin{CIRCULAR_ARC}
+                  name = circle2
+                  units = radians
+                  radius = 4.0
+                  start angle = 0.0
+                  center = [20.0,9.0,0.0]
+                  end angle = 6.283185307179586
+               \end{CIRCULAR_ARC}
+         \end{CHAIN}
+   \end{INNER_BOUNDARIES}
+
+\end{MODEL}
+
+\end{FILE}
